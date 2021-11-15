@@ -1,0 +1,22 @@
+.main-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  .content-wrapper {
+    width: calc(100% - 250px);
+    height: 86px;
+    margin-left: auto;
+    transition: all ease-in-out 250ms;
+    &.full-width {
+      width: 100%;
+      transition: all ease-in-out 250ms;
+    }
+    .page-wrapper {
+      margin-top: 86px;
+      background-color: #f2f2f2;
+      height: calc(100vh - 86px);
+      padding: 0 30px;
+      color : grey;
+    }
+  }
+}

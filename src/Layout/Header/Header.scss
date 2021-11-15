@@ -1,0 +1,19 @@
+.header-wrapper {
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100% - 250px);
+    padding: 25px 50px 25px 25px;
+    box-shadow: 0 2px 5px #888888;
+    position: fixed;
+    top:0;
+    right:0;
+    background-color: #ffffff;
+    transition: all ease-in-out 250ms;
+    &.full-width {
+      width: 100%;
+      transition: all ease-in-out 250ms;
+    }
+    .hamburger-menu {
+      cursor: pointer;
+    }
+}
