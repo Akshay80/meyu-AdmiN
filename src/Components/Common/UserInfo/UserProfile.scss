@@ -1,8 +1,8 @@
 @import '../../../Styles/custom';
 
 .user-profile-container {
-    width: 60%;
-    margin-left: 50px;
+    width: 70%;
+    padding-left: 50px;
 }
 .page-heading {
         color: $primary;
@@ -140,3 +140,30 @@
     }
   }
   
+
+  @media (max-width:1024px) {
+      .user-profile-container {
+        width: 100%;
+      }
+  }
+
+  @media (max-width:991px) {
+    .user-profile-container {
+     padding-left: 30px;
+    }
+}
+@media (max-width:768px) {
+    .user-profile-container {
+     padding-left: 20px;
+    }
+    .page-heading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+@media (max-width:576px) {
+    .user-profile-container {
+     padding-left: 10px;
+    }
+}

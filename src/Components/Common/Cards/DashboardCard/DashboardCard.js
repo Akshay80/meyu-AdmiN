@@ -4,10 +4,12 @@ import './DashboardCard.scss'
 
 export const DashboardCard = () => {
   return (
-    <div className="dashboard-card d-flex justify-content-around">
+    <div className="container">
+    <div className="row">
+    <div className="dashboard-card mr-3 d-flex justify-content-around ">
       {DashboardCardData.map((val, key) => {
         return (
-          <div className="card mb-3" style={{ maxWidth: "200px" }}>
+          <div className="card m-2" style={{ maxWidth: "200px" }}>
             <div key={key} className="row p-3">
               <h5 className="card-title d-flex align-items-center">
                 {val.title}
@@ -24,6 +26,8 @@ export const DashboardCard = () => {
           </div>
         );
       })}
+    </div>
+    </div>
     </div>
   );
 };
