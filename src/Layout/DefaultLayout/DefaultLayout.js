@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import PrivateRoute from "../../Routes/PrivateRoute";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 

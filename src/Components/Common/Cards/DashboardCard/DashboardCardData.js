@@ -3,31 +3,44 @@ import {ReactComponent as TotalOrder} from '../../../../Assets/Icon/totalOrder.s
 import {ReactComponent as TotalDelivered} from '../../../../Assets/Icon/orderDelivered.svg'
 import {ReactComponent as TotalCancelled} from '../../../../Assets/Icon/orderCancelled.svg'
 import {ReactComponent as TotalRevenue} from '../../../../Assets/Icon/Revenue.svg'
-import Path from '../../../../Constant/RouterConstant'
+import {ReactComponent as TotalChef} from '../../../../Assets/Icon/Chef.svg'
+import {ReactComponent as TotalCustomer} from '../../../../Assets/Icon/totalCustomer.svg'
+import {ReactComponent as Orderinprogress} from '../../../../Assets/Icon/orderinprogress.svg'
 
 export const DashboardCardData = [
     {
         title: "Total Orders",
         icon: <TotalOrder /> ,
-        // link: Path.totalOrders,
         number: "80"
     },  
     {
         title: "Total Delivered",
         icon: <TotalDelivered/> ,
-        // link: Path.totalDelivered,
         number: "75"
     },
     {
         title: "Total Cancelled",
         icon: <TotalCancelled /> ,
-        // link: Path.totalCancelled,
         number: "5"
     },
     {
         title: "Total Revenue",
         icon: <TotalRevenue /> ,
-        // link: Path.totalRevenue,
         number: "2000"
+    },
+    {
+        title: "Total Chef",
+        icon: <TotalChef /> ,
+        number: "50"
+    },
+    {
+        title: "Total Customer",
+        icon: <TotalCustomer /> ,
+        number: "200"
+    },
+    {
+        title: "Order in Progress",
+        icon: <Orderinprogress /> ,
+        number: "10"
     },
 ]

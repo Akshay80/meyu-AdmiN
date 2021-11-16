@@ -1,9 +1,20 @@
+@import './_theme.scss';
+@import '../Components/Common/Buttons/buttons.scss';
+
+a {
+  text-decoration: none !important;
+  color: black;
+  &:hover {
+    color : $main-color;
+  }
+}
+
 .main-wrapper {
   display: flex;
   flex-wrap: wrap;
 
   .content-wrapper {
-    width: calc(100% - 250px);
+    width: calc(100% - 20%);
     height: 86px;
     margin-left: auto;
     transition: all ease-in-out 250ms;
@@ -13,10 +24,10 @@
     }
     .page-wrapper {
       margin-top: 86px;
-      background-color: #f2f2f2;
-      height: calc(100vh - 86px);
+      height: 100vh; 
       padding: 0 30px;
-      color : grey;
+      background-color: lightgray;
+      color : #31ad5d;
     }
   }
 }

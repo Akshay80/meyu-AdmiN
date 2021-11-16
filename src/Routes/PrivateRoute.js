@@ -1,5 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
+import UserProfile from '../Components/Common/UserInfo/UserProfile'
 import Path from '../Constant/RouterConstant'
 import DefaultLayout from '../Layout/DefaultLayout/DefaultLayout'
 import Dashboard from '../Pages/Dashboard'
@@ -15,6 +16,7 @@ function PrivateRoute() {
                 <Route path={Path.productManagement} element={<ProductManagement />} />
                 <Route path={Path.userManagement} element={<UserManagement />} />
                 <Route path={''} element={<Dashboard />} />
+                <Route path={Path.userProfile} element={<UserProfile />} />
             </Route>
         </Routes>
     )

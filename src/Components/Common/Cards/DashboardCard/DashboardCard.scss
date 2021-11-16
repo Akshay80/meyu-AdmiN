@@ -1,0 +1,8 @@
+@import '../../../../Styles/custom';
+
+.dashboard-card {
+    flex-wrap: wrap;
+    .card {
+        border: 1px solid #31ad5d;
+    }
+}
