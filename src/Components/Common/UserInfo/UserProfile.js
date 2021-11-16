@@ -1,63 +1,111 @@
-import React from 'react'
-import { Form, Row, Button } from 'react-bootstrap'
+import React from "react";
+import { Form, Row, Button } from "react-bootstrap";
+import { Input } from "reactstrap";
+import {ReactComponent as UserIcon} from '../../../Assets/Icon/user.svg'
+import "./UserProfile.scss";
+import '../Buttons/buttons.scss'
+// import './imagecontrol';
 
 const UserProfile = () => {
-    return (
-        <div>
-            <Form>
-  <Row className="mb-3">
-    <Form.Group  controlId="formGridEmail">
-      <Form.Label>Email</Form.Label>
-      <Form.Control type="email" placeholder="Enter email" />
-    </Form.Group>
+  return (
+    <div className="user-profile-container">
+       <div className="page-heading d-flex align-items-center">
+        <UserIcon style={{height: "36px", width:"36px", marginRight: "10px"}} />
+          <h3 className="m-1">
+         Edit Profile </h3>
+      </div>
+      <div className="profile-pic-wrapper">
+        <div className="pic-holder">
+          <img
+            id="profilePic"
+            className="pic"
+            alt=""
+            src="https://source.unsplash.com/random/150x150"/>
 
-    <Form.Group  controlId="formGridPassword">
-      <Form.Label>Password</Form.Label>
-      <Form.Control type="password" placeholder="Password" />
-    </Form.Group>
-    
-  </Row>
-
-  <Form.Group className="mb-3" controlId="formGridAddress1">
-    <Form.Label>Address</Form.Label>
-    <Form.Control placeholder="1234 Main St" />
-  </Form.Group>
-
-  <Form.Group className="mb-3" controlId="formGridAddress2">
-    <Form.Label>Address 2</Form.Label>
-    <Form.Control placeholder="Apartment, studio, or floor" />
-  </Form.Group>
-
-  <Row className="mb-3">
-    <Form.Group  controlId="formGridCity">
-      <Form.Label>City</Form.Label>
-      <Form.Control />
-    </Form.Group>
-
-    <Form.Group  controlId="formGridState">
-      <Form.Label>State</Form.Label>
-      <Form.Select defaultValue="Choose...">
-        <option>Choose...</option>
-        <option>...</option>
-      </Form.Select>
-    </Form.Group>
-
-    <Form.Group  controlId="formGridZip">
-      <Form.Label>Zip</Form.Label>
-      <Form.Control />
-    </Form.Group>
-  </Row>
-
-  <Form.Group className="mb-3" id="formGridCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
-  </Form.Group>
-
-  <Button variant="primary" type="submit">
-    Submit
-  </Button>
-</Form>
+          <label for="newProfilePhoto" className="upload-file-block">
+            <div className="text-center">
+              <div className="mb-2">
+                <i className="fa fa-camera fa-2x"></i>
+              </div>
+              <div className="text-uppercase">
+                Update <br /> Profile Photo
+              </div>
+            </div>
+          </label>
+          <Input
+            className="uploadProfileInput d-none"
+            type="file"
+            name="profile_pic"
+            id="newProfilePhoto"
+            accept="image/*"
+          />
         </div>
-    )
-}
+      </div>
+      <Form className="profile-form">
+        <Row className="mb-3">
+          <Form.Group className="col-6 mb-3" controlId="formGridName">
+            <Form.Label>First Name</Form.Label>
+            <Form.Control type="name" placeholder="Enter First Name" />
+          </Form.Group>
+          <Form.Group className="col-6" controlId="formGridName">
+            <Form.Label>Last Name</Form.Label>
+            <Form.Control type="name" placeholder="Enter Last Name" />
+          </Form.Group>
+        </Row>
 
-export default UserProfile
+        <Row className="mb-3">
+          <Form.Group className="mb-3" controlId="formGridEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="email" placeholder="Enter email" />
+          </Form.Group>
+          <Form.Group controlId="formGridPhone">
+            <Form.Label>Contact Number</Form.Label>
+            <Form.Control type="number" placeholder="Enter Contact Number" />
+          </Form.Group>
+        </Row>
+
+        <Form.Group className="mb-3" controlId="formGridAddress1">
+          <Form.Label>Address</Form.Label>
+          <Form.Control placeholder="Address" />
+        </Form.Group>
+
+        <Row className="mb-3">
+          <Form.Group className="col-6 mb-3" controlId="formGridCountry">
+            <Form.Label>Country</Form.Label>
+            <Form.Select defaultValue="Choose...">
+              <option>Choose...</option>
+              <option>...</option>
+            </Form.Select>
+          </Form.Group>
+
+          <Form.Group className="col-6 mb-3" controlId="formGridState">
+            <Form.Label>State</Form.Label>
+            <Form.Select defaultValue="Choose...">
+              <option>Choose...</option>
+              <option>...</option>
+            </Form.Select>
+          </Form.Group>
+
+          <Form.Group className="col-6 mb-3" controlId="formGridCity">
+            <Form.Label>City</Form.Label>
+            <Form.Control placeholder="Singapore" />
+          </Form.Group>
+          <Form.Group  className="col-6" controlId="formGridZip">
+            <Form.Label>Zip</Form.Label>
+            <Form.Control placeholder="238282" />
+          </Form.Group>
+        </Row>
+        <div className="d-flex align-items-center justify-content-center flex-wrap-wrap">
+          <Button className="m-2 btn-primary" variant="primary" type="submit">
+            Update
+          </Button>
+          <Button className="m-2" variant="danger" type="submit">
+            Cancel
+          </Button>
+        </div>
+      </Form>
+    </div>
+  );
+};
+
+export default UserProfile;
