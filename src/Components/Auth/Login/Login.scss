@@ -1,0 +1,57 @@
+@import '../../../Styles/_custom.scss';
+
+
+.cards1
+{
+    padding: $bigfont!important;
+    margin-top: 8rem!important;
+    width: 25rem!important;
+    border-radius: $mini!important;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+}
+.card-title1
+{
+    color:$main-color;
+    font-weight: $boldest;
+    letter-spacing: 0.2rem;
+}
+
+.btn-primary
+{
+    width: 100%;
+}
+
+ h3.card-title1
+{
+    margin-bottom: 0rem!important;
+}
+
+.card-title2
+{
+    color: $main-color;
+}
+
+.link
+{
+    color: $heading;
+    font-size: $base;
+    font-weight: $bold!important;
+    text-decoration: underline!important;
+}
+
+
+.link:hover
+{
+    color: $heading;
+}
+
+    .logos {
+      font-size: $bigfont;
+      font-weight: $boldest;
+    }
+    .logos-text {
+        font-size: $tagline;
+        margin-top: -10px;
+    }
