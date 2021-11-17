@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { DashboardCard } from "../../Components/Common/Cards/DashboardCard/DashboardCard";
 import { ReactComponent as Home } from "../../Assets/Icon/home.svg";
 import "./Dashboard.scss";
-import DatePicker from "react-datepicker";
 import Week from "../../Components/Common/DatePicker/Week";
 import Month from "../../Components/Common/DatePicker/Month";
 import Year from "../../Components/Common/DatePicker/Year";

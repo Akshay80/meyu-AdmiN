@@ -9,8 +9,6 @@ const Path = {
     homePage : "/",
     dashboard: "/",
     userProfile: "user-profile",
-    userManagement: "user-management",
-    productManagement: "product-management",
     orderManagement: "order-management",
     totalOrders : "total-orders",
     totalDelivered : "total-delivered",
