@@ -14,7 +14,7 @@ const Sidebar = ({ menuToggleState }) => {
       </div>
       <ul className="sidebarList">
         {SidebarData.map((val, key) => {
-          if (val.subMenus != undefined) {
+          if (val.subMenus !== undefined) {
             return (
               <ProSidebar>
                 <Menu key={key + 1} iconShape="square">

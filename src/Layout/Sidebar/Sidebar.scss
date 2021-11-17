@@ -101,4 +101,17 @@
   .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item:hover {
     color: #f27125 !important;
   }
+  .pro-sidebar > .pro-sidebar-inner {
+    background-color: unset !important;
+    height: unset !important;
+  }
+  .pro-sidebar .pro-menu.shaped .pro-menu-item > .pro-inner-item > .pro-icon-wrapper {
+    background-color: unset !important;
+}
+.pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
+  background-color: unset !important;
+}
+.pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item > div > ul {
+  padding: 0px !important;
+}
   }

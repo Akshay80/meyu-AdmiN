@@ -1,3 +1,17 @@
+.btn-auth
+{
+  color: #fff !important;
+    border: 1px solid #f27125 !important;
+    background-color: #f27125!important;
+    width: 100%;
+}
+
+.btn:focus, a:focus
+{
+         outline: none!important;
+         box-shadow: none!important;
+}
+
 .btn-secondary {
   color: #f27125 !important;
   border: 1px solid #f27125 !important;
