@@ -1,11 +1,21 @@
-@import '../../../Styles/_custom.scss';
+@import "../../../Styles/_custom.scss";
 
-.cards2
-{
-    padding: $bigfont!important;
-    width: 25rem!important;
-    border-radius: $mini!important;
-    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
--webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+.cards2 {
+  padding: $bigfont !important;
+  width: 25rem !important;
+  border-radius: $mini !important;
+  background: $white;
+  box-shadow: 0px 0px 15px 1px rgba(242, 113, 37, 0.74);
+  -webkit-box-shadow: 0px 0px 15px 1px rgba(242, 113, 37, 0.74);
+  -moz-box-shadow: 0px 0px 15px 1px rgba(242, 113, 37, 0.74);
+  //     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+  // -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+  // -moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+}
+
+.errors {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 1px;
 }
