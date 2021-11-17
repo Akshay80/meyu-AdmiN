@@ -64,22 +64,35 @@
                 cursor: pointer;
                 background-color: #f2f2f2;
               }
-
-            #icon {
-                flex: 25%;
-                display: grid;
-                place-items: center;
-            }
-            #title {
-                flex: 75%;
-                display: grid;
-            }
         }
       }
   }
-  }
-//   @media (max-width: 767px) {
 
-//   }
-// }
-//   }
+  .pro-sidebar {
+    color: #ffffff !important;
+    width: 100% !important;
+    min-width: unset !important;
+    text-align: left !important;
+    transition: width, left, right, 0.3s !important;
+    position: relative !important;
+    z-index: 1009 !important; 
+    height: unset !important;
+  }
+  .pro-sidebar .pro-menu {
+    padding: 5px 0px !important; 
+  }
+  .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 5px 12px !important;
+    cursor: pointer !important; 
+  }
+  .pro-sidebar .pro-menu a:hover {
+    color: #f27125 !important;
+  }
+
+  .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item:hover {
+    color: #f27125 !important;
+  }
+  }
