@@ -1,7 +1,9 @@
 import React from "react";
 import { SidebarData } from "./SidebarData";
 import { NavLink } from "react-router-dom";
+import "react-pro-sidebar/dist/css/styles.css";
 import "./Sidebar.scss";
+import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 
 const Sidebar = ({ menuToggleState }) => {
   return (
@@ -12,14 +14,37 @@ const Sidebar = ({ menuToggleState }) => {
       </div>
       <ul className="sidebarList">
         {SidebarData.map((val, key) => {
-          return (
-            <li key={key} className="row">
-              <NavLink className="sidebar-menu-links" to={val.link}>
-                <span id="icon">{val.icon}</span>
-                <span id="title">{val.title}</span>
-              </NavLink>
-            </li>
-          );
+          if (val.subMenus != undefined) {
+            return (
+              <ProSidebar>
+                <Menu key={key + 1} iconShape="square">
+                    <SubMenu icon={val.icon} title={val.title}>
+                      <MenuItem>
+                        {val.subMenus.map((submenu, i) => {
+                          return (
+                            <MenuItem i={i + 1}>
+                            <NavLink to={submenu.link}>
+                              <MenuItem>{submenu.title}</MenuItem>
+                            </NavLink>
+                            </MenuItem>
+                          );
+                        })}
+                      </MenuItem>
+                    </SubMenu>
+                </Menu>
+              </ProSidebar>
+            );
+          } else {
+            return (
+              <ProSidebar>
+                <Menu key={key + 1} iconShape="square">
+                  <NavLink to={val.link}>
+                    <MenuItem icon={val.icon}>{val.title}</MenuItem>
+                  </NavLink>
+                </Menu>
+              </ProSidebar>
+            );
+          }
         })}
       </ul>
     </div>

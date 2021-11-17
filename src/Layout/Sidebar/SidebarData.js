@@ -14,7 +14,7 @@ export const SidebarData = [
   {
     title: "User Management",
     icon: <UserIcon />,
-    link: Path.userManagement,
+    link: Path.customer,
 
     subMenus: [
       {
@@ -30,8 +30,8 @@ export const SidebarData = [
   {
     title: "Product Management",
     icon: <ProductIcon />,
-    link: Path.productManagement,
-
+    link: Path.allItems,
+    
     subMenus: [
       {
         title: "All Items",
