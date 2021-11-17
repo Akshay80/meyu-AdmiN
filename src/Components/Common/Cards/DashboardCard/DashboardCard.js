@@ -6,27 +6,30 @@ export const DashboardCard = () => {
   return (
     <div className="container">
     <div className="row">
-    <div className="dashboard-card mr-3 d-flex justify-content-around ">
       {DashboardCardData.map((val, key) => {
         return (
-          <div className="card m-2" style={{ maxWidth: "200px" }}>
+          <div className="dashboard-card col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-3 h-100">
+          <div className="card" style={{ maxWidth: "200px" }}>
             <div key={key} className="row p-3">
               <h5 className="card-title d-flex align-items-center">
                 {val.title}
               </h5>
-              <div className="col-md-4 d-flex align-items-center justify-content-center">
+              <div className=" d-flex align-items-center justify-content-center">
+                <div className="col-md-4 col-sm-6 col-xs-12">
                 {val.icon}
-              </div>
-              <div className="col-md-8">
+                </div>
+             
+              <div className="col-md-8 col-sm-6 col-xs-12">
                 <div className="card-body">
                   <p className="card-text">{val.number}</p>
                 </div>
               </div>
+              </div>
             </div>
           </div>
+    </div>
         );
       })}
-    </div>
     </div>
     </div>
   );

@@ -6,3 +6,12 @@
     .dashboard-content {
         height: 100%;
     }
+    
+    @media (max-width: 576px) {
+    .dashboard-wrapper {
+        align-items: center;
+               justify-content: center;
+               display: flex;
+               flex-direction: column;
+    }
+}
