@@ -23,7 +23,7 @@ const Sidebar = ({ menuToggleState }) => {
                         {val.subMenus.map((submenu, i) => {
                           return (
                             <MenuItem i={i + 1}>
-                            <NavLink to={submenu.link}>
+                            <NavLink className="sidebar-menu-links" to={submenu.link}>
                               <MenuItem>{submenu.title}</MenuItem>
                             </NavLink>
                             </MenuItem>
