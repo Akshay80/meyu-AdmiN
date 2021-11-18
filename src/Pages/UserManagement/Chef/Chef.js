@@ -1,9 +1,10 @@
 import React from 'react'
+import ChefTable from '../../../Components/Common/Table/OrdersTable/ChefTable'
 
 const Chef = () => {
     return (
         <div>
-            Chef
+           <ChefTable />
         </div>
     )
 }
