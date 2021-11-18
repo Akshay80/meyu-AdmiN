@@ -1,9 +1,12 @@
 import React from 'react'
+import FoodCard from '../../../Components/Common/Cards/FoodCard/FoodCard'
+import ChefDetail from './ChefDetail'
 
 const Chef = () => {
     return (
         <div>
-            Chef
+            <ChefDetail />
+            <FoodCard />
         </div>
     )
 }

@@ -21,7 +21,7 @@ const CustomerDetail = () => {
         </div>
       </div>
       <div>
-        <CustomerCard />
+        <CustomerCard />x x 
       </div>
       <div className="pb-3">
         <div className="d-flex align-items-center ps-4 mt-5 pb-1">

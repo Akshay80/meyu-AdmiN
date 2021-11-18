@@ -22,16 +22,7 @@ const ChefDetail = () => {
       </div>
       <div>
         <ChefCard />
-      </div>
-      <div className="pb-3">
-        <div className="d-flex align-items-center ps-4 mt-5 pb-1">
-          <OrderIcon
-            style={{ height: "24px", width: "24px", marginRight: "5px" }}
-          />
-          <h4 className="m-1">Order-Details </h4>
-        </div>
-        <OrderDetailCard />
-      </div>
+      </div>  
     </div>
   );
 };
