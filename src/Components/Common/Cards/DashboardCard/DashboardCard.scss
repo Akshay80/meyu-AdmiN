@@ -1,8 +1,17 @@
-@import '../../../../Styles/custom';
+@import "../../../../Styles/custom";
 
 .dashboard-card {
-    flex-wrap: wrap;
-    .card {
-        border: 1px solid #31ad5d;
-    }
+  flex-wrap: wrap;
+  .card {
+    border: 1px solid #31ad5d;
+  }
+}
+
+@media (max-width: 575px) {
+  .dashboard-card {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
 }

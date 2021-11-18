@@ -3,12 +3,15 @@ import { DashboardCard } from "../../Components/Common/Cards/DashboardCard/Dashb
 import { ReactComponent as Home } from "../../Assets/Icon/home.svg";
 import "./Dashboard.scss";
 import DatePicker from "react-datepicker";
+import Week from "../../Components/Common/DatePicker/Week";
+import Month from "../../Components/Common/DatePicker/Month";
+import Year from "../../Components/Common/DatePicker/Year";
+import  "../../Components/Common/DatePicker/Datepickbutton.scss";
 
 const Dashboard = () => {
-  const [startDate, setStartDate] = useState(new Date());
 
   return (
-    <>
+    <div className="dashboard-wrapper">
       <div className="page-heading d-flex justify-content-between align-items-center p-4">
         <div className="d-flex">
           <Home
@@ -16,17 +19,17 @@ const Dashboard = () => {
           />
           <h3 className="m-1">Dashboard </h3>
         </div>
-        <div className="me-3">
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-          />
+
+        <div className="date-filters d-flex justify-content-around">
+          <Week />
+          <Month />
+          <Year />
         </div>
       </div>
       <div className="dashboard-content">
         <DashboardCard />
       </div>
-    </>
+    </div>
   );
 };
 
