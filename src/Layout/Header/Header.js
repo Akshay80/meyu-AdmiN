@@ -4,9 +4,7 @@ import { ReactComponent as UserIcon} from "../../Assets/Icon/user.svg";
 import UserDropdown from "../../Components/Common/UserInfo/UserDropdown";
 import './Header.scss'
 
-
-
-const Header = ({menuToggleState,toggleMenu}) => {
+const Header = ({menuToggleState, toggleMenu}) => {
   return (  
         <div className={`header-wrapper d-flex ${menuToggleState?'full-width':''}`}>
             <span className="hamburger-menu">

@@ -44,34 +44,34 @@ const UserProfile = () => {
       <Form className="profile-form">
         <Row className="mb-3">
           <Form.Group className="col-md-6 col-sm-12 mb-3" controlId="formGridName">
-            <Form.Label>First Name</Form.Label>
+            <Form.Label className="mb-0">First Name</Form.Label>
             <Form.Control type="name" placeholder="Enter First Name" />
           </Form.Group>
           <Form.Group className="col-md-6 col-sm-12" controlId="formGridName">
-            <Form.Label>Last Name</Form.Label>
+            <Form.Label className="mb-0">Last Name</Form.Label>
             <Form.Control type="name" placeholder="Enter Last Name" />
           </Form.Group>
         </Row>  
 
         <Row className="mb-3">
           <Form.Group className="mb-3" controlId="formGridEmail">
-            <Form.Label>Email</Form.Label>
+            <Form.Label className="mb-0">Email</Form.Label>
             <Form.Control type="email" placeholder="Enter email" />
           </Form.Group>
           <Form.Group controlId="formGridPhone">
-            <Form.Label>Contact Number</Form.Label>
+            <Form.Label className="mb-0">Contact Number</Form.Label>
             <Form.Control type="number" placeholder="Enter Contact Number" />
           </Form.Group>
         </Row>
 
         <Form.Group className="mb-3" controlId="formGridAddress1">
-          <Form.Label>Address</Form.Label>
+          <Form.Label className="mb-0">Address</Form.Label>
           <Form.Control placeholder="Address" />
         </Form.Group>
 
         <Row className="mb-3">
           <Form.Group className="col-md-6 col-sm-6 col-xs-12 mb-3" controlId="formGridCountry">
-            <Form.Label>Country</Form.Label>
+            <Form.Label className="mb-0">Country</Form.Label>
             <Form.Select defaultValue="Choose...">
               <option>Choose...</option>
               <option>...</option>
@@ -79,7 +79,7 @@ const UserProfile = () => {
           </Form.Group>
 
           <Form.Group className="col-md-6 col-sm-6 col-xs-12 mb-3" controlId="formGridState">
-            <Form.Label>State</Form.Label>
+            <Form.Label className="mb-0">State</Form.Label>
             <Form.Select defaultValue="Choose...">
               <option>Choose...</option>
               <option>...</option>
@@ -87,11 +87,11 @@ const UserProfile = () => {
           </Form.Group>
 
           <Form.Group className="col-md-6 col-sm-6 col-xs-12 mb-3" controlId="formGridCity">
-            <Form.Label>City</Form.Label>
+            <Form.Label className="mb-0">City</Form.Label>
             <Form.Control placeholder="Singapore" />
           </Form.Group>
           <Form.Group  className="col-md-6 col-sm-6 col-xs-12" controlId="formGridZip">
-            <Form.Label>Zip</Form.Label>
+            <Form.Label className="mb-0">Zip</Form.Label>
             <Form.Control placeholder="238282" />
           </Form.Group>
         </Row>
