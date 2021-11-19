@@ -31,9 +31,6 @@
     -o-object-position: center;
     object-position: center;
   }
-  .form-control {
-    width: 85% !important;
-  }
 
   @media (max-width:1024px) {
       .user-profile-container {
@@ -55,9 +52,6 @@
         align-items: center;
         justify-content: center;
     } 
-    .form-control {
-      width: 100% !important;
-    }
   
 }
 @media (max-width:576px) {

@@ -14,4 +14,10 @@
                display: flex;
                flex-direction: column;
     }
+    .page-heading {
+        flex-direction:column;
+    }
+    .date-filters {
+        margin-top: 15px;
+    }
 }

@@ -46,7 +46,7 @@ const OrderProfile = () => {
             controlId="formGridAmount"
           >
             <Form.Label className="mb-0">Total Amount</Form.Label>
-            <Form.Control type="number" placeholder="Total Amount" />
+            <Form.Control type="text" placeholder="Total Amount" />
           </Form.Group>
 
           <Form.Group

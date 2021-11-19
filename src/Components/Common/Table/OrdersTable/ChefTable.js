@@ -11,6 +11,8 @@ import { chefData } from "./ChefData";
 import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
 import "./ChefTable.css";
+import Path from "../../../../Constant/RouterConstant";
+import { NavLink } from "react-router-dom";
 
 const ChefTable = () => {
   const products = chefData.map((custom) => [
@@ -76,9 +78,9 @@ const ChefTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex justify-content-evenly">
-            <a href="#">
+            <NavLink to={Path.chefDetails}>
               <ViewIcon />
-            </a>
+              </NavLink>
             <a href="#">
               <DeleteIcon />
             </a>

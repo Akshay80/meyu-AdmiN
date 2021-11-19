@@ -9,11 +9,11 @@ export const DashboardCard = () => {
       {DashboardCardData.map((val, key) => {
         return (
           <div className="dashboard-card col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-3 h-100">
-          <div className="card" style={{ maxWidth: "200px" }}>
+        <div className="card h-100" style={{ maxWidth: "200px" }}>
             <div key={key} className="row p-3">
-              <h5 className="card-title d-flex align-items-center">
+              <h6 className="card-title d-flex align-items-center">
                 {val.title}
-              </h5>
+              </h6>
               <div className=" d-flex align-items-center justify-content-center">
                 <div className="col-md-4 col-sm-6 col-xs-12">
                 {val.icon}

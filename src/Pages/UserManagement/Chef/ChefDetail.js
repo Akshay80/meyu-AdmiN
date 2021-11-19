@@ -1,8 +1,6 @@
 import React from "react";
 import ChefCard from "../../../Components/Common/Cards/PrimaryCard/ChefDetailCard/Card";
 import { ReactComponent as ChefIcon } from "../../../Assets/Icon/Chef.svg";
-import { ReactComponent as OrderIcon } from "../../../Assets/Icon/order.svg";
-import OrderDetailCard from "../../../Components/Common/Cards/OrderDetailCard/OrderDetailCard";
 
 const ChefDetail = () => {
   return (

@@ -15,7 +15,6 @@ const OrderManagement = () => {
       </div>
       <div className="orders-table-container">
         <OrdersTable />
-        <OrderProfile />
       </div>
     </>
   );
