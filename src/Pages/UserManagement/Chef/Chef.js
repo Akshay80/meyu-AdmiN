@@ -1,12 +1,10 @@
 import React from 'react'
-import FoodCard from '../../../Components/Common/Cards/FoodCard/FoodCard'
-import ChefDetail from './ChefDetail'
+import ChefTable from '../../../Components/Common/Table/OrdersTable/ChefTable'
 
 const Chef = () => {
     return (
         <div>
-            <ChefDetail />
-            <FoodCard />
+           <ChefTable />
         </div>
     )
 }

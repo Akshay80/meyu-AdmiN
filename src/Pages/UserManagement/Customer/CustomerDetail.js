@@ -13,7 +13,7 @@ const CustomerDetail = () => {
             style={{ height: "36px", width: "36px", marginRight: "10px" }}
           />
           <div className="d-block">
-            <h4 className="mb-0">Customer-Details </h4>
+            <h4 className="mb-0">Customer / Customer-Details </h4>
             <h6>
               Customer ID <b>#543210</b>
             </h6>
@@ -21,7 +21,7 @@ const CustomerDetail = () => {
         </div>
       </div>
       <div>
-        <CustomerCard />x x 
+        <CustomerCard />
       </div>
       <div className="pb-3">
         <div className="d-flex align-items-center ps-4 mt-5 pb-1">

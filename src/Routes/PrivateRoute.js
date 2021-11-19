@@ -10,6 +10,7 @@ import Categories from "../Pages/ProductManagement/Categories/Categories";
 import Tags from "../Pages/ProductManagement/Tags/Tags";
 import Chef from "../Pages/UserManagement/Chef/Chef";
 import Customer from "../Pages/UserManagement/Customer/Customer";
+import CustomerDetail from "../Pages/UserManagement/Customer/CustomerDetail";
 
 function PrivateRoute() {
   return (
@@ -17,8 +18,10 @@ function PrivateRoute() {
       <Route path={Path.dashboard} element={<DefaultLayout />}>
         <Route path={""} element={<Dashboard />} />
         
-        <Route path={Path.chef} element={<Chef />} />
         <Route path={Path.customer} element={<Customer />} />
+        <Route path={Path.customerDetails} element={<CustomerDetail />} />
+
+        <Route path={Path.chef} element={<Chef />} />
         <Route path={Path.allItems} element={<AllItems />} />
         <Route path={Path.categories} element={<Categories />} />
         <Route path={Path.tags} element={<Tags />} />

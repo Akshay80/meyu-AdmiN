@@ -15,7 +15,7 @@ const Path = {
     totalCancelled : "total-cancelled",
     totalRevenue : "total-revenue",
     customer : "customer",
-    customerDetails : "customer-details",
+    customerDetails : "/customer-details",
     chef : "chef",
     chefDetails : "chef-details",
     chefFood : "chef-food-details",
