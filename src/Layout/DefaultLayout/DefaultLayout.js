@@ -11,7 +11,6 @@ const DefaultLayout = () => {
         setMenuToggle(!menuToggle);
     }
   return (
-    <>
       <div className="main-wrapper">
         <Sidebar menuToggleState={menuToggle} />
         <div className={`content-wrapper ${menuToggle ? "full-width" : ''}`}>
@@ -21,7 +20,6 @@ const DefaultLayout = () => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 

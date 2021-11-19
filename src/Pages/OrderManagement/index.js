@@ -14,7 +14,9 @@ const OrderManagement = () => {
         <h3 className="m-1">Order Management</h3>
       </div>
       <div className="orders-table-container">
+        <div className="card">
         <OrdersTable />
+        </div>
         <OrderProfile />
       </div>
     </>

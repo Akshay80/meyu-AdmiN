@@ -7,19 +7,19 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { chefData } from "./ChefData";
-import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
-import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
-import "./ChefTable.css";
+import { AllItemsData } from "./AllItemsData";
+import {ReactComponent as EditIcon} from '../../../../Assets/Icon/Edit.svg';
+import {ReactComponent as DeleteIcon} from '../../../../Assets/Icon/Delete.svg';
+import "./AllItemsTable.css";
 
-const ChefTable = () => {
-  const products = chefData.map((custom) => [
+const AllItemsTable = () => {
+  const products = AllItemsData.map((custom) => [
     {
       id: custom.id,
       date: custom.date,
       name: custom.name,
-      email: custom.email,
-      phonenumber: custom.phonenumber,
+      product: custom.product,
+      status: custom.status
     },
   ]);
 
@@ -29,7 +29,7 @@ const ChefTable = () => {
   const columns = [
     {
       dataField: "id",
-      text: "Chef ID",
+      text: "Product ID",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -37,7 +37,7 @@ const ChefTable = () => {
     },
     {
       dataField: "date",
-      text: "Join Date",
+      text: "Date",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -52,40 +52,41 @@ const ChefTable = () => {
       align: "center",
     },
     {
-      dataField: "email",
-      text: "Email",
+      dataField: "product",
+      text: "Product Name",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "phonenumber",
-      text: "Contact No.",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
-
-    {
-      dataField: "link",
-      text: "Action",
-      headerAlign: "center",
-      align: "center",
-      formatter: (rowContent, row) => {
-        return (
-          <div className="d-flex justify-content-evenly">
-            <a href="#">
-              <ViewIcon />
-            </a>
-            <a href="#">
-              <DeleteIcon />
-            </a>
-          </div>
-        );
+        dataField: "status",
+        text: "Status",
+        sort: true,
+        headerSortingStyle,
+        headerAlign: "center",
+        align: "center",
       },
-    },
+      {
+        dataField: "link",
+        text: "Action",
+        headerAlign: "center",
+        align: "center",
+        formatter: (rowContent, row) => {
+          return (
+            <div className="d-flex justify-content-evenly">
+              <a href="#">
+                <EditIcon />
+              </a>
+              <a href="#">
+                <DeleteIcon />
+              </a>
+            </div>
+          );
+        },
+      },
+
+   
   ];
 
   const defaultSorted = [
@@ -97,7 +98,6 @@ const ChefTable = () => {
 
   return (
     <div className="table-responsive" style={{ padding: "20px" }}>
-      <h1 className="h2">Products</h1>
       <PaginationProvider
         pagination={paginationFactory({
           custom: true,
@@ -133,13 +133,13 @@ const ChefTable = () => {
         })}
         keyField="id"
         columns={columns}
-        data={chefData.map((item) => item)}
+        data={AllItemsData.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={chefData.map((item) => item)}
+            data={AllItemsData.map((item) => item)}
             search
           >
             {(toolkitprops) => (
@@ -171,4 +171,4 @@ const ChefTable = () => {
   );
 };
 
-export default ChefTable;
+export default AllItemsTable;

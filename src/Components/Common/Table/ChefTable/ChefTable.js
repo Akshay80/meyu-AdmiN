@@ -7,15 +7,13 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { customerData } from "./CustomerData";
+import { chefData } from "./ChefData";
 import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
-import "./CustomerTable.css";
-import Path from '../../../../Constant/RouterConstant';
-import { NavLink } from "react-router-dom";
+import "./ChefTable.css";
 
-const CustomerTable = () => {
-  const products = customerData.map((custom) => [
+const ChefTable = () => {
+  const products = chefData.map((custom) => [
     {
       id: custom.id,
       date: custom.date,
@@ -31,7 +29,7 @@ const CustomerTable = () => {
   const columns = [
     {
       dataField: "id",
-      text: "Customer ID",
+      text: "Chef ID",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -47,7 +45,7 @@ const CustomerTable = () => {
     },
     {
       dataField: "name",
-      text: "Customer Name",
+      text: "Chef Name",
       headerSortingStyle,
       sort: true,
       headerAlign: "center",
@@ -77,13 +75,13 @@ const CustomerTable = () => {
       align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex justify-content-evenly align-items-center">
-            <NavLink to={Path.customerDetails}>
+          <div className="d-flex justify-content-evenly">
+            <a href="#">
               <ViewIcon />
-            </NavLink>
-           
+            </a>
+            <a href="#">
               <DeleteIcon />
-              
+            </a>
           </div>
         );
       },
@@ -99,7 +97,6 @@ const CustomerTable = () => {
 
   return (
     <div className="table-responsive" style={{ padding: "20px" }}>
-      <h1 className="h2">Products</h1>
       <PaginationProvider
         pagination={paginationFactory({
           custom: true,
@@ -135,13 +132,13 @@ const CustomerTable = () => {
         })}
         keyField="id"
         columns={columns}
-        data={customerData.map((item) => item)}
+        data={chefData.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={customerData.map((item) => item)}
+            data={chefData.map((item) => item)}
             search
           >
             {(toolkitprops) => (
@@ -173,4 +170,4 @@ const CustomerTable = () => {
   );
 };
 
-export default CustomerTable;
+export default ChefTable;

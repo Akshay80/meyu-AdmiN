@@ -7,21 +7,21 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { OrdersData } from "./OrdersTableData";
+import { customerData } from "./CustomerData";
 import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
-import "./OrdersTable.css";
+import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
+import "./CustomerTable.css";
 import Path from '../../../../Constant/RouterConstant';
 import { NavLink } from "react-router-dom";
 
-const OrdersTable = () => {
-  const products = OrdersData.map((custom) => [
+const CustomerTable = () => {
+  const products = customerData.map((custom) => [
     {
       id: custom.id,
       date: custom.date,
-      customername: custom.customername,
-      chefname: custom.chefname,
-      amount: custom.amount,
-      status: custom.status,
+      name: custom.name,
+      email: custom.email,
+      phonenumber: custom.phonenumber,
     },
   ]);
 
@@ -31,7 +31,7 @@ const OrdersTable = () => {
   const columns = [
     {
       dataField: "id",
-      text: "Order ID",
+      text: "Customer ID",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -39,14 +39,14 @@ const OrdersTable = () => {
     },
     {
       dataField: "date",
-      text: "Date",
+      text: "Join Date",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "customername",
+      dataField: "name",
       text: "Customer Name",
       headerSortingStyle,
       sort: true,
@@ -54,24 +54,16 @@ const OrdersTable = () => {
       align: "center",
     },
     {
-        dataField: "chefname",
-        text: "Chef Name",
-        headerSortingStyle,
-        sort: true,
-        headerAlign: "center",
-        align: "center",
-      },
-    {
-      dataField: "amount",
-      text: "Amount",
+      dataField: "email",
+      text: "Email",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "status",
-      text: "Status",
+      dataField: "phonenumber",
+      text: "Contact No.",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -89,6 +81,8 @@ const OrdersTable = () => {
             <NavLink to={Path.customerDetails}>
               <ViewIcon />
             </NavLink>
+           
+              <DeleteIcon />
               
           </div>
         );
@@ -140,13 +134,13 @@ const OrdersTable = () => {
         })}
         keyField="id"
         columns={columns}
-        data={OrdersData.map((item) => item)}
+        data={customerData.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={OrdersData.map((item) => item)}
+            data={customerData.map((item) => item)}
             search
           >
             {(toolkitprops) => (
@@ -178,4 +172,4 @@ const OrdersTable = () => {
   );
 };
 
-export default OrdersTable;
+export default CustomerTable;
