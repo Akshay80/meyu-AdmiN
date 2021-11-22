@@ -3,7 +3,7 @@ import { ReactComponent as BagIcon } from "../../../Assets/Icon/Shoppingbasket.s
 import AllItemsTable from "../../../Components/Common/Table/AllItemsTable/AllItemsTable";
 const AllItems = () => {
   return (
-    <div>
+    <div className="pt-2">
       <div className="page-heading d-flex align-items-center p-3">
         <BagIcon
           style={{ height: "36px", width: "36px", marginRight: "10px" }}

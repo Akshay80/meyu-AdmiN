@@ -17,9 +17,9 @@ const  Sidebar = ({ menuToggleState }) => {
           if (val.subMenus !== undefined) {
             return (
               <ProSidebar>
-                <Menu key={key + 1} iconShape="square">
+                <Menu  key={key + 1} iconShape="square">
                     <SubMenu key={key} icon={val.icon} title={val.title}>
-                      <MenuItem>
+                      <MenuItem >
                         {val.subMenus.map((submenu, i) => {
                           return (
                             <MenuItem i={i + 1}>
@@ -39,7 +39,7 @@ const  Sidebar = ({ menuToggleState }) => {
               <ProSidebar>
                 <Menu key={key + 1} iconShape="square">
                   <NavLink to={val.link}>
-                    <MenuItem icon={val.icon}>{val.title}</MenuItem>
+                    <MenuItem style={{color:'white'}} icon={val.icon}>{val.title}</MenuItem>
                   </NavLink>
                 </Menu>
               </ProSidebar>
