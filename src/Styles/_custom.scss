@@ -26,8 +26,31 @@ a {
     .page-wrapper {
       margin-top: 86px;
       padding: 0 30px;
-      // background-color:#f1f5f9;
-      color : #31ad5d;
+     .main-heading{
+       color: $sec-color;
+     }
+      .sec-heading {
+        color: $primary;
+      }
+     .sec-text {
+       color : $sec-color;
+     } 
+     .img {
+      color : $sec-color;
+     }
+     .card {
+       border : 1px solid $sec-color;
+       border-radius: 15px;
+     }
+     .card-title {
+      color : $main-color;
+    }
+    .card-text {
+      color : $sec-color;
+    }
+    h5,h6, p {
+    color :  $primary-light;
+    }
     }
   }
 }

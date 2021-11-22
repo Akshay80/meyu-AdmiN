@@ -12,23 +12,31 @@ import AllItems from "../Pages/ProductManagement/Allitems/AllItems";
 import Categories from "../Pages/ProductManagement/Categories/Categories";
 import Tags from "../Pages/ProductManagement/Tags/Tags";
 import OrderManagement from "../Pages/OrderManagement";
+import OrderProfile from "../Pages/OrderManagement/OrderProfile/OrderProfile";
+import EditItems from "../Pages/ProductManagement/Allitems/EditItems";
 
 function PrivateRoute() {
   return (
     <Routes>
       <Route path={Path.dashboard} element={<DefaultLayout />}>
+
         <Route path={""} element={<Dashboard />} />
-        
+
         <Route path={Path.customer} element={<Customer />} />
         <Route path={Path.customerDetails} element={<CustomerDetail />} />
         <Route path={Path.chefDetails} element={<ChefDetail />} />
 
         <Route path={Path.chef} element={<Chef />} />
         <Route path={Path.allItems} element={<AllItems />} />
+        <Route path={Path.editItems} element={<EditItems />} />
+
         <Route path={Path.categories} element={<Categories />} />
+
         <Route path={Path.tags} element={<Tags />} />
 
         <Route path={Path.orderManagement} element={<OrderManagement />} />
+        <Route path={Path.orderDetails} element={<OrderProfile />} />
+
         <Route path={Path.userProfile} element={<UserProfile />} />
       </Route>
     </Routes>

@@ -7,21 +7,21 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { customerData } from "./CustomerData";
-import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
-import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
-import "./CustomerTable.css";
-import Path from '../../../../Constant/RouterConstant';
+import { AllItemsData } from "./AllItemsData";
+import {ReactComponent as EditIcon} from '../../../../Assets/Icon/Edit.svg';
+import {ReactComponent as DeleteIcon} from '../../../../Assets/Icon/Delete.svg';
+import "./AllItemsTable.css";
 import { NavLink } from "react-router-dom";
+import Path from "../../../../Constant/RouterConstant";
 
-const CustomerTable = () => {
-  const products = customerData.map((custom) => [
+const AllItemsTable = () => {
+  const products = AllItemsData.map((custom) => [
     {
       id: custom.id,
       date: custom.date,
       name: custom.name,
-      email: custom.email,
-      phonenumber: custom.phonenumber,
+      product: custom.product,
+      status: custom.status
     },
   ]);
 
@@ -31,7 +31,7 @@ const CustomerTable = () => {
   const columns = [
     {
       dataField: "id",
-      text: "Customer ID",
+      text: "Product ID",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -39,7 +39,7 @@ const CustomerTable = () => {
     },
     {
       dataField: "date",
-      text: "Join Date",
+      text: "Date",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -47,47 +47,49 @@ const CustomerTable = () => {
     },
     {
       dataField: "name",
-      text: "Customer Name",
+      text: "Chef Name",
       headerSortingStyle,
       sort: true,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "email",
-      text: "Email",
+      dataField: "product",
+      text: "Product Name",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "phonenumber",
-      text: "Contact No.",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
-
-    {
-      dataField: "link",
-      text: "Action",
-      headerAlign: "center",
-      align: "center",
-      formatter: (rowContent, row) => {
-        return (
-          <div className="d-flex justify-content-evenly align-items-center">
-            <NavLink to={Path.customerDetails}>
-              <ViewIcon />
-            </NavLink>
-           
-              <DeleteIcon />
-              
-          </div>
-        );
+        dataField: "status",
+        text: "Status",
+        sort: true,
+        headerSortingStyle,
+        headerAlign: "center",
+        align: "center",
       },
-    },
+      {
+        dataField: "link",
+        text: "Action",
+        headerAlign: "center",
+        align: "center",
+        formatter: (rowContent, row) => {
+          return (
+            <div className="d-flex justify-content-evenly">
+              <NavLink to={Path.editItems}>
+                <EditIcon />
+                </NavLink>
+            
+              <a href="#">
+                <DeleteIcon />
+              </a>
+            </div>
+          );
+        },
+      },
+
+   
   ];
 
   const defaultSorted = [
@@ -99,7 +101,6 @@ const CustomerTable = () => {
 
   return (
     <div className="table-responsive" style={{ padding: "20px" }}>
-      <h1 className="h2">Products</h1>
       <PaginationProvider
         pagination={paginationFactory({
           custom: true,
@@ -135,13 +136,13 @@ const CustomerTable = () => {
         })}
         keyField="id"
         columns={columns}
-        data={customerData.map((item) => item)}
+        data={AllItemsData.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={customerData.map((item) => item)}
+            data={AllItemsData.map((item) => item)}
             search
           >
             {(toolkitprops) => (
@@ -173,4 +174,4 @@ const CustomerTable = () => {
   );
 };
 
-export default CustomerTable;
+export default AllItemsTable;

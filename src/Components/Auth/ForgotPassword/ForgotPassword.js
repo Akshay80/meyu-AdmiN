@@ -13,7 +13,7 @@ const ForgotPassword = () => {
     alert("Data Registered!");
   }
   return (
-    <div className="container bg-dark" style={{ height: "100vh" }}>
+    <div className="container bg-dark">
       <div className="row justify-content-center">
         <div className="cards mb-5">
           <div className="card-body">

@@ -5,7 +5,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 import "./Sidebar.scss";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 
-const Sidebar = ({ menuToggleState }) => {
+const  Sidebar = ({ menuToggleState }) => {
   return (
     <div className={`sidebar ${menuToggleState ? "hide-menu" : ""}`}>
       <div className="sidebar-menu">

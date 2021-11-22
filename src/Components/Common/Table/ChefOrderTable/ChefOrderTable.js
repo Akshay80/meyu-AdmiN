@@ -7,21 +7,18 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { OrdersData } from "./OrdersTableData";
-import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
-import "./OrdersTable.css";
-import Path from '../../../../Constant/RouterConstant';
-import { NavLink } from "react-router-dom";
+import { chefOrderData } from "./ChefOrderData";
+import "./ChefOrderTable.css";
 
-const OrdersTable = () => {
-  const products = OrdersData.map((custom) => [
+const ChefOrderTable = () => {
+  const products = chefOrderData.map((custom) => [
     {
       id: custom.id,
       date: custom.date,
-      customername: custom.customername,
-      chefname: custom.chefname,
+      name: custom.name,
+      address: custom.address,
       amount: custom.amount,
-      status: custom.status,
+      status: custom.status
     },
   ]);
 
@@ -46,7 +43,7 @@ const OrdersTable = () => {
       align: "center",
     },
     {
-      dataField: "customername",
+      dataField: "name",
       text: "Customer Name",
       headerSortingStyle,
       sort: true,
@@ -54,13 +51,13 @@ const OrdersTable = () => {
       align: "center",
     },
     {
-        dataField: "chefname",
-        text: "Chef Name",
-        headerSortingStyle,
-        sort: true,
-        headerAlign: "center",
-        align: "center",
-      },
+      dataField: "address",
+      text: "Delivery Address ",
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+    },
     {
       dataField: "amount",
       text: "Amount",
@@ -70,30 +67,15 @@ const OrdersTable = () => {
       align: "center",
     },
     {
-      dataField: "status",
-      text: "Status",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
-
-    {
-      dataField: "link",
-      text: "Action",
-      headerAlign: "center",
-      align: "center",
-      formatter: (rowContent, row) => {
-        return (
-          <div className="d-flex justify-content-evenly align-items-center">
-            <NavLink to={Path.orderDetails}>
-              <ViewIcon />
-            </NavLink>
-              
-          </div>
-        );
+        dataField: "status",
+        text: "Status",
+        sort: true,
+        headerSortingStyle,
+        headerAlign: "center",
+        align: "center",
       },
-    },
+
+   
   ];
 
   const defaultSorted = [
@@ -140,13 +122,13 @@ const OrdersTable = () => {
         })}
         keyField="id"
         columns={columns}
-        data={OrdersData.map((item) => item)}
+        data={chefOrderData.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={OrdersData.map((item) => item)}
+            data={chefOrderData.map((item) => item)}
             search
           >
             {(toolkitprops) => (
@@ -178,4 +160,4 @@ const OrdersTable = () => {
   );
 };
 
-export default OrdersTable;
+export default ChefOrderTable;

@@ -16,24 +16,24 @@ const Signup = () => {
   return (
     <div className="container bg-dark">
       <div className="row justify-content-center">
-        <div className="cards2 mb-5 mt-5">
+        <div className="cards2">
           <div className="card-body">
             <h3 className="card-title1 text-center">MEYU</h3>
-            <p className="card-title2 mb-2 text-center">Meyu Admin</p>
+            <p className="card-title2 mb-1 text-center">Meyu Admin</p>
             <p className="card-title3">Sign In</p>
-            <p className="card-subtitle mb-4">
+            <p className="card-subtitle mb-3">
               Already have an account?{" "}
               <a href={Path.login} className="link">
                 Sign in
               </a>
             </p>
             <form
-              className="row g-3"
+              className="row g-2  "
               autoComplete="off"
               onSubmit={handleSubmit(login)}
             >
               <div className="col-md-12">
-                <label for="inputEmail4" className="form-label">
+                <label for="inputEmail4" className="form-label mb-0">
                   Name
                 </label>
                 <input
@@ -51,7 +51,7 @@ const Signup = () => {
                 {errors.name && <p className="errors">{errors.name.message}</p>}
               </div>
               <div className="col-md-12">
-                <label for="inputPassword4" className="form-label">
+                <label for="inputPassword4" className="form-label mb-0">
                   Email
                 </label>
                 <input
@@ -72,7 +72,7 @@ const Signup = () => {
                 )}
               </div>
               <div className="col-12">
-                <label for="inputAddress" className="form-label">
+                <label for="inputAddress" className="form-label mb-0">
                   Password
                 </label>
                 <input
@@ -93,7 +93,7 @@ const Signup = () => {
                 )}
               </div>
               <div className="col-12">
-                <label for="inputAddress2" className="form-label">
+                <label for="inputAddress2" className="form-label mb-0">
                   Confirm Password
                 </label>
                 <input

@@ -1,8 +1,11 @@
 @import "../../../Styles/_custom.scss";
 
 .cards1 {
+  position: absolute; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: $bigfont !important;
-  margin-top: 8rem !important;
   width: 25rem !important;
   border-radius: $mini !important;
   background: $white;

@@ -24,7 +24,7 @@ const CustomerDetail = () => {
         <CustomerCard />
       </div>
       <div className="pb-3">
-        <div className="d-flex align-items-center ps-4 mt-5 pb-1">
+        <div className=" main-heading d-flex align-items-center ps-4 mt-5 pb-1">
           <OrderIcon
             style={{ height: "24px", width: "24px", marginRight: "5px" }}
           />

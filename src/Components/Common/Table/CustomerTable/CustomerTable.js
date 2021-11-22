@@ -7,15 +7,15 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { chefData } from "./ChefData";
+import { customerData } from "./CustomerData";
 import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
-import "./ChefTable.css";
-import Path from "../../../../Constant/RouterConstant";
+import "./CustomerTable.css";
+import Path from '../../../../Constant/RouterConstant';
 import { NavLink } from "react-router-dom";
 
-const ChefTable = () => {
-  const products = chefData.map((custom) => [
+const CustomerTable = () => {
+  const products = customerData.map((custom) => [
     {
       id: custom.id,
       date: custom.date,
@@ -31,7 +31,7 @@ const ChefTable = () => {
   const columns = [
     {
       dataField: "id",
-      text: "Chef ID",
+      text: "Customer ID",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -47,7 +47,7 @@ const ChefTable = () => {
     },
     {
       dataField: "name",
-      text: "Chef Name",
+      text: "Customer Name",
       headerSortingStyle,
       sort: true,
       headerAlign: "center",
@@ -77,13 +77,13 @@ const ChefTable = () => {
       align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex justify-content-evenly">
-            <NavLink to={Path.chefDetails}>
+          <div className="d-flex justify-content-evenly align-items-center">
+            <NavLink to={Path.customerDetails}>
               <ViewIcon />
-              </NavLink>
-            <a href="#">
+            </NavLink>
+           
               <DeleteIcon />
-            </a>
+              
           </div>
         );
       },
@@ -99,7 +99,6 @@ const ChefTable = () => {
 
   return (
     <div className="table-responsive" style={{ padding: "20px" }}>
-      <h1 className="h2">Products</h1>
       <PaginationProvider
         pagination={paginationFactory({
           custom: true,
@@ -135,13 +134,13 @@ const ChefTable = () => {
         })}
         keyField="id"
         columns={columns}
-        data={chefData.map((item) => item)}
+        data={customerData.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={chefData.map((item) => item)}
+            data={customerData.map((item) => item)}
             search
           >
             {(toolkitprops) => (
@@ -173,4 +172,4 @@ const ChefTable = () => {
   );
 };
 
-export default ChefTable;
+export default CustomerTable;

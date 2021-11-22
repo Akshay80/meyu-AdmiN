@@ -39,10 +39,6 @@
     object-position: center;
   }
 
-    .form-select {
-      width: 85% !important;
-    }
-
   .pic-holder .upload-file-block,
   .pic-holder .upload-loader {
     position: absolute;
@@ -164,9 +160,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-    .form-select {
-      width: 100% !important;
     }
 }
 @media (max-width:576px) {

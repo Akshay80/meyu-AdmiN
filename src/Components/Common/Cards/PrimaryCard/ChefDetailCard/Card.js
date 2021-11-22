@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Card.scss";
+import ChefOrderDetails from "../../../../../Pages/UserManagement/Chef/ChefOrderDetails"
+import FoodCard from '../../FoodCard/FoodCard'
 
-const ChefCard = () => {
+const   ChefCard = () => {
+  const [togglemenu, setToggleMenu] = useState(false);
+  const toggleMenu = () => {
+    setToggleMenu(true);
+  }
   return (
     <div className="container">
       <div className="card mb-3 p-3">
@@ -27,7 +33,7 @@ const ChefCard = () => {
                   <p>Chef Timing</p>
                 </div>
                 <div className="d-flex flex-column">
-                <button type="button" className="btn btn-outline-secondary mb-3">View</button>
+                <button type="button" onClick={toggleMenu} className="btn btn-outline-secondary mb-3">View</button>
                   <button
                     className="btn btn-success shadow-none"
                     type="button"
@@ -40,17 +46,18 @@ const ChefCard = () => {
               <div className="primary-card-info mx-3 mt-5 d-flex justify-content-between">
                 <div className="info-xz">
                   <h5 className="mb-0">Completed Order</h5>
-                  <h5>56</h5>
+                  <h6>56</h6>
                 </div>
                 <div className="info-xz">
                   <h5 className="mb-0">Total Amount</h5>
-                  <h5>$ 56</h5>
+                  <h6>$ 56</h6>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {togglemenu?<FoodCard />: <ChefOrderDetails />}
     </div>
   );
 };

@@ -91,7 +91,7 @@ const UserProfile = () => {
             <Form.Control placeholder="Singapore" />
           </Form.Group>
           <Form.Group  className="col-md-6 col-sm-6 col-xs-12" controlId="formGridZip">
-            <Form.Label >Zip</Form.Label>
+            <Form.Label className="mb-0" >Zip</Form.Label>
             <Form.Control placeholder="238282" />
           </Form.Group>
         </Row>

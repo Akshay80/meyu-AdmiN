@@ -20,13 +20,14 @@ const Path = {
     chefDetails : "/chef-details",
     chefFood : "chef-food-details",
     allItems : "all-items",
-    editItems : "edit-items",
+    editItems : "/edit-items",
     categories : "product-categories",
-    addCategory : "add-category",
+    addCategory : "/add-category",
     tags : "tags",
-    addTag : "add-tags",
+    addTag : "/add-tags",
     orders : "orders",
-    orderManage : "order-management"
+    orderManage : "order-management",
+    orderDetails : "/order-details"
 };
 
 export default Path

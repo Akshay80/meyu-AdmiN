@@ -7,21 +7,21 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { OrdersData } from "./OrdersTableData";
+import { chefData } from "./ChefData";
 import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
-import "./OrdersTable.css";
-import Path from '../../../../Constant/RouterConstant';
+import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
+import "./ChefTable.css";
+import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
 
-const OrdersTable = () => {
-  const products = OrdersData.map((custom) => [
+const ChefTable = () => {
+  const products = chefData.map((custom) => [
     {
       id: custom.id,
       date: custom.date,
-      customername: custom.customername,
-      chefname: custom.chefname,
-      amount: custom.amount,
-      status: custom.status,
+      name: custom.name,
+      email: custom.email,
+      phonenumber: custom.phonenumber,
     },
   ]);
 
@@ -31,7 +31,7 @@ const OrdersTable = () => {
   const columns = [
     {
       dataField: "id",
-      text: "Order ID",
+      text: "Chef ID",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -39,39 +39,31 @@ const OrdersTable = () => {
     },
     {
       dataField: "date",
-      text: "Date",
+      text: "Join Date",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "customername",
-      text: "Customer Name",
+      dataField: "name",
+      text: "Chef Name",
       headerSortingStyle,
       sort: true,
       headerAlign: "center",
       align: "center",
     },
     {
-        dataField: "chefname",
-        text: "Chef Name",
-        headerSortingStyle,
-        sort: true,
-        headerAlign: "center",
-        align: "center",
-      },
-    {
-      dataField: "amount",
-      text: "Amount",
+      dataField: "email",
+      text: "Email",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "status",
-      text: "Status",
+      dataField: "phonenumber",
+      text: "Contact No.",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -85,11 +77,13 @@ const OrdersTable = () => {
       align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex justify-content-evenly align-items-center">
-            <NavLink to={Path.orderDetails}>
-              <ViewIcon />
-            </NavLink>
-              
+          <div className="d-flex justify-content-evenly">
+            <NavLink to={Path.chefDetails} >
+              <ViewIcon/>
+              </NavLink>
+            <a href="#">
+              <DeleteIcon />
+            </a>
           </div>
         );
       },
@@ -140,13 +134,13 @@ const OrdersTable = () => {
         })}
         keyField="id"
         columns={columns}
-        data={OrdersData.map((item) => item)}
+        data={chefData.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={OrdersData.map((item) => item)}
+            data={chefData.map((item) => item)}
             search
           >
             {(toolkitprops) => (
@@ -178,4 +172,4 @@ const OrdersTable = () => {
   );
 };
 
-export default OrdersTable;
+export default ChefTable;

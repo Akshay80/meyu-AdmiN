@@ -15,7 +15,7 @@ export const DashboardCard = () => {
                 {val.title}
               </h6>
               <div className=" d-flex align-items-center justify-content-center">
-                <div className="col-md-4 col-sm-6 col-xs-12">
+                <div className="img col-md-4 col-sm-6 col-xs-12">
                 {val.icon}
                 </div>
              
