@@ -13,6 +13,8 @@ import {ReactComponent as DeleteIcon} from '../../../../Assets/Icon/Delete.svg';
 import "./AllItemsTable.css";
 import { NavLink } from "react-router-dom";
 import Path from "../../../../Constant/RouterConstant";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const AllItemsTable = () => {
   const products = AllItemsData.map((custom) => [
@@ -27,7 +29,26 @@ const AllItemsTable = () => {
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
-
+  function handleDelete(rowId, name) {
+    confirmAlert({
+      title: 'Delete',
+      message: `Are you sure you want to remove ${name} from this table?`,
+      buttons: [
+        {
+          label: 'Yes',
+          className: 'btn btn-danger',
+          onClick: () => {
+            console.log('ROW ID: ',rowId);
+            console.log('ROW NAME: ',name);
+          }
+        },
+        {
+          label: 'No',
+          // onClick: () => alert('Click No')
+        }
+      ]
+    });
+  }
   const columns = [
     {
       dataField: "id",
@@ -80,10 +101,9 @@ const AllItemsTable = () => {
               <NavLink to={Path.editItems}>
                 <EditIcon />
                 </NavLink>
+             
+                <DeleteIcon className="iconHover" onClick={() => handleDelete(row.id, row.name)}/>
             
-              <a href="#">
-                <DeleteIcon />
-              </a>
             </div>
           );
         },

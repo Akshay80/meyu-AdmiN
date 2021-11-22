@@ -2,7 +2,6 @@ import React from "react";
 import OrdersTable from "../../Components/Common/Table/OrdersTable/OrdersTable";
 import { ReactComponent as OrderIcon } from "../../Assets/Icon/order.svg";
 import "./OrderManagement.scss";
-import OrderProfile from "./OrderProfile/OrderProfile";
 
 const OrderManagement = () => {
   return (

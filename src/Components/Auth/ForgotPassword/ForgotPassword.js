@@ -22,7 +22,7 @@ const ForgotPassword = () => {
             <p className="card-text fw-bold color-grey">Forgot Password</p>
             <form onSubmit={handleSubmit(forgotPassword)}>
               <div className="mb-3 mt-4">
-                <label for="exampleFormControlInput1" class="form-label">
+                <label htmlFor="exampleFormControlInput1" className="form-label">
                   <small>Registered Email</small>
                 </label>
 

@@ -1,3 +1,11 @@
 .react-bootstrap-table table {
     table-layout: auto;
   }
+
+  .iconHover:hover {
+    cursor: pointer;
+  }
+
+ .iconHover{
+margin-top: 5px;
+ }

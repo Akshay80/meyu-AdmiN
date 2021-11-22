@@ -33,7 +33,7 @@ const Signup = () => {
               onSubmit={handleSubmit(login)}
             >
               <div className="col-md-12">
-                <label for="inputEmail4" className="form-label mb-0">
+                <label htmlFor="inputEmail4" className="form-label mb-0">
                   Name
                 </label>
                 <input
@@ -51,7 +51,7 @@ const Signup = () => {
                 {errors.name && <p className="errors">{errors.name.message}</p>}
               </div>
               <div className="col-md-12">
-                <label for="inputPassword4" className="form-label mb-0">
+                <label htmlFor="inputPassword4" className="form-label mb-0">
                   Email
                 </label>
                 <input
@@ -72,7 +72,7 @@ const Signup = () => {
                 )}
               </div>
               <div className="col-12">
-                <label for="inputAddress" className="form-label mb-0">
+                <label htmlFor="inputAddress" className="form-label mb-0">
                   Password
                 </label>
                 <input
@@ -93,7 +93,7 @@ const Signup = () => {
                 )}
               </div>
               <div className="col-12">
-                <label for="inputAddress2" className="form-label mb-0">
+                <label htmlFor="inputAddress2" className="form-label mb-0">
                   Confirm Password
                 </label>
                 <input

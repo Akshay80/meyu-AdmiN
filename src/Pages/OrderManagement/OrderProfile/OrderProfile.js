@@ -1,8 +1,7 @@
 import React from "react";
-import { Form, Row, Button } from "react-bootstrap";
+import { Form, Row } from "react-bootstrap";
 import "./OrderProfile.scss";
 import "../../../Components/Common/Buttons/buttons.scss";
-// import './imagecontrol';
 
 const OrderProfile = () => {
   return (

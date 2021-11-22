@@ -13,6 +13,8 @@ import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg
 import "./CustomerTable.css";
 import Path from '../../../../Constant/RouterConstant';
 import { NavLink } from "react-router-dom";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const CustomerTable = () => {
   const products = customerData.map((custom) => [
@@ -24,7 +26,27 @@ const CustomerTable = () => {
       phonenumber: custom.phonenumber,
     },
   ]);
-
+  function handleDelete(rowId, name) {
+    confirmAlert({
+      title: 'Delete',
+      message: `Are you sure you want to remove ${name} from this table?`,
+      buttons: [
+        {
+          label: 'Yes',
+          className: 'btn btn-danger',
+          color: 'red',
+          onClick: () => {
+            console.log('ROW ID: ',rowId);
+            console.log('ROW NAME: ',name);
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => alert('Click No')
+        }
+      ]
+    });
+  }
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
@@ -82,8 +104,7 @@ const CustomerTable = () => {
               <ViewIcon />
             </NavLink>
            
-              <DeleteIcon />
-              
+              <DeleteIcon className="iconHover" onClick={() => handleDelete(row.id, row.name)}/>
           </div>
         );
       },

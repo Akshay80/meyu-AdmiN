@@ -9,7 +9,7 @@ const   ChefCard = () => {
     setToggleMenu(true);
   }
   return (
-    <div className="container">
+    <div className="container mb-5">
       <div className="card mb-3 p-3">
         <div className="row g-0">
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">

@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Row } from "react-bootstrap";
 import { Input } from "reactstrap";
-import { ReactComponent as OrderIcon } from "../../../Assets/Icon/order.svg";
 import "../../../Components/Common/Buttons/buttons.scss";
 
 const ItemDetails = () => {
@@ -16,7 +15,7 @@ const ItemDetails = () => {
             src="https://source.unsplash.com/random/150x150"
           />
 
-          <label for="newProfilePhoto" className="upload-file-block">
+          <label htmlFor="newProfilePhoto" className="upload-file-block">
             <div className="text-center">
               <div className="mb-2">
                 <i className="fa fa-camera fa-2x"></i>

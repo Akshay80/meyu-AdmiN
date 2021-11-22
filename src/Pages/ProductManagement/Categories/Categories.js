@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
+import CategoriesTable from '../../../Components/Common/Table/CategoriesTable/CategoriesTable';
 
 const Categories = () => {
     return (
         <div>
-            Categories
+            <CategoriesTable />
         </div>
+       
     )
 }
 

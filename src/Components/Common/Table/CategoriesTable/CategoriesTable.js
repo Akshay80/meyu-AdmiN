@@ -7,51 +7,50 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { chefData } from "./ChefData";
-import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
-import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
-import "./ChefTable.css";
-import Path from "../../../../Constant/RouterConstant";
-import { NavLink } from "react-router-dom";
-import { confirmAlert } from "react-confirm-alert";
+import { CategoriesItemsData } from "./CategoriesItemsData";
+import {ReactComponent as EditIcon} from '../../../../Assets/Icon/Edit.svg';
+import {ReactComponent as DeleteIcon} from '../../../../Assets/Icon/Delete.svg';
+import "./CategoryTable.css";
+import { confirmAlert } from 'react-confirm-alert';
+import {ReactComponent as BagIcon} from '../../../../Assets/Icon/Shoppingbasket.svg';
+import {ReactComponent as AddIcon} from '../../../../Assets/Icon/Add.svg';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
-const ChefTable = () => {
-  const products = chefData.map((custom) => [
+const CategoriesTable = () => {
+  const products = CategoriesItemsData.map((custom) => [
     {
-      id: custom.id,
+      serialno: custom.serialno,
       date: custom.date,
-      name: custom.name,
-      email: custom.email,
-      phonenumber: custom.phonenumber,
+      cat: custom.cat,
+      subcat: custom.subcat,
     },
   ]);
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
+
   function handleDelete(rowId, name) {
     confirmAlert({
       title: 'Delete',
-      message: `Are you sure you want to remove ${name} from this table?`,
+      message: `Are you sure you want to remove this item from the table?`,
       buttons: [
         {
           label: 'Yes',
           className: 'btn btn-danger',
           onClick: () => {
             console.log('ROW ID: ',rowId);
-            console.log('ROW NAME: ',name);
           }
         },
         {
           label: 'No',
-          // onClick: () => alert('Click No')
         }
       ]
     });
   }
   const columns = [
     {
-      dataField: "id",
-      text: "Chef ID",
+      dataField: "serialno",
+      text: "Serial No",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -59,55 +58,47 @@ const ChefTable = () => {
     },
     {
       dataField: "date",
-      text: "Join Date",
+      text: "Date",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "name",
-      text: "Chef Name",
+      dataField: "cat",
+      text: "Category",
       headerSortingStyle,
       sort: true,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "email",
-      text: "Email",
+      dataField: "subcat",
+      text: "Sub-Category",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
-    {
-      dataField: "phonenumber",
-      text: "Contact No.",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
-
-    {
-      dataField: "link",
-      text: "Action",
-      headerAlign: "center",
-      align: "center",
-      formatter: (rowContent, row) => {
-        return (
-          <div className="d-flex justify-content-evenly">
-            <NavLink to={Path.chefDetails} >
-              <ViewIcon/>
-              </NavLink>
+   
+      {
+        dataField: "link",
+        text: "Action",
+        headerAlign: "center",
+        align: "center",
+        formatter: (rowContent, row) => {
+          return (
+            <div className="d-flex justify-content-evenly">
+              
+                <EditIcon className="mt-1"/>
+                <DeleteIcon className="iconHover" onClick={() => handleDelete(row.serialno, row.name)}/>
             
-              <DeleteIcon className="iconHover" onClick={() => handleDelete(row.id, row.name)}/>
-            
-          </div>
-        );
+            </div>
+          );
+        },
       },
-    },
+
+   
   ];
 
   const defaultSorted = [
@@ -118,6 +109,44 @@ const ChefTable = () => {
   ];
 
   return (
+    <>
+<div className="page-heading d-flex align-items-center p-3 justify-content-between">
+  <div className="d-flex">
+        <BagIcon
+          style={{ height: "36px", width: "36px", marginRight: "10px" }}
+        />
+        <h3 className="m-1">Categories </h3>
+        </div>
+        <div className="d-flex align-items-center "><button type="submit" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <AddIcon /> Add New Categories</button></div>
+      </div>
+<div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog modal-dialog-centered">
+    <div className="modal-content">
+    <div className="modal-header border-0">
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body p-4 pt-0">
+        <form>
+          <div className="mb-3">
+            <label htmlFor="recipient-name" className="col-form-label">Category</label>
+            <input type="text" className="form-control" id="category" placeholder="category"/>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="message-text" className="col-form-label">Sub Categories</label>
+            <input type="text" className="form-control" id="sub-category" placeholder="sub category"/>
+          </div>
+        </form>
+      </div>
+      <div className="modal-footer border-0 d-block mx-auto">
+        {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button> */}
+        <button type="button" className="btn btn-primary">Add Categories</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div className="card">
     <div className="table-responsive" style={{ padding: "20px" }}>
       <PaginationProvider
         pagination={paginationFactory({
@@ -154,13 +183,13 @@ const ChefTable = () => {
         })}
         keyField="id"
         columns={columns}
-        data={chefData.map((item) => item)}
+        data={CategoriesItemsData.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={chefData.map((item) => item)}
+            data={CategoriesItemsData.map((item) => item)}
             search
           >
             {(toolkitprops) => (
@@ -188,8 +217,11 @@ const ChefTable = () => {
           </ToolkitProvider>
         )}
       </PaginationProvider>
+      
     </div>
+    </div>
+    </>
   );
 };
 
-export default ChefTable;
+export default CategoriesTable;
