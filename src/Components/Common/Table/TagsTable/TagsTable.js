@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
@@ -7,53 +7,62 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { customerData } from "./CustomerData";
-import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
-import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
-import "./CustomerTable.css";
-import Path from '../../../../Constant/RouterConstant';
-import { NavLink } from "react-router-dom";
+import { TagsData } from "./TagsData";
+import {ReactComponent as EditIcon} from '../../../../Assets/Icon/Edit.svg';
+import {ReactComponent as DeleteIcon} from '../../../../Assets/Icon/Delete.svg';
+import "./Tags.css";
 import { confirmAlert } from 'react-confirm-alert';
+import {ReactComponent as BagIcon} from '../../../../Assets/Icon/Shoppingbasket.svg';
+import {ReactComponent as AddIcon} from '../../../../Assets/Icon/Add.svg';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-const CustomerTable = () => {
-  const products = customerData.map((custom) => [
+const TagsTable = () => {
+  const products = TagsData.map((custom) => [
     {
-      id: custom.id,
+      serialno: custom.serialno,
       date: custom.date,
-      name: custom.name,
-      email: custom.email,
-      phonenumber: custom.phonenumber,
+      tags: custom.tags,
     },
   ]);
+
+  const { SearchBar } = Search;
+  const headerSortingStyle = { backgroundColor: "#e3edf8" };
+
+// function handleEdit(id, cat) {
+//   console.log(id)
+//   cat = category;
+//   console.log(cat);
+// }
+
+// function addCategory()
+// {
+//   alert(true);
+//   setcatcheck(true);
+// }
+
   function handleDelete(rowId, name) {
     confirmAlert({
       title: 'Delete',
-      message: `Are you sure you want to remove ${name} from this table?`,
+      message: `Are you sure you want to remove this item from the table?`,
       buttons: [
         {
           label: 'Yes',
           className: 'btn btn-danger',
-          color: 'red',
           onClick: () => {
             console.log('ROW ID: ',rowId);
-            console.log('ROW NAME: ',name);
           }
         },
         {
           label: 'No',
-          onClick: () => alert('Click No')
+          // onClick: () => alert('Click No')
         }
       ]
     });
   }
-  const { SearchBar } = Search;
-  const headerSortingStyle = { backgroundColor: "#e3edf8" };
-
   const columns = [
     {
-      dataField: "id",
-      text: "Customer ID",
+      dataField: "serialno",
+      text: "Serial No",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -61,54 +70,39 @@ const CustomerTable = () => {
     },
     {
       dataField: "date",
-      text: "Join Date",
+      text: "Date",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "name",
-      text: "Customer Name",
+      dataField: "tags",
+      text: "Tags",
       headerSortingStyle,
       sort: true,
       headerAlign: "center",
       align: "center",
     },
-    {
-      dataField: "email",
-      text: "Email",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      dataField: "phonenumber",
-      text: "Contact No.",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
-
-    {
-      dataField: "link",
-      text: "Action",
-      headerAlign: "center",
-      align: "center",
-      formatter: (rowContent, row) => {
-        return (
-          <div className="d-flex justify-content-evenly align-items-center">
-            <NavLink to={Path.customerDetails}>
-              <ViewIcon />
-            </NavLink>
-           
-              <DeleteIcon className="iconHover" onClick={() => handleDelete(row.id, row.name)}/>
-          </div>
-        );
+   
+      {
+        dataField: "link",
+        text: "Action",
+        headerAlign: "center",
+        align: "center",
+        formatter: (rowContent, row) => {
+          return (
+            <div className="d-flex justify-content-evenly">
+              
+                <EditIcon className="mt-1" />
+                <DeleteIcon className="iconHover" onClick={() => handleDelete(row.serialno, row.tags)}/>
+            
+            </div>
+          );
+        },
       },
-    },
+
+   
   ];
 
   const defaultSorted = [
@@ -119,6 +113,37 @@ const CustomerTable = () => {
   ];
 
   return (
+    <>
+<div className="page-heading d-flex align-items-center p-3 justify-content-between">
+  <div className="d-flex">
+        <BagIcon
+          style={{ height: "36px", width: "36px", marginRight: "10px" }}
+        />
+        <h3 className="m-1">Tags </h3>
+        </div>
+        <div className="d-flex align-items-center "><button type="submit" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal1"> <AddIcon /> Add New Tags</button></div>
+      </div>
+<div className="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog modal-dialog-centered">
+    <div className="modal-content">
+      <div className="modal-body p-4">
+        <form>
+          <div className="mb-3">
+            <label for="recipient-name" className="col-form-label">Tags Name</label>
+             <input type="text" className="form-control" id="tags" placeholder="Tags"/> 
+          </div>
+        </form>
+      </div>
+      <div className="modal-footer border-0 d-block mx-auto">
+        {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button> */}
+        <button type="button" className="btn btn-primary">Add Tags</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div className="card">
     <div className="table-responsive" style={{ padding: "20px" }}>
       <PaginationProvider
         pagination={paginationFactory({
@@ -155,13 +180,13 @@ const CustomerTable = () => {
         })}
         keyField="id"
         columns={columns}
-        data={customerData.map((item) => item)}
+        data={TagsData.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={customerData.map((item) => item)}
+            data={TagsData.map((item) => item)}
             search
           >
             {(toolkitprops) => (
@@ -189,8 +214,11 @@ const CustomerTable = () => {
           </ToolkitProvider>
         )}
       </PaginationProvider>
+      
     </div>
+    </div>
+    </>
   );
 };
 
-export default CustomerTable;
+export default TagsTable;

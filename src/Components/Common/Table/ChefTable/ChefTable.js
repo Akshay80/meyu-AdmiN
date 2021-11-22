@@ -11,6 +11,7 @@ import { chefData } from "./ChefData";
 import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
 import "./ChefTable.css";
+import { confirmAlert } from "react-confirm-alert";
 
 const ChefTable = () => {
   const products = chefData.map((custom) => [
@@ -25,7 +26,26 @@ const ChefTable = () => {
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
-
+  function handleDelete(rowId, name) {
+    confirmAlert({
+      title: 'Delete',
+      message: `Are you sure you want to remove ${name} from this table?`,
+      buttons: [
+        {
+          label: 'Yes',
+          className: 'btn btn-danger',
+          onClick: () => {
+            console.log('ROW ID: ',rowId);
+            console.log('ROW NAME: ',name);
+          }
+        },
+        {
+          label: 'No',
+          // onClick: () => alert('Click No')
+        }
+      ]
+    });
+  }
   const columns = [
     {
       dataField: "id",
@@ -79,9 +99,9 @@ const ChefTable = () => {
             <a href="#">
               <ViewIcon />
             </a>
-            <a href="#">
-              <DeleteIcon />
-            </a>
+            
+              <DeleteIcon className="iconHover" onClick={() => handleDelete(row.id, row.name)}/>
+            
           </div>
         );
       },
