@@ -20,12 +20,6 @@
     transition: all ease-in-out 250ms;
   }
 
-  // &.overlay-menu {
-  //   width: 20%;
-  //   z-index: 10;
-  //   transition: all ease-in-out 250ms;
-  //   box-shadow: unset;
-  // }
   .sidebar-menu {
     height: 93px;
     display: flex;
@@ -124,5 +118,36 @@
     > div
     > ul {
     padding: 0px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 30%;
+    z-index: 100;
+    &.hide-menu {
+      left: -30%;
+      box-shadow: unset;
+      transition: all ease-in-out 250ms;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .sidebar {
+    height: 100%;
+    width: 65%;
+    max-width: 300px;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    transition: all 250ms ease-in-out;
+    &.hide-menu {
+      left: -65%;
+      box-shadow: unset;
+      transition: all ease-in-out 250ms;
+    }
   }
 }

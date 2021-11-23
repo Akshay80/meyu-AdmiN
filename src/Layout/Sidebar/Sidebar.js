@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SidebarData } from "./SidebarData";
 import { NavLink } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
@@ -6,18 +6,25 @@ import "./Sidebar.scss";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 
 const  Sidebar = ({ menuToggleState }) => {
+
+    const [sidebar, setSidebar] = useState("false");
+    const showSidebar = () => {
+      setSidebar(!sidebar); 
+     };
+
   return (
+    
     <div className={`sidebar ${menuToggleState ? "hide-menu" : ""}`}>
       <div className="sidebar-menu">
         <span className="logo"> MEYU</span>
         <span className="logo-text">Meyu Admin</span>
       </div>
-      <ul className="sidebarList">
+      <ul onClick={showSidebar} className="sidebarList">
         {SidebarData.map((val, key) => {
           if (val.subMenus !== undefined) {
             return (
               <ProSidebar>
-                <Menu  key={key + 1} iconShape="square">
+                <Menu key={key + 1} iconShape="square">
                     <SubMenu key={key} icon={val.icon} title={val.title}>
                       <MenuItem >
                         {val.subMenus.map((submenu, i) => {

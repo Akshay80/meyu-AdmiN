@@ -1,6 +1,6 @@
 .header-wrapper {
     justify-content: space-between;
-    z-index: 999;
+    z-index: 10;
     align-items: center;
     width: calc(100% - 20%);
     padding: 25px 50px 25px 25px;
@@ -18,4 +18,31 @@
     .hamburger-menu {
       cursor: pointer;
     }
+}
+
+
+@media (max-width: 1200px) {
+  .header-wrapper {
+    width : calc(100% - 30%);
+    &.full-width {
+      max-width: 100% !important;
+      transition: all ease-in-out 250ms;
+    }
+  }
+}
+
+@media (max-width : 991px) {
+  .header-wrapper {
+  width : calc(100% - 300px);
+  margin-left: auto !important;
+    &.full-width {
+      max-width: 100% !important;
+      transition: all ease-in-out 250ms;
+    }
+  }
+}
+@media (max-width : 576px) {
+  .header-wrapper {
+    width: 100%;
+  }
 }

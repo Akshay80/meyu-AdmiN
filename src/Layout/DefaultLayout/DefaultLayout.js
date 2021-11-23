@@ -6,7 +6,6 @@ import Sidebar from "../Sidebar/Sidebar";
 const DefaultLayout = () => {
 
     const [menuToggle, setMenuToggle] = useState(false);
-
     const menuToggleHandle =()=>{
         setMenuToggle(!menuToggle);
     }
