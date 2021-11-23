@@ -12,8 +12,10 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  function login1() {
+  function login1(data) {
     alert("Data Registered!");
+    setEmail(data.email);
+    setPassword(data.password);
     console.log("Email:", email);
     console.log("Password: ", password);
   }
@@ -42,6 +44,10 @@ const Login = () => {
                     placeholder="Email"
                     {...register("email", {
                       required: "Email is required",
+                      pattern: {
+                        value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+                        message: "Invalid Email",
+                      },
                     })}
                   />
                   {errors.email && (

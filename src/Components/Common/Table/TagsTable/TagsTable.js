@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
@@ -15,8 +15,15 @@ import { confirmAlert } from 'react-confirm-alert';
 import {ReactComponent as BagIcon} from '../../../../Assets/Icon/Shoppingbasket.svg';
 import {ReactComponent as AddIcon} from '../../../../Assets/Icon/Add.svg';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { useForm } from "react-hook-form";
 
 const TagsTable = () => {
+  const [tag, setTag] = useState();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const products = TagsData.map((custom) => [
     {
       serialno: custom.serialno,
@@ -39,6 +46,12 @@ const TagsTable = () => {
 //   alert(true);
 //   setcatcheck(true);
 // }
+
+function settag(data)
+{
+  setTag(data.tags);
+  console.log(tag);
+}
 
   function handleDelete(rowId, name) {
     confirmAlert({
@@ -130,17 +143,23 @@ const TagsTable = () => {
         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div className="modal-body p-4 pt-0">
-        <form>
+        <form onSubmit={handleSubmit(settag)}>
           <div className="mb-3">
             <label htmlFor="recipient-name" className="col-form-label">Tags Name</label>
-             <input type="text" className="form-control" id="tags" placeholder="Tags"/> 
+             <input type="text" className="form-control shadow-none" id="tags" placeholder="Tags" name="tags" autoComplete="off"
+                    {...register("tags", {
+                      required: "Tag is required",
+                    })}/> 
+                     {errors.tags && (
+                    <p className="errors">{errors.tags.message}</p>
+                  )}
           </div>
+          <div className="modal-footer border-0 d-flex justify-content-center">
+        <button type="submit" className="btn btn-primary">Add Tags</button>
+      </div>
         </form>
       </div>
-      <div className="modal-footer border-0 d-block mx-auto">
       
-        <button type="button" className="btn btn-primary">Add Tags</button>
-      </div>
     </div>
   </div>
 </div>

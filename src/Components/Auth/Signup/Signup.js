@@ -10,7 +10,7 @@ const Signup = () => {
     watch,
     formState: { errors },
   } = useForm();
-  function login() {
+  function login(data) {
     alert("Data Submitted!");
   }
   return (
@@ -33,9 +33,6 @@ const Signup = () => {
               onSubmit={handleSubmit(login)}
             >
               <div className="col-md-12">
-                <label htmlFor="inputEmail4" className="form-label mb-0">
-                  Name
-                </label>
                 <input
                   className="form-control shadow-none"
                   type="text"
@@ -48,12 +45,10 @@ const Signup = () => {
                     },
                   })}
                 />
-                {errors.name && <p className="errors">{errors.name.message}</p>}
+                {errors.name && <p className="errorss">{errors.name.message}</p>}
               </div>
               <div className="col-md-12">
-                <label htmlFor="inputPassword4" className="form-label mb-0">
-                  Email
-                </label>
+              
                 <input
                   type="email"
                   className="form-control shadow-none"
@@ -68,13 +63,10 @@ const Signup = () => {
                   })}
                 />
                 {errors.email && (
-                  <p className="errors">{errors.email.message}</p>
+                  <p className="errorss">{errors.email.message}</p>
                 )}
               </div>
               <div className="col-12">
-                <label htmlFor="inputAddress" className="form-label mb-0">
-                  Password
-                </label>
                 <input
                   name="password"
                   placeholder="Password"
@@ -89,13 +81,10 @@ const Signup = () => {
                   })}
                 />
                 {errors.password && (
-                  <p className="errors">{errors.password.message}</p>
+                  <p className="errorss">{errors.password.message}</p>
                 )}
               </div>
               <div className="col-12">
-                <label htmlFor="inputAddress2" className="form-label mb-0">
-                  Confirm Password
-                </label>
                 <input
                   name="password_repeat"
                   className="form-control shadow-none"
@@ -108,7 +97,7 @@ const Signup = () => {
                   })}
                 />
                 {errors.cpassword && (
-                  <p className="errors">{errors.cpassword.message}</p>
+                  <p className="errorss">{errors.cpassword.message}</p>
                 )}
               </div>
               <div className="col-12 mt-4">

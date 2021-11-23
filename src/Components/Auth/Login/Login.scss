@@ -69,6 +69,16 @@ h3.card-title1 {
   text-align: left;
 }
 // Small devices (landscape phones, 576px and up)
+@media (max-width:400px) {
+  .cards1{
+    width: 20rem!important;
+  }
+}
+@media (max-width:325px) {
+  .cards1{
+    width: 17rem!important;
+  }
+}
 @media (min-width: 576px) {
   .container {
     max-width: unset !important;
