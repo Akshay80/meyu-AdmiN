@@ -135,7 +135,7 @@ const ChefOrderTable = () => {
               <>
                 <div className="d-flex justify-content-between mb-3">
                   <SizePerPageDropdownStandalone {...paginationProps} />
-                  <SearchBar {...toolkitprops.searchProps} srText=" " />
+                  <SearchBar className="ms-2" {...toolkitprops.searchProps} srText=" " />
                 </div>
                 <BootstrapTable
                   {...toolkitprops.baseProps}

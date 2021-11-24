@@ -14,7 +14,7 @@ const FoodCard = () => {
     <div className="row col-md-12">
       {FoodCardData.map((val, key) => {
         return (
-          <div key={key} className="col-md-4 gy-3 g-5">
+          <div key={key} className="col-md-4 gy-3 gx-5 mb-3">
             <div className="card h-100">
               <img
                 src="https://source.unsplash.com/random/100x100"
