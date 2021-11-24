@@ -11,7 +11,7 @@ const DefaultLayout = () => {
     }
   return (
       <div className="main-wrapper">
-        <Sidebar menuToggleState={menuToggle} />
+        <Sidebar menuToggleState={menuToggle} toggleMenu={menuToggleHandle} />
         <div className={`content-wrapper ${menuToggle ? "full-width" : ''}`}>
           <Header menuToggleState={menuToggle} toggleMenu={menuToggleHandle} />
           <div className="page-wrapper">

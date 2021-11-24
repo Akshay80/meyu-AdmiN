@@ -35,7 +35,7 @@ const Signup = () => {
 
 
   return (
-    <div className="container bg-dark">
+    <div className="auth-wrapper bg-dark">
       <div className="row justify-content-center">
         <div className="cards2 pt-1 pb-1">
           <div className="card-body">

@@ -5,7 +5,7 @@ import "./OrderManagement.scss";
 
 const OrderManagement = () => {
   return (
-    <div className="page-heading ">
+    <div>
       <div className="main-heading d-flex align-items-center p-3">
         <OrderIcon
           style={{ height: "36px", width: "36px", marginRight: "10px" }}

@@ -20,7 +20,7 @@ const Login = () => {
     console.log("Password: ", password);
   }
   return (
-    <div className="container align-items-center bg-dark">
+    <div className="auth-wrapper align-items-center bg-dark">
       <div className="row text-center justify-content-center">
         <div className="cards1 mb-5 align-middle">
           <div className="card-body">

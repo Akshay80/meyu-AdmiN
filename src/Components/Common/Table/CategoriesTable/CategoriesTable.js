@@ -82,17 +82,9 @@ const CategoriesTable = () => {
     },
     {
       dataField: "cat",
-      text: "Category",
+      text: "Cuisine",
       headerSortingStyle,
       sort: true,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      dataField: "subcat",
-      text: "Sub-Category",
-      sort: true,
-      headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
