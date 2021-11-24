@@ -5,7 +5,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: $bigfont !important;
+  padding: $large !important;
   width: 25rem !important;
   border-radius: $mini !important;
   background: $white;
@@ -20,8 +20,8 @@
 .errorss {
   color: red;
   font-size: 14px;
-  margin-top: 5px !important;
-  margin-bottom: 10px !important;
+  margin-top: 0px !important;
+  margin-bottom: 5px !important;
 }
 
 @media (max-width: 400px) {
