@@ -5,12 +5,13 @@ import "../../../Components/Common/Buttons/buttons.scss";
 
 const ItemDetails = () => {
   return (
+    <div className="card p-5 m-3">
     <div className="pb-5">
-      <div className="profile-pic-wrapper">
-        <div className="pic-holder">
+      <div className="profile-pic-wrapper pb-2">
+        <div className="profile-pic-holder" style={{borderRadius:'unset', width:"240px", height:'120px'}}>
           <img
             id="profilePic"
-            className="pic"
+            className="pic" 
             alt=""
             src="https://source.unsplash.com/random/150x150"
           />
@@ -127,6 +128,7 @@ const ItemDetails = () => {
       <button className="btn btn-success w-25">Save
       </button>
       </div>
+    </div>
     </div>
   );
 };

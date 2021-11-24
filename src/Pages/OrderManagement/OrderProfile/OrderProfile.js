@@ -14,9 +14,9 @@ const OrderProfile = () => {
         />
         <h3 className="m-1">Order Management</h3>
       </div>
-    <div className="card">
+    <div className="card m-3 mt-0">
     <div className="order-profile-container">
-      <div className="profile-pic-wrapper">
+      <div className="profile-pic-wrapper pb-3">
         <div className="pic-holder">
           <img
             id="profilePic"

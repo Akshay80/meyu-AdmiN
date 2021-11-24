@@ -1,10 +1,15 @@
+.user-card-info {
+    justify-content: space-between;
+}
 p {
     margin-bottom: 0 !important;
 }
 @media  (max-width : 768px) {
         .user-card-info {
             margin-top: 10px;
+            justify-content: center !important;
         }
+
 }
 @media (max-width: 376px) {
     .user-card-info, .primary-card-info{
