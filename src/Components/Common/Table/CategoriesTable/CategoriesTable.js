@@ -118,11 +118,11 @@ const CategoriesTable = () => {
   return (
     <>
       <div className="page-heading d-flex align-items-center p-3 justify-content-between">
-        <div className="d-flex">
+        <div className="d-flex pb-2 align-items-center">
           <BagIcon
             style={{ height: "36px", width: "36px", marginRight: "10px" }}
           />
-          <h3 className="m-1">Categories </h3>
+          <h3 className="m-1 ">Categories </h3>
         </div>
         <div className="d-flex align-items-center ">
           <button
@@ -157,17 +157,17 @@ const CategoriesTable = () => {
               <div className="modal-body p-4 pt-0">
                 <div className="mb-3">
                   <label htmlFor="recipient-name" className="col-form-label">
-                    Category
+                    Cuisine
                   </label>
                   <input
                     type="text"
                     className="form-control shadow-none"
                     id="category"
                     name="category"
-                    placeholder="category"
+                    placeholder="cuisine"
                     autoComplete="off"
                     {...register("category", {
-                      required: "Category is required",
+                      required: "Cuisine is required",
                     })}
                   />
                   {errors.category && (
@@ -175,7 +175,7 @@ const CategoriesTable = () => {
                   )}
                 </div>
 
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <label htmlFor="message-text" className="col-form-label">
                     Sub Categories
                   </label>
@@ -193,7 +193,7 @@ const CategoriesTable = () => {
                   {errors.subcategory && (
                     <p className="errors">{errors.subcategory.message}</p>
                   )}
-                </div>
+                </div> */}
                 <div className="modal-footer border-0 d-flex justify-content-center">
                   <button type="submit" className="btn btn-primary">
                     Add Categories

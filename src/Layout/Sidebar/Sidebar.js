@@ -20,7 +20,7 @@ const  Sidebar = ({ menuToggleState, toggleMenu }) => {
         <span className="logo"> MEYU</span>
         <span className="logo-text">Meyu Admin</span>
       </div>
-      <img src={CloseMenu} onClick={toggleMenu} className="close-menu-mobile-btn"/>
+      <img src={CloseMenu} onClick={toggleMenu} className="close-menu-mobile-btn" alt="close_btn"/>
       <ul onClick={showSidebar} className="sidebarList">
         {SidebarData.map((val, key) => {
           if (val.subMenus !== undefined) {

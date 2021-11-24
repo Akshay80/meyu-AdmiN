@@ -128,7 +128,7 @@ function settag(data)
   return (
     <>
 <div className="page-heading d-flex align-items-center p-3 justify-content-between">
-  <div className="d-flex">
+  <div className="d-flex pb-2 align-items-center">
         <BagIcon
           style={{ height: "36px", width: "36px", marginRight: "10px" }}
         />

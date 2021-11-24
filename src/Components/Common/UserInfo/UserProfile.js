@@ -1,5 +1,4 @@
 import React from "react";
-import { Form, Row, Button } from "react-bootstrap";
 import { Input } from "reactstrap";
 import { ReactComponent as UserIcon } from "../../../Assets/Icon/user.svg";
 import "./UserProfile.scss";
@@ -10,15 +9,25 @@ import * as Yup from "yup";
 
 const UserProfile = () => {
   const profileValidation = Yup.object().shape({
-    firstName: Yup.string().required("First Name is required"),
-    lastName: Yup.string().required("Last name is required"),
+    firstName: Yup.string()
+      .required("First name is required")
+      .matches(/^[A-Za-z]+$/i, "Invalid Firstname"),
+    lastName: Yup.string()
+      .required("Last name is required")
+      .matches(/^[A-Za-z]+$/i, "Invalid Lastname"),
     email: Yup.string().required("Email is required").email("Email is invalid"),
-    contact: Yup.string().required("Contact is required"),
+    contact: Yup.string()
+      .required("Contact is required")
+      .matches(/^[0-9]*$/, "Invalid Contact"),
     address: Yup.string().required("Address is required"),
     country: Yup.string().required("Country is required"),
     state: Yup.string().required("State is required"),
-    city: Yup.string().required("City is required"),
-    zip: Yup.string().required("Zip is required"),
+    city: Yup.string()
+      .required("City is required")
+      .matches(/^[A-Za-z]+$/i, "Invalid City"),
+    zip: Yup.string()
+      .required("Zip is required")
+      .matches(/^[0-9]*$/, "Invalid Zipcode"),
   });
 
   const formOptions = { resolver: yupResolver(profileValidation) };
@@ -30,7 +39,7 @@ const UserProfile = () => {
   function onSubmit(data) {
     // display form data on success
     alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
-    return false;
+    // return false;
   }
 
   return (
@@ -69,137 +78,176 @@ const UserProfile = () => {
           />
         </div>
       </div>
-      <Form onSubmit={handleSubmit(onSubmit)} className="profile-form">
-        <Row className="mb-3">
-          <Form.Group className="col-md-6 col-sm-12" controlId="formGridName">
-            <Form.Label className="mb-0">First Name</Form.Label>
-            <Form.Control
-              {...register("firstName")}
-              className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
-              type="name"
-              placeholder="Enter First Name"
-            />
-            <div className="invalid-feedback">{errors.firstName?.message}</div>
-          </Form.Group>
-          <Form.Group className="col-md-6 col-sm-12" controlId="formGridName">
-            <Form.Label className="mb-0">Last Name</Form.Label>
-            <Form.Control
-              {...register("lastName")}
-              className={`form-control ${errors.lastName ? "is-invalid" : ""}`}
-              type="name"
-              placeholder="Enter Last Name"
-            />
-            <div className="invalid-feedback pb-0">
-              {errors.lastName?.message}
-            </div>
-          </Form.Group>
-        </Row>
 
-        <Row className="mb-3">
-          <Form.Group className="mb-3" controlId="formGridEmail">
-            <Form.Label className="mb-0">Email</Form.Label>
-            <Form.Control
-              {...register("email")}
-              className={`form-control ${errors.email ? "is-invalid" : ""}`}
-              type="email"
-              placeholder="Enter email"
-            />
-            <div className="invalid-feedback pb-0">{errors.email?.message}</div>
-          </Form.Group>
-          <Form.Group controlId="formGridPhone">
-            <Form.Label className="mb-0">Contact Number</Form.Label>
-            <Form.Control
-              {...register("contact")}
-              className={`form-control ${errors.contact ? "is-invalid" : ""}`}
-              type="number"
-              placeholder="Enter Contact Number"
-            />
-            <div className="invalid-feedback">{errors.contact?.message}</div>
-          </Form.Group>
-        </Row>
+      <form
+        class="row g-3 needs-validation"
+        onSubmit={handleSubmit(onSubmit)}
+        novalidate
+      >
+        <div class="col-md-6 col-sm-12">
+          <label for="validationCustom01" class="form-label">
+            First name
+          </label>
+          <input
+            type="text"
+            {...register("firstName", {
+              pattern: {
+                value: /^[A-Za-z]+$/i,
+                message: "Invalid firstname",
+              },
+            })}
+            className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
+            placeholder="Enter First Name"
+          />
+          <div className="invalid-feedback">{errors.firstName?.message}</div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label for="validationCustom02" class="form-label">
+            Last name
+          </label>
+          <input
+            type="text"
+            {...register("lastName", {
+              pattern: {
+                value: /^[A-Za-z]+$/i,
+                message: "Invalid lastname",
+              },
+            })}
+            className={`form-control ${errors.lastName ? "is-invalid" : ""}`}
+            placeholder="Enter Last Name"
+          />
+          <div className="invalid-feedback pb-0">
+            {errors.lastName?.message}
+          </div>
+        </div>
+        <div>
+          <label for="validationCustom03" class="form-label">
+            Email
+          </label>
+          <input
+            type="email"
+            {...register("email", {
+              pattern: {
+                value:
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: "Invalid email",
+              },
+            })}
+            className={`form-control ${errors.email ? "is-invalid" : ""}`}
+            placeholder="Enter email"
+          />
+          <div className="invalid-feedback pb-0">{errors.email?.message}</div>
+        </div>
 
-        <Form.Group className="mb-3" controlId="formGridAddress1">
-          <Form.Label className="mb-0">Address</Form.Label>
-          <Form.Control
+        <div>
+          <label for="validationCustom04" class="form-label">
+            Contact Number
+          </label>
+          <input
+            type="tel"
+            maxLength="10"
+            {...register("contact", {
+              pattern: {
+                value: /^[0-9]*$/,
+                message: "Invalid contact number",
+              },
+            })}
+            className={`form-control ${errors.contact ? "is-invalid" : ""}`}
+            placeholder="Enter Contact Number"
+          />
+          <div className="invalid-feedback">{errors.contact?.message}</div>
+        </div>
+
+        <div>
+          <label for="validationCustom05" class="form-label">
+            Address
+          </label>
+          <input
+            type="text"
             {...register("address")}
             className={`form-control ${errors.address ? "is-invalid" : ""}`}
             placeholder="Address"
           />
           <div className="invalid-feedback pb-0">{errors.address?.message}</div>
-        </Form.Group>
+        </div>
 
-        <Row className="mb-3">
-          <Form.Group
-            className="col-md-6 col-sm-6 col-xs-12 mb-3"
-            controlId="formGridCountry"
+        <div class="col-md-6 col-sm-12">
+          <label for="validationCustom06" class="form-label">
+            Country
+          </label>
+          <select
+            {...register("country")}
+            className={`form-select ${errors.country ? "is-invalid" : ""}`}
           >
-            <Form.Label className="mb-0">Country</Form.Label>
-            <Form.Select
-              {...register("country")}
-              className={`form-select ${errors.country ? "is-invalid" : ""}`}
-              defaultValue="Choose..."
-            >
-              <option>Choose...</option>
-              <option>...</option>
-            </Form.Select>
-            <div className="invalid-feedback">{errors.country?.message}</div>
-          </Form.Group>
-
-          <Form.Group
-            className="col-md-6 col-sm-6 col-xs-12 mb-3"
-            controlId="formGridState"
+            <option selected disabled value="">
+              Choose...
+            </option>
+            <option>...</option>
+          </select>
+          <div className="invalid-feedback">{errors.country?.message}</div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label for="validationCustom07" class="form-label">
+            State
+          </label>
+          <select
+            {...register("state")}
+            className={`form-select ${errors.state ? "is-invalid" : ""}`}
           >
-            <Form.Label className="mb-0">State</Form.Label>
-            <Form.Select
-              {...register("state")}
-              className={`form-select ${errors.state ? "is-invalid" : ""}`}
-              defaultValue="Choose..."
-            >
-              <option>Choose...</option>
-              <option>...</option>
-            </Form.Select>
-            <div className="invalid-feedback">{errors.state?.message}</div>
-          </Form.Group>
-
-          <Form.Group
-            className="col-md-6 col-sm-6 col-xs-12 mb-3"
-            controlId="formGridCity"
-          >
-            <Form.Label className="mb-0">City</Form.Label>
-            <Form.Control
-              {...register("city")}
-              className={`form-control ${errors.city ? "is-invalid" : ""}`}
-              placeholder="Singapore"
-            />
-            <div className="invalid-feedback">{errors.city?.message}</div>
-          </Form.Group>
-          <Form.Group
-            className="col-md-6 col-sm-6 col-xs-12"
-            controlId="formGridZip"
-          >
-            <Form.Label className="mb-0">Zip</Form.Label>
-            <Form.Control
-              {...register("zip")}
-              className={`form-control ${errors.zip ? "is-invalid" : ""}`}
-              placeholder="238282"
-            />
-            <div className="invalid-feedback">{errors.zip?.message}</div>
-          </Form.Group>
-        </Row>
+            <option selected disabled value="">
+              Choose...
+            </option>
+            <option>...</option>
+          </select>
+          <div className="invalid-feedback">{errors.state?.message}</div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label for="validationCustom08" class="form-label">
+            City
+          </label>
+          <input
+            type="text"
+            {...register("city", {
+              pattern: {
+                value: /^[A-Za-z]+$/i,
+                message: "Invalid city",
+              },
+            })}
+            className={`form-control ${errors.city ? "is-invalid" : ""}`}
+            placeholder="Singapore"
+          />
+          <div className="invalid-feedback">{errors.city?.message}</div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label for="validationCustom09" class="form-label">
+            Zip
+          </label>
+          <input
+            type="text"
+            {...register("zip", {
+              pattern: {
+                value: /^[0-9]*$/,
+                message: "Invalid zipcode",
+              },
+            })}
+            className={`form-control ${errors.zip ? "is-invalid" : ""}`}
+            placeholder="238282"
+          />
+          <div className="invalid-feedback">{errors.zip?.message}</div>
+        </div>
         <div className="d-flex pb-5 align-items-center justify-content-center flex-wrap-wrap">
-          <Button className="m-2 btn-primary" variant="primary" type="submit">
+          <button className="m-2 btn btn-primary" type="submit">
             Update
-          </Button>
-          <Button
+          </button>
+          <button
             onClick={() => reset()}
-            className="m-2"
-            variant="danger"
+            className="btn btn-danger m-2"
             type="submit"
           >
             Cancel
-          </Button>
+          </button>
         </div>
-      </Form>
+      </form>
     </div>
   );
 };
