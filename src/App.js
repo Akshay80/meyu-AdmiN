@@ -3,11 +3,10 @@ import Login from "./Components/Auth/Login/Login";
 import ForgotPassword from "./Components/Auth/ForgotPassword/ForgotPassword";
 import PrivateRoute from "./Routes/PrivateRoute";
 import Signup from "./Components/Auth/Signup/Signup";
-import './App.scss';
+
 
 function App() {
   return (
-    <div className="container-wrapper">
     <Router>
       <Routes>
         <Route path="/signup" element={<Signup />} />
@@ -16,7 +15,6 @@ function App() {
       </Routes>
       <PrivateRoute />
     </Router>
-    </div>
   );
 }
 

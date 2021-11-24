@@ -19,6 +19,9 @@
     box-shadow: unset;
     transition: all ease-in-out 250ms;
   }
+  .close-menu-mobile-btn{
+    display: none;
+  }
 
   .sidebar-menu {
     height: 93px;
@@ -130,22 +133,29 @@
       box-shadow: unset;
       transition: all ease-in-out 250ms;
     }
+    
   }
 }
+
 
 @media (max-width: 991px) {
   .sidebar {
     height: 100%;
-    width: 65%;
-    max-width: 300px;
+    width: 300px;
     position: fixed;
     z-index: 100;
     top: 0;
-    left: 0;
+    left: -350px;
     overflow: hidden;
     transition: all 250ms ease-in-out;
+    .close-menu-mobile-btn{
+      display: block;
+      position: absolute;
+      top: 32px;
+      right: 20px;
+    }
     &.hide-menu {
-      left: -65%;
+      left: 0;
       box-shadow: unset;
       transition: all ease-in-out 250ms;
     }

@@ -14,7 +14,7 @@ const Signup = () => {
     alert("Data Submitted!");
   }
   return (
-    <div className="container bg-dark">
+    <div className="auth-wrapper bg-dark">
       <div className="row justify-content-center">
         <div className="cards2">
           <div className="card-body">
