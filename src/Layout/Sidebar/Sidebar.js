@@ -6,7 +6,7 @@ import "./Sidebar.scss";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import CloseMenu from './../../Assets/Icon/close_white.svg'
 
-const  Sidebar = ({ menuToggleState,toggleMenu }) => {
+const  Sidebar = ({ menuToggleState, toggleMenu }) => {
 
     const [sidebar, setSidebar] = useState("false");
     const showSidebar = () => {

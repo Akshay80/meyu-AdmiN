@@ -42,7 +42,7 @@ const UserProfile = () => {
         <h2 className="m-1">Edit Profile </h2>
       </div>
       <div className="profile-pic-wrapper">
-        <div className="pic-holder">
+        <div className="profile-pic-holder">
           <img
             id="profilePic"
             className="pic"

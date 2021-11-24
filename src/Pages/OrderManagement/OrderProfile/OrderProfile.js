@@ -1,10 +1,20 @@
 import React from "react";
 import { Form, Row } from "react-bootstrap";
 import "./OrderProfile.scss";
+import { ReactComponent as OrderIcon } from "../../../Assets/Icon/order.svg";
+
 import "../../../Components/Common/Buttons/buttons.scss";
 
 const OrderProfile = () => {
   return (
+    <>
+       <div className="main-heading d-flex align-items-center p-3 py-5">
+        <OrderIcon
+          style={{ height: "36px", width: "36px", marginRight: "10px" }}
+        />
+        <h3 className="m-1">Order Management</h3>
+      </div>
+    <div className="card">
     <div className="order-profile-container">
       <div className="profile-pic-wrapper">
         <div className="pic-holder">
@@ -124,6 +134,8 @@ const OrderProfile = () => {
         </Row>
       </Form>
     </div>
+    </div>
+    </>
   );
 };
 
