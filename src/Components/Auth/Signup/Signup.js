@@ -2,8 +2,11 @@ import React from "react";
 import "./Signup.scss";
 import Path from "../../../Constant/RouterConstant";
 import { useForm } from "react-hook-form";
-// import axios from "axios";
-import axiosConfig from '../../Common/APIConfig/axiosConfig'
+import axiosConfig from "../../Common/APIConfig/axiosConfig";
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+
+let toastId = null;
 
 const Signup = () => {
   const {
@@ -15,24 +18,47 @@ const Signup = () => {
   function login(data) {
     const postData = {
       user: {
-      firstName: data.firstname,
-      lastName:data.lastname,
-      phone:data.phone,
-      email:data.email,
-      userRole:4,
-      password:data.password
-    }
-  }
-    alert("Data Submitted!");
-    axiosConfig.post('/signup', postData)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
+        firstName: data.firstname,
+        lastName: data.lastname,
+        phone: data.phone,
+        email: data.email,
+        userRole: 4,
+        password: data.password,
+      },
+    };
+    axiosConfig
+      .post("/signup", postData)
+      .then(function (response) {
+        if (!toast.isActive(toastId)) {
+          toast.success(response.data.data.message, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+          toast.error(response.data.error.message, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+        } else {
+          console.log("Toast already active");
+        }
+      })
 
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   return (
     <div className="auth-wrapper bg-dark">
@@ -53,7 +79,6 @@ const Signup = () => {
               autoComplete="off"
               onSubmit={handleSubmit(login)}
             >
-              <div class="row g-2">
               <div className="col-md-6">
                 <input
                   className="form-control shadow-none"
@@ -67,7 +92,9 @@ const Signup = () => {
                     },
                   })}
                 />
-                {errors.firstname && <p className="errorss">{errors.firstname.message}</p>}
+                {errors.firstname && (
+                  <p className="errorss">{errors.firstname.message}</p>
+                )}
               </div>
               <div className="col-md-6">
                 <input
@@ -82,21 +109,19 @@ const Signup = () => {
                     },
                   })}
                 />
-                {errors.lastname && <p className="errorss">{errors.lastname.message}</p>}
-              </div>
+                {errors.lastname && (
+                  <p className="errorss">{errors.lastname.message}</p>
+                )}
               </div>
               <div className="col-md-12">
                 <input
                   type="tel"
+                  maxLength="10"
                   className="form-control shadow-none"
                   name="phone"
                   placeholder="Phone Number"
                   {...register("phone", {
                     required: "Phone number is required",
-                    maxLength: {
-                      value: 10,
-                      message: "Only ten digits are allowed!"
-                    },
                     pattern: {
                       value: /^[0-9]*$/,
                       message: "Invalid Phone Number",
@@ -108,7 +133,6 @@ const Signup = () => {
                 )}
               </div>
               <div className="col-md-12">
-              
                 <input
                   type="email"
                   className="form-control shadow-none"
@@ -117,7 +141,8 @@ const Signup = () => {
                   {...register("email", {
                     required: "Email is required",
                     pattern: {
-                      value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      value:
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                       message: "Invalid Email",
                     },
                   })}
@@ -169,6 +194,18 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        limit={1}
+        transition={Flip}
+      />
     </div>
   );
 };
