@@ -23,16 +23,12 @@ const Login = () => {
     axiosConfig
     .post("/authenticateadmin", loginData)
     .then(function (response) {
-      console.log(response.data.error);
-      if(response.status === 401)
-      {
-        console.log("hello world");
-      }
       if(response.data.success === true)
       {
         let token = response.data.data.token;
         let token2 = token.substring(4);
         localStorage.setItem('token', token2);
+        localStorage.setItem('user', JSON.stringify(response.data.data.user));
        window.location.href="/";
       }
       if (!toast.isActive(toastId)) {

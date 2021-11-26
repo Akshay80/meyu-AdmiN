@@ -21,8 +21,6 @@ const ForgotPassword = () => {
     axiosConfig
     .post("/forgot-password", forgetData)
     .then(function (response) {
-      console.log(response.data.data.message);
-
       if (!toast.isActive(toastId)) {
         toast.success(response.data.data.message, {
           position: "top-right",
