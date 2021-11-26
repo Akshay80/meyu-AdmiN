@@ -7,10 +7,7 @@ import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 let toastId = null;
-
 const Login = () => {
-  // const [email, setEmail] = useState();
-  // const [password, setPassword] = useState();
   const {
     register,
     handleSubmit,
@@ -20,87 +17,104 @@ const Login = () => {
   function login1(data) {
     const loginData = {
       username: data.email,
-      password: data.password,
-    };
+      password: data.password
+    }
+
     axiosConfig
-      .post("/authenticateadmin", loginData)
-      .then(function (response) {
-        console.log(response);
-        console.log(response.status);
-        if (response.data.success === true) {
-          localStorage.setItem("token", response?.data?.token);
-        }
+    .post("/authenticateadmin", loginData)
+    .then(function (response) {
+      console.log(response.data.error);
+      if(response.data.success === true)
+      {
+        let token = response.data.data.token;
+        let token2 = token.substring(4);
+        localStorage.setItem('token', token2);
+       window.location.href="/";
+      }
+      if (!toast.isActive(toastId)) {
+        toast.error(response.data.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      }
+    })
 
-        if (response.data.success === false && !toast.isActive(toastId)) {
-          toast.error(response.data.error.message, {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-            toastId: "my_toast",
-          });
-        }
-      })
-
-      .catch(function (error) {
-        console.log(error);
-      });
+    .catch(function (error) {
+      if (!toast.isActive(toastId)) {
+        toast.error(error.response.data.error.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      }
+    });
+    
   }
   return (
     <>
-      <div className="auth-wrapper align-items-center bg-dark">
-        <div className="row text-center justify-content-center">
-          <div className="cards1 mb-5 align-middle">
-            <div className="card-body">
-              <h3 className="card-title1">MEYU</h3>
-              <p className="card-title2 mb-4">Meyu Admin</p>
-              <p className="card-title3">Sign In</p>
-              <p className="card-subtitle mb-4">
-                Don't have an account?{" "}
-                <a href={Path.signup} className="link">
-                  Sign up
-                </a>
-              </p>
-              <form autoComplete="off" onSubmit={handleSubmit(login1)}>
-                <div className="mb-3 row justify-content-center">
-                  <div className="col-sm-12">
-                    <input
-                      type="email"
-                      className="form-control shadow-none"
-                      name="email"
-                      placeholder="Email"
-                      {...register("email", {
-                        required: "Email is required",
-                        pattern: {
-                          value:
-                            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                          message: "Invalid Email",
-                        },
-                      })}
-                    />
-                    {errors.email && (
-                      <p className="errors">{errors.email.message}</p>
-                    )}
-                  </div>
+    <div className="auth-wrapper align-items-center bg-dark">
+      <div className="row text-center justify-content-center">
+        <div className="cards1 mb-5 align-middle">
+          <div className="card-body">
+            <h3 className="card-title1">MEYU</h3>
+            <p className="card-title2 mb-4">Meyu Admin</p>
+            <p className="card-title3">Sign In</p>
+            <p className="card-subtitle mb-4">
+              Don't have an account?{" "}
+              <a href={Path.signup} className="link">
+                Sign up
+              </a>
+            </p>
+            <form autoComplete="off" onSubmit={handleSubmit(login1)}>
+              <div className="mb-3 row justify-content-center">
+                <div className="col-sm-12">
+                  <input
+                    type="email"
+                    className="form-control shadow-none"
+                    name="email"
+                    placeholder="Email"
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        message: "Invalid Email",
+                      },
+                     
+                    })} />
+                  {errors.email && (
+                    <p className="errors">{errors.email.message}</p>
+                  )}
                 </div>
-                <div className="mb-3 row justify-content-center">
-                  <div className="col-sm-12">
-                    <input
-                      name="password"
-                      placeholder="Password"
-                      className="form-control shadow-none"
-                      type="password"
-                      {...register("password", {
-                        required: "Password is required",
-                      })}
-                    />
-                    {errors.password && (
-                      <p className="errors">{errors.password.message}</p>
-                    )}
-                  </div>
+              </div>
+              <div className="mb-3 row justify-content-center">
+                <div className="col-sm-12">
+                  <input
+                    name="password"
+                    placeholder="Password"
+                    className="form-control shadow-none"
+                    type="password"
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: {
+                        value: 8,
+                        message: "Password must have at least 8 characters",
+                      }
+                    })} />
+                  {errors.password && (
+                    <p className="errors">{errors.password.message}</p>
+                  )}
+                </div>
                 </div>
                 <div className="mt-4 mb-4 row justify-content-center">
                   <div className="col-sm-12">
@@ -121,8 +135,8 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="bottom-center"
+    <ToastContainer
+        position="top-right"
         autoClose={5000}
         hideProgressBar
         closeOnClick
@@ -131,9 +145,8 @@ const Login = () => {
         draggable={false}
         pauseOnHover
         limit={1}
-        transition={Flip}
-      />
-    </>
+        transition={Flip} />
+        </>
   );
 };
 

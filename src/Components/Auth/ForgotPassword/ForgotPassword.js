@@ -1,7 +1,11 @@
 import React from "react";
 import "./ForgotPassword.scss";
 import { useForm } from "react-hook-form";
+import axiosConfig from "../../Common/APIConfig/axiosConfig";
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
+let toastId= null;
 const ForgotPassword = () => {
   const {
     register,
@@ -9,8 +13,29 @@ const ForgotPassword = () => {
     formState: { errors },
   } = useForm();
 
-  function forgotPassword() {
-    alert("Data Registered!");
+  function forgotPassword(data) {
+    const forgetData = {
+      email: data.email,
+      phone: ''
+    }
+    axiosConfig
+    .post("/forgot-password", forgetData)
+    .then(function (response) {
+      // console.log(response.data.data.message);
+
+      if (!toast.isActive(toastId)) {
+        toast.success(response.data.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      } 
+    })
   }
   return (
     <div className="auth-wrapper bg-dark">
@@ -48,6 +73,18 @@ const ForgotPassword = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        limit={1}
+        transition={Flip}
+      />
     </div>
   );
 };

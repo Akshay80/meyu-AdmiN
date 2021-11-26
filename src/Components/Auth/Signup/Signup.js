@@ -31,7 +31,7 @@ const Signup = () => {
       .then(function (response) {
         if (!toast.isActive(toastId)) {
           toast.success(response.data.data.message, {
-            position: "bottom-center",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: true,
             closeOnClick: true,
@@ -41,7 +41,7 @@ const Signup = () => {
             toastId: "my_toast",
           });
           toast.error(response.data.error.message, {
-            position: "bottom-center",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: true,
             closeOnClick: true,
@@ -50,9 +50,7 @@ const Signup = () => {
             progress: 0,
             toastId: "my_toast",
           });
-        } else {
-          console.log("Toast already active");
-        }
+        } 
       })
 
       .catch(function (error) {
@@ -195,7 +193,7 @@ const Signup = () => {
         </div>
       </div>
       <ToastContainer
-        position="bottom-center"
+        position="top-right"
         autoClose={5000}
         hideProgressBar
         closeOnClick
