@@ -11,10 +11,11 @@ const UserDropdown = () => {
           <Dropdown key={key}>
             <Dropdown.Toggle className="btn-dropdown" />
             <Dropdown.Menu>
-              {/* <Dropdown.Item>{user.name}</Dropdown.Item>
-              <Dropdown.Item>{user.email}</Dropdown.Item> */}
               <Dropdown.Item>
                 <NavLink to={user.profile}>{user.userInfo}</NavLink>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <NavLink to={user.changePassword}>{user.changePasswordText}</NavLink>
               </Dropdown.Item>
               <Dropdown.Item>
                 <NavLink to={user.logout}>{user.signout}</NavLink>

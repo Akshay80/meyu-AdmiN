@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "reactstrap";
 import { ReactComponent as UserIcon } from "../../../Assets/Icon/user.svg";
 import "./UserProfile.scss";
@@ -6,8 +6,62 @@ import "../Buttons/buttons.scss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import axiosConfig from "../APIConfig/axiosConfig";
 
 const UserProfile = () => {
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm();
+
+  const [apiData, setApiData] = useState([]);
+  function profile(data) {
+    const profileData = {
+      user: [
+        {
+          profile: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            phone: data.contact,
+            gender: null,
+            description: null,
+          },
+          address: {
+            street: data.address,
+            city: data.city,
+            state: data.state,
+            country: data.country,
+            zipCode: data.zip,
+          },
+        },
+      ],
+    };
+  }
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    axiosConfig
+      .post("/auth/profile", {
+        headers: {
+          "content-type": "application/json",
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        console.log("res", res?.data);
+        // if (res?.data?.success === true) {
+        //   console.log("test", res?.data?.data);
+        //   setApiData(res?.data?.data);
+        // } else {
+        //   console.log("test", res?.data?.token);
+        // }
+      })
+      .catch((error) => {
+        console.log("error", error.response.data);
+      });
+  }, []);
+
   const profileValidation = Yup.object().shape({
     firstName: Yup.string()
       .required("First name is required")

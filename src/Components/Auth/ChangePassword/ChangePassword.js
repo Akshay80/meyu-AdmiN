@@ -1,8 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Path from "../../../Constant/RouterConstant";
 import { useForm } from "react-hook-form";
-import '../ForgotPassword/ForgotPassword.scss'
+import './ChangePassword.scss'
 
 const ChangePassword = () => {
   const {
@@ -12,10 +11,10 @@ const ChangePassword = () => {
   } = useForm();
 
   return (
-    <div>
-      <div className="auth-wrapper align-items-center bg-dark">
+    <div className="p-5">
+      <div className="align-items-center">
         <div className="row text-center justify-content-center">
-          <div className="cards1 mb-5 align-middle">
+          <div className="changepass-card align-middle">
             <div className="card-body">
               <h3 className="card-title1">MEYU</h3>
               <p className="card-title2 mb-4">Meyu Admin</p>

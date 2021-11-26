@@ -14,11 +14,13 @@ import Tags from "../Pages/ProductManagement/Tags/Tags";
 import OrderManagement from "../Pages/OrderManagement";
 import OrderProfile from "../Pages/OrderManagement/OrderProfile/OrderProfile";
 import EditItems from "../Pages/ProductManagement/Allitems/EditItems";
+import ChangePassword from '../Components/Auth/ChangePassword/ChangePassword'
 
 function PrivateRoute() {
   return (
     <Routes>
       <Route path={Path.dashboard} element={<DefaultLayout />}>
+      <Route path={Path.changePassword} element={<ChangePassword />} />
 
         <Route path={""} element={<Dashboard />} />
 
