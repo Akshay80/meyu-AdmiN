@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Input } from "reactstrap";
 import { ReactComponent as UserIcon } from "../../../Assets/Icon/user.svg";
 import "./UserProfile.scss";
@@ -6,8 +6,18 @@ import "../Buttons/buttons.scss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import axiosConfig from '../APIConfig/axiosConfig';
+import { checked } from "glamor";
+import UserImage from '../../../Assets/Images/blank-user.png';
 
 const UserProfile = () => {
+  const [firstname, setFirstname] = useState();
+  const [lastname, setLastname] = useState();
+  const [email, setEmail] = useState();
+  const [contact, setContact] = useState();
+  const [gender, setGender] = useState();
+  const [url, setURL] = useState();
+  const [address, setAddress] = useState();
   const profileValidation = Yup.object().shape({
     firstName: Yup.string()
       .required("First name is required")
@@ -35,6 +45,23 @@ const UserProfile = () => {
   // get functions to build form with useForm() hook
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
+  
+
+  useEffect(() => {
+    axiosConfig.get('auth/profile').then(function (response) {
+console.log(response.data.data.Profile);
+setFirstname(response.data.data.Profile.firstName);
+setLastname(response.data.data.Profile.lastName);
+setEmail(response.data.data.Profile.email);
+setContact(response.data.data.Profile.phone);
+setAddress(response.data.data.Profile.Address);
+setURL(response.data.data.Profile.profileUrl);
+setGender(response.data.data.Profile.gender);
+    })
+    .catch(function (error) {
+    console.log(error);
+      })
+  }, [])
 
   function onSubmit(data) {
     // display form data on success
@@ -55,8 +82,8 @@ const UserProfile = () => {
           <img
             id="profilePic"
             className="pic"
-            alt=""
-            src="https://source.unsplash.com/random/150x150"
+            alt="userimage"
+            src={url === null? UserImage:url}
           />
 
           <label htmlFor="newProfilePhoto" className="upload-file-block">
@@ -90,13 +117,14 @@ const UserProfile = () => {
           </label>
           <input
             type="text"
+            value={firstname}
             {...register("firstName", {
               pattern: {
                 value: /^[A-Za-z]+$/i,
                 message: "Invalid firstname",
               },
             })}
-            className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
+            className={`form-control ${errors.firstName === null || errors.firstName === '' ? "is-invalid" : ""}`}
             placeholder="Enter First Name"
           />
           <div className="invalid-feedback">{errors.firstName?.message}</div>
@@ -107,13 +135,14 @@ const UserProfile = () => {
           </label>
           <input
             type="text"
+            value={lastname}
             {...register("lastName", {
               pattern: {
                 value: /^[A-Za-z]+$/i,
                 message: "Invalid lastname",
               },
             })}
-            className={`form-control ${errors.lastName ? "is-invalid" : ""}`}
+            className={`form-control ${errors.lasttName === null || errors.lastName === '' ? "is-invalid" : ""}`}
             placeholder="Enter Last Name"
           />
           <div className="invalid-feedback pb-0">
@@ -126,6 +155,7 @@ const UserProfile = () => {
           </label>
           <input
             type="email"
+            value={email}
             {...register("email", {
               pattern: {
                 value:
@@ -133,7 +163,7 @@ const UserProfile = () => {
                 message: "Invalid email",
               },
             })}
-            className={`form-control ${errors.email ? "is-invalid" : ""}`}
+            className={`form-control ${errors.email === null || errors.email === ''? "is-invalid" : ""}`}
             placeholder="Enter email"
           />
           <div className="invalid-feedback pb-0">{errors.email?.message}</div>
@@ -144,6 +174,7 @@ const UserProfile = () => {
             Contact Number
           </label>
           <input
+          value={contact}
             type="tel"
             maxLength="10"
             {...register("contact", {
@@ -152,7 +183,7 @@ const UserProfile = () => {
                 message: "Invalid contact number",
               },
             })}
-            className={`form-control ${errors.contact ? "is-invalid" : ""}`}
+            className={`form-control ${errors.contact === null || errors.contact === ''? "is-invalid" : ""}`}
             placeholder="Enter Contact Number"
           />
           <div className="invalid-feedback">{errors.contact?.message}</div>
@@ -163,13 +194,37 @@ const UserProfile = () => {
             Address
           </label>
           <input
+            value={address}
             type="text"
             {...register("address")}
-            className={`form-control ${errors.address ? "is-invalid" : ""}`}
+            className={`form-control ${errors.address === '' ? "is-invalid" : ""}`}
             placeholder="Address"
           />
           <div className="invalid-feedback pb-0">{errors.address?.message}</div>
         </div>
+        <div>
+          <label for="validationCustom007" class="form-label me-2">
+           Gender
+          </label>
+        <div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="male" />
+  <label class="form-check-label">
+    Male
+  </label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="female" />
+  <label class="form-check-label">
+    Female
+  </label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="others" {...gender === null? checked: null}/>
+  <label class="form-check-label">
+    Others
+  </label>
+</div>
+</div>
 
         <div class="col-md-6 col-sm-12">
           <label for="validationCustom06" class="form-label">

@@ -27,7 +27,7 @@ const Path = {
     addTag : "/add-tags",
     orders : "orders",
     orderManage : "order-management",
-    orderDetails : "/order-details"
+    orderDetails : "/order-details",
 };
 
 export default Path

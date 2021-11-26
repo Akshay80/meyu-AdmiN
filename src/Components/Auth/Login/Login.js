@@ -26,8 +26,7 @@ const Login = () => {
       if(response.data.success === true)
       {
         let token = response.data.data.token;
-        let token2 = token.substring(4);
-        localStorage.setItem('token', token2);
+        localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(response.data.data.user));
        window.location.href="/";
       }
@@ -62,7 +61,8 @@ const Login = () => {
     
   }
   return (
-    <><div className="auth-wrapper align-items-center bg-dark">
+    <>
+    <div className="auth-wrapper align-items-center bg-dark">
       <div className="row text-center justify-content-center">
         <div className="cards1 mb-5 align-middle">
           <div className="card-body">
@@ -114,27 +114,27 @@ const Login = () => {
                     <p className="errors">{errors.password.message}</p>
                   )}
                 </div>
-              </div>
-              <div className="mt-4 mb-4 row justify-content-center">
-                <div className="col-sm-12">
-                  <button type="submit" className="btn btn-auth">
-                    Sign In
-                  </button>
                 </div>
-              </div>
+                <div className="mt-4 mb-4 row justify-content-center">
+                  <div className="col-sm-12">
+                    <button type="submit" className="btn btn-auth">
+                      Sign In
+                    </button>
+                  </div>
+                </div>
 
-              <p>
-                Forgot Password?{" "}
-                <a href={Path.forgotPassword} className="link">
-                  Click Here
-                </a>
-              </p>
-            </form>
+                <p>
+                  Forgot Password?{" "}
+                  <a href={Path.forgotPassword} className="link">
+                    Click Here
+                  </a>
+                </p>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-
-    </div><ToastContainer
+    <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar
@@ -144,7 +144,8 @@ const Login = () => {
         draggable={false}
         pauseOnHover
         limit={1}
-        transition={Flip} /></>
+        transition={Flip} />
+        </>
   );
 };
 

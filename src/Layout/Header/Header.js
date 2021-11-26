@@ -5,7 +5,6 @@ import './Header.scss'
 
 const Header = ({menuToggleState, toggleMenu}) => {
     var user = JSON.parse(localStorage.getItem('user'))
-    console.log(user);
 
   return (  
         <div className={`header-wrapper d-flex ${menuToggleState?'full-width':''}`}>
