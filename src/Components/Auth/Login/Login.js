@@ -45,6 +45,7 @@ const Login = () => {
     })
 
     .catch(function (error) {
+      console.log(error);
       if (!toast.isActive(toastId)) {
         toast.error(error.response.data.error.message, {
           position: "top-right",

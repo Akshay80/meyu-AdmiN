@@ -6,9 +6,10 @@ import axiosConfig from "../APIConfig/axiosConfig";
 
 const UserDropdown = () => {
   const logout = () => {
-    axiosConfig
-      .get("auth/logout", {
-        headers: { "Content-Type": "application/json"}
+    axiosConfig.get("auth/logout", {
+        headers: { 
+          'content-type': "application/json"
+        }
       })
       .then(function (response) {
         console.log(response);
@@ -32,7 +33,7 @@ const UserDropdown = () => {
               </Dropdown.Item>
               <Dropdown.Item>
                 {/* <NavLink to={user.logout}>{user.signout}</NavLink> */}
-                <button className="border-0 bg-grey p-0" onClick={logout}>
+                <button className="border-0 bg-gray p-0" onClick={logout}>
                   {user.signout}
                 </button>
               </Dropdown.Item>
