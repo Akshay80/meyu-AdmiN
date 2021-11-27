@@ -6,10 +6,14 @@ import Week from "../../Components/Common/DatePicker/Week";
 import Month from "../../Components/Common/DatePicker/Month";
 import Year from "../../Components/Common/DatePicker/Year";
 import  "../../Components/Common/DatePicker/Datepickbutton.scss";
+import Login from "../../Components/Auth/Login/Login";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-
+  const navigate = useNavigate();
+const token = localStorage.getItem('token');
   return (
+    <>
     <div className="dashboard-wrapper">
       <div className="page-heading d-flex justify-content-between align-items-center p-4">
         <div className="main-heading d-flex">
@@ -29,6 +33,7 @@ const Dashboard = () => {
         <DashboardCard />
       </div>
     </div>
+    </>
   );
 };
 

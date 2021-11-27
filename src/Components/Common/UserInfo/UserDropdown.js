@@ -3,7 +3,10 @@ import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UserInfo } from "./UserInfo";
 import axiosConfig from "../APIConfig/axiosConfig";
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
+let toastId = null;
 const UserDropdown = () => {
   const logout = () => {
     axiosConfig.get("auth/logout", {
@@ -12,10 +15,37 @@ const UserDropdown = () => {
         }
       })
       .then(function (response) {
-        console.log(response);
+          if (!toast.isActive(toastId)) {
+            toast.success(response.data.data.message, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: 0,
+              toastId: "my_toast",
+            });
+          }
+        localStorage.removeItem('token');
+        setTimeout(() => {
+          window.location.href="/login"
+        }, 3000);
+        console.log(response.data.data.message);
       })
       .catch(function (error) {
-        console.log(error);
+        if (!toast.isActive(toastId)) {
+          toast.error(error.response.data.error, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+        };
       });
   };
 
@@ -41,6 +71,17 @@ const UserDropdown = () => {
           </Dropdown>
         );
       })}
+        <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        limit={1}
+        transition={Flip} />
     </>
   );
 };
