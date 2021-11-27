@@ -4,6 +4,7 @@ import UserDropdown from "../../Components/Common/UserInfo/UserDropdown";
 import './Header.scss'
 
 const Header = ({menuToggleState, toggleMenu}) => {
+    var user = JSON.parse(localStorage.getItem('user'))
 
   return (  
         <div className={`header-wrapper d-flex ${menuToggleState?'full-width':''}`}>
@@ -12,8 +13,8 @@ const Header = ({menuToggleState, toggleMenu}) => {
             </span>
             <div className="user-container d-flex">
                 <div className="me-2">
-                    <h6 className="pb-0 mb-0 fw-bold">Admin User Name</h6>
-                    <p>admin.email@meyu.com</p>
+                    <h6 className="pb-0 mb-0 fw-bold">{user.fullName}</h6>
+                    <p>{user.email}</p>
                 </div>
                 <UserDropdown />
             </div>
