@@ -6,12 +6,18 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './Styles/_custom.scss'
 import "react-datepicker/dist/react-datepicker.css";
-import axios from 'axios';
+import Login from './Components/Auth/Login/Login';
+import Home from './Pages/Dashboard/index';
 
-axios.defaults.url = 'http://192.168.5.34:8081/api/';
-axios.defaults.headers.common['Authorization'] = 'Bearer'+localStorage.getItem('token');
-
-
+const token = localStorage.getItem('token');
+if(!token)
+ {
+    <Login />
+ }
+ else
+ {
+  <Home />
+ }
 ReactDOM.render(
   <React.StrictMode>
     <App />

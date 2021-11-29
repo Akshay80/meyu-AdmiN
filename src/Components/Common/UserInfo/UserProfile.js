@@ -6,8 +6,9 @@ import "../Buttons/buttons.scss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import axiosConfig from "../APIConfig/axiosConfig";
-import UserImage from '../../../Assets/Images/blank-user.png';
+// import axiosConfig from "../APIConfig/axiosConfig";
+import UserImage from "../../../Assets/Images/blank-user.png";
+import { profileService } from "../../../Services/userService";
 
 const UserProfile = () => {
   const [firstname, setFirstname] = useState();
@@ -37,12 +38,14 @@ const UserProfile = () => {
     zip: Yup.string()
       .required("Zip is required")
       .matches(/^[0-9]*$/, "Invalid Zipcode"),
-  });const formOptions = { resolver: yupResolver(profileValidation) };
+  });
+  const formOptions = { resolver: yupResolver(profileValidation) };
 
   // get functions to build form with useForm() hook
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
   const [apiData, setApiData] = useState([]);
+
   function profile(data) {
     const profileData = {
       user: [
@@ -67,47 +70,48 @@ const UserProfile = () => {
   }
 
   useEffect(() => {
+    profileFun({});
+  }, []);
 
-    axiosConfig.get('auth/profile').then(function (response) {
-      // console.log(response.data.data.Profile);
-      setFirstname(response.data.data.Profile.firstName);
-      setLastname(response.data.data.Profile.lastName);
-      setEmail(response.data.data.Profile.email);
-      setContact(response.data.data.Profile.phone);
-      setAddress(response.data.data.Profile.Address);
-      setURL(response.data.data.Profile.profileUrl);
-      setGender(response.data.data.Profile.gender);
-          })
-          .catch(function (error) {
-            console.log(error);
-              })
-    let token = localStorage.getItem("token");
-    axiosConfig
-      .post("/auth/profile", {
-        headers: {
-          "content-type": "application/json",
-          "Authorization": token,
-        },
+  const profileFun = (data) => {
+    console.log("formdata", data);
+    profileService(data)
+
+      .then(function (response) {
+        // console.log(response.data.data.Profile);
+        setFirstname(response?.data?.data?.Profile?.firstName);
+        setLastname(response?.data?.data?.Profile?.lastName);
+        setEmail(response?.data?.data?.Profile?.email);
+        setContact(response?.data?.data?.Profile?.phone);
+        setAddress(response?.data?.data?.Profile?.Address?.street);
+        setURL(response?.data?.data?.Profile?.profileUrl);
+        setGender(response?.data?.data?.Profile?.gender);
       })
-      .then((res) => {
-        console.log("res", res?.data);
-        // if (res?.data?.success === true) {
-        //   console.log("test", res?.data?.data);
-        //   setApiData(res?.data?.data);
-        // } else {
-        //   console.log("test", res?.data?.token);
-        // }
-      })
-      .catch((error) => {
-        console.log("error", error.response.data);
+      .catch(function (error) {
+        console.log(error);
       });
-  }, []);  
-
+  };
 
   function onSubmit(data) {
-    // display form data on success
-    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
-    // return false;
+    
+    let params = {
+      profile: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.contact,
+        // "email": data.email,
+        gender: data.gender,
+        description: data.description,
+      },
+      address: {
+        street: data.address,
+        city: data.city,
+        state: data.state,
+        country: data.country,
+        zipCode: data.zip,
+      },
+    };
+    profileFun(params);
   }
 
   return (
@@ -124,7 +128,7 @@ const UserProfile = () => {
             id="profilePic"
             className="pic"
             alt="userimage"
-            src={url === null? UserImage:url}
+            src={url === null ? UserImage : url}
           />
 
           <label htmlFor="newProfilePhoto" className="upload-file-block">
@@ -165,7 +169,11 @@ const UserProfile = () => {
                 message: "Invalid firstname",
               },
             })}
-            className={`form-control ${errors.firstName === null || errors.firstName === '' ? "is-invalid" : ""}`}
+            className={`form-control ${
+              errors.firstName === null || errors.firstName === ""
+                ? "is-invalid"
+                : ""
+            }`}
             placeholder="Enter First Name"
           />
           <div className="invalid-feedback">{errors.firstName?.message}</div>
@@ -183,7 +191,11 @@ const UserProfile = () => {
                 message: "Invalid lastname",
               },
             })}
-            className={`form-control ${errors.lasttName === null || errors.lastName === '' ? "is-invalid" : ""}`}
+            className={`form-control ${
+              errors.lasttName === null || errors.lastName === ""
+                ? "is-invalid"
+                : ""
+            }`}
             placeholder="Enter Last Name"
           />
           <div className="invalid-feedback pb-0">
@@ -204,7 +216,9 @@ const UserProfile = () => {
                 message: "Invalid email",
               },
             })}
-            className={`form-control ${errors.email === null || errors.email === ''? "is-invalid" : ""}`}
+            className={`form-control ${
+              errors.email === null || errors.email === "" ? "is-invalid" : ""
+            }`}
             placeholder="Enter email"
           />
           <div className="invalid-feedback pb-0">{errors.email?.message}</div>
@@ -215,7 +229,7 @@ const UserProfile = () => {
             Contact Number
           </label>
           <input
-          value={contact}
+            value={contact}
             type="tel"
             maxLength="10"
             {...register("contact", {
@@ -224,7 +238,11 @@ const UserProfile = () => {
                 message: "Invalid contact number",
               },
             })}
-            className={`form-control ${errors.contact === null || errors.contact === ''? "is-invalid" : ""}`}
+            className={`form-control ${
+              errors.contact === null || errors.contact === ""
+                ? "is-invalid"
+                : ""
+            }`}
             placeholder="Enter Contact Number"
           />
           <div className="invalid-feedback">{errors.contact?.message}</div>
@@ -238,34 +256,65 @@ const UserProfile = () => {
             value={address}
             type="text"
             {...register("address")}
-            className={`form-control ${errors.address === '' ? "is-invalid" : ""}`}
+            className={`form-control ${
+              errors.address === "" ? "is-invalid" : ""
+            }`}
             placeholder="Address"
           />
           <div className="invalid-feedback pb-0">{errors.address?.message}</div>
         </div>
         <div>
           <label for="validationCustom007" class="form-label me-2">
-           Gender
+            Gender
           </label>
-        <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="flexRadioDefault" id="male" />
-  <label class="form-check-label">
-    Male
-  </label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="flexRadioDefault" id="female" />
-  <label class="form-check-label">
-    Female
-  </label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="flexRadioDefault" id="others" />
-  <label class="form-check-label">
-    Others
-  </label>
-</div>
-</div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              id="male"
+              {...register("gender")}
+              value="male"
+            />
+            <label class="form-check-label">Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              {...register("gender")}
+              id="female"
+              value="female"
+            />
+            <label class="form-check-label">Female</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              {...register("gender")}
+              id="others"
+              value="other"
+            />
+            <label class="form-check-label">Others</label>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label for="validationCustom08" class="form-label">
+            Description
+          </label>
+          <textarea
+            type="text"
+            {...register("description", {
+              pattern: {
+                value: /^[A-Za-z]+$/i,
+              },
+            })}
+            className={`form-control ${errors.description ? "is-invalid" : ""}`}
+            placeholder="Describe yourself"
+          />
+          {/* <div className="invalid-feedback">{errors.city?.message}</div> */}
+        </div>
 
         <div class="col-md-6 col-sm-12">
           <label for="validationCustom06" class="form-label">
@@ -278,9 +327,26 @@ const UserProfile = () => {
             <option selected disabled value="">
               Choose...
             </option>
-            <option>...</option>
+            <option>India</option>
           </select>
           <div className="invalid-feedback">{errors.country?.message}</div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label for="validationCustom08" class="form-label">
+            Street
+          </label>
+          <input
+            type="text"
+            {...register("street", {
+              pattern: {
+                value: /^[A-Za-z]+$/i,
+                message: "Invalid Street",
+              },
+            })}
+            className={`form-control ${errors.street ? "is-invalid" : ""}`}
+            placeholder="Street"
+          />
+          <div className="invalid-feedback">{errors.street?.message}</div>
         </div>
         <div class="col-md-6 col-sm-12">
           <label for="validationCustom07" class="form-label">
@@ -293,7 +359,7 @@ const UserProfile = () => {
             <option selected disabled value="">
               Choose...
             </option>
-            <option>...</option>
+            <option>Uttrakhand</option>
           </select>
           <div className="invalid-feedback">{errors.state?.message}</div>
         </div>

@@ -33,6 +33,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start_dev": "set REACT_APP_ENV=dev && react-scripts start",
+    "start_stag": "set REACT_APP_ENV=stag && react-scripts start",
+    "start_dev_ubuntu": "REACT_APP_ENV=dev react-scripts start",
+    "start_stag_ubuntu": "REACT_APP_ENV=stag react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

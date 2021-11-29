@@ -13,8 +13,8 @@ const Header = ({menuToggleState, toggleMenu}) => {
             </span>
             <div className="user-container d-flex">
                 <div className="me-2">
-                    <h6 className="pb-0 mb-0 fw-bold">{user.fullName}</h6>
-                    <p>{user.email}</p>
+                    <h6 className="pb-0 mb-0 fw-bold">{user.fullName === undefined? "Admin Full Name": user.fullName}</h6>
+                    <p>{user.email === undefined? "Admin Email": user.email}</p>
                 </div>
                 <UserDropdown />
             </div>

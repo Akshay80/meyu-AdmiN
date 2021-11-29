@@ -5,62 +5,51 @@ import { useForm } from "react-hook-form";
 import axiosConfig from "../../Common/APIConfig/axiosConfig";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { useNavigate } from "react-router-dom";
 
 let toastId = null;
 const Login = () => {
+    let history = useHistory()
+  const [loader, setLoader] = useState(false);
+  const [isValidForm, setIsValidForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  function login1(data) {
-    const loginData = {
-      username: data.email,
-      password: data.password
+  
+  const onSubmit = (data) => {
+    setLoader(true);
+    let params = {
+      szEmail: data.email,
+      szPassword: data.password
     }
 
-    axiosConfig
-    .post("/authenticateadmin", loginData)
-    .then(function (response) {
-      if(response.data.success === true)
-      {
-        let token = response.data.data.token;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(response.data.data.user));
-       window.location.href="/";
-      }
-      if (!toast.isActive(toastId)) {
-        toast.error(response.data.error, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-      }
-    })
-
-    .catch(function (error) {
-      console.log(error);
-      if (!toast.isActive(toastId)) {
-        toast.error(error.response.data.error.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-      }
-    });
-    
+    loginService(params)
+      .then(res => {
+        console.log("res login", res.statusCode)
+        if (res?.status !== "Error") {
+          console.log("test",res)
+          // setUserDetail(JSON.stringify(res.responseData.adminProfile));
+          setUserToken(res?.data?.szToken);
+          history.push('/');
+        }
+        else {
+          setErrorMessage(res?.data?.message);
+          setIsValidForm(false);
+        }
+        setLoader(false);
+      })
+      .catch(err => {
+        setErrorMessage(err?.data?.message);
+        console.log("error", err);
+        setLoader(false);
+        setIsValidForm(false);
+      })
   }
+
   return (
     <>
     <div className="auth-wrapper align-items-center bg-dark">
@@ -81,8 +70,7 @@ const Login = () => {
                 <div className="col-sm-12">
                   <input
                     type="email"
-                    className="form-control shadow-none"
-                    name="email"
+                    className="form-control shadow-none"  
                     placeholder="Email"
                     {...register("email", {
                       required: "Email is required",
@@ -100,7 +88,6 @@ const Login = () => {
               <div className="mb-3 row justify-content-center">
                 <div className="col-sm-12">
                   <input
-                    name="password"
                     placeholder="Password"
                     className="form-control shadow-none"
                     type="password"
