@@ -12,7 +12,7 @@ const Week = () => {
   };
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
     <button className="example-custom-input" onClick={onClick} ref={ref}>
-      Week
+      {value.substring(0,value.length-2)}
     </button>
   ));
   return (

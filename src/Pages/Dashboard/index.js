@@ -14,25 +14,25 @@ const Dashboard = () => {
 const token = localStorage.getItem('token');
   return (
     <>
-    <div className="dashboard-wrapper">
-      <div className="page-heading d-flex justify-content-between align-items-center p-4">
-        <div className="main-heading d-flex">
+    <div className="dashboard-wrapper d-flex justify-content-between align-items-center">
+      <div className="page-heading d-flex p-4">
+        <div className="d-flex">
           <Home
             style={{ height: "36px", width: "36px", marginRight: "10px" }}
           />
           <h3 className=" m-1">Dashboard </h3>
         </div>
 
+      </div>
         <div className="date-filters d-flex justify-content-around">
           <Week />
           <Month />
           <Year />
         </div>
-      </div>
+    </div>
       <div className="dashboard-content">
         <DashboardCard />
       </div>
-    </div>
     </>
   );
 };

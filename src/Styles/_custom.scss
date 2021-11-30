@@ -1,85 +1,133 @@
-@import './_theme.scss';
-@import '../Components/Common/Buttons/buttons.scss';
+@import "./_theme.scss";
+@import "../Components/Common/Buttons/buttons.scss";
 
 a {
   text-decoration: none !important;
   color: black;
   &:hover {
-    color : $main-color;
+    color: $main-color;
   }
 }
- .dropdown-item:active {
-   background-color: transparent;
- }
+.dropdown-item:active {
+  background-color: transparent;
+}
 
 .main-wrapper {
   display: flex;
   flex-wrap: wrap;
   height: 100vh;
-  
+
   .content-wrapper {
     width: calc(100% - 20%);
     margin-left: auto;
-    background-color:#f1f5f9;
+    // background-color: #f7fcff; 
     transition: all ease-in-out 250ms;
     &.full-width {
-      width: 100%;
+      // width: 100%;
       transition: all ease-in-out 250ms;
     }
     .page-wrapper {
-      margin-top: 93px;
+      margin-top: 83px;
       padding: 0 30px;
-     .main-heading{
-       color: $sec-color;
-     }
+
+      .main-heading {
+        color: $main-color;
+        font-weight: bold;
+        font-size: 40px;
+        //  padding: 15px;
+        //  border-radius: 10px;
+        //  background-color: $main-color !important;
+      }
       .sec-heading {
         color: $primary;
       }
-     .sec-text {
-       color : $sec-color;
-     } 
-     .img {
-      color : $sec-color;
-     }
-     .card {
-       border-radius: 15px;
-       box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.4);
-       -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.4);
-       -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.4);
-     }
-     .card-title {
-      color : $main-color;
+      .sec-text {
+        color: $sec-color;
+      }
+      .svg-icon {
+        color: $primary-light;
+        background-color: #fdd1bcb0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        width: 50px;
+        padding: 8px;
+        border-radius: 50%;
+      }
+      .item-pic {
+        width: 100% !important;
+        object-fit: cover !important;
+        max-width: 400px !important;
+        max-height: 240px !important;
+      }
+      .profile-pic {
+        width: 100% !important;
+        object-fit: cover !important;
+        max-width: 450px !important;
+        max-height: 250px !important;
+      }
+      .card {
+        border-radius: 10px;
+        box-shadow: 0px 1px 5px 0px rgba(90, 61, 17, 0.4);
+        -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.4);
+      }
+
+      // .card {
+      //   background: #000046; /* fallback for old browsers */
+      //   background: -webkit-linear-gradient(to right, #1CB5E0, #000046); /* Chrome 10-25, Safari 5.1-6 */
+      //   background: linear-gradient(to right, #1CB5E0, #000046); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      // }
+
+      .card-title {
+        color: black;
+        font-weight: bold;
+        // font-size: 16px !important;
+      }
+      .card-text {
+        color: $heading;
+        font-size: 14px;
+      }
+      h5 {
+        color: $primary;
+        font-weight: bold;
+      }
+      h6 {
+        color: $sidebar-bg;
+      }
+      p {
+        color: $sidebar-bg;
+      }
     }
-    .card-text {
-      color : $sec-color;
-    }
-    h5,h6, p {
-    color :  $primary-light;
-    }
-    }
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
 
-@media (max-width : 1200px) {
+@media (max-width: 1200px) {
   .content-wrapper {
     width: calc(100% - 30%) !important ;
     margin-left: auto;
-    background-color:#f1f5f9;
+    background-color: #f1f5f9;
     transition: all ease-in-out 250ms;
     &.full-width {
-      width: 100% !important;
+      // width: 100% !important;
       transition: all ease-in-out 250ms;
     }
+  }
 }
-}
-@media (max-width : 991px) {
+@media (max-width: 991px) {
   .content-wrapper {
     min-width: 100%;
     transition: all ease-in-out 250ms;
-    background-color:#f1f5f9;
+    background-color: #f1f5f9;
     &.full-width {
-     min-width: 100%;
-    transition: all ease-in-out 250ms;
+      min-width: 100%;
+      transition: all ease-in-out 250ms;
     }
-}
+  }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
@@ -15,8 +15,10 @@ import Path from '../../../../Constant/RouterConstant';
 import { NavLink } from "react-router-dom";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import axiosConfig from '../../APIConfig/axiosConfig'
 
 const CustomerTable = () => {
+  const [customerDatas, setCustomerDatas] = useState()
   const products = customerData.map((custom) => [
     {
       id: custom.id,
@@ -26,6 +28,21 @@ const CustomerTable = () => {
       phonenumber: custom.phonenumber,
     },
   ]);
+
+  useEffect(() => {
+    axiosConfig.get('admin/getusers' , {
+      headers : {
+        "content-type": "application/json"
+      }
+    }).then(function (response) {
+console.log(response.data.data)
+setCustomerDatas(response.data.data)
+customerDatas.map((ele) => console.log(ele))
+    })
+    .catch(function (error){
+console.log(error)
+    })
+  }, [])
   function handleDelete(rowId, name) {
     confirmAlert({
       title: 'Delete',

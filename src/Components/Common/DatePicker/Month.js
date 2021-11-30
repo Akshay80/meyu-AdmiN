@@ -5,7 +5,7 @@ const Month = () => {
   const [startDate, setStartDate] = useState(new Date());
   const ExampleCustomInput = React.forwardRef(({ value, onClick }, ref) => (
     <button className="example-custom-input" onClick={onClick} ref={ref}>
-      Monthly
+      {value}
     </button>
   ));
   // console.log(startDate.getMonth()+1);
@@ -13,7 +13,7 @@ const Month = () => {
     <DatePicker
       selected={startDate}
       onChange={(date) => setStartDate(date)}
-      dateFormat="MM/yyyy"
+      dateFormat="MMMM"
       showMonthYearPicker
       customInput={<ExampleCustomInput />}
     />

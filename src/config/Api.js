@@ -14,5 +14,9 @@ export default (() => {
 
     // user
     userProfile: `${setting.api.url}auth/profile`,
+    viewuserProfile: `${setting.api.url}auth/profile`,
+    
+    // Customer
+    customers: `${setting.api.url}admin/getusers`
   }
 })()

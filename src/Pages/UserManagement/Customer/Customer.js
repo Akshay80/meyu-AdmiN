@@ -5,7 +5,7 @@ import { ReactComponent as UserIcon } from "../../../Assets/Icon/user.svg";
 const Customer = () => {
   return (
     <div className="pt-2">
-      <div className="page-heading d-flex align-items-center p-3">
+      <div className="page-heading d-flex align-items-center p-4">
         <UserIcon
           style={{ height: "36px", width: "36px", marginRight: "10px" }}
         />

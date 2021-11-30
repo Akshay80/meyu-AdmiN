@@ -12,7 +12,6 @@ ApiInstance.interceptors.request.use(
     const headers = {
       "Content-Type": "application/json",
       "Authorization" : token,
-
     };
     if (token) {
       request.headers.common['Authorization'] = token;

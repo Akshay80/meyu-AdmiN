@@ -8,9 +8,9 @@ import "../../../Components/Common/Buttons/buttons.scss";
 const OrderProfile = () => {
   return (
     <>
-       <div className="main-heading d-flex align-items-center p-3 py-5">
+       <div className="page-heading d-flex align-items-center p-4 ">
         <OrderIcon
-          style={{ height: "36px", width: "36px", marginRight: "10px" }}
+          style={{ height: "30px", width: "30px", marginRight: "10px" }}
         />
         <h3 className="m-1">Order Management</h3>
       </div>
@@ -20,7 +20,7 @@ const OrderProfile = () => {
         <div className="pic-holder">
           <img
             id="profilePic"
-            className="pic"
+            className="profile-pic"
             alt=""
             src="https://source.unsplash.com/random/120x120"
           />

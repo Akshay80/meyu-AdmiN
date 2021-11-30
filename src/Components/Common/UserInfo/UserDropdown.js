@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import {useNavigate} from 'react-router-dom'
 import './userDropDown.css'
 import Path from "../../../Constant/RouterConstant";
+import '../Buttons/buttons.scss';
 
 let toastId = null;
 const UserDropdown = () => {
@@ -58,7 +59,7 @@ const UserDropdown = () => {
       {UserInfo.map((user, key) => {
         return (
           <Dropdown key={key}>
-            <Dropdown.Toggle className="dropdown-button" />
+            <Dropdown.Toggle className="btn-dropdown" />
             <Dropdown.Menu>
               <Dropdown.Item>
                 <Link to={user.profile}>{user.userInfo}</Link>
