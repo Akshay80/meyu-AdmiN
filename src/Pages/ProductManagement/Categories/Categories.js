@@ -3,7 +3,7 @@ import CategoriesTable from '../../../Components/Common/Table/CategoriesTable/Ca
 
 const Categories = () => {
     return (
-        <div className="p-4">
+        <div>
             <CategoriesTable />
         </div>
        

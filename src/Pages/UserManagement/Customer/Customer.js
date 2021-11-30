@@ -4,7 +4,7 @@ import { ReactComponent as UserIcon } from "../../../Assets/Icon/user.svg";
 
 const Customer = () => {
   return (
-    <div className="pt-2">
+    <div>
       <div className="page-heading d-flex p-4">
       <div className="page-heading-wapper d-flex">
         <UserIcon className="page-icon m-0"     />

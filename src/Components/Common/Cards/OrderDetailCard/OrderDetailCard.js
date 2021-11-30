@@ -6,8 +6,8 @@ const OrderDetailCard = () => {
   return (
     <div className="container">
       <div className="card mb-3 p-3">
-          <div className="card-title d-flex pb-3 ps-3">
-            <OrderIcon className="icon-bg"/>
+          <div className="card-title d-flex align-items-center pb-3 ps-3">
+            <OrderIcon className="page-icon m-0"/>
             <div className="d-block mx-3">
               <h5 className="mb-0">Delivered</h5>
               <p>Date</p>
@@ -38,7 +38,7 @@ const OrderDetailCard = () => {
               </div>
               <div className="card-xz">
                 <h5 className="mb-0">Price</h5>
-                <h6>$ 24</h6>
+                <h6>$24</h6>
               </div>
               <div className="card-xz">
                 <h5 className="mb-0">Total Price</h5>

@@ -4,7 +4,7 @@ import { ReactComponent as UserIcon } from "../../../Assets/Icon/user.svg";
 
 const Chef = () => {
   return (
-    <div className="pt-2">
+    <div>
       <div className="page-heading d-flex align-items-center p-4">
       <div className="page-heading-wapper d-flex">
         <UserIcon className="page-icon m-0" />

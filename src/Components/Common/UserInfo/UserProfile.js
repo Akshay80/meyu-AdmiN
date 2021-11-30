@@ -92,11 +92,11 @@ const UserProfile = () => {
   // }
 
   useEffect(() => {
-    // profileFun({});
-    profileDetails();
+    profileFun({});
+    // profileDetails();
   }, []);
 
-  const profileDetails = () => {
+  const profileFun = () => {
     viewprofileService().then(function(response) {
     // console.log(response.data)
     setFirstname(response?.data?.data?.Profile?.firstName);
