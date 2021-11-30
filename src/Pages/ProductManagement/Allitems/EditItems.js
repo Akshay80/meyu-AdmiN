@@ -6,18 +6,16 @@ import {ReactComponent as ShoppingCartIcon} from '../../../Assets/Icon/Shoppingb
 const EditItems = () => {
   return (
     <div>
-      <div className="page-heading d-flex justify-content-between flex-column p-4">
-        <div className="d-flex align-items-center">
-          <ShoppingCartIcon
-            style={{ height: "36px", width: "36px", marginRight: "10px" }}
-          />
+      <div className="page-heading d-flex align-items-center justify-content-between p-4">
+        <div className="page-heading-wapper d-flex">
+          <ShoppingCartIcon  className="page-icon m-0"  />
           <div className="d-block">
-            <h4 className="mb-0">All Items / Item Details </h4>
+            <h3 className="page-sec-heading m-0 ms-2">All Items / Item Details </h3>
+          </div>
+        </div>
             <h6>
               Chef ID <b>#543210</b>
             </h6>
-          </div>
-        </div>
       </div>
 
       <div className="d-flex flex-column justify-content-around">

@@ -5,11 +5,11 @@ import { ReactComponent as ListIcon } from "../../../../Assets/Icon/Menu.svg";
 const FoodCard = () => {
   return (
     <>
-      <div className="page-heading d-flex align-items-center ps-4 mt-3">
-        <ListIcon
-          style={{ height: "36px", width: "36px", marginRight: "10px" }}
-        />
-        <h3 className="m-1">Foods </h3>
+      <div className="page-heading d-flex align-items-center p-4">
+      <div className="page-heading-wapper d-flex">
+        <ListIcon className="page-icon m-0" />
+        <h3 className="page-sec-heading m-0 ms-2">Foods</h3>
+      </div>
       </div>
     <div className="row col-md-12">
       {FoodCardData.map((val, key) => {

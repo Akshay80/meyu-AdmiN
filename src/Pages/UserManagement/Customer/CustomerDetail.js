@@ -7,29 +7,29 @@ import OrderDetailCard from "../../../Components/Common/Cards/OrderDetailCard/Or
 const CustomerDetail = () => {
   return (
     <div>
-      <div className="page-heading d-flex justify-content-between flex-column p-4 pb-0">
-        <div className="d-flex align-items-center">
-          <UserIcon
-            style={{ height: "36px", width: "36px", marginRight: "10px" }}
-          />
+      <div className="page-heading d-flex align-items-center justify-content-between p-4">
+        <div className="page-heading-wapper d-flex">
+          <UserIcon className="page-icon m-0" />
           <div className="d-block">
-            <h4 className="mb-0">Customer / Customer-Details </h4>
-            <h6>
-              Customer ID <b>#543210</b>
-            </h6>
+            <h3 className="page-sec-heading m-0 ms-2">Customer-Details </h3>
           </div>
         </div>
+        <h6>
+          Customer ID <b>#543210</b>
+        </h6>
       </div>
       <div>
         <CustomerCard />
       </div>
       <div className="pb-3">
-        <div className=" main-heading d-flex align-items-center ps-4 mt-5 pb-1">
-          <OrderIcon
-            style={{ height: "24px", width: "24px", marginRight: "5px" }}
-          />
-          <h4 className="m-1">Order-Details </h4>
-        </div>
+      <div className="page-heading d-flex align-items-center p-4  ">
+      <div className="page-heading-wapper d-flex">
+        <OrderIcon
+          className="page-icon m-0"
+        />
+        <h3 className="page-sec-heading m-0 ms-2">Order Details</h3>
+      </div>
+      </div>
         <OrderDetailCard />
       </div>
     </div>

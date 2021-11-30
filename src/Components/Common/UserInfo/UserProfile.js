@@ -46,28 +46,28 @@ const UserProfile = () => {
   const { errors } = formState;
   const [apiData, setApiData] = useState([]);
 
-  function profile(data) {
-    const profileData = {
-      user: [
-        {
-          profile: {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            phone: data.contact,
-            gender: null,
-            description: null,
-          },
-          address: {
-            street: data.address,
-            city: data.city,
-            state: data.state,
-            country: data.country,
-            zipCode: data.zip,
-          },
-        },
-      ],
-    };
-  }
+  // function profile(data) {
+  //   const profileData = {
+  //     user: [
+  //       {
+  //         profile: {
+  //           firstName: data.firstName,
+  //           lastName: data.lastName,
+  //           phone: data.contact,
+  //           gender: null,
+  //           description: null,
+  //         },
+  //         address: {
+  //           street: data.address,
+  //           city: data.city,
+  //           state: data.state,
+  //           country: data.country,
+  //           zipCode: data.zip,
+  //         },
+  //       },
+  //     ],
+  //   };
+  // }
 
   useEffect(() => {
     profileFun({});
@@ -92,6 +92,7 @@ const UserProfile = () => {
   };
 
   function onSubmit(data) {
+    // alert("clicked");
     let params = {
       profile: {
         firstName: data.firstName,
@@ -99,7 +100,6 @@ const UserProfile = () => {
         phone: data.contact,
         // "email": data.email,
         gender: data.gender,
-        description: data.description,
       },
       address: {
         street: data.address,
@@ -114,11 +114,11 @@ const UserProfile = () => {
 
   return (
     <div className="user-profile-container">
-      <div className="page-heading d-flex align-items-center">
-        <UserIcon
-          style={{ height: "36px", width: "36px", marginRight: "10px" }}
-        />
-        <h2 className="m-1">Edit Profile </h2>
+      <div className="page-heading d-flex p-4">
+        <div className="page-heading-wapper d-flex">
+          <UserIcon className="page-icon m-0" />
+          <h3 className="page-sec-heading m-0 ms-2">Edit Profile </h3>
+        </div>
       </div>
       <div className="profile-pic-wrapper">
         <div className="profile-pic-holder">
@@ -152,7 +152,7 @@ const UserProfile = () => {
       <form
         className="row g-3 needs-validation"
         onSubmit={handleSubmit(onSubmit)}
-        noValidate
+        // noValidate
       >
         <div className="col-md-6 col-sm-12">
           <label htmlFor="validationCustom01" className="form-label">
@@ -356,7 +356,7 @@ const UserProfile = () => {
         </div>
 
         {/* ========== Description ========  */}
-        <div>
+        {/* <div>
           <label htmlFor="validationCustom08" className="form-label">
             Description
           </label>
@@ -372,7 +372,7 @@ const UserProfile = () => {
             className={`form-control ${errors.description ? "is-invalid" : ""}`}
             placeholder="Describe yourself"
           />
-        </div>
+        </div> */}
         {/* =========================================== */}
 
         <div className="d-flex pb-5 align-items-center justify-content-center flex-wrap-wrap">
