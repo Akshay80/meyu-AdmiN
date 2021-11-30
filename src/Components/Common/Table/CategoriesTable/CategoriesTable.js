@@ -117,13 +117,12 @@ const CategoriesTable = () => {
 
   return (
     <>
-      <div className="page-heading d-flex align-items-center p-3 justify-content-between">
-        <div className="d-flex pb-2 align-items-center">
-          <BagIcon
-            style={{ height: "36px", width: "36px", marginRight: "10px" }}
-          />
-          <h3 className="m-1 ">Categories </h3>
-        </div>
+      <div className="page-heading d-flex align-items-center p-4 justify-content-between">
+          <div className="page-heading-wapper d-flex">
+            <BagIcon className="page-icon m-0" />
+            <h3 className="page-sec-heading m-0 ms-2">Categories </h3>
+          </div>
+       
         <div className="d-flex align-items-center ">
           <button
             type="submit"
@@ -135,7 +134,7 @@ const CategoriesTable = () => {
             <AddIcon /> Add New Categories
           </button>
         </div>
-      </div>
+        </div>
       <div
         className="modal fade"
         id="exampleModal"

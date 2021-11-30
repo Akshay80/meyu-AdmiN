@@ -68,28 +68,28 @@ const UserProfile = () => {
   const { errors } = formState;
   const [apiData, setApiData] = useState([]);
 
-  function profile(data) {
-    const profileData = {
-      user: [
-        {
-          profile: {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            phone: data.contact,
-            gender: "m",
-            description: "test",
-          },
-          address: {
-            street: data.address,
-            city: data.city,
-            state: data.state,
-            country: data.country,
-            zipCode: data.zip,
-          },
-        },
-      ],
-    };
-  }
+  // function profile(data) {
+  //   const profileData = {
+  //     user: [
+  //       {
+  //         profile: {
+  //           firstName: data.firstName,
+  //           lastName: data.lastName,
+  //           phone: data.contact,
+  //           gender: null,
+  //           description: null,
+  //         },
+  //         address: {
+  //           street: data.address,
+  //           city: data.city,
+  //           state: data.state,
+  //           country: data.country,
+  //           zipCode: data.zip,
+  //         },
+  //       },
+  //     ],
+  //   };
+  // }
 
   useEffect(() => {
     // profileFun({});
@@ -114,58 +114,25 @@ console.log(error);
   })
 }
 
-
-
-  // const profileFun = (data) => {
-  //   console.log("formdata", data);
-  //   profileService(data)
-  //     .then(function (response) {
-  //       console.log(response);
-  //       console.log(response.data.data.Profile);
-        // setFirstname(response?.data?.data?.Profile?.firstName);
-        // setLastname(response?.data?.data?.Profile?.lastName);
-        // setEmail(response?.data?.data?.Profile?.email);
-        // setContact(response?.data?.data?.Profile?.phone);
-        // setAddress(response?.data?.data?.Profile?.Address?.street);
-        // setURL(response?.data?.data?.Profile?.profileUrl);
-        // setGender(response?.data?.data?.Profile?.gender);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // };
-
-  function dataSubmit(data) {
-  console.log(data)
-    // let params = {
-    //   profile: {
-    //     firstName: data.firstName,
-    //     lastName: data.lastName,
-    //     phone: data.contact,
-    //     // "email": data.email,
-    //     gender: data.gender,
-    //     description: data.description,
-    //   },
-    //   address: {
-    //     street: data.address,
-    //     city: data.city,
-    //     state: data.state,
-    //     country: data.country,
-    //     zipCode: data.zip,
-    //   },
-    // };
-    // profileFun(params);
-    // const formData = new FormData();
-    // formData.append("image", image.raw);
-    // console.log(image);
-
-    // await fetch("YOUR_URL", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "multipart/form-data"
-    //   },
-    //   body: formData
-    // });
+  function onSubmit(data) {
+    // alert("clicked");
+    let params = {
+      profile: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.contact,
+        // "email": data.email,
+        gender: data.gender,
+      },
+      address: {
+        street: data.address,
+        city: data.city,
+        state: data.state,
+        country: data.country,
+        zipCode: data.zip,
+      },
+    };
+    profileFun(params);
   }
 
   const handleChange = (e) => {
@@ -178,11 +145,11 @@ console.log(error);
   };
   return (
     <div className="user-profile-container">
-      <div className="page-heading d-flex align-items-center">
-        <UserIcon
-          style={{ height: "36px", width: "36px", marginRight: "10px" }}
-        />
-        <h2 className="m-1">Edit Profile </h2>
+      <div className="page-heading d-flex p-4">
+        <div className="page-heading-wapper d-flex">
+          <UserIcon className="page-icon m-0" />
+          <h3 className="page-sec-heading m-0 ms-2">Edit Profile </h3>
+        </div>
       </div>
       <div className="profile-pic-wrapper">
         <div className="profile-pic-holder">
@@ -237,9 +204,9 @@ console.log(error);
       </div>
 
       <form
-        className="row g-3"
-        onSubmit={handleSubmit(dataSubmit)}
-        noValidate
+        className="row g-3 needs-validation"
+        onSubmit={handleSubmit(onSubmit)}
+        // noValidate
       >
         <div className="col-md-6 col-sm-12">
           <label htmlFor="validationCustom01" className="form-label">
@@ -448,7 +415,7 @@ console.log(error);
         </div>
 
         {/* ========== Description ========  */}
-        <div>
+        {/* <div>
           <label htmlFor="validationCustom08" className="form-label">
             Description
           </label>
@@ -464,7 +431,7 @@ console.log(error);
             className={`form-control ${errors.description ? "is-invalid" : ""}`}
             placeholder="Describe yourself"
           />
-        </div>
+        </div> */}
         {/* =========================================== */}
 
         <div className="d-flex pb-5 align-items-center justify-content-center flex-wrap-wrap">

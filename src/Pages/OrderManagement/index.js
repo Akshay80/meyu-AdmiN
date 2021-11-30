@@ -7,10 +7,12 @@ const OrderManagement = () => {
   return (
     <div>
       <div className="page-heading d-flex align-items-center p-4  ">
+      <div className="page-heading-wapper d-flex">
         <OrderIcon
-          className="me-2"
+          className="page-icon m-0"
         />
-        <h4 className="m-1">Order Management</h4>
+        <h3 className="page-sec-heading m-0 ms-2">Order Management</h3>
+      </div>
       </div>
       <div className="orders-table-container">
         <div className="card">

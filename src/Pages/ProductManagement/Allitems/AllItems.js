@@ -4,11 +4,11 @@ import AllItemsTable from "../../../Components/Common/Table/AllItemsTable/AllIte
 const AllItems = () => {
   return (
     <div>
-      <div className="page-heading d-flex align-items-center p-4">
-        <BagIcon
-          style={{ height: "36px", width: "36px", marginRight: "10px" }}
-        />
-        <h3 className="m-1">All items </h3>
+      <div className="page-heading d-flex p-4">
+        <div className="page-heading-wapper d-flex">
+          <BagIcon className="page-icon m-0" />
+          <h3 className="page-sec-heading m-0 ms-2">All items </h3>
+        </div>
       </div>
       <div className="card">
         <AllItemsTable />
