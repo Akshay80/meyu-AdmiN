@@ -12,6 +12,7 @@ const Signup = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -30,6 +31,9 @@ const Signup = () => {
       .post("/signup", postData)
       .then(function (response) {
         if (!toast.isActive(toastId)) {
+          if(response.data.success === true)
+          {
+            console.log("Success Response: ", response.data.success);
           toast.success(response.data.data.message, {
             position: "top-right",
             autoClose: 5000,
@@ -40,7 +44,9 @@ const Signup = () => {
             progress: 0,
             toastId: "my_toast",
           });
-          toast.error(response.data.error.message, {
+          reset();
+        }
+          toast.error(response?.data?.error?.message, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: true,
@@ -51,8 +57,9 @@ const Signup = () => {
             toastId: "my_toast",
           });
         } 
+     
       })
-
+      
       .catch(function (error) {
         console.log(error);
       });
@@ -65,7 +72,7 @@ const Signup = () => {
           <div className="card-body">
             <h3 className="card-title1 text-center">MEYU</h3>
             <p className="card-title2 mb-1 text-center">Meyu Admin</p>
-            <p className="card-title3">Sign In</p>
+            <p className="card-title3">Sign Up</p>
             <p className="card-subtitle mb-3">
               Already have an account?{" "}
               <a href={Path.login} className="link">
@@ -73,7 +80,7 @@ const Signup = () => {
               </a>
             </p>
             <form
-              className="row g-2"
+              className="row g-3"
               autoComplete="off"
               onSubmit={handleSubmit(login)}
             >
@@ -167,25 +174,10 @@ const Signup = () => {
                   <p className="errorss">{errors.password.message}</p>
                 )}
               </div>
-              {/* <div className="col-12">
-                <input
-                  name="password_repeat"
-                  className="form-control shadow-none"
-                  placeholder="Confirm Password"
-                  type="password"
-                  {...register("cpassword", {
-                    required: "Confirm Password is required",
-                    validate: (value) =>
-                      value === watch("password") || "Passwords don't match.",
-                  })}
-                />
-                {errors.cpassword && (
-                  <p className="errorss">{errors.cpassword.message}</p>
-                )}
-              </div> */}
-              <div className="col-12 mt-4">
+             
+              <div className="mb-2 col-12 mt-4">
                 <button type="submit" className="btn btn-auth">
-                  Sign In
+                  Sign up
                 </button>
               </div>
             </form>

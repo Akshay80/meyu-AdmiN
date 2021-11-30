@@ -8,6 +8,7 @@ const Week = () => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+    console.log(dates)
   };
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
     <button className="example-custom-input" onClick={onClick} ref={ref}>

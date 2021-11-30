@@ -1,5 +1,5 @@
 import ApiInstance from "./../config/intercepter";
-import Api from "./../config/api";
+import Api from "../config/api";
 // import { resHandle } from "../helper";
 
 // login
@@ -10,4 +10,9 @@ export function loginApiFun(payload) {
 // forgot password
 export function forgotPasswordService(payload) {
   return ApiInstance.post(`${Api.forgotPassword}`, payload);
+}
+
+// change password
+export function changePasswordService(payload) {
+  return ApiInstance.put(`${Api.changePassword}`, payload);
 }

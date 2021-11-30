@@ -10,6 +10,7 @@ export default (() => {
     login: `${setting.api.url}login`,
     forgotPassword: `${setting.api.url}forgot-password`,
     resetPassword: `${setting.api.url}resetPassword`,
+    changePassword: `${setting.api.url}auth/changepassword`,
 
     // user
     userProfile: `${setting.api.url}auth/profile`,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Login.scss";
 import Path from "../../../Constant/RouterConstant";
 import { useForm } from "react-hook-form";
@@ -6,10 +6,10 @@ import axiosConfig from "../../Common/APIConfig/axiosConfig";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { useNavigate } from "react-router-dom";
+import { loginApiFun } from "../../../Services/authService";
 
 let toastId = null;
 const Login = () => {
-    let history = useHistory()
   const [loader, setLoader] = useState(false);
   const [isValidForm, setIsValidForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -27,14 +27,12 @@ const Login = () => {
       szPassword: data.password
     }
 
-    loginService(params)
+    loginApiFun(params)
       .then(res => {
         console.log("res login", res.statusCode)
         if (res?.status !== "Error") {
           console.log("test",res)
           // setUserDetail(JSON.stringify(res.responseData.adminProfile));
-          setUserToken(res?.data?.szToken);
-          history.push('/');
         }
         else {
           setErrorMessage(res?.data?.message);
@@ -65,7 +63,7 @@ const Login = () => {
                 Sign up
               </a>
             </p>
-            <form autoComplete="off" onSubmit={handleSubmit(login1)}>
+            <form autoComplete="off" onSubmit={handleSubmit(loginApiFun)}>
               <div className="mb-3 row justify-content-center">
                 <div className="col-sm-12">
                   <input

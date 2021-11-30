@@ -11,7 +11,7 @@ ApiInstance.interceptors.request.use(
     let token = localStorage.getItem("token");
     const headers = {
       "Content-Type": "application/json",
-      // "Authorization" : setting.api.AUTH,
+      "Authorization" : token,
 
     };
     if (token) {

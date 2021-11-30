@@ -8,6 +8,7 @@ const Month = () => {
       Monthly
     </button>
   ));
+  // console.log(startDate.getMonth()+1);
   return (
     <DatePicker
       selected={startDate}

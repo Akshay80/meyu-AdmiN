@@ -1,0 +1,13 @@
+.logout
+{
+    border: none;
+    text-align: start;
+    width: 100%;
+    background-color: transparent;
+    padding:0;
+}
+
+.logout:hover{
+    background-color: transparent;
+    color: #f27125;
+}

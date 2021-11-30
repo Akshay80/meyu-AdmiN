@@ -8,6 +8,7 @@ const Year = () => {
         Yearly
       </button>
     ));
+    // console.log(startDate.getFullYear())
     return (
       <DatePicker
         selected={startDate}

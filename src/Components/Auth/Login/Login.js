@@ -5,9 +5,11 @@ import { useForm } from "react-hook-form";
 import axiosConfig from "../../Common/APIConfig/axiosConfig";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import {useNavigate} from 'react-router-dom'
 
 let toastId = null;
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -28,7 +30,7 @@ const Login = () => {
         let token = response.data.data.token;
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(response.data.data.user));
-       window.location.href="/";
+       navigate("/")
       }
       if (!toast.isActive(toastId)) {
         toast.error(response.data.error, {

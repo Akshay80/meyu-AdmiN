@@ -11,6 +11,7 @@ import UserImage from "../../../Assets/Images/blank-user.png";
 import { profileService } from "../../../Services/userService";
 
 const UserProfile = () => {
+  const [image, setImage] = useState({ preview: "", raw: "" });
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
   const [email, setEmail] = useState();
@@ -92,7 +93,7 @@ const UserProfile = () => {
       });
   };
 
-  function onSubmit(data) {
+  function onSubmit(data, e) {
     
     let params = {
       profile: {
@@ -112,8 +113,29 @@ const UserProfile = () => {
       },
     };
     profileFun(params);
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("image", image.raw);
+    console.log(image);
+
+    // await fetch("YOUR_URL", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "multipart/form-data"
+    //   },
+    //   body: formData
+    // });
   }
 
+
+  const handleChange = (e) => {
+    if (e.target.files.length) {
+      setImage({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0]
+      });
+    }
+  };
   return (
     <div className="user-profile-container">
       <div className="page-heading d-flex align-items-center">
@@ -124,14 +146,35 @@ const UserProfile = () => {
       </div>
       <div className="profile-pic-wrapper">
         <div className="profile-pic-holder">
-          <img
+          {/* <img
             id="profilePic"
             className="pic"
             alt="userimage"
             src={url === null ? UserImage : url}
-          />
-
-          <label htmlFor="newProfilePhoto" className="upload-file-block">
+          /> */}
+          <label htmlFor="upload-button">
+          {image.preview ? (
+          <img id="profilePic"
+          className="pic"
+          alt="userimage" src={image.preview} />
+        ) : (
+          <>
+           <img id="profilePic"
+          className="pic"
+          alt="userimage" src={UserImage} />
+            {/* <h5 className="text-center" style={{ cursor: "pointer" }}>
+              Upload your photo
+            </h5> */}
+          </>
+        )}
+  </label>
+  {/* <input
+        type="file"
+        id="upload-button"
+        style={{ display: "none" }}
+        
+      /> */}
+          <label htmlFor="upload-button" className="upload-file-block">
             <div className="text-center">
               <div className="mb-2">
                 <i className="fa fa-camera fa-2x"></i>
@@ -145,9 +188,11 @@ const UserProfile = () => {
             className="uploadProfileInput d-none"
             type="file"
             name="profile_pic"
-            id="newProfilePhoto"
+            id="upload-button"
             accept="image/*"
+            onChange={handleChange}
           />
+          
         </div>
       </div>
 

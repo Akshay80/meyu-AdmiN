@@ -19,7 +19,7 @@ const TagChips = () => {
     return (
       <Formik
         initialValues={this.state}
-        onSubmit={onSubmit}
+        // onSubmit={onSubmit}
         render={({
           values,
           errors,

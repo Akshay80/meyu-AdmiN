@@ -5,9 +5,13 @@ import { UserInfo } from "./UserInfo";
 import axiosConfig from "../APIConfig/axiosConfig";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import {useNavigate} from 'react-router-dom'
+import './userDropDown.css'
+import Path from "../../../Constant/RouterConstant";
 
 let toastId = null;
 const UserDropdown = () => {
+  const navigate = useNavigate()
   const logout = () => {
     axiosConfig.get("auth/logout", {
         headers: { 
@@ -27,9 +31,9 @@ const UserDropdown = () => {
               toastId: "my_toast",
             });
           }
-        localStorage.removeItem('token');
+        localStorage.clear();
         setTimeout(() => {
-          window.location.href="/login"
+          navigate("/login")
         }, 3000);
         console.log(response.data.data.message);
       })
@@ -54,17 +58,20 @@ const UserDropdown = () => {
       {UserInfo.map((user, key) => {
         return (
           <Dropdown key={key}>
-            <Dropdown.Toggle className="btn-dropdown" />
+            <Dropdown.Toggle className="dropdown-button" />
             <Dropdown.Menu>
               <Dropdown.Item>
                 <Link to={user.profile}>{user.userInfo}</Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                {/* <NavLink to={user.logout}>{user.signout}</NavLink> */}
-                <button className="border-0 bg-gray p-0" onClick={logout}>
+                <Link to={user.changePassword}>{user.changePasswordText}</Link>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <button className="logout" onClick={logout}>
                   {user.signout}
                 </button>
               </Dropdown.Item>
+              
             </Dropdown.Menu>
           </Dropdown>
         );
