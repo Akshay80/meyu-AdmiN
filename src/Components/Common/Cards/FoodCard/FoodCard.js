@@ -17,14 +17,14 @@ const FoodCard = () => {
           <div key={key} className="col-md-4 gy-3 gx-5 mb-3">
             <div className="card h-100">
               <img
-                src="https://source.unsplash.com/random/100x100"
+                src="https://source.unsplash.com/random/60x60"
                 className="card-img-top p-3 pb-0"
                 alt="..."
               />
               <div className="card-body">
-                <h6 className="card-title">{val.title}</h6>
-                <p className="card-text">{val.detail}</p>
-                <p className="card-text">{val.price}</p>
+                <h6>{val.title}</h6>
+                <p>{val.detail}</p>
+                <p>{val.price}</p>
               </div>
             </div>
           </div>

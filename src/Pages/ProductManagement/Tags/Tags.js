@@ -3,7 +3,7 @@ import TagsTable from '../../../Components/Common/Table/TagsTable/TagsTable'
 
 const Tags = () => {
     return (
-        <div className="pt-2">
+        <div className="p-4">
            <TagsTable />
         </div>
     )

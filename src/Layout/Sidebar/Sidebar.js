@@ -31,7 +31,7 @@ const  Sidebar = ({ menuToggleState, toggleMenu }) => {
                       <MenuItem >
                         {val.subMenus.map((submenu, i) => {
                           return (
-                            <MenuItem onClick={toggleMenu} i={i + 1}>
+                            <MenuItem  onClick={toggleMenu} i={i + 1}>
                             <NavLink className="sidebar-menu-links" to={submenu.link}>
                               <MenuItem key={key}>{submenu.title}</MenuItem>
                             </NavLink>

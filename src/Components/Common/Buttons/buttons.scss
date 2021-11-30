@@ -19,19 +19,18 @@
 }
 
 .btn-dropdown {
-  background-color: #f27125 !important;
-  color: #fff !important;
-  border: none;
+  background-color: transparent !important;
+  color: black !important;
+  border: unset !important;
 
   &:hover {
-    color: #fff !important;
-    background-color: green !important;
+    background-color: transparent !important;
   }
   &:active {
-    background-color: green !important;
+    background-color: transparent !important;
   }
   &:focus {
-    background-color: green !important;
-    box-shadow: none !important;
+    background-color: transparent !important;
+    box-shadow: unset !important;
   }
 }

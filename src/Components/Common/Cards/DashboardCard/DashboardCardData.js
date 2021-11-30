@@ -10,7 +10,7 @@ import {ReactComponent as Orderinprogress} from '../../../../Assets/Icon/orderin
 export const DashboardCardData = [
     {
         title: "Total Orders",
-        icon: <TotalOrder /> ,
+        icon: <TotalOrder/> ,
         number: "80"
     },  
     {

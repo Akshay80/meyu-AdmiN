@@ -76,7 +76,6 @@ const UserProfile = () => {
   const profileFun = (data) => {
     console.log("formdata", data);
     profileService(data)
-
       .then(function (response) {
         // console.log(response.data.data.Profile);
         setFirstname(response?.data?.data?.Profile?.firstName);
@@ -93,7 +92,6 @@ const UserProfile = () => {
   };
 
   function onSubmit(data) {
-    
     let params = {
       profile: {
         firstName: data.firstName,
@@ -127,7 +125,7 @@ const UserProfile = () => {
           <img
             id="profilePic"
             className="pic"
-            alt="userimage"
+            alt=""
             src={url === null ? UserImage : url}
           />
 
@@ -152,12 +150,12 @@ const UserProfile = () => {
       </div>
 
       <form
-        class="row g-3 needs-validation"
+        className="row g-3 needs-validation"
         onSubmit={handleSubmit(onSubmit)}
-        novalidate
+        noValidate
       >
-        <div class="col-md-6 col-sm-12">
-          <label for="validationCustom01" class="form-label">
+        <div className="col-md-6 col-sm-12">
+          <label htmlFor="validationCustom01" className="form-label">
             First name
           </label>
           <input
@@ -170,16 +168,14 @@ const UserProfile = () => {
               },
             })}
             className={`form-control ${
-              errors.firstName === null || errors.firstName === ""
-                ? "is-invalid"
-                : ""
+              errors.firstName || errors.firstName === "" ? "is-invalid" : ""
             }`}
             placeholder="Enter First Name"
           />
           <div className="invalid-feedback">{errors.firstName?.message}</div>
         </div>
-        <div class="col-md-6 col-sm-12">
-          <label for="validationCustom02" class="form-label">
+        <div className="col-md-6 col-sm-12">
+          <label htmlFor="validationCustom02" className="form-label">
             Last name
           </label>
           <input
@@ -192,9 +188,7 @@ const UserProfile = () => {
               },
             })}
             className={`form-control ${
-              errors.lasttName === null || errors.lastName === ""
-                ? "is-invalid"
-                : ""
+              errors.lastName || errors.lastName === "" ? "is-invalid" : ""
             }`}
             placeholder="Enter Last Name"
           />
@@ -203,7 +197,7 @@ const UserProfile = () => {
           </div>
         </div>
         <div>
-          <label for="validationCustom03" class="form-label">
+          <label htmlFor="validationCustom03" className="form-label">
             Email
           </label>
           <input
@@ -225,7 +219,7 @@ const UserProfile = () => {
         </div>
 
         <div>
-          <label for="validationCustom04" class="form-label">
+          <label htmlFor="validationCustom04" className="form-label">
             Contact Number
           </label>
           <input
@@ -239,9 +233,7 @@ const UserProfile = () => {
               },
             })}
             className={`form-control ${
-              errors.contact === null || errors.contact === ""
-                ? "is-invalid"
-                : ""
+              errors.contact || errors.contact === "" ? "is-invalid" : ""
             }`}
             placeholder="Enter Contact Number"
           />
@@ -249,90 +241,7 @@ const UserProfile = () => {
         </div>
 
         <div>
-          <label for="validationCustom05" class="form-label">
-            Address
-          </label>
-          <input
-            value={address}
-            type="text"
-            {...register("address")}
-            className={`form-control ${
-              errors.address === "" ? "is-invalid" : ""
-            }`}
-            placeholder="Address"
-          />
-          <div className="invalid-feedback pb-0">{errors.address?.message}</div>
-        </div>
-        <div>
-          <label for="validationCustom007" class="form-label me-2">
-            Gender
-          </label>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              id="male"
-              {...register("gender")}
-              value="male"
-            />
-            <label class="form-check-label">Male</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              {...register("gender")}
-              id="female"
-              value="female"
-            />
-            <label class="form-check-label">Female</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              {...register("gender")}
-              id="others"
-              value="other"
-            />
-            <label class="form-check-label">Others</label>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-          <label for="validationCustom08" class="form-label">
-            Description
-          </label>
-          <textarea
-            type="text"
-            {...register("description", {
-              pattern: {
-                value: /^[A-Za-z]+$/i,
-              },
-            })}
-            className={`form-control ${errors.description ? "is-invalid" : ""}`}
-            placeholder="Describe yourself"
-          />
-          {/* <div className="invalid-feedback">{errors.city?.message}</div> */}
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-          <label for="validationCustom06" class="form-label">
-            Country
-          </label>
-          <select
-            {...register("country")}
-            className={`form-select ${errors.country ? "is-invalid" : ""}`}
-          >
-            <option selected disabled value="">
-              Choose...
-            </option>
-            <option>India</option>
-          </select>
-          <div className="invalid-feedback">{errors.country?.message}</div>
-        </div>
-        <div class="col-md-6 col-sm-12">
-          <label for="validationCustom08" class="form-label">
+          <label htmlFor="validationCustom08" className="form-label">
             Street
           </label>
           <input
@@ -348,23 +257,71 @@ const UserProfile = () => {
           />
           <div className="invalid-feedback">{errors.street?.message}</div>
         </div>
-        <div class="col-md-6 col-sm-12">
-          <label for="validationCustom07" class="form-label">
+        <div>
+          <label htmlFor="validationCustom007" className="form-label me-2">
+            Gender
+          </label>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              id="male"
+              {...register("gender")}
+              value="male"
+            />
+            <label className="form-check-label">Male</label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              {...register("gender")}
+              id="female"
+              value="female"
+            />
+            <label className="form-check-label">Female</label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              {...register("gender")}
+              id="others"
+              value="other"
+            />
+            <label className="form-check-label">Others</label>
+          </div>
+        </div>
+
+        <div className="col-md-6 col-sm-12">
+          <label htmlFor="validationCustom06" className="form-label">
+            Country
+          </label>
+          <select
+            {...register("country")}
+            className={`form-select ${errors.country ? "is-invalid" : ""}`}
+          >
+            <option value="">Choose...</option>
+            <option>India</option>
+          </select>
+          <div className="invalid-feedback">{errors.country?.message}</div>
+        </div>
+
+        <div className="col-md-6 col-sm-12">
+          <label htmlFor="validationCustom07" className="form-label">
             State
           </label>
           <select
             {...register("state")}
             className={`form-select ${errors.state ? "is-invalid" : ""}`}
           >
-            <option selected disabled value="">
-              Choose...
-            </option>
+            <option value="">Choose...</option>
             <option>Uttrakhand</option>
           </select>
           <div className="invalid-feedback">{errors.state?.message}</div>
         </div>
-        <div class="col-md-6 col-sm-12">
-          <label for="validationCustom08" class="form-label">
+        <div className="col-md-6 col-sm-12">
+          <label htmlFor="validationCustom08" className="form-label">
             City
           </label>
           <input
@@ -380,8 +337,8 @@ const UserProfile = () => {
           />
           <div className="invalid-feedback">{errors.city?.message}</div>
         </div>
-        <div class="col-md-6 col-sm-12">
-          <label for="validationCustom09" class="form-label">
+        <div className="col-md-6 col-sm-12">
+          <label htmlFor="validationCustom09" className="form-label">
             Zip
           </label>
           <input
@@ -397,6 +354,27 @@ const UserProfile = () => {
           />
           <div className="invalid-feedback">{errors.zip?.message}</div>
         </div>
+
+        {/* ========== Description ========  */}
+        <div>
+          <label htmlFor="validationCustom08" className="form-label">
+            Description
+          </label>
+          <textarea
+            resize="none"
+            rows="3"
+            type="text"
+            {...register("description", {
+              pattern: {
+                value: /^[A-Za-z]+$/i,
+              },
+            })}
+            className={`form-control ${errors.description ? "is-invalid" : ""}`}
+            placeholder="Describe yourself"
+          />
+        </div>
+        {/* =========================================== */}
+
         <div className="d-flex pb-5 align-items-center justify-content-center flex-wrap-wrap">
           <button className="m-2 btn btn-primary" type="submit">
             Update

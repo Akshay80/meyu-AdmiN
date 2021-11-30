@@ -6,11 +6,11 @@ import "./OrderManagement.scss";
 const OrderManagement = () => {
   return (
     <div>
-      <div className="main-heading d-flex align-items-center p-3">
+      <div className="page-heading d-flex align-items-center p-4  ">
         <OrderIcon
-          style={{ height: "36px", width: "36px", marginRight: "10px" }}
+          className="me-2"
         />
-        <h3 className="m-1">Order Management</h3>
+        <h4 className="m-1">Order Management</h4>
       </div>
       <div className="orders-table-container">
         <div className="card">

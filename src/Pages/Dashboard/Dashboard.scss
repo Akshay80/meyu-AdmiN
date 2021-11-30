@@ -1,7 +1,7 @@
 @import '../../Styles/custom';
 
 .page-heading {
-        color: rgb(64, 158, 64);
+        color: black;
     }
     .dashboard-content {
         height: 100%;
@@ -14,10 +14,10 @@
                display: flex;
                flex-direction: column;
     }
-    .page-heading {
-        flex-direction:column;
-    }
+    // .page-heading {
+    //     // flex-direction:column;
+    // }
     .date-filters {
-        margin-top: 15px;
+        margin-bottom: 15px;
     }
 }

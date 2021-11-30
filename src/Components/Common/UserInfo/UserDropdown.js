@@ -5,6 +5,7 @@ import { UserInfo } from "./UserInfo";
 import axiosConfig from "../APIConfig/axiosConfig";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import '../Buttons/buttons.scss';
 
 let toastId = null;
 const UserDropdown = () => {

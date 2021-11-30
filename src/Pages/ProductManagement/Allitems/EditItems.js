@@ -6,7 +6,7 @@ import {ReactComponent as ShoppingCartIcon} from '../../../Assets/Icon/Shoppingb
 const EditItems = () => {
   return (
     <div>
-      <div className="page-heading d-flex justify-content-between flex-column p-4 pb-0">
+      <div className="page-heading d-flex justify-content-between flex-column p-4">
         <div className="d-flex align-items-center">
           <ShoppingCartIcon
             style={{ height: "36px", width: "36px", marginRight: "10px" }}

@@ -14,17 +14,17 @@
   box-shadow: 0 2px 5px #888888;
   background-color: $sidebar-bg;
   transition: all ease-in-out 250ms;
-  &.hide-menu {
-    left: -20%;
-    box-shadow: unset;
-    transition: all ease-in-out 250ms;
-  }
+  // &.hide-menu {
+  //   left: -20%;
+  //   box-shadow: unset;
+  //   transition: all ease-in-out 250ms;
+  // }
   .close-menu-mobile-btn{
     display: none;
   }
 
   .sidebar-menu {
-    height: 93px;
+    height: 83px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -128,11 +128,11 @@
   .sidebar {
     width: 30%;
     z-index: 100;
-    &.hide-menu {
-      left: -30%;
-      box-shadow: unset;
-      transition: all ease-in-out 250ms;
-    }
+    // &.hide-menu {
+    //   left: -30%;
+    //   box-shadow: unset;
+    //   transition: all ease-in-out 250ms;
+    // }
     
   }
 }
@@ -141,7 +141,7 @@
 @media (max-width: 991px) {
   .sidebar {
     height: 100%;
-    width: 300px;
+    width: 250px;
     position: fixed;
     z-index: 100;
     top: 0;
@@ -153,6 +153,7 @@
       position: absolute;
       top: 32px;
       right: 20px;
+      cursor: pointer;
     }
     &.hide-menu {
       left: 0;
