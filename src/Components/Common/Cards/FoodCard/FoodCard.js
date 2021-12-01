@@ -27,13 +27,13 @@ const FoodCard = () => {
               <div className="card-body">
                 <h6 className="card-title">{val.title}</h6>
                 <p className="card-description text-muted">
-                <ReadMoreReact ideal={120} text={val.detail} readMoreText="click here to read more"/>
+                <ReadMoreReact ideal={120} text={val.detail} />
                 </p>
                 <ReactStars
   count={val.count}
   size={28}
   edit={false}
-  color1={'#ffd700'} />
+  color1={'#04AA6D'} />
                 <p className="price">{val.price}</p>
               </div>
             </div>

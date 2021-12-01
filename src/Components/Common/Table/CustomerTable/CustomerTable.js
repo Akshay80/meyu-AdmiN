@@ -59,7 +59,7 @@ console.log(error)
         },
         {
           label: 'No',
-          onClick: () => alert('Click No')
+          // onClick: () => alert('Click No')
         }
       ]
     });
