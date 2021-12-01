@@ -60,7 +60,7 @@ const ChangePassword = () => {
     <div className="pt-5">
       <div className="align-items-center">
         <div className="row text-center justify-content-center">
-          <div className="changepass-card align-middle">
+          <div className="card changepass-card align-middle">
             <div className="card-body">
               <h3 className="card-title1">MEYU</h3>
               <p className="card-title2 mb-4">Meyu Admin</p>

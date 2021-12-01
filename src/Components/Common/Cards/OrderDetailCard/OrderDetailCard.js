@@ -7,7 +7,7 @@ const OrderDetailCard = () => {
     <div className="container">
       <div className="card mb-3 p-3">
           <div className="card-title d-flex align-items-center pb-3 ps-3">
-            <OrderIcon className="page-icon m-0"/>
+            <OrderIcon className="svg-icon"/>
             <div className="d-block mx-3">
               <h5 className="mb-0">Delivered</h5>
               <p>Date</p>

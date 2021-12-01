@@ -99,10 +99,10 @@ const ChefTable = () => {
         return (
           <div className="d-flex justify-content-evenly">
             <NavLink to={Path.chefDetails} >
-              <ViewIcon/>
+              <ViewIcon className="view-icon"/>
               </NavLink>
             
-              <DeleteIcon className="iconHover" onClick={() => handleDelete(row.id, row.name)}/>
+              <DeleteIcon className="iconHover delete-icon" onClick={() => handleDelete(row.id, row.name)}/>
             
           </div>
         );

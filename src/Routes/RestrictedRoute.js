@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import Path from "../Constant/RouterConstant";
 
 const RestrictedRoute = () => {
 
@@ -7,7 +8,7 @@ const RestrictedRoute = () => {
 
   console.log("token", token);
 
-  return !token ? <Outlet /> : <Navigate to="/" />;
+  return !token ? <Outlet /> : <Navigate to={Path.dashboard} />;
 };
 
 export default RestrictedRoute;

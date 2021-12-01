@@ -8,11 +8,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 // import axiosConfig from "../APIConfig/axiosConfig";
 import UserImage from "../../../Assets/Images/blank-user.png";
-import { profileService, viewprofileService } from "../../../Services/userService";
-
+import {
+  profileService,
+  viewprofileService,
+} from "../../../Services/userService";
 
 const UserProfile = () => {
-
   // For View
   const [image, setImage] = useState({ preview: "", raw: "" });
   const [firstname, setFirstname] = useState();
@@ -24,9 +25,7 @@ const UserProfile = () => {
   const [address, setAddress] = useState();
   const [city, setCity] = useState();
 
-
-
-// For Edit
+  // For Edit
   const [editedfirstname, seteditedFirstname] = useState();
   const [editedlastname, seteditedLastname] = useState();
   const [editedmail, seteditedEmail] = useState();
@@ -97,25 +96,25 @@ const UserProfile = () => {
   }, []);
 
   const profileFun = () => {
-    viewprofileService().then(function(response) {
-    // console.log(response.data)
-    setFirstname(response?.data?.data?.Profile?.firstName);
-    setLastname(response?.data?.data?.Profile?.lastName);
-    setEmail(response?.data?.data?.Profile?.email);
-    setContact(response?.data?.data?.Profile?.phone);
-    setAddress(response?.data?.data?.Profile?.Address);
-    setURL(response?.data?.data?.Profile?.coverPhotoUrl);
-    setGender(response?.data?.data?.Profile?.gender);
-    setCity(response.data.data.Profile.city);
-    
-  }).catch(function (error) 
-  {
-console.log(error);
-  })
-}
+    profileService()
+      .then(function (response) {
+        // console.log(response.data)
+        setFirstname(response?.data?.data?.Profile?.firstName);
+        setLastname(response?.data?.data?.Profile?.lastName);
+        setEmail(response?.data?.data?.Profile?.email);
+        setContact(response?.data?.data?.Profile?.phone);
+        setAddress(response?.data?.data?.Profile?.Address);
+        setURL(response?.data?.data?.Profile?.coverPhotoUrl);
+        setGender(response?.data?.data?.Profile?.gender);
+        setCity(response.data.data.Profile.city);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   function onSubmit(data) {
-    // alert("clicked");
+    alert("clicked");
     let params = {
       profile: {
         firstName: data.firstName,
@@ -139,7 +138,7 @@ console.log(error);
     if (e.target.files.length) {
       setImage({
         preview: URL.createObjectURL(e.target.files[0]),
-        raw: e.target.files[0]
+        raw: e.target.files[0],
       });
     }
   };
@@ -148,7 +147,7 @@ console.log(error);
       <div className="page-heading d-flex p-4">
         <div className="page-heading-wapper d-flex">
           <UserIcon className="page-icon m-0" />
-          <h3 className="page-sec-heading m-0 ms-2">Edit Profile </h3>
+          <h3 className="page-sec-heading m-0 mx-2">Edit Profile</h3>
         </div>
       </div>
       <div className="profile-pic-wrapper">
@@ -160,22 +159,20 @@ console.log(error);
             src={url === null ? UserImage : url}
           /> */}
           <label htmlFor="upload-button">
-          {image.preview ? (
-          <img id="profilePic"
-          className="pic"
-          alt="userimage" src={image.preview} />
-        ) : (
-          <>
-           <img id="profilePic"
-          className="pic"
-          alt="userimage" src={url === null?UserImage: image.preview} />
-            {/* <h5 className="text-center" style={{ cursor: "pointer" }}>
-              Upload your photo
-            </h5> */}
-          </>
-        )}
-  </label>
-  {/* <input
+            {image.preview ? (
+              <img id="profilePic" className="pic" alt="" src={image.preview} />
+            ) : (
+              <>
+                <img
+                  id="profilePic"
+                  className="pic"
+                  alt=""
+                  src={url === null ? UserImage : image.preview}
+                />
+              </>
+            )}
+          </label>
+          {/* <input
         type="file"
         id="upload-button"
         style={{ display: "none" }}
@@ -199,7 +196,6 @@ console.log(error);
             accept="image/*"
             onChange={handleChange}
           />
-          
         </div>
       </div>
 
@@ -221,9 +217,7 @@ console.log(error);
                 message: "Invalid firstname",
               },
             })}
-            className={`form-control ${
-              errors.firstName ? "is-invalid" : ""
-            }`}
+            className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
             placeholder="Enter First Name"
             onChange={(e) => seteditedFirstname(e.target.value)}
           />
@@ -242,9 +236,7 @@ console.log(error);
                 message: "Invalid lastname",
               },
             })}
-            className={`form-control ${
-              errors.lastName ? "is-invalid" : ""
-            }`}
+            className={`form-control ${errors.lastName ? "is-invalid" : ""}`}
             placeholder="Enter Last Name"
             onChange={(e) => seteditedLastname(e.target.value)}
           />
@@ -266,9 +258,7 @@ console.log(error);
                 message: "Invalid email",
               },
             })}
-            className={`form-control ${
-              errors.email ? "is-invalid" : ""
-            }`}
+            className={`form-control ${errors.email ? "is-invalid" : ""}`}
             placeholder="Enter email"
             onChange={(e) => seteditedEmail(e.target.value)}
           />
@@ -280,7 +270,7 @@ console.log(error);
             Contact Number
           </label>
           <input
-             defaultValue={contact}
+            defaultValue={contact}
             type="tel"
             maxLength="10"
             {...register("contact", {
@@ -289,9 +279,7 @@ console.log(error);
                 message: "Invalid contact number",
               },
             })}
-            className={`form-control ${
-              errors.contact ? "is-invalid" : ""
-            }`}
+            className={`form-control ${errors.contact ? "is-invalid" : ""}`}
             placeholder="Enter Contact Number"
             onChange={(e) => seteditedContact(e.target.value)}
           />
@@ -303,7 +291,7 @@ console.log(error);
             Street
           </label>
           <input
-           defaultValue={address}
+            defaultValue={address}
             type="text"
             {...register("street", {
               pattern: {
@@ -381,7 +369,7 @@ console.log(error);
             City
           </label>
           <input
-           defaultValue={city}
+            defaultValue={city}
             type="text"
             {...register("city", {
               pattern: {

@@ -1,7 +1,9 @@
 .example-custom-input {
     margin-right: 5px;
     border-radius: 5px;
-    border: unset;
+    border: 1px solid lightgray;
     padding: 5px 10px;
-    background-color: silver;
+  &:hover {
+      background-color: lightgrey;
+  }
 }

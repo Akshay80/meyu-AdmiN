@@ -96,10 +96,10 @@ const CategoriesTable = () => {
       align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex justify-content-evenly">
-            <EditIcon className="mt-1" />
+          <div className="d-flex align-items-center justify-content-evenly">
+            <EditIcon className="edit-icon mt-1" />
             <DeleteIcon
-              className="iconHover"
+              className="iconHover delete-icon"
               onClick={() => handleDelete(row.serialno, row.name)}
             />
           </div>
@@ -120,7 +120,7 @@ const CategoriesTable = () => {
       <div className="page-heading d-flex align-items-center p-4 justify-content-between">
           <div className="page-heading-wapper d-flex">
             <BagIcon className="page-icon m-0" />
-            <h3 className="page-sec-heading m-0 ms-2">Categories </h3>
+            <h3 className="page-sec-heading m-0 mx-2">Categories </h3>
           </div>
        
         <div className="d-flex align-items-center ">

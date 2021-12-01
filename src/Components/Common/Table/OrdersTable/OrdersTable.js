@@ -88,7 +88,7 @@ const OrdersTable = () => {
         return (
           <div className=" d-flex justify-content-evenly align-items-center">
             <NavLink to={Path.orderDetails}>
-              <ViewIcon />
+              <ViewIcon className="view-icon" />
             </NavLink>
           </div>
         );
