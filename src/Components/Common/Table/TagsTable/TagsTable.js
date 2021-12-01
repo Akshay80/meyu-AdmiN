@@ -105,9 +105,9 @@ const TagsTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex justify-content-evenly">
-            <EditIcon className="mt-1" />
+            <EditIcon className="mt-1 edit-icon" />
             <DeleteIcon
-              className="iconHover"
+              className="iconHover delete-icon"
               onClick={() => handleDelete(row.serialno, row.tags)}
             />
           </div>
@@ -128,7 +128,7 @@ const TagsTable = () => {
       <div className="page-heading d-flex align-items-center p-4 justify-content-between">
         <div className="page-heading-wapper d-flex">
           <BagIcon className="page-icon m-0" />
-          <h3 className="page-sec-heading m-0 ms-2">Tags </h3>
+          <h3 className="page-sec-heading m-0 mx-2">Tags </h3>
         </div>
         <div className="d-flex align-items-center ">
           <button

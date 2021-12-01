@@ -11,7 +11,7 @@ const OrderManagement = () => {
         <OrderIcon
           className="page-icon m-0"
         />
-        <h3 className="page-sec-heading m-0 ms-2">Order Management</h3>
+        <h3 className="page-sec-heading m-0 mx-2">Order Management</h3>
       </div>
       </div>
       <div className="orders-table-container">

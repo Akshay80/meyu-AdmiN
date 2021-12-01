@@ -5,8 +5,6 @@ const Path = {
     forgotPassword : "forgot-password",
     resetPassword : "reset-password",
     changePassword : "change-password",
-    home : "/",
-    homePage : "/",
     dashboard: "/",
     userProfile: "user-profile",
     orderManagement: "order-management",

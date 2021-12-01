@@ -99,10 +99,10 @@ const AllItemsTable = () => {
           return (
             <div className="d-flex justify-content-evenly">
               <NavLink to={Path.editItems}>
-                <EditIcon />
+                <EditIcon className="edit-icon"/>
                 </NavLink>
              
-                <DeleteIcon className="iconHover" onClick={() => handleDelete(row.id, row.name)}/>
+                <DeleteIcon className="iconHover delete-icon" onClick={() => handleDelete(row.id, row.name)}/>
             
             </div>
           );

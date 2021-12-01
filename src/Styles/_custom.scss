@@ -48,8 +48,13 @@ a {
           border-radius: 5px 0px 0px 5px;
         }
         .page-sec-heading {
-          padding: 8px 10px 8px 0px;
+          padding: 0px 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           color: black;
+          flex-wrap: wrap;
+          line-height: 1.0;
         }
       }
 
@@ -67,8 +72,17 @@ a {
         align-items: center;
         height: 45px;
         width: 45px;
-        padding: 8px;
+        padding: 10px;
         border-radius: 50%;
+      }
+      .view-icon {
+        color: $view;
+      }
+      .delete-icon {
+        color: $delete;
+      }
+      .edit-icon {
+        color: $edit;
       }
       .item-pic {
         width: 100% !important;

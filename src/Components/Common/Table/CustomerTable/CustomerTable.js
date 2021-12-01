@@ -118,10 +118,10 @@ console.log(error)
         return (
           <div className="d-flex justify-content-evenly align-items-center">
             <NavLink to={Path.customerDetails}>
-              <ViewIcon />
+              <ViewIcon className="view-icon" />
             </NavLink>
            
-              <DeleteIcon className="iconHover" onClick={() => handleDelete(row.id, row.name)}/>
+              <DeleteIcon className="iconHover delete-icon" onClick={() => handleDelete(row.id, row.name)}/>
           </div>
         );
       },

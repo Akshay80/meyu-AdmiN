@@ -6,7 +6,7 @@ const ItemChefCard = () => {
     <div className="container">
       <div className="card mb-3 p-3">
         <div className="row g-0">
-          <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
+          <div className="col-md-3 col-sm-12 d-flex align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src="https://source.unsplash.com/random/111x111"
