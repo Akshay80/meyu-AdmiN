@@ -6,18 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './Styles/_custom.scss'
 import "react-datepicker/dist/react-datepicker.css";
-import Login from './Components/Auth/Login/Login';
-import Home from './Pages/Dashboard/index';
 
-const token = localStorage.getItem('token');
-if(!token)
- {
-    <Login />
- }
- else
- {
-  <Home />
- }
 ReactDOM.render(
   <React.StrictMode>
     <App />

@@ -13,7 +13,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path={Path.dashboard} element={<LoginRoute />}>
-          <Route exact path={Path.dashboard} element={<PrivateRoute />} />
+          {/* <Route exact path={Path.dashboard} element={<PrivateRoute />} /> */}
         </Route>
         <Route exact path={Path.dashboard} element={<RestrictedRoute />}>
           <Route exact path={Path.login} element={<Login />} />

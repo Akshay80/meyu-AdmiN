@@ -1,6 +1,9 @@
 import React from "react";
 import { FoodCardData } from "./FoodCardData";
 import { ReactComponent as ListIcon } from "../../../../Assets/Icon/Menu.svg";
+import './FoodCard.scss'
+import ReactStars from 'react-stars'
+import ReadMoreReact from 'read-more-react';
 
 const FoodCard = () => {
   return (
@@ -15,16 +18,23 @@ const FoodCard = () => {
       {FoodCardData.map((val, key) => {
         return (
           <div key={key} className="col-md-4 gy-3 gx-5 mb-3">
-            <div className="card h-100">
+            <div className="card">
               <img
-                src="https://source.unsplash.com/random/60x60"
-                className="card-img-top p-3 pb-0"
+                src={val.url}
+                className="card-img-top cardimage"
                 alt="..."
               />
               <div className="card-body">
-                <h6>{val.title}</h6>
-                <p>{val.detail}</p>
-                <p>{val.price}</p>
+                <h6 className="card-title">{val.title}</h6>
+                <p className="card-description text-muted">
+                <ReadMoreReact ideal={120} text={val.detail} readMoreText="click here to read more"/>
+                </p>
+                <ReactStars
+  count={val.count}
+  size={28}
+  edit={false}
+  color1={'#ffd700'} />
+                <p className="price">{val.price}</p>
               </div>
             </div>
           </div>

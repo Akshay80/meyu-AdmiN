@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+.cardimage {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  font-family: "Roboto", sans-serif;
+}
+
+.card-title {
+  font-size: 24px;
+  font-family: "Roboto", sans-serif;
+}
+
+.card-description {
+  font-family: "Roboto", sans-serif;
+}
+
+.read-more-button {
+  color: blue !important;
+}
+
+.price {
+  font-size: 24px !important;
+  font-weight: 500;
+  color: #f47a00 !important;
+  font-family: "Roboto", sans-serif;
+}
