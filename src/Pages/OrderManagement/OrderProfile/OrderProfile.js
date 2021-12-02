@@ -22,7 +22,7 @@ const OrderProfile = () => {
                 id="profilePic"
                 className="profile-pic"
                 alt=""
-                src="https://source.unsplash.com/random/120x120"
+                src="https://source.unsplash.com/random/512x512"
               />
             </div>
           </div>
@@ -122,8 +122,8 @@ const OrderProfile = () => {
                 <Form.Control placeholder="Delivered Date" />
               </Form.Group>
 
-              <div className="d-flex flex-column w-100 flex-direction-column pb-5 mt-2 align-items-start">
-                <h5>Description</h5>
+              <div className="d-flex flex-column w-100 flex-direction-column pb-5 align-items-start">
+                <label>Description</label>
                 {/* <textarea className="text-area w-100"></textarea> */}
                 <textarea
                   rows="4"

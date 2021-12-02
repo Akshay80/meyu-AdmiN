@@ -116,14 +116,14 @@ a {
         font-size: 14px;
       }
       h5 {
-        color: $primary;
+        color: black;
         font-weight: bold;
       }
       h6 {
-        color: $sidebar-bg;
+        color:rgb(100, 100, 100);
       }
       p {
-        color: $sidebar-bg;
+        color: $sidebar-bg; 
       }
     }
   }
@@ -133,7 +133,11 @@ a {
     margin: 0;
   }
 }
-
+#pageDropDown {
+  color: grey !important;
+  border: 1px solid lightgrey !important;
+  background-color: inherit !important;
+}
 @media (max-width: 1200px) {
   .content-wrapper {
     width: calc(100% - 30%) !important ;
@@ -155,5 +159,12 @@ a {
       min-width: 100%;
       transition: all ease-in-out 250ms;
     }
+  }
+}
+
+@media (max-width: 576px) {
+  .profile-pic {
+    max-width: 200px !important;
+    max-height: 150px !important;
   }
 }

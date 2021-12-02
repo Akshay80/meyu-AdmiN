@@ -194,6 +194,7 @@ const TagsTable = () => {
       <div className="card">
         <div className="table-responsive" style={{ padding: "20px" }}>
           <PaginationProvider
+         
             pagination={paginationFactory({
               custom: true,
               totalSize: products.length,

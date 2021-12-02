@@ -100,8 +100,8 @@ const ItemDetails = () => {
               <Form.Control placeholder="Price" type="number" />
             </Form.Group>
 
-            <div className="d-flex flex-column w-100 flex-direction-column pb-2 mt-2 align-items-start">
-              <h5>Description</h5>
+            <div className="d-flex flex-column w-100 flex-direction-column pb-2 align-items-start">
+              <label>Description</label>
               <textarea
                 rows="4"
                 className="text-area mx-1 form-control w-100 h-100"
