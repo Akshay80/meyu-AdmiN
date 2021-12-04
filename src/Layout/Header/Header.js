@@ -1,12 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as Hamburger } from "../../Assets/Icon/hamburger.svg";
 import UserDropdown from "../../Components/Common/UserInfo/UserDropdown";
 import './Header.scss'
 
 const Header = ({menuToggleState, toggleMenu}) => {
+    const navigate = useNavigate();
     const token = localStorage.getItem('token')
     if(!token)
-    window.location.href="/login"
+    navigate("/login");
     var user = JSON.parse(localStorage.getItem('user'))
 
   return (  
