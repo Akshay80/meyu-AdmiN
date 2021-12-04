@@ -47,7 +47,21 @@ const Login = () => {
     })
 
     .catch(function (error) {
-      console.log(error);
+      console.log(error.response.data.error);
+      if (!toast.isActive(toastId)) {
+        toast.error(error.response.data.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      }
+
+      console.log(error.response.data.error.message);
       if (!toast.isActive(toastId)) {
         toast.error(error.response.data.error.message, {
           position: "top-right",

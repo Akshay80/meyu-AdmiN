@@ -8,11 +8,11 @@ export function profileService(payload) {
 }
 
 //Get Profile Data
-export function viewprofileService(payload) {
-  return ApiInstance?.get(`${Api.viewuserProfile}`, payload);
+export function viewprofileService() {
+  return ApiInstance?.get(`${Api.viewuserProfile}`);
 }
 
 // Get Customer Data
-export function viewCustomerService(payload) {
-  return ApiInstance?.get(`${Api.customers}`, payload);
+export function viewCustomerService() {
+  return ApiInstance?.get(`${Api.customers}`);
 }

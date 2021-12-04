@@ -1,18 +1,18 @@
 import React from "react";
 import { FoodCardData } from "./FoodCardData";
 import { ReactComponent as ListIcon } from "../../../../Assets/Icon/Menu.svg";
-import './FoodCard.scss'
-import ReactStars from 'react-stars'
-import ReadMoreReact from 'read-more-react';
+import "./FoodCard.scss";
+import ReactStars from "react-stars";
+import ReadMoreReact from "read-more-react";
 
 const FoodCard = () => {
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4">
-      <div className="page-heading-wapper d-flex">
-        <ListIcon className="page-icon m-0" />
-        <h3 className="page-sec-heading m-0 ms-2">Foods</h3>
-      </div>
+        <div className="page-heading-wapper d-flex">
+          <ListIcon className="page-icon m-0" />
+          <h3 className="page-sec-heading m-0 ms-2">Foods</h3>
+        </div>
       </div>
     <div className="row col-md-12">
       {FoodCardData.map((val, key) => {
@@ -31,16 +31,16 @@ const FoodCard = () => {
                 </p>
                 <ReactStars
   count={val.count}
-  size={28}
+  size={16}
   edit={false}
   color1={'#04AA6D'} />
                 <p className="price">{val.price}</p>
               </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 };

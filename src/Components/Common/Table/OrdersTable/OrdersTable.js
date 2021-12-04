@@ -86,7 +86,7 @@ const OrdersTable = () => {
       align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className=" d-flex justify-content-evenly align-items-center">
+          <div className="d-flex justify-content-evenly align-items-center">
             <NavLink to={Path.orderDetails}>
               <ViewIcon className="view-icon" />
             </NavLink>
