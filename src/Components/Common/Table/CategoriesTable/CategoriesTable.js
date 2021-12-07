@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
@@ -16,34 +16,84 @@ import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbaske
 import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useForm } from "react-hook-form";
+import { category, deleteCategoryFun, editCategoryFun, viewCategoryFun } from '../../../../Services/categoryService';
 
 const CategoriesTable = () => {
   const [categoryy, setCat] = useState();
-  const [subCategoryy, setSubCat] = useState();
   const {
-    register,
+    register, setValue,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  //  Get Category API Implementation 
+
+  useEffect(() => {
+    getCategoriesData();
+  }, []);
+  
+  const getCategoriesData = () => {
+    viewCategoryFun()
+    .then((res) => {
+      console.log("response", res);
+      if (res?.statusText === "OK") {
+          setValue("")  
+      }
+    });
+  }
 
   const products = CategoriesItemsData.map((custom) => [
     {
       serialno: custom.serialno,
       date: custom.date,
       cat: custom.cat,
-      subcat: custom.subcat,
     },
   ]);
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
+  // Post Category : Add Category API Implementation
+  
   const onSubmit = (data) => {
-    setCat(data.category);
-    setSubCat(data.subcategory);
-    console.log(categoryy);
-    console.log(subCategoryy);
+    console.log("data added", data);
+    let params = {
+      category: data.name,
+        // category: image 
+    }
+    category(params)
+    .then((res) => {
+      console.log("added category data", res);
+    })
+    .catch((error) => {
+      console.log("cat data error", error);
+    });
   };
+
+// Edit Category API Implementation
+
+const onCatSubmit = (data) => {
+  console.log("edited category", data)
+  let params = {
+    category: data.category,
+  }
+  editCategoryFun(params) 
+  .then(res => {
+    console.log("edited categories data", res);
+  })
+  .catch((error) => {
+    console.log("post data error", error);
+  });
+}
+
+ 
+  //  Delete Category API Implementation
+
+    // const deleteCat = () => {
+    //   deleteCategoryFun() {
+
+    //   }
+    // }
 
   function handleDelete(rowId, name) {
     confirmAlert({
@@ -173,26 +223,6 @@ const CategoriesTable = () => {
                     <p className="errors">{errors.category.message}</p>
                   )}
                 </div>
-
-                {/* <div className="mb-3">
-                  <label htmlFor="message-text" className="col-form-label">
-                    Sub Categories
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control shadow-none"
-                    id="sub-category"
-                    name="sub-category"
-                    placeholder="sub category"
-                    autoComplete="off"
-                    {...register("subcategory", {
-                      required: "Sub Category is required",
-                    })}
-                  />
-                  {errors.subcategory && (
-                    <p className="errors">{errors.subcategory.message}</p>
-                  )}
-                </div> */}
                 <div className="modal-footer border-0 d-flex justify-content-center">
                   <button type="submit" className="btn btn-primary">
                     Add Categories

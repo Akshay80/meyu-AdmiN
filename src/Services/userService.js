@@ -4,15 +4,20 @@ import Api from "../config/Api";
 
 // Profile
 export function profileService(payload) {
+  console.log("hello",`${Api.userProfile}`)
   return ApiInstance?.post(`${Api.userProfile}`, payload);
 }
 
 //Get Profile Data
-export function viewprofileService(payload) {
-  return ApiInstance?.get(`${Api.viewuserProfile}`, payload);
+export function viewprofileService() {
+  return ApiInstance?.get(`${Api.viewuserProfile}`);
+}
+// Change Profile Image 
+export function changeProfileImage(payload) {
+  return ApiInstance?.post(`${Api.changeProfileImage}`, payload);
 }
 
 // Get Customer Data
-export function viewCustomerService(payload) {
-  return ApiInstance?.get(`${Api.customers}`, payload);
+export function viewCustomerService() {
+  return ApiInstance?.get(`${Api.customers}`);
 }

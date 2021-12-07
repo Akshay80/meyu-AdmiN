@@ -15,8 +15,16 @@ export default (() => {
     // user
     userProfile: `${setting.api.url}auth/profile`,
     viewuserProfile: `${setting.api.url}auth/profile`,
+    changeProfileImage: `${setting.api.url}auth/profile-image`,
     
     // Customer
-    customers: `${setting.api.url}admin/getusers`
+    customers: `${setting.api.url}admin/getusers`,
+
+
+    // Category
+    category: `${setting.api.url}admin/category`,
+    categoryFun: `${setting.api.url}common/category`,
+    deleteCategory: `${setting.api.url}admin/deletecategory`,
+    editCategory: `${setting.api.url}admin/editcategory`,
   }
 })()

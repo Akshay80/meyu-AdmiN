@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 
 const Year = () => {
     const [startDate, setStartDate] = useState(new Date());
+
     const ExampleCustomInput = React.forwardRef(({ value, onClick }, ref) => (
       <button className="example-custom-input" onClick={onClick} ref={ref}>
         {value}
@@ -21,3 +22,5 @@ const Year = () => {
 }
 
 export default Year
+
+
