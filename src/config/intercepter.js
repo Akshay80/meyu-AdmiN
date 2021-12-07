@@ -13,6 +13,7 @@ ApiInstance.interceptors.request.use(
       "Content-Type": "application/json",
       "Authorization": token,
     };
+    request.headers["Content-Type"] = "application/json"
     if (token) {
       request.headers.common['Authorization'] = token;
     } 

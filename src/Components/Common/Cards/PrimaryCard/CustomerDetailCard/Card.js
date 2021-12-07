@@ -1,7 +1,8 @@
 import React from "react";
+import UserImage from '../../../../../Assets/Images/blank-user.png';
 import "./Card.scss";
 
-const CustomerCard = () => {
+const CustomerCard = (props) => {
   return (
     <div className="container">
       <div className="card mb-3 p-3">
@@ -9,20 +10,20 @@ const CustomerCard = () => {
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src="https://source.unsplash.com/random/111x111"
+                src={(props.setURL === null)? UserImage: props.setURL}
                 className="img"
                 alt="..."
-                style={{ borderRadius: "50%", margin:"5px" }}
+                style={{ borderRadius: "50%", width: 100, height:100 }}
               />
             </div>
           </div>
           <div className="col-md-9 col-sm-12">
             <div>
-              <div className="user-card-info d-flex mx-3 align-items-center justify-content-between">
+              <div className="user-card-info d-flex mx-3 mt-2 align-items-center justify-content-between">
                 <div className="info-x">
-                  <h5 className="mb-0">Name</h5>
-                  <p>Phone No</p>
-                  <p>Email</p>
+                  <h5 className="mb-1">{props.setName}</h5>
+                  <p>{props.setPhone}</p>
+                  <p>{props.setEmail}</p>
                 </div>
                 <div>
                   <button

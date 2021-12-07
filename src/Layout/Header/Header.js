@@ -1,9 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as Hamburger } from "../../Assets/Icon/hamburger.svg";
 import UserDropdown from "../../Components/Common/UserInfo/UserDropdown";
 import './Header.scss'
 
 const Header = ({menuToggleState, toggleMenu}) => {
+    const navigate = useNavigate();
+    const token = localStorage.getItem('token')
+    if(!token)
+    navigate("/login");
     var user = JSON.parse(localStorage.getItem('user'))
 
   return (  
@@ -13,8 +18,8 @@ const Header = ({menuToggleState, toggleMenu}) => {
             </span>
             <div className="user-container d-flex">
                 <div className="me-2">
-                    <h6 className="pb-0 mb-0 fw-bold">{user.fullName === undefined? "Admin Full Name": user.fullName}</h6>
-                    <p>{user.email === undefined? "Admin Email": user.email}</p>
+                    <h6 className="pb-0 mb-0 fw-bold">{user.fullName}</h6>
+                    <p>{user.email}</p>
                 </div>
                 <UserDropdown />
             </div>

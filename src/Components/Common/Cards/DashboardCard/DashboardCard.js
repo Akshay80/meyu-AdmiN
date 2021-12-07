@@ -8,7 +8,7 @@ export const DashboardCard = () => {
       <div className="row">
         {DashboardCardData.map((val, key) => {
           return (
-            <div className="dashboard-card col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-3">
+            <div className="dashboard-card col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-4">
               <div className="card h-100 w-100 py-2" style={{ maxWidth: "250px" }}>
                 <div key={key} className="row p-3">
                   <div className="col-4">
@@ -16,8 +16,8 @@ export const DashboardCard = () => {
                   </div>
                   <div className="col-8">
                     <div className="card-body p-0">
-                      <p className="card-text">{val.title}</p>
-                      <h3 className="card-title">{val.number}</h3>
+                      <p className="card-text cardTitle">{val.title}</p>
+                      <h3 className="cardNumber">{val.number}</h3>
                     </div>
                   </div>
                 </div>
