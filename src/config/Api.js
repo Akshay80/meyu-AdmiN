@@ -17,6 +17,11 @@ export default (() => {
     viewuserProfile: `${setting.api.url}auth/profile`,
     
     // Customer
-    customers: `${setting.api.url}admin/getusers`
+    customers: `${setting.api.url}admin/getusers`,
+    // Categories
+    categories: `${setting.api.url}common/category`,
+    deletecategories: `${setting.api.url}admin/deletecategory`,
+    //Chef
+    chefDetails: `${setting.api.url}admin/getallchef`
   }
 })()

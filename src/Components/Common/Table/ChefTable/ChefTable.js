@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect, useState } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
@@ -7,25 +7,16 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { chefData } from "./ChefData";
 import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
 import "./ChefTable.css";
 import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
+import {chefDetailsService} from '../../../../Services/userService';
 
 const ChefTable = () => {
-  const products = chefData.map((custom) => [
-    {
-      id: custom.id,
-      date: custom.date,
-      name: custom.name,
-      email: custom.email,
-      phonenumber: custom.phonenumber,
-    },
-  ]);
-
+const [chef, setChef] = useState([]);
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
   function handleDelete(rowId, name) {
@@ -66,7 +57,7 @@ const ChefTable = () => {
       align: "center",
     },
     {
-      dataField: "name",
+      dataField: "fullName",
       text: "Chef Name",
       headerSortingStyle,
       sort: true,
@@ -82,7 +73,7 @@ const ChefTable = () => {
       align: "center",
     },
     {
-      dataField: "phonenumber",
+      dataField: "phone",
       text: "Contact No.",
       sort: true,
       headerSortingStyle,
@@ -102,13 +93,28 @@ const ChefTable = () => {
               <ViewIcon className="view-icon"/>
               </NavLink>
             
-              <DeleteIcon className="iconHover delete-icon" onClick={() => handleDelete(row.id, row.name)}/>
+              <DeleteIcon className="iconHover delete-icon" onClick={() => handleDelete(row.id, row.fullName)}/>
             
           </div>
         );
       },
     },
   ];
+
+  useEffect(() => {
+   data();
+    },[])
+
+    const data = async () => {
+     await chefDetailsService().then(function (res) {
+        console.log(res.data.data)
+        setChef(res.data.data);
+      })
+      .catch(function (error)
+      {
+        console.log(error)
+      })
+    }
 
   const defaultSorted = [
     {
@@ -117,12 +123,12 @@ const ChefTable = () => {
     },
   ];
 
+
   return (
     <div className="table-responsive" style={{ padding: "20px" }}>
       <PaginationProvider
         pagination={paginationFactory({
           custom: true,
-          totalSize: products.length,
           prePageText: "Previous",
           nextPageText: "Next",
           page: 1,
@@ -145,22 +151,17 @@ const ChefTable = () => {
               text: "50",
               value: 50,
             },
-            {
-              text: "All",
-              value: products.length,
-            },
           ],
-          hideSizePerPage: products.length === 0,
         })}
         keyField="id"
         columns={columns}
-        data={chefData.map((item) => item)}
+        data={chef}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={chefData.map((item) => item)}
+            data={chef}
             search
           >
             {(toolkitprops) => (
@@ -177,6 +178,7 @@ const ChefTable = () => {
                   wrapperClasses="table-responsive"
                   hover
                   striped
+                  data={chef}
                   condensed={false}
                   noDataIndication="No Data Is Available"
                 />
