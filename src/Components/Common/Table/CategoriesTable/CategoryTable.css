@@ -9,3 +9,19 @@
     margin-bottom: 1px!important;
     text-align: left;
   }
+
+  .categoryImages
+  {
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+    height: 50px;
+    object-fit: cover;
+  }
+
+  .categoryImages:hover
+  {
+    height: 100px;
+    width: 100px;
+    transform: scale(2);
+    overflow: hidden;
+  }

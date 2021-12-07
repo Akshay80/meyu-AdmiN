@@ -63,7 +63,7 @@ const CategoriesTable = () => {
            
           <div className="d-flex align-items-center justify-content-evenly">
           {row.MediaObjects.map(rows => 
-          <img src={url+rows.imageUrl} alt="food_image" style={{width: '100%', height:50, objectFit: "cover"}}/>
+          <img className="categoryImages"src={url+rows.imageUrl} alt="food_image"/>
           )}
           </div>
         );

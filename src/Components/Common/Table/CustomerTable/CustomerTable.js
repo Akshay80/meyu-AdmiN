@@ -22,6 +22,17 @@ function CustomerTable() {
   const { SearchBar } = Search;
   const columns = [
     {
+      dataField: 'sl.no',
+      text: 'Serial no.',
+      formatter: (cell, row, rowIndex, formatExtraData) => {
+        return rowIndex + 1;
+      },
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
       dataField: "createdBy",
       text: "Customer ID",
       sort: true,

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "./Card.scss";
 import ChefOrderDetails from "../../../../../Pages/UserManagement/Chef/ChefOrderDetails"
 import FoodCard from '../../FoodCard/FoodCard'
+import UserImage from '../../../../../Assets/Images/blank-user.png';
 
-const   ChefCard = () => {
+const   ChefCard = (props) => {
   const [togglemenu, setToggleMenu] = useState(false);
   const toggleMenu = () => {
     setToggleMenu(true);
@@ -15,10 +16,10 @@ const   ChefCard = () => {
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src="https://source.unsplash.com/random/111x111"
+                src={(props.setURL === null)? UserImage: props.setURL}
                 className="img"
                 alt="..."
-                style={{ borderRadius: "50%", margin:"5px" }}
+                style={{ borderRadius: "50%", width: 100, height:100 }}
               />
             </div>
           </div>
@@ -26,9 +27,9 @@ const   ChefCard = () => {
             <div>
               <div className="user-card-info d-flex mx-3 align-items-center justify-content-between">
                 <div className="info-x">
-                <h5 className="mb-0">Name</h5>
-                  <p>Phone No</p>
-                  <p>Email</p>
+                <h5 className="mb-0">{props.setName}</h5>
+                  <p>{props.setPhone}</p>
+                  <p>{props.setEmail}</p>
                   <p>Join Date</p>
                   <p>Chef Timing</p>
                 </div>

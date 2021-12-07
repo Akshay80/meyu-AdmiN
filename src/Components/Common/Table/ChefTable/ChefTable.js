@@ -12,11 +12,13 @@ import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg
 import "./ChefTable.css";
 import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import {chefDetailsService} from '../../../../Services/userService';
 
 const ChefTable = () => {
 const [chef, setChef] = useState([]);
+const navigate = useNavigate();
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
   function handleDelete(rowId, name) {
@@ -40,6 +42,17 @@ const [chef, setChef] = useState([]);
     });
   }
   const columns = [
+    {
+      dataField: 'sl.no',
+      text: 'Serial no.',
+      formatter: (cell, row, rowIndex, formatExtraData) => {
+        return rowIndex + 1;
+      },
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+    },
     {
       dataField: "id",
       text: "Chef ID",
@@ -89,9 +102,10 @@ const [chef, setChef] = useState([]);
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex justify-content-evenly">
-            <NavLink to={Path.chefDetails} >
-              <ViewIcon className="view-icon"/>
-              </NavLink>
+            {/* <NavLink to={Path.chefDetails} > */}
+            
+              <ViewIcon className="view-icon" onClick={() => handleView(row.id, row.createdBy)}/>
+              {/* </NavLink> */}
             
               <DeleteIcon className="iconHover delete-icon" onClick={() => handleDelete(row.id, row.fullName)}/>
             
@@ -100,6 +114,13 @@ const [chef, setChef] = useState([]);
       },
     },
   ];
+
+  async function handleView(rowId, rowcreatedBy) {
+    console.log(rowId);
+    localStorage.setItem("ids1", rowId);
+    // localStorage.setItem("custId", rowcreatedBy);
+    navigate("/chef-details");
+  }
 
   useEffect(() => {
    data();
