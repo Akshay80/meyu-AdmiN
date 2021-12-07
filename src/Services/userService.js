@@ -21,3 +21,18 @@ export function changeProfileImage(payload) {
 export function viewCustomerService() {
   return ApiInstance?.get(`${Api.customers}`);
 }
+
+// Get Categories Data
+export function viewCategoryService() {
+  return ApiInstance?.get(`${Api.categories}`);
+}
+
+//Delete Categories Data
+export function deleteCategoryService(payload) {
+  return ApiInstance?.post(`${Api.deletecategories}`, payload);
+}
+
+//Chef Details Data
+export function chefDetailsService() {
+  return ApiInstance?.get(`${Api.chefDetails}`);
+}
