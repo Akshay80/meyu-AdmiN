@@ -4,7 +4,6 @@ import Api from "../config/Api";
 
 // Profile
 export function profileService(payload) {
-  console.log("hello",`${Api.userProfile}`)
   return ApiInstance?.post(`${Api.userProfile}`, payload);
 }
 

@@ -1,35 +1,64 @@
 import React, {useState, useEffect} from "react";
 import ChefCard from "../../../Components/Common/Cards/PrimaryCard/ChefDetailCard/Card";
 import { ReactComponent as ChefIcon } from "../../../Assets/Icon/Chef.svg";
-import axiosConfig from '../../../Components/Common/APIConfig/axiosConfig'
+import { confirmChefAccount, getchefDetails } from "../../../Services/chefServices";
+// import axiosConfig from '../../../Components/Common/APIConfig/axiosConfig'
 
 const ChefDetail = ({ menuToggleState }) => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [url, setURL] = useState();
+  // const [name, setName] = useState();
+  // const [email, setEmail] = useState();
+  // const [phone, setPhone] = useState();
+  // const [url, setURL] = useState();
+  // const [status, setStatus] = useState();
+  const [chefDetail, setchefDetail] = useState({});
 
-  const id = localStorage.getItem('ids1')
+  // const id = localStorage.getItem('ids1')
   useEffect(() => {
-    axiosConfig
-    .get(`admin/getuserdetails/${id}`, {
-      headers: {
-        "content-type": "application/json",
-      },
-    })
+    fetchChefDetail();
+  }, []);
+
+  const fetchChefDetail = () => {
+    // axiosConfig
+    // .get(`admin/getuserdetails/${id}`, {  
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    // })
+    getchefDetails()
     .then((response) => {
-      //  setCustomer(response.data.data);
-      console.log(response.data.data)
+      // setchefDetail(response);
+      console.log("chef details", response);
       //  setID(response.data.data.createdBy);
-       setName(response.data.data.fullName);
-       setEmail(response.data.data.email);
-       setPhone(response.data.data.phone);
-       setURL(response.data.data.coverPhotoUrl);
+      //  setName(response.data.data.fullName);
+      //  setEmail(response.data.data.email);
+      //  setPhone(response.data.data.phone);
+      //  setStatus(response.data.data.status);
+      //  setURL(response.data.data.profileUrl);
     })
     .catch(function (error) {
       console.log(error);
     });
-  }, [])
+  }
+
+  const changeStatus = (data) => {
+    // alert("clicked");
+    console.log("data", data);
+    let params = {
+      isVerified: "true",
+    };
+    confirmChefAccount(params)
+      .then((data) => {
+        console.log("confirm chef account", data);
+        if (data.data.success === "true") {
+          // setApproved(approved)
+          fetchChefDetail();
+        }
+      })
+      .catch((error) => {
+        console.log("errrorrr chef", error);
+      });
+  };
+
   return (
     <div>
       <div className="page-heading d-flex align-items-center justify-content-between p-4">
@@ -43,7 +72,8 @@ const ChefDetail = ({ menuToggleState }) => {
           Chef ID <b>#543210</b>
         </h6>
       </div>
-      <ChefCard setName={name} setEmail={email} setPhone={phone} setURL={url} />
+      {/* <ChefCard changeStatus={changeStatus} setName={name} setEmail={email} setPhone={phone} setURL={url} setStatus={status} /> */}
+      <ChefCard changeStatus={changeStatus} chefDetail={chefDetail} />
     </div>
   );
 };

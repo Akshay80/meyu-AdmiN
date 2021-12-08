@@ -27,7 +27,10 @@ export default (() => {
     // Categories
     categories: `${setting.api.url}common/category`,
     deletecategories: `${setting.api.url}admin/deletecategory`,
-    //Chef
-    chefDetails: `${setting.api.url}admin/getallchef`
+
+    //Chef  
+    chefDetails: `${setting.api.url}admin/getallchef`,
+    getchefDetails: `${setting.api.url}admin/getuserdetails/:id`,
+    confirmChef: `${setting.api.url}admin/confirmchef/:id`,
   }
 })()

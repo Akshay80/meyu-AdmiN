@@ -26,14 +26,14 @@ const  Sidebar = ({ menuToggleState, toggleMenu }) => {
           if (val.subMenus !== undefined) {
             return (
               <ProSidebar>
-                <Menu key={key + 1} iconShape="square">
+                <Menu iconShape="square">
                     <SubMenu key={key} icon={val.icon} title={val.title}>
-                      <MenuItem >
+                      <MenuItem>
                         {val.subMenus.map((submenu, i) => {
                           return (
-                            <MenuItem  onClick={toggleMenu} i={i + 1}>
+                            <MenuItem onClick={toggleMenu}>
                             <NavLink className="sidebar-menu-links" to={submenu.link}>
-                              <MenuItem key={key}>{submenu.title}</MenuItem>
+                              <MenuItem>{submenu.title}</MenuItem>
                             </NavLink>
                             </MenuItem>
                           );

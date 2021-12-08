@@ -51,7 +51,7 @@ const UserProfile = () => {
           setValue("state", response.data.data.Profile.Address.state);
           setValue("city", response.data.data.Profile.Address.city);
           setValue("zip", response.data.data.Profile.Address.zipCode);
-          setURL(response.data.data.Profile.profileUrl);
+          setURL("uploadedimage", `${setting.api.url}response.data.data.Profile.profileUrl`);
         }
       })
       .catch((error) => {
@@ -80,7 +80,7 @@ const UserProfile = () => {
       },
     };
     profileService(params)
-      .then((data) => { 
+      .then((data) => {
         console.log("post profile data", data);
       })
       .catch((error) => {
@@ -97,16 +97,18 @@ const UserProfile = () => {
         raw: e?.target?.files[0],
       });
     }
-      let formData = new FormData();
-      formData.append("profile", setImage );
-      changeProfileImage(formData)
-        .then((response) => {
-          console.log("post profile data", response);
-        })
-        .catch((error) => {
-          console.log("post data error", error);
-        });
-    
+
+    let formData = new FormData();
+    console.log("target image", e?.target?.files[0]);
+    formData.append("profile", e?.target?.files[0]);
+    changeProfileImage(formData)
+      .then((response) => {
+        console.log("post profile data", response);
+      })
+      .catch((error) => {
+        console.log("post data error", error);
+      });
+
     // let token = localStorage.getItem("token");
     // axios
     //   .post(`${setting.api.url}auth/profile-image`, formData, {
@@ -140,53 +142,53 @@ const UserProfile = () => {
       </div>
 
       {/* ======================== profile pic =================== */}
-  
-        <div className="profile-pic-wrapper">
-          <div className="profile-pic-holder">
-            {/* {console.log("response", profileData)} */}
-            <label htmlFor="upload-button">
-              {image.preview ? (
+
+      <div className="profile-pic-wrapper">
+        <div className="profile-pic-holder">
+          {/* {console.log("response", profileData)} */}
+          <label htmlFor="upload-button">
+            {image.preview ? (
+              <img
+                id="profilePic"
+                className="pic"
+                alt=""
+                src={image.preview}
+                {...register("uploadedimage", {})}
+              />
+            ) : (
+              <>
                 <img
                   id="profilePic"
                   className="pic"
                   alt=""
-                  src={image.preview}
+                  src={image?.preview}
                 />
-              ) : (
-                <>
-                  <img
-                    id="profilePic"
-                    className="pic"
-                    alt=""
-                    src={image?.preview}
-                  />
-                </>
-              )}
-            </label>
-            <label htmlFor="upload-button" className="upload-file-block">
-              <div className="text-center">
-                <div className="mb-2">
-                  <i className="fa fa-camera fa-2x"></i>
-                </div>
-                <div className="text-uppercase">
-                  Update <br /> Profile Photo
-                </div>
+              </>
+            )}
+          </label>
+          <label htmlFor="upload-button" className="upload-file-block">
+            <div className="text-center">
+              <div className="mb-2">
+                <i className="fa fa-camera fa-2x"></i>
               </div>
-            </label>
-            <Input
-              className="uploadProfileInput d-none"
-              type="file"
-              name="profile_pic"
-              id="upload-button"
-              accept="image/*"
-              onChange={handleChange}
-            />
-          </div>
-          <button className="btn btn-success" onClick={handleChange}>
+              <div className="text-uppercase">
+                Update <br /> Profile Photo
+              </div>
+            </div>
+          </label>
+          <Input
+            className="uploadProfileInput d-none"
+            type="file"
+            name="profile_pic"
+            id="upload-button"
+            accept="image/*"
+            onChange={handleChange}
+          />
+        </div>
+        <button className="btn btn-success" onClick={handleChange}>
             Update
           </button>
-        </div>
-     
+      </div>
 
       {/* ======================== my form ===================== */}
 

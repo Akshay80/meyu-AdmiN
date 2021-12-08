@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import "./Card.scss";
-import ChefOrderDetails from "../../../../../Pages/UserManagement/Chef/ChefOrderDetails"
-import FoodCard from '../../FoodCard/FoodCard'
-import UserImage from '../../../../../Assets/Images/blank-user.png';
+import ChefOrderDetails from "../../../../../Pages/UserManagement/Chef/ChefOrderDetails";
+import FoodCard from "../../FoodCard/FoodCard";
+import UserImage from "../../../../../Assets/Images/blank-user.png";
 
-const   ChefCard = (props) => {
+const ChefCard = (props) => {
   const [togglemenu, setToggleMenu] = useState(false);
+
   const toggleMenu = () => {
     setToggleMenu(true);
-  }
+  };
+  console.log("chefffff detailsllslss", props.chefDetail);
   return (
     <div className="container mb-5">
       <div className="card mb-3 p-3">
@@ -16,10 +18,10 @@ const   ChefCard = (props) => {
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src={(props.setURL === null)? UserImage: props.setURL}
+                src={props.chefDetail.profileUrl === null ? UserImage : props.chefDetail.profileUrl}
                 className="img"
                 alt="..."
-                style={{ borderRadius: "50%", width: 100, height:100 }}
+                style={{ borderRadius: "50%", width: 100, height: 100 }}
               />
             </div>
           </div>
@@ -27,19 +29,27 @@ const   ChefCard = (props) => {
             <div>
               <div className="user-card-info d-flex mx-3 align-items-center justify-content-between">
                 <div className="info-x">
-                <h5 className="mb-0">{props.setName}</h5>
-                  <p>{props.setPhone}</p>
-                  <p>{props.setEmail}</p>
+                  <h5 className="mb-0">{props.chefDetail.fullName}</h5>
+                  <p>{props.chefDetail.phone}</p>
+                  <p>{props.chefDetail.email}</p>
                   <p>Join Date</p>
                   <p>Chef Timing</p>
                 </div>
                 <div className="d-flex flex-column">
-                <button type="button" onClick={toggleMenu} className="btn btn-outline-secondary mb-3">View</button>
+                  <button
+                    type="button"
+                    onClick={toggleMenu}
+                    className="btn btn-outline-secondary mb-3"
+                  >
+                    View
+                  </button>
                   <button
                     className="btn btn-success shadow-none"
                     type="button"
+                    data-bs-toggle="button"
+                    onClick={props.changeStatus}
                   >
-                    Approved
+                    {props.chefDetail.status}
                   </button>
                 </div>
               </div>
@@ -51,14 +61,14 @@ const   ChefCard = (props) => {
                 </div>
                 <div className="info-xz">
                   <h5 className="mb-0">Total Amount</h5>
-                  <h6>$ 56</h6>
+                  <h6>$56</h6>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {togglemenu?<FoodCard />: <ChefOrderDetails />}
+      {togglemenu ? <FoodCard /> : <ChefOrderDetails />}
     </div>
   );
 };
