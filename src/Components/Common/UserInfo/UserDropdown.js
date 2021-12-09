@@ -1,57 +1,47 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UserInfo } from "./UserInfo";
-import axiosConfig from "../APIConfig/axiosConfig";
-import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import {useNavigate} from 'react-router-dom'
-import './userDropDown.css'
+import { useNavigate } from "react-router-dom";
+import "./userDropDown.css";
 import Path from "../../../Constant/RouterConstant";
-import '../Buttons/buttons.scss';
+import "../Buttons/buttons.scss";
+import { logoutFun } from "../../../Services/authService";
+import { clearToken } from "../../helper/uitility";
+import axios from "axios";
 
-let toastId = null;
 const UserDropdown = () => {
-  const navigate = useNavigate()
-  const logout = () => {
-    axiosConfig.get("auth/logout", {
-        headers: { 
-          'content-type': "application/json"
-        }
-      })
-      .then(function (response) {
-          if (!toast.isActive(toastId)) {
-            toast.success(response.data.data.message, {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: 0,
-              toastId: "my_toast",
-            });
-          }
-        localStorage.clear();
-        setTimeout(() => {
-          navigate("/login")
-        }, 3000);
-        console.log(response.data.data.message);
+  let navigate = useNavigate();
+
+  const logoutFunction = () => {
+    logoutFun()
+      .then((res) => {
+        console.log("logout clicked", res);
+        clearToken(); 
+        navigate("/login");
       })
       .catch(function (error) {
-        if (!toast.isActive(toastId)) {
-          toast.error(error.response.data.error, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-            toastId: "my_toast",
-          });
-        };
+        console.log("error logout", error);
       });
+
+    // axios.get(`http://52.77.236.78:8081/api/auth/logout`,
+    // {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Authorization": localStorage.getItem('token'),
+    //   }
+    // }
+    // )
+    // .then((res) => {
+    //       console.log("logout clicked", res);
+    //       clearToken(); 
+    //       navigate("/login");
+    //     })
+    //     .catch(function (error) {
+    //       console.log("error logout", error);
+    //     });
+
   };
 
   return (
@@ -68,26 +58,14 @@ const UserDropdown = () => {
                 <Link to={user.changePassword}>{user.changePasswordText}</Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                <button className="logout" onClick={logout}>
+                <button className="logout" onClick={logoutFunction}>
                   {user.signout}
                 </button>
               </Dropdown.Item>
-              
             </Dropdown.Menu>
           </Dropdown>
         );
       })}
-        <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover
-        limit={1}
-        transition={Flip} />
     </>
   );
 };

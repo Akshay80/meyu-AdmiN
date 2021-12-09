@@ -26,7 +26,7 @@ const ChefDetail = ({ menuToggleState }) => {
     // })
     getchefDetails()
     .then((response) => {
-      // setchefDetail(response);
+      setchefDetail(response);
       console.log("chef details", response);
       //  setID(response.data.data.createdBy);
       //  setName(response.data.data.fullName);

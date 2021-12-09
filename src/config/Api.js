@@ -7,7 +7,9 @@ export default (() => {
     'AUTH': setting.api.AUTH,
 
     // Auth
-    login: `${setting.api.url}login`,
+    login: `${setting.api.url}authenticateadmin`,
+    logout: `${setting.api.url}auth/logout`,
+    signup: `${setting.api.url}signup`,
     forgotPassword: `${setting.api.url}forgot-password`,
     resetPassword: `${setting.api.url}resetPassword`,
     changePassword: `${setting.api.url}auth/changepassword`,

@@ -1,11 +1,11 @@
 import React from "react";
 import "./ForgotPassword.scss";
 import { useForm } from "react-hook-form";
-import axiosConfig from "../../Common/APIConfig/axiosConfig";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { forgotPasswordService } from "../../../Services/authService";
 
-let toastId= null;
+let toastId = null;
 const ForgotPassword = () => {
   const {
     register,
@@ -13,28 +13,20 @@ const ForgotPassword = () => {
     formState: { errors },
   } = useForm();
 
-  function forgotPassword(data) {
-    const forgetData = {
+  const forgotPassword = (data) => {
+    let params = {
       email: data.email,
-      phone: ''
-    }
-    axiosConfig
-    .post("/forgot-password", forgetData)
-    .then(function (response) {
-      if (!toast.isActive(toastId)) {
-        toast.success(response.data.data.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-      } 
-    })
-  }
+      phone: "",
+    };
+    forgotPasswordService(params)
+      .then((response) => {
+        console.log("response", response);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   return (
     <div className="auth-wrapper bg-dark">
       <div className="row justify-content-center">
@@ -45,7 +37,10 @@ const ForgotPassword = () => {
             <p className="card-text fw-bold color-grey">Forgot Password</p>
             <form onSubmit={handleSubmit(forgotPassword)}>
               <div className="mb-3 mt-4">
-                <label htmlFor="exampleFormControlInput1" className="form-label">
+                <label
+                  htmlFor="exampleFormControlInput1"
+                  className="form-label"
+                >
                   <small>Registered Email</small>
                 </label>
 

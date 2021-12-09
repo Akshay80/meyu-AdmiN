@@ -1,53 +1,82 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Login.scss";
 import Path from "../../../Constant/RouterConstant";
 import { useForm } from "react-hook-form";
 import axiosConfig from "../../Common/APIConfig/axiosConfig";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { useNavigate } from "react-router-dom";
-import { loginApiFun } from "../../../Services/authService";
+import {useNavigate} from 'react-router-dom'
 
 let toastId = null;
 const Login = () => {
-  const [loader, setLoader] = useState(false);
-  const [isValidForm, setIsValidForm] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  
-  const onSubmit = (data) => {
-    setLoader(true);
-    let params = {
-      szEmail: data.email,
-      szPassword: data.password
+  function login1(data) {
+    const loginData = {
+      username: data.email,
+      password: data.password
     }
+    
+    axiosConfig
+    .post("/authenticateadmin", loginData)
+    .then(function (response) {
+      if(response.data.success === true)
+      {
+        let token = response.data.data.token;
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(response.data.data.user));
+       navigate("/")
+      }
+      if (!toast.isActive(toastId)) {
+        toast.error(response.data.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      }
+    })
 
-    loginApiFun(params)
-      .then(res => {
-        console.log("res login", res.statusCode)
-        if (res?.status !== "Error") {
-          console.log("test",res)
-          // setUserDetail(JSON.stringify(res.responseData.adminProfile));
-        }
-        else {
-          setErrorMessage(res?.data?.message);
-          setIsValidForm(false);
-        }
-        setLoader(false);
-      })
-      .catch(err => {
-        setErrorMessage(err?.data?.message);
-        console.log("error", err);
-        setLoader(false);
-        setIsValidForm(false);
-      })
+    .catch(function (error) {
+      console.log(error.response.data.error);
+      if (!toast.isActive(toastId)) {
+        toast.error(error.response.data.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      }
+
+      console.log(error.response.data.error.message);
+      if (!toast.isActive(toastId)) {
+        toast.error(error.response.data.error.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      }
+    });
+    
   }
-
   return (
     <>
     <div className="auth-wrapper align-items-center bg-dark">
@@ -63,12 +92,13 @@ const Login = () => {
                 Sign up
               </a>
             </p>
-            <form autoComplete="off" onSubmit={handleSubmit(loginApiFun)}>
+            <form autoComplete="off" onSubmit={handleSubmit(login1)}>
               <div className="mb-3 row justify-content-center">
                 <div className="col-sm-12">
                   <input
                     type="email"
-                    className="form-control shadow-none"  
+                    className="form-control shadow-none"
+                    name="email"
                     placeholder="Email"
                     {...register("email", {
                       required: "Email is required",
@@ -86,6 +116,7 @@ const Login = () => {
               <div className="mb-3 row justify-content-center">
                 <div className="col-sm-12">
                   <input
+                    name="password"
                     placeholder="Password"
                     className="form-control shadow-none"
                     type="password"

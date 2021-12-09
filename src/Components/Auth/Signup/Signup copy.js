@@ -2,7 +2,11 @@ import React from "react";
 import "./Signup.scss";
 import Path from "../../../Constant/RouterConstant";
 import { useForm } from "react-hook-form";
-import { signupFun } from "../../../Services/authService";
+import axiosConfig from "../../Common/APIConfig/axiosConfig";
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+
+let toastId = null;
 
 const Signup = () => {
   const {
@@ -12,9 +16,8 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  function onSubmit(data) {
-    console.log("data", data);
-    const params = {
+  function login(data) {
+    const postData = {
       user: {
         firstName: data.firstname,
         lastName: data.lastname,
@@ -24,15 +27,41 @@ const Signup = () => {
         password: data.password,
       },
     };
-    signupFun(params)
-      .then((data) => {
-        console.log("post profile data", data);
-
-        reset();
+    axiosConfig
+      .post("/signup", postData)
+      .then(function (response) {
+        if (!toast.isActive(toastId)) {
+          if(response.data.success === true)
+          {
+            console.log("Success Response: ", response.data.success);
+          toast.success(response.data.data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+          reset();
+        }
+          toast.error(response?.data?.error?.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+        } 
+     
       })
-
+      
       .catch(function (error) {
-        console.log("post data error", error);
+        console.log(error);
       });
   }
 
@@ -53,7 +82,7 @@ const Signup = () => {
             <form
               className="row g-3"
               autoComplete="off"
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(login)}
             >
               <div className="col-md-6">
                 <input
@@ -145,7 +174,7 @@ const Signup = () => {
                   <p className="errorss">{errors.password.message}</p>
                 )}
               </div>
-
+             
               <div className="mb-2 col-12 mt-4">
                 <button type="submit" className="btn btn-auth">
                   Sign up
@@ -155,6 +184,18 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        limit={1}
+        transition={Flip}
+      />
     </div>
   );
 };

@@ -15,7 +15,7 @@ const Path = {
     customer : "customer",
     customerDetails : "/customer-details",
     chef : "chef",
-    chefDetails : "/chef-details",
+    chefDetails : "/chef-details/:id",
     chefFood : "chef-food-details",
     allItems : "all-items",
     editItems : "/edit-items",

@@ -15,10 +15,14 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import {chefDetailsService} from '../../../../Services/userService';
+import { useParams } from "react-router-dom";
 
 const ChefTable = () => {
 const [chef, setChef] = useState([]);
 const navigate = useNavigate();
+
+const {id} = useParams();
+
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
   function handleDelete(rowId, name) {
@@ -62,7 +66,7 @@ const navigate = useNavigate();
       align: "center",
     },
     {
-      dataField: "date",
+      dataField: "verificationDate",
       text: "Join Date",
       sort: true,
       headerSortingStyle,
@@ -101,11 +105,10 @@ const navigate = useNavigate();
       align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex justify-content-evenly">
-            {/* <NavLink to={Path.chefDetails} > */}
-            
-              <ViewIcon className="view-icon" onClick={() => handleView(row.id, row.createdBy)}/>
-              {/* </NavLink> */}
+          <div className="d-flex justify-content-evenly align-items-center">
+            <NavLink to={Path.chefDetails} >
+              <ViewIcon className="view-icon"/>
+              </NavLink>
             
               <DeleteIcon className="iconHover delete-icon" onClick={() => handleDelete(row.id, row.fullName)}/>
             
@@ -115,20 +118,20 @@ const navigate = useNavigate();
     },
   ];
 
-  async function handleView(rowId, rowcreatedBy) {
-    console.log(rowId);
-    localStorage.setItem("ids1", rowId);
-    // localStorage.setItem("custId", rowcreatedBy);
-    navigate("/chef-details");
-  }
+  // async function handleView(rowId, rowcreatedBy) {
+  //   console.log(rowId);
+  //   localStorage.setItem("ids1", rowId);
+  //   // localStorage.setItem("custId", rowcreatedBy);
+  //   navigate(Path.chefDetails);
+  // }
 
   useEffect(() => {
    data();
     },[])
 
-    const data = async () => {
-     await chefDetailsService().then(function (res) {
-        console.log(res.data.data)
+    const data =  () => {
+     chefDetailsService().then(function (res) {
+        console.log("chef data", res.data.data)
         setChef(res.data.data);
       })
       .catch(function (error)

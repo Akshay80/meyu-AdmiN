@@ -32,7 +32,7 @@ const ChefCard = (props) => {
                   <h5 className="mb-0">{props.chefDetail.fullName}</h5>
                   <p>{props.chefDetail.phone}</p>
                   <p>{props.chefDetail.email}</p>
-                  <p>Join Date</p>
+                  <p>{props.chefDetail.verificationDate}</p>
                   <p>Chef Timing</p>
                 </div>
                 <div className="d-flex flex-column">
