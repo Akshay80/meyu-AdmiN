@@ -12,6 +12,7 @@ import {
 } from "../../../Services/userService";
 import axios from "axios";
 import setting from "../../../config/settings";
+import camera from '../../../Assets/Icon/camera.svg'
 
 const UserProfile = () => {
   // To view the filled information
@@ -51,7 +52,8 @@ const UserProfile = () => {
           setValue("state", response.data.data.Profile.Address.state);
           setValue("city", response.data.data.Profile.Address.city);
           setValue("zip", response.data.data.Profile.Address.zipCode);
-          setURL("uploadedimage", `${setting.api.url}response.data.data.Profile.profileUrl`);
+          // setURL("uploadedimage", response.data.data.Profile.profileUrl);
+          setURL(`http://52.77.236.78:8081/${response.data.data.Profile.profileUrl}`);
         }
       })
       .catch((error) => {
@@ -104,6 +106,7 @@ const UserProfile = () => {
     changeProfileImage(formData)
       .then((response) => {
         console.log("post profile data", response);
+        window.location.reload(false);
       })
       .catch((error) => {
         console.log("post data error", error);
@@ -147,29 +150,19 @@ const UserProfile = () => {
         <div className="profile-pic-holder">
           {/* {console.log("response", profileData)} */}
           <label htmlFor="upload-button">
-            {image.preview ? (
+            {console.log("OUUURRRRRRRR URRLLLLRRRLLLLR: ", url)}
+            
               <img
                 id="profilePic"
                 className="pic"
-                alt=""
-                src={image.preview}
+                alt="user_image"
+                src={url? url: image.preview }
                 {...register("uploadedimage", {})}
               />
-            ) : (
-              <>
-                <img
-                  id="profilePic"
-                  className="pic"
-                  alt=""
-                  src={image?.preview}
-                />
-              </>
-            )}
           </label>
           <label htmlFor="upload-button" className="upload-file-block">
             <div className="text-center">
               <div className="mb-2">
-                <i className="fa fa-camera fa-2x"></i>
               </div>
               <div className="text-uppercase">
                 Update <br /> Profile Photo
@@ -185,9 +178,9 @@ const UserProfile = () => {
             onChange={handleChange}
           />
         </div>
-        <button className="btn btn-success" onClick={handleChange}>
+        {/* <button className="btn btn-success" onClick={handleChange}>
             Update
-          </button>
+          </button> */}
       </div>
 
       {/* ======================== my form ===================== */}
