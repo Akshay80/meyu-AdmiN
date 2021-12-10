@@ -51,22 +51,15 @@ function CustomerTable() {
       headerAlign: "center",
       align: "center",
     },
-    {
-      dataField: "createdBy",
-      text: "Customer ID",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      dataField: "createdAt",
-      text: "Join Date",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   dataField: "createdBy",
+    //   text: "Customer ID",
+    //   sort: true,
+    //   headerSortingStyle,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
+  
     {
       dataField: "fullName",
       text: "Customer Name",
@@ -84,6 +77,14 @@ function CustomerTable() {
     {
       dataField: "phone",
       text: "Contact No.",
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      dataField: "createdAt",
+      text: "Join Date",
+      sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",

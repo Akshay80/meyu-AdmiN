@@ -39,5 +39,6 @@ export default (() => {
     addTag: `${setting.api.url}admin/tag`,
     editTag: `${setting.api.url}admin/edittag`,
     deleteTag: `${setting.api.url}admin/deletetag`,
+    getTagId: `${setting.api.url}common/tag/`,
   };
 })();

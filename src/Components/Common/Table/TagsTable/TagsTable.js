@@ -15,7 +15,11 @@ import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbaske
 import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useForm } from "react-hook-form";
-import { addTags, deleteTags, getAllTagFun } from "../../../../Services/tagServices";
+import {
+  addTags,
+  deleteTags,
+  getAllTagFun,
+} from "../../../../Services/tagServices";
 
 const TagsTable = () => {
   const [tag, setTag] = useState([]);
@@ -27,10 +31,10 @@ const TagsTable = () => {
   } = useForm();
 
   useEffect(() => {
-    data();
+    tagdata();
   }, []);
 
-  const data = () => {
+  const tagdata = () => {
     getAllTagFun()
       .then((res) => {
         console.log("taggsss data", res.data.data);
@@ -41,41 +45,41 @@ const TagsTable = () => {
       });
   };
 
+  // Adding Tags API
   const onSubmit = (data) => {
     console.log("data", data);
     let params = {
-     name : data.tags,
+      name: data.tags,
     };
     addTags(params)
       .then((data) => {
         console.log("post profile data", data);
-        data();
-
+        tagdata();
       })
       .catch((error) => {
         console.log("post data error", error);
       });
   };
 
-  const deleteTag = (data) => {
-    // console.log("data", data);
-    let params = {
-     id : data?.id,
-    };
-    deleteTags(params)
-      .then((data) => {
-        console.log("post profile data", data);
-      })
-      .catch((error) => {
-        console.log("post data error", error);
-      });
-  }
-
   
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
-  function  handleDelete(rowId, name) {
+  // Deleting tag API
+
+ const handleDelete = (rowId) => {
+
+  let params = {
+    id: rowId,
+  };
+  deleteTags(params)
+    .then((data) => {
+      console.log("post tag id deleted data", data);
+    })
+    .catch((error) => {
+      console.log("post data error", error);
+    });
+
     confirmAlert({
       title: "Delete",
       message: `Are you sure you want to remove this item from the table?`,
@@ -84,8 +88,7 @@ const TagsTable = () => {
           label: "Yes",
           className: "btn btn-danger",
           onClick: () => {
-            // console.log("ROW ID: ", rowId);
-            deleteTag();
+            handleDelete(rowId);
           },
         },
         {
@@ -93,7 +96,10 @@ const TagsTable = () => {
         },
       ],
     });
+    tagdata();
   }
+
+
   const columns = [
     {
       dataField: "serialno",
@@ -106,14 +112,14 @@ const TagsTable = () => {
       headerAlign: "center",
       align: "center",
     },
-    {
-      dataField: "id",
-      text: "ID",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   dataField: "id",
+    //   text: "ID",
+    //   sort: true,
+    //   headerSortingStyle,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
     {
       dataField: "name",
       text: "Name",
@@ -134,7 +140,7 @@ const TagsTable = () => {
             <EditIcon className="mt-1 edit-icon" />
             <DeleteIcon
               className="iconHover delete-icon"
-              onClick={() => handleDelete(row.serialno, row.tags)}
+              onClick={() => handleDelete(row.id)}
             />
           </div>
         );
@@ -186,7 +192,6 @@ const TagsTable = () => {
               ></button>
             </div>
             <div className="modal-body p-4 pt-0">
-
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-3">
                   <label htmlFor="recipient-name" className="col-form-label">
@@ -208,7 +213,7 @@ const TagsTable = () => {
                   )}
                 </div>
                 <div className="modal-footer border-0 d-flex justify-content-center">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">
                     Add Tags
                   </button>
                 </div>
@@ -219,67 +224,72 @@ const TagsTable = () => {
       </div>
 
       <div className="card">
-      <div className="table-responsive" style={{ padding: "20px" }}>
-      <PaginationProvider
-        pagination={paginationFactory({
-          custom: true,
-          prePageText: "Previous",
-          nextPageText: "Next",
-          page: 1,
-          sizePerPage: 4,
-          sizePerPageList: [
-            {
-              text: "5",
-              value: 5,
-            },
+        <div className="table-responsive" style={{ padding: "20px" }}>
+          <PaginationProvider
+            pagination={paginationFactory({
+              custom: true,
+              prePageText: "Previous",
+              nextPageText: "Next",
+              page: 1,
+              sizePerPage: 4,
+              sizePerPageList: [
+                {
+                  text: "5",
+                  value: 5,
+                },
 
-            {
-              text: "10",
-              value: 10,
-            },
-            {
-              text: "30",
-              value: 30,
-            },
-            {
-              text: "50",
-              value: 50,
-            },
-          ],
-        })}
-        keyField="id"
-        columns={columns}
-        data={tag}
-      >
-        {({ paginationProps, paginationTableProps }) => (
-          <ToolkitProvider keyField="id" columns={columns} data={tag} search>
-            {(toolkitprops) => (
-              <>
-                <div className="d-flex justify-content-between mb-3">
-                  <SizePerPageDropdownStandalone {...paginationProps} />
-                  <SearchBar {...toolkitprops.searchProps} srText=" " />
-                </div>
-                <BootstrapTable
-                  {...toolkitprops.baseProps}
-                  {...paginationTableProps}
-                  defaultSorted={defaultSorted}
-                  defaultSortDirection="asc"
-                  wrapperClasses="table-responsive"
-                  hover
-                  striped
-                  data={tag}
-                  condensed={false}
-                  noDataIndication="No Data Is Available"
-                />
-                <div className="d-flex justify-content-end">
-                  <PaginationListStandalone {...paginationProps} />
-                </div>
-              </>
+                {
+                  text: "10",
+                  value: 10,
+                },
+                {
+                  text: "30",
+                  value: 30,
+                },
+                {
+                  text: "50",
+                  value: 50,
+                },
+              ],
+            })}
+            keyField="id"
+            columns={columns}
+            data={tag}
+          >
+            {({ paginationProps, paginationTableProps }) => (
+              <ToolkitProvider
+                keyField="id"
+                columns={columns}
+                data={tag}
+                search
+              >
+                {(toolkitprops) => (
+                  <>
+                    <div className="d-flex justify-content-between mb-3">
+                      <SizePerPageDropdownStandalone {...paginationProps} />
+                      <SearchBar {...toolkitprops.searchProps} srText=" " />
+                    </div>
+                    <BootstrapTable
+                      {...toolkitprops.baseProps}
+                      {...paginationTableProps}
+                      defaultSorted={defaultSorted}
+                      defaultSortDirection="asc"
+                      wrapperClasses="table-responsive"
+                      hover
+                      striped
+                      data={tag}
+                      condensed={false}
+                      noDataIndication="No Data Is Available"
+                    />
+                    <div className="d-flex justify-content-end">
+                      <PaginationListStandalone {...paginationProps} />
+                    </div>
+                  </>
+                )}
+              </ToolkitProvider>
             )}
-          </ToolkitProvider>
-        )}
-      </PaginationProvider>
-    </div>
+          </PaginationProvider>
+        </div>
       </div>
     </>
   );

@@ -21,3 +21,8 @@ export function editTags(payload) {
 export function deleteTags(payload) {
   return ApiInstance?.post(`${Api.deleteTag}`,payload);
 }
+
+//   get tags by ID
+export function getTagsbyId() {
+    return ApiInstance?.get(`${Api.deleteTag}`);
+  }

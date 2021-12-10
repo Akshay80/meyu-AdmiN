@@ -32,7 +32,7 @@ console.log("cedjwcsjckb", chefDetail)
                   <h5 className="mb-0">{chefDetail?.firstName} {chefDetail?.lastName}</h5>
                   <p>{chefDetail?.phone}</p>
                   <p>{chefDetail?.email}</p>
-                  <p>{chefDetail?.id}</p>
+                  {/* <p>{chefDetail?.id}</p> */}
                   <p>Chef Timing</p>
                 </div>
                 <div className="d-flex flex-column">
