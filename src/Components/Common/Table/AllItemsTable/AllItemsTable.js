@@ -97,7 +97,7 @@ const AllItemsTable = () => {
         align: "center",
         formatter: (rowContent, row) => {
           return (
-            <div className="d-flex justify-content-evenly">
+            <div className="d-flex justify-content-evenly align-items-center">
               <NavLink to={Path.editItems}>
                 <EditIcon className="edit-icon"/>
                 </NavLink>

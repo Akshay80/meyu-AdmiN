@@ -1,8 +1,33 @@
 import React from "react";
 import UserImage from '../../../../../Assets/Images/blank-user.png';
 import "./Card.scss";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const CustomerCard = ({customerDetail}) => {
+
+  const disContinue = () => {
+    confirmAlert({
+      title: "Discontinue!",
+      message: `Are you sure you want to discontinue this customer?`,  
+      buttons: [
+        {
+          label: "Yes",
+          className: "btn btn-danger",
+          color: "red",
+          onClick: () => {
+            alert("Customer Discontinued!")
+          },
+        },
+        {
+          label: "No",
+        },
+      ],
+    });
+  }
+
+
+
 
   return (
     <div className="container">
@@ -30,6 +55,7 @@ const CustomerCard = ({customerDetail}) => {
                   <button
                     className="btn btn-outline-danger shadow-none"
                     type="button"
+                    onClick={disContinue}
                   >
                     Discontinue
                   </button>

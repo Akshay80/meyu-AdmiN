@@ -106,7 +106,7 @@ const UserProfile = () => {
     changeProfileImage(formData)
       .then((response) => {
         console.log("post profile data", response);
-        window.location.reload(false);
+        getProfileData();
       })
       .catch((error) => {
         console.log("post data error", error);

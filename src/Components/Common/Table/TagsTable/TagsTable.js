@@ -131,7 +131,7 @@ const TagsTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex justify-content-evenly">
-            <EditIcon className="mt-1 edit-icon" />
+            <EditIcon  />
             <DeleteIcon
               className="iconHover delete-icon"
               onClick={() => handleDelete(row.serialno, row.tags)}

@@ -10,6 +10,8 @@ import "../Buttons/buttons.scss";
 import { logoutFun } from "../../../Services/authService";
 import { clearToken } from "../../helper/uitility";
 import axios from "axios";
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 const UserDropdown = () => {
   let navigate = useNavigate();
@@ -17,6 +19,16 @@ const UserDropdown = () => {
   const logoutFunction = () => {
     logoutFun()
       .then((res) => {
+        toast.success(res.data.data.message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
         console.log("logout clicked", res);
         clearToken(); 
         navigate("/login");
@@ -48,6 +60,18 @@ const UserDropdown = () => {
           </Dropdown>
         );
       })}
+         <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        limit={1}
+        transition={Flip}
+      />
     </>
   );
 };

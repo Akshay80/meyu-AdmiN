@@ -13,7 +13,7 @@ const ItemDetails = () => {
               id="itemPic"
               className="item-pic"
               alt=""
-              src="https://source.unsplash.com/random/150x150"
+              src="https://source.unsplash.com/random/512x512"
             />
           </div>
           <label htmlFor="newProfilePhoto" className="upload-file-block">
@@ -22,7 +22,7 @@ const ItemDetails = () => {
                 <i className="fa fa-camera fa-2x"></i>
               </div>
             </div>
-            <div className="text-uppercase">Change Image</div>
+            <div className="btn btn-outline-success">Change Image</div>
           </label>
           <Input
             className="uploadProfileInput d-none"

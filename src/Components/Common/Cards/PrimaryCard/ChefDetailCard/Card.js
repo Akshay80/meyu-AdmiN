@@ -4,13 +4,13 @@ import ChefOrderDetails from "../../../../../Pages/UserManagement/Chef/ChefOrder
 import FoodCard from "../../FoodCard/FoodCard";
 import UserImage from "../../../../../Assets/Images/blank-user.png";
 
-const ChefCard = ({chefDetail, changeStatus}) => {
+const ChefCard = ({ chefDetail, changeStatus, status }) => {
   const [togglemenu, setToggleMenu] = useState(false);
 
   const toggleMenu = () => {
     setToggleMenu(true);
   };
-console.log("cedjwcsjckb", chefDetail)
+  console.log("cedjwcsjckb", chefDetail);
   return (
     <div className="container mb-5">
       <div className="card mb-3 p-3">
@@ -18,7 +18,11 @@ console.log("cedjwcsjckb", chefDetail)
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src={chefDetail?.coverPhotoUrl === null ? UserImage : chefDetail?.coverPhotoUrl}
+                src={
+                  chefDetail?.coverPhotoUrl === null
+                    ? UserImage
+                    : chefDetail?.coverPhotoUrl
+                }
                 className="img"
                 alt="..."
                 style={{ borderRadius: "50%", width: 100, height: 100 }}
@@ -29,7 +33,9 @@ console.log("cedjwcsjckb", chefDetail)
             <div>
               <div className="user-card-info d-flex mx-3 align-items-center justify-content-between">
                 <div className="info-x">
-                  <h5 className="mb-0">{chefDetail?.firstName} {chefDetail?.lastName}</h5>
+                  <h5 className="mb-0">
+                    {chefDetail?.firstName} {chefDetail?.lastName}
+                  </h5>
                   <p>{chefDetail?.phone}</p>
                   <p>{chefDetail?.email}</p>
                   <p>{chefDetail?.id}</p>
@@ -44,12 +50,14 @@ console.log("cedjwcsjckb", chefDetail)
                     View
                   </button>
                   <button
-                    className="btn btn-success shadow-none"
+                    disabled={status ? true : false}
+                    className={status? "btn btn-success shadow-none": "btn btn-danger shadow-none"}
                     type="button"
                     data-bs-toggle="button"
                     onClick={changeStatus}
                   >
-                    {chefDetail?.status}
+                    {/* {chefDetail?.status} */}
+                   {status?"Approved": "Rejected"}
                   </button>
                 </div>
               </div>

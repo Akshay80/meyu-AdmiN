@@ -47,7 +47,7 @@ const CategoriesTable = () => {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {reset();setShow(true);}
 
   const [show1, setShow1] = useState(false);
   const handleClose1 = () => setShow1(false);
@@ -128,7 +128,7 @@ const CategoriesTable = () => {
         return (
           <div className="d-flex align-items-center justify-content-evenly">
             <EditIcon
-              className="edit-icon mt-1"
+              className="edit-icon"
               onClick={() => handleEdit(row.id, row.name)}
             />
             <DeleteIcon
@@ -173,20 +173,34 @@ const CategoriesTable = () => {
   ]);
 
   const EditSubmit = (data) => {
-    alert("Udemy")
-    var formData = new FormData();
+    var formData2 = new FormData();
     let ids = localStorage.getItem("catID");
     console.log("category", data.category[0])
-    formData.append("name", data.name);
-    formData.append("id", ids);
-    formData.append("category", data.category[0]);
+    formData2.append("name", data.name);
+    formData2.append("id", ids);
+    formData2.append("category", data.category[0]);
     setFormData2({ name: data.name, id: ids, category: data.category[0]});
     console.log("FormData: ", formData2);
     editCategoryFun(formData2)
       .then(function (res) {
-        console.log(res.data.data);
-        viewCategorybyId();
+        
+        if(res.data.data[0] === 1)
+        {
+          handleClose1();
+        toast.info("Category Edited Successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+        categories()
+      }
       })
+      
       .catch(function (error) {
         console.log(error);
       });
@@ -241,22 +255,23 @@ const CategoriesTable = () => {
     });
   }
 
-  async function handleEdit(rowId, rowName) {
+  async function handleEdit(rowId) {
     console.log(rowId);
     localStorage.setItem("catID", rowId);
     handleShow1();
+    reset()
     // Getting Data for Specific category
     await viewCategorybyId(rowId)
-      .then(function (response) {
-        response.data.data.MediaObjects.map((items) =>
-          setEditImage(items.imageUrl)
-          );
+      .then(function (response) {   
+        // response.data.data.MediaObjects.map((items) =>
+        //   setEditImage(items.imageUrl)
+        //   );
+        console.log(response.data.data)
+       
           setValue("name", response.data.data.name);
-          setValue("category", response.data.data.MediaObjects.map((items) => items.imageUrl));
-        // response.data.data.map((items) =>
-        // items.MediaObjects.map((item) => console.log("HELLO : ",item))
-        // )
-        setModalData(response.data.data);
+          // setValue("category",  response.data.data.MediaObjects.map((items) => url+items.imageUrl));
+          // setValue("category", response.data.data.MediaObjects.map((item) => item.imageUrl));
+        // setModalData(response.data.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -299,8 +314,6 @@ const CategoriesTable = () => {
           <button
             type="submit"
             className="btn btn-secondary"
-            // data-bs-toggle="modal"
-            // data-bs-target="#exampleModal"
             onClick={handleShow}
           >
             {" "}
@@ -408,10 +421,6 @@ const CategoriesTable = () => {
       </Modal>
 
       <div className="card">
-        {/* {products.map(items => items.map((item) => <tr>
-          <td>{item.id}</td><td>{item.name}</td><td>{item.imageUrl}</td>
-          </tr>)
-          )} */}
         <div className="table-responsive" style={{ padding: "20px" }}>
           <PaginationProvider
             pagination={paginationFactory({
