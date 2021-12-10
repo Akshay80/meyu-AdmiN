@@ -16,11 +16,6 @@ export function changeProfileImage(payload) {
   return ApiInstance?.post(`${Api.changeProfileImage}`, payload);
 }
 
-// Get Customer Data
-export function viewCustomerService() {
-  return ApiInstance?.get(`${Api.customers}`);
-}
-
 // Get Categories Data
 export function viewCategoryService() {
   return ApiInstance?.get(`${Api.categories}`);
@@ -31,7 +26,3 @@ export function deleteCategoryService(payload) {
   return ApiInstance?.post(`${Api.deletecategories}`, payload);
 }
 
-//Chef Details Data
-export function chefDetailsService() {
-  return ApiInstance?.get(`${Api.chefDetails}`);
-}

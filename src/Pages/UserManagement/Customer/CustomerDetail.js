@@ -1,39 +1,30 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import CustomerCard from "../../../Components/Common/Cards/PrimaryCard/CustomerDetailCard/Card";
 import { ReactComponent as UserIcon } from "../../../Assets/Icon/user.svg";
 import { ReactComponent as OrderIcon } from "../../../Assets/Icon/order.svg";
-import axiosConfig from '../../../Components/Common/APIConfig/axiosConfig'
 import OrderDetailCard from "../../../Components/Common/Cards/OrderDetailCard/OrderDetailCard";
+import { getCustomerDetails } from "../../../Services/customerServices";
+import { useParams } from "react-router-dom";
 
 const CustomerDetail = () => {
-  const [customer, setCustomer] = useState();
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [url, setURL] = useState();
+  const [customerDetail, setCustomerDetail] = useState({});
+  const {customerId} = useParams();
 
-  const id = localStorage.getItem('ids')
-  const custId = localStorage.getItem('custId')
   useEffect(() => {
-    axiosConfig
-    .get(`admin/getuserdetails/${id}`, {
-      headers: {
-        "content-type": "application/json",
-      },
-    })
-    .then((response) => {
-      //  setCustomer(response.data.data);
-      console.log(response.data.data)
-      //  setID(response.data.data.createdBy);
-       setName(response.data.data.fullName);
-       setEmail(response.data.data.email);
-       setPhone(response.data.data.phone);
-       setURL(response.data.data.coverPhotoUrl);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }, [])
+    fetchCustomerDetail();
+  }, []);
+
+  const fetchCustomerDetail = () => {
+    getCustomerDetails(customerId)
+      .then((response) => {
+        setCustomerDetail(response?.data?.data);
+        console.log("customer details", response?.data?.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <div className="page-heading d-flex align-items-center justify-content-between p-4">
@@ -44,21 +35,19 @@ const CustomerDetail = () => {
           </div>
         </div>
         <h6>
-          Customer ID <b>{custId}</b>
+          Customer ID <b>{customerDetail?.id}</b>
         </h6>
       </div>
       <div>
-        <CustomerCard setName={name} setEmail={email} setPhone={phone} setURL={url}/>
+        <CustomerCard customerDetail={customerDetail} />
       </div>
       <div className="pb-3">
-      <div className="page-heading d-flex align-items-center p-4  ">
-      <div className="page-heading-wapper d-flex">
-        <OrderIcon
-          className="page-icon m-0"
-        />
-        <h3 className="page-sec-heading m-0 mx-2">Order Details</h3>
-      </div>
-      </div>
+        <div className="page-heading d-flex align-items-center p-4  ">
+          <div className="page-heading-wapper d-flex">
+            <OrderIcon className="page-icon m-0" />
+            <h3 className="page-sec-heading m-0 mx-2">Order Details</h3>
+          </div>
+        </div>
         <OrderDetailCard />
       </div>
     </div>

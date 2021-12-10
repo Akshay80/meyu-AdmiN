@@ -10,16 +10,35 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
 import "./CustomerTable.css";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import axiosConfig from "../../APIConfig/axiosConfig";
-const headerSortingStyle = { backgroundColor: "#e3edf8" };
+import { viewCustomerService } from '../../../../Services/customerServices';
+import Path from "../../../../Constant/RouterConstant";
 
+const headerSortingStyle = { backgroundColor: "#e3edf8" };
 function CustomerTable() {
   const [customerData, setCustomerData] = useState([]);
   const navigate = useNavigate();
   const { SearchBar } = Search;
+
+  useEffect(() => {
+    data();
+  }, []);
+
+  const data = () => {
+    viewCustomerService()
+      .then(function (res) {
+        console.log("customer data", res.data.data);
+        setCustomerData(res.data.data);
+        // customerData.map((items) => localStorage.setItem("id", items.id));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  
   const columns = [
     {
       dataField: 'sl.no',
@@ -77,11 +96,9 @@ function CustomerTable() {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex justify-content-evenly align-items-center">
-            <ViewIcon
-              className="view-icon"
-              onClick={() => handleView(row.id, row.createdBy)}
-            />
-
+             <NavLink to={`${Path.customerDetails}/${row?.id}`}>
+              <ViewIcon className="view-icon" />
+            </NavLink>
             <DeleteIcon
               className="iconHover delete-icon"
               onClick={() => handleDelete(row.id, row.fullName)}
@@ -99,37 +116,12 @@ function CustomerTable() {
     },
   ];
 
-  useEffect(() => {
-    data();
-  }, []);
 
-  const data = async () => {
-    await axiosConfig
-      .get("admin/getusers", {
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-      .then((response) => {
-        setCustomerData(response.data.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
-  async function handleView(rowId, rowcreatedBy) {
-    console.log(rowId);
-    console.log(rowcreatedBy);
-    localStorage.setItem("ids", rowId);
-    localStorage.setItem("custId", rowcreatedBy);
-    navigate("/customer-details");
-  }
 
   function handleDelete(rowId, name) {
     confirmAlert({
       title: "Delete",
-      message: `Are you sure you want to remove ${name} from this table?`,
+      message: `Are you sure you want to remove ${name} from this table?`,  
       buttons: [
         {
           label: "Yes",

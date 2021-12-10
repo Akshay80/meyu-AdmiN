@@ -17,6 +17,7 @@ import EditItems from "../Pages/ProductManagement/Allitems/EditItems";
 import ChangePassword from '../Components/Auth/ChangePassword/ChangePassword'
 
 function PrivateRoute() {
+
   return (
     <Routes>
       <Route path={Path.dashboard} element={<DefaultLayout />}>
@@ -25,8 +26,8 @@ function PrivateRoute() {
         <Route path={""} element={<Dashboard />} />
 
         <Route path={Path.customer} element={<Customer />} />
-        <Route path={Path.customerDetails} element={<CustomerDetail />} />
-        <Route path={Path.chefDetails} element={<ChefDetail />} />
+        <Route path={`${Path.customerDetails}/:customerId`} element={<CustomerDetail />} />
+        <Route path={`${Path.chefDetails}/:chefId`} element={<ChefDetail />} />
 
         <Route path={Path.chef} element={<Chef />} />
         <Route path={Path.allItems} element={<AllItems />} />

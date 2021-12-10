@@ -1,4 +1,4 @@
-import React , {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
@@ -14,41 +14,57 @@ import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
-import {chefDetailsService} from '../../../../Services/userService';
+import { chefDetailsService } from "../../../../Services/chefServices";
 import { useParams } from "react-router-dom";
 
 const ChefTable = () => {
-const [chef, setChef] = useState([]);
-const navigate = useNavigate();
+  const [chef, setChef] = useState([]);
+  const navigate = useNavigate();
 
-const {id} = useParams();
+  const { id } = useParams();
+
+  useEffect(() => {
+    data();
+  }, []);
+
+  const data = () => {
+    chefDetailsService()
+      .then(function (res) {
+        console.log("chef data", res.data.data);
+        setChef(res.data.data);
+        // chef.map((items) => localStorage.setItem("id", items.id));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
   function handleDelete(rowId, name) {
     confirmAlert({
-      title: 'Delete',
+      title: "Delete",
       message: `Are you sure you want to remove ${name} from this table?`,
       buttons: [
         {
-          label: 'Yes',
-          className: 'btn btn-danger',
+          label: "Yes",
+          className: "btn btn-danger",
           onClick: () => {
-            console.log('ROW ID: ',rowId);
-            console.log('ROW NAME: ',name);
-          }
+            console.log("ROW ID: ", rowId);
+            console.log("ROW NAME: ", name);
+          },
         },
         {
-          label: 'No',
+          label: "No",
           // onClick: () => alert('Click No')
-        }
-      ]
+        },
+      ],
     });
   }
   const columns = [
     {
-      dataField: 'sl.no',
-      text: 'Serial no.',
+      dataField: "sl.no",
+      text: "Serial no.",
       formatter: (cell, row, rowIndex, formatExtraData) => {
         return rowIndex + 1;
       },
@@ -106,39 +122,19 @@ const {id} = useParams();
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex justify-content-evenly align-items-center">
-            <NavLink to={Path.chefDetails} >
-              <ViewIcon className="view-icon"/>
-              </NavLink>
-            
-              <DeleteIcon className="iconHover delete-icon" onClick={() => handleDelete(row.id, row.fullName)}/>
-            
+            <NavLink to={`${Path.chefDetails}/${row.id}`}>
+              <ViewIcon className="view-icon" />
+            </NavLink>
+
+            <DeleteIcon
+              className="iconHover delete-icon"
+              onClick={() => handleDelete(row.id, row.fullName)}
+            />
           </div>
         );
       },
     },
   ];
-
-  // async function handleView(rowId, rowcreatedBy) {
-  //   console.log(rowId);
-  //   localStorage.setItem("ids1", rowId);
-  //   // localStorage.setItem("custId", rowcreatedBy);
-  //   navigate(Path.chefDetails);
-  // }
-
-  useEffect(() => {
-   data();
-    },[])
-
-    const data =  () => {
-     chefDetailsService().then(function (res) {
-        console.log("chef data", res.data.data)
-        setChef(res.data.data);
-      })
-      .catch(function (error)
-      {
-        console.log(error)
-      })
-    }
 
   const defaultSorted = [
     {
@@ -146,7 +142,6 @@ const {id} = useParams();
       order: "asc",
     },
   ];
-
 
   return (
     <div className="table-responsive" style={{ padding: "20px" }}>
@@ -182,12 +177,7 @@ const {id} = useParams();
         data={chef}
       >
         {({ paginationProps, paginationTableProps }) => (
-          <ToolkitProvider
-            keyField="id"
-            columns={columns}
-            data={chef}
-            search
-          >
+          <ToolkitProvider keyField="id" columns={columns} data={chef} search>
             {(toolkitprops) => (
               <>
                 <div className="d-flex justify-content-between mb-3">
