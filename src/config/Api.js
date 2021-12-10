@@ -1,10 +1,9 @@
-import setting from './settings';
+import setting from "./settings";
 
 export default (() => {
   return {
-
     // Basic Auth
-    'AUTH': setting.api.AUTH,
+    AUTH: setting.api.AUTH,
 
     // Auth
     login: `${setting.api.url}authenticateadmin`,
@@ -18,10 +17,10 @@ export default (() => {
     userProfile: `${setting.api.url}auth/profile`,
     viewuserProfile: `${setting.api.url}auth/profile`,
     changeProfileImage: `${setting.api.url}auth/profile-image`,
-    
+
     // Customer
     customers: `${setting.api.url}admin/getusers`,
-
+    getcustomerDetails: `${setting.api.url}admin/getuserdetails`,
 
     // Category
     category: `${setting.api.url}admin/category`,
@@ -29,11 +28,17 @@ export default (() => {
     // Categories
     categories: `${setting.api.url}common/category`,
     deletecategories: `${setting.api.url}admin/deletecategory`,
-    catergoryById: `${setting.api.url}auth/category/:id`,
+    catergoryById: `${setting.api.url}auth/category`,
 
-    //Chef  
+    //Chef
     chefDetails: `${setting.api.url}admin/getallchef`,
-    getchefDetails: `${setting.api.url}admin/getuserdetails/:id`,
+    getchefDetails: `${setting.api.url}common/chef-profile`,
     confirmChef: `${setting.api.url}admin/confirmchef/:id`,
-  }
-})()
+
+    // tags
+    getAllTags: `${setting.api.url}common/tag`,
+    addTag: `${setting.api.url}admin/tag`,
+    editTag: `${setting.api.url}admin/edittag`,
+    deleteTag: `${setting.api.url}admin/deletetag`,
+  };
+})();

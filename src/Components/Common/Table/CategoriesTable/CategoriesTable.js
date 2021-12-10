@@ -15,13 +15,20 @@ import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbaske
 import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useForm } from "react-hook-form";
-import { viewCategoryService , deleteCategoryService } from "../../../../Services/userService";
-import { } from "../../../../Services/userService";
-import { category, viewCategorybyId } from "../../../../Services/categoryService";
+import {
+  viewCategoryService,
+  deleteCategoryService,
+} from "../../../../Services/userService";
+import {} from "../../../../Services/userService";
+import {
+  category,
+  viewCategorybyId,
+  editCategoryFun,
+} from "../../../../Services/categoryService";
 import Path from "../../../../Constant/RouterConstant";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Modal, Button, Form, FormControl } from "react-bootstrap";
 
 let toastId = null;
@@ -31,26 +38,23 @@ const CategoriesTable = () => {
   const [subCategoryy, setSubCat] = useState();
   const [categoryData, setCategoryData] = useState([]);
   const [image, setImage] = useState([]);
-  const [editImage, setEditImage] = useState([]);
+  const [editImage, setEditImage] = useState({});
   const [catImage, setCatImage] = useState();
   const [product, setProducts] = useState([]);
   const [formData, setFormData] = useState();
-  
-  
-  
+  const [formData2, setFormData2] = useState();
+  const [modalData, setModalData] = useState([]);
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  
-  
   const [show1, setShow1] = useState(false);
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
 
   const id = useParams();
 
-  
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
@@ -60,6 +64,7 @@ const CategoriesTable = () => {
   const {
     register,
     setValue,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -122,8 +127,11 @@ const CategoriesTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex align-items-center justify-content-evenly">
-            <EditIcon className="edit-icon mt-1" onClick={() => handleEdit(row.id, row.name)}/>
-            <DeleteIcon 
+            <EditIcon
+              className="edit-icon mt-1"
+              onClick={() => handleEdit(row.id, row.name)}
+            />
+            <DeleteIcon
               className="iconHover delete-icon"
               onClick={() => handleDelete(row.id, row.name)}
             />
@@ -143,8 +151,6 @@ const CategoriesTable = () => {
   useEffect(() => {
     categories();
   }, []);
-
-
 
   async function categories() {
     await viewCategoryService()
@@ -166,11 +172,31 @@ const CategoriesTable = () => {
     },
   ]);
 
+  const EditSubmit = (data) => {
+    alert("Udemy")
+    var formData = new FormData();
+    let ids = localStorage.getItem("catID");
+    console.log("category", data.category[0])
+    formData.append("name", data.name);
+    formData.append("id", ids);
+    formData.append("category", data.category[0]);
+    setFormData2({ name: data.name, id: ids, category: data.category[0]});
+    console.log("FormData: ", formData2);
+    editCategoryFun(formData2)
+      .then(function (res) {
+        console.log(res.data.data);
+        viewCategorybyId();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const onSubmit = (data) => {
     var formData = new FormData();
     formData.append("name", data.name);
     formData.append("category", data.category[0]);
-    setFormData({ name: data.name, category: data.category[0]});
+    setFormData({ name: data.name, category: data.category[0] });
     category(formData)
       .then(function (res) {
         console.log(res);
@@ -185,15 +211,16 @@ const CategoriesTable = () => {
           progress: 0,
           toastId: "my_toast",
         });
-        setTimeout(() => {
-          window.location.reload(false);
-        }, 3000);
+        categories();
+        reset();
       })
-      
+
       .catch(function (error) {
         console.log(error);
       });
   };
+
+ 
 
   function handleDelete(rowId, name) {
     confirmAlert({
@@ -215,20 +242,25 @@ const CategoriesTable = () => {
   }
 
   async function handleEdit(rowId, rowName) {
-    console.log(rowId)
-    localStorage.setItem("catID", rowId)
-    handleShow1(rowId);
-// Getting Data for Specific category
-    await viewCategorybyId(id(rowId))
-    .then(function (response) {
-    console.log(response.data.data);
-    response.data.data.map((items) =>
-    items.MediaObjects.map((item) => setEditImage(item.imageUrl))
-  );
-    }).catch(function (error) {
-      console.log(error);
-    })
-
+    console.log(rowId);
+    localStorage.setItem("catID", rowId);
+    handleShow1();
+    // Getting Data for Specific category
+    await viewCategorybyId(rowId)
+      .then(function (response) {
+        response.data.data.MediaObjects.map((items) =>
+          setEditImage(items.imageUrl)
+          );
+          setValue("name", response.data.data.name);
+          setValue("category", response.data.data.MediaObjects.map((items) => items.imageUrl));
+        // response.data.data.map((items) =>
+        // items.MediaObjects.map((item) => console.log("HELLO : ",item))
+        // )
+        setModalData(response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   function confirmDelete(rowId) {
@@ -240,7 +272,7 @@ const CategoriesTable = () => {
         console.log(res.data.data);
         toast.success(res.data.data, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
@@ -248,9 +280,7 @@ const CategoriesTable = () => {
           progress: 0,
           toastId: "my_toast",
         });
-        setTimeout(() => {
-          window.location.reload(false);
-        }, 1000);
+        categories();
       })
       .catch(function (error) {
         console.log(error);
@@ -278,7 +308,7 @@ const CategoriesTable = () => {
           </button>
         </div>
       </div>
-{/* Modal for Adding New Category */}
+      {/* Modal for Adding New Category */}
       <Modal
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -292,7 +322,7 @@ const CategoriesTable = () => {
           closeButton
         ></Modal.Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
-        <Modal.Body className="p-4 pt-0">
+          <Modal.Body className="p-4 pt-0">
             <Form.Group className="mb-1">
               <Form.Label>Cuisine name</Form.Label>
               <Form.Control
@@ -318,20 +348,19 @@ const CategoriesTable = () => {
             {errors.category && (
               <p className="errors">{errors.category.message}</p>
             )}
-         
-        </Modal.Body>
-        <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
-          <Button variant="primary" type="submit">
-            Add Categories
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
+            <Button variant="primary" type="submit">
+              Add Categories
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal>
 
-{/* Modal for Edit */}
+      {/* Modal for Edit */}
 
-<Modal
-        aria-labelledby="contained-modal-title-vcenter"
+      <Modal
+        aria-labelledby="contained-modal-title-2-vcenter"
         centered
         show={show1}
         onHide={handleClose1}
@@ -342,8 +371,8 @@ const CategoriesTable = () => {
           className="border-0 shadow-none"
           closeButton
         ></Modal.Header>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-        <Modal.Body className="p-4 pt-0">
+        <Form onSubmit={handleSubmit(EditSubmit)}>
+          <Modal.Body className="p-4 pt-0">
             <Form.Group className="mb-1">
               <Form.Label>Cuisine name</Form.Label>
               <Form.Control
@@ -369,13 +398,12 @@ const CategoriesTable = () => {
             {errors.category && (
               <p className="errors">{errors.category.message}</p>
             )}
-         
-        </Modal.Body>
-        <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
-          <Button variant="success" type="submit">
-            Update
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
+            <Button variant="success" type="submit">
+              Update
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal>
 
@@ -460,7 +488,7 @@ const CategoriesTable = () => {
 
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={3000}
         hideProgressBar
         closeOnClick
         rtl={false}

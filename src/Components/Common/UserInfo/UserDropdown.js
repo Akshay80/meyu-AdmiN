@@ -24,24 +24,6 @@ const UserDropdown = () => {
       .catch(function (error) {
         console.log("error logout", error);
       });
-
-    // axios.get(`http://52.77.236.78:8081/api/auth/logout`,
-    // {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Authorization": localStorage.getItem('token'),
-    //   }
-    // }
-    // )
-    // .then((res) => {
-    //       console.log("logout clicked", res);
-    //       clearToken(); 
-    //       navigate("/login");
-    //     })
-    //     .catch(function (error) {
-    //       console.log("error logout", error);
-    //     });
-
   };
 
   return (

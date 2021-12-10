@@ -2,7 +2,8 @@ import React from "react";
 import UserImage from '../../../../../Assets/Images/blank-user.png';
 import "./Card.scss";
 
-const CustomerCard = (props) => {
+const CustomerCard = ({customerDetail}) => {
+
   return (
     <div className="container">
       <div className="card mb-3 p-3">
@@ -10,7 +11,7 @@ const CustomerCard = (props) => {
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src={(props.setURL === null)? UserImage: props.setURL}
+                src={(customerDetail?.profileUrl === null)? UserImage: customerDetail?.profileUrl}
                 className="img"
                 alt="..."
                 style={{ borderRadius: "50%", width: 100, height:100 }}
@@ -21,9 +22,9 @@ const CustomerCard = (props) => {
             <div>
               <div className="user-card-info d-flex mx-3 mt-2 align-items-center justify-content-between">
                 <div className="info-x">
-                  <h5 className="mb-1">{props.setName}</h5>
-                  <p>{props.setPhone}</p>
-                  <p>{props.setEmail}</p>
+                  <h5 className="mb-1">{customerDetail?.fullName}</h5>
+                  <p>{customerDetail?.phone}</p>
+                  <p>{customerDetail?.email}</p>
                 </div>
                 <div>
                   <button

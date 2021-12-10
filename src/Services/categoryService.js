@@ -20,7 +20,7 @@ export function viewCategoryFun() {
     return ApiInstance.put(`${Api.editCategory}`, payload);
   }
 
-  export function viewCategorybyId() {
-    return ApiInstance.get(`${Api.catergoryById}`);
+  export function viewCategorybyId(id) {
+    return ApiInstance.get(`${Api.catergoryById}/${id}`);
   }
   

@@ -26,5 +26,3 @@ export function getUserToken(){
 export function clearToken(){
     localStorage.clear()
 }
-
-// export function

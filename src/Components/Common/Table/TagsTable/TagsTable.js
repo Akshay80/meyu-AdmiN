@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
@@ -7,7 +7,6 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { TagsData } from "./TagsData";
 import { ReactComponent as EditIcon } from "../../../../Assets/Icon/Edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
 import "./Tags.css";
@@ -16,43 +15,67 @@ import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbaske
 import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useForm } from "react-hook-form";
+import { addTags, deleteTags, getAllTagFun } from "../../../../Services/tagServices";
 
 const TagsTable = () => {
-  const [tag, setTag] = useState();
+  const [tag, setTag] = useState([]);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
-  const products = TagsData.map((custom) => [
-    {
-      serialno: custom.serialno,
-      date: custom.date,
-      tags: custom.tags,
-    },
-  ]);
 
+  useEffect(() => {
+    data();
+  }, []);
+
+  const data = () => {
+    getAllTagFun()
+      .then((res) => {
+        console.log("taggsss data", res.data.data);
+        setTag(res.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const onSubmit = (data) => {
+    console.log("data", data);
+    let params = {
+     name : data.tags,
+    };
+    addTags(params)
+      .then((data) => {
+        console.log("post profile data", data);
+        data();
+
+      })
+      .catch((error) => {
+        console.log("post data error", error);
+      });
+  };
+
+  const deleteTag = (data) => {
+    // console.log("data", data);
+    let params = {
+     id : data?.id,
+    };
+    deleteTags(params)
+      .then((data) => {
+        console.log("post profile data", data);
+      })
+      .catch((error) => {
+        console.log("post data error", error);
+      });
+  }
+
+  
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
-  // function handleEdit(id, cat) {
-  //   console.log(id)
-  //   cat = category;
-  //   console.log(cat);
-  // }
-
-  // function addCategory()
-  // {
-  //   alert(true);
-  //   setcatcheck(true);
-  // }
-
-  function settag(data) {
-    setTag(data.tags);
-    console.log(tag);
-  }
-
-  function handleDelete(rowId, name) {
+  function  handleDelete(rowId, name) {
     confirmAlert({
       title: "Delete",
       message: `Are you sure you want to remove this item from the table?`,
@@ -61,12 +84,12 @@ const TagsTable = () => {
           label: "Yes",
           className: "btn btn-danger",
           onClick: () => {
-            console.log("ROW ID: ", rowId);
+            // console.log("ROW ID: ", rowId);
+            deleteTag();
           },
         },
         {
           label: "No",
-          // onClick: () => alert('Click No')
         },
       ],
     });
@@ -75,22 +98,25 @@ const TagsTable = () => {
     {
       dataField: "serialno",
       text: "Serial No",
+      formatter: (cell, row, rowIndex, formatExtraData) => {
+        return rowIndex + 1;
+      },
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "date",
-      text: "Date",
+      dataField: "id",
+      text: "ID",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
     },
     {
-      dataField: "tags",
-      text: "Tags",
+      dataField: "name",
+      text: "Name",
       headerSortingStyle,
       sort: true,
       headerAlign: "center",
@@ -160,7 +186,8 @@ const TagsTable = () => {
               ></button>
             </div>
             <div className="modal-body p-4 pt-0">
-              <form onSubmit={handleSubmit(settag)}>
+
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-3">
                   <label htmlFor="recipient-name" className="col-form-label">
                     Tags Name
@@ -192,78 +219,67 @@ const TagsTable = () => {
       </div>
 
       <div className="card">
-        <div className="table-responsive" style={{ padding: "20px" }}>
-          <PaginationProvider
-         
-            pagination={paginationFactory({
-              custom: true,
-              totalSize: products.length,
-              prePageText: "Previous",
-              nextPageText: "Next",
-              page: 1,
-              sizePerPage: 4,
-              sizePerPageList: [
-                {
-                  text: "5",
-                  value: 5,
-                },
+      <div className="table-responsive" style={{ padding: "20px" }}>
+      <PaginationProvider
+        pagination={paginationFactory({
+          custom: true,
+          prePageText: "Previous",
+          nextPageText: "Next",
+          page: 1,
+          sizePerPage: 4,
+          sizePerPageList: [
+            {
+              text: "5",
+              value: 5,
+            },
 
-                {
-                  text: "10",
-                  value: 10,
-                },
-                {
-                  text: "30",
-                  value: 30,
-                },
-                {
-                  text: "50",
-                  value: 50,
-                },
-                {
-                  text: "All",
-                  value: products.length,
-                },
-              ],
-              hideSizePerPage: products.length === 0,
-            })}
-            keyField="id"
-            columns={columns}
-            data={TagsData.map((item) => item)}
-          >
-            {({ paginationProps, paginationTableProps }) => (
-              <ToolkitProvider
-                keyField="id"
-                columns={columns}
-                data={TagsData.map((item) => item)}
-                search
-              >
-                {(toolkitprops) => (
-                  <>
-                    <div className="d-flex justify-content-between mb-3">
-                      <SizePerPageDropdownStandalone {...paginationProps} />
-                      <SearchBar {...toolkitprops.searchProps} srText=" " />
-                    </div>
-                    <BootstrapTable
-                      {...toolkitprops.baseProps}
-                      {...paginationTableProps}
-                      defaultSorted={defaultSorted}
-                      defaultSortDirection="asc"
-                      wrapperClasses="table-responsive"
-                      hover
-                      striped
-                      condensed={false}
-                      noDataIndication="No Data Is Available"
-                    />
-                    <div className="d-flex justify-content-end">
-                      <PaginationListStandalone {...paginationProps} />
-                    </div>
-                  </>
-                )}
-              </ToolkitProvider>
+            {
+              text: "10",
+              value: 10,
+            },
+            {
+              text: "30",
+              value: 30,
+            },
+            {
+              text: "50",
+              value: 50,
+            },
+          ],
+        })}
+        keyField="id"
+        columns={columns}
+        data={tag}
+      >
+        {({ paginationProps, paginationTableProps }) => (
+          <ToolkitProvider keyField="id" columns={columns} data={tag} search>
+            {(toolkitprops) => (
+              <>
+                <div className="d-flex justify-content-between mb-3">
+                  <SizePerPageDropdownStandalone {...paginationProps} />
+                  <SearchBar {...toolkitprops.searchProps} srText=" " />
+                </div>
+                <BootstrapTable
+                  {...toolkitprops.baseProps}
+                  {...paginationTableProps}
+                  defaultSorted={defaultSorted}
+                  defaultSortDirection="asc"
+                  wrapperClasses="table-responsive"
+                  hover
+                  striped
+                  data={tag}
+                  condensed={false}
+                  noDataIndication="No Data Is Available"
+                />
+                <div className="d-flex justify-content-end">
+                  <PaginationListStandalone {...paginationProps} />
+                </div>
+              </>
             )}
-          </PaginationProvider>
-        </div>
+          </ToolkitProvider>
+        )}
+      </PaginationProvider>
+    </div>
       </div>
     </>
   );

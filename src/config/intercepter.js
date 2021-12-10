@@ -7,6 +7,9 @@ const ApiInstance = axios.create({
 // request interceptor
 ApiInstance.interceptors.request.use(
   (request) => {
+    if (request.method === 'get') {
+      request.data = true
+    }
     // console.log('req', request)
     let token = localStorage.getItem("token");
     const headers = {

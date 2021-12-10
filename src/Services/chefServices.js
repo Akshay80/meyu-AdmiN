@@ -1,11 +1,17 @@
 import ApiInstance from "../config/Intercepter";
 import Api from "../config/Api";
-// import { resHandle } from "../helper";
 
+//  confirm chef account
 export function confirmChefAccount(payload) {
     return ApiInstance?.put(`${Api.confirmChef}`, payload);
   }
   
-export function getchefDetails() {
-  return ApiInstance?.get(`${Api.getchefDetails}`);
+  // chef card details
+export function getchefDetails(id) {
+  return ApiInstance?.get(`${Api.getchefDetails}/${id}`);
+}
+
+// All Chef Details Data
+export function chefDetailsService() {
+  return ApiInstance?.get(`${Api.chefDetails}`);
 }
