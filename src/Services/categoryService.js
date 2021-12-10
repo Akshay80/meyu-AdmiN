@@ -19,3 +19,8 @@ export function viewCategoryFun() {
   export function editCategoryFun(payload) {
     return ApiInstance.put(`${Api.editCategory}`, payload);
   }
+
+  export function viewCategorybyId() {
+    return ApiInstance.get(`${Api.catergoryById}`);
+  }
+  

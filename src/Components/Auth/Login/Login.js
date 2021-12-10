@@ -34,6 +34,7 @@ const Login = (props) => {
         if (res?.data?.status !== "Error") {
           console.log("test",res)
           setUserToken(res?.data?.data?.token);
+          localStorage.setItem('user', JSON.stringify(res.data.data.user));
           navigate("/");
         }
         else {

@@ -7,7 +7,6 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-// import { CategoriesItemsData } from "./CategoriesItemsData";
 import { ReactComponent as EditIcon } from "../../../../Assets/Icon/Edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
 import "./CategoryTable.css";
@@ -16,40 +15,75 @@ import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbaske
 import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useForm } from "react-hook-form";
-import { viewCategoryService } from "../../../../Services/userService";
-import {deleteCategoryService} from "../../../../Services/userService";
+import { viewCategoryService , deleteCategoryService } from "../../../../Services/userService";
+import { } from "../../../../Services/userService";
+import { category, viewCategorybyId } from "../../../../Services/categoryService";
 import Path from "../../../../Constant/RouterConstant";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Modal, Button, Form, FormControl } from "react-bootstrap";
+
+let toastId = null;
 
 const CategoriesTable = () => {
   const [categoryy, setCat] = useState();
   const [subCategoryy, setSubCat] = useState();
   const [categoryData, setCategoryData] = useState([]);
   const [image, setImage] = useState([]);
+  const [editImage, setEditImage] = useState([]);
+  const [catImage, setCatImage] = useState();
   const [product, setProducts] = useState([]);
+  const [formData, setFormData] = useState();
+  
+  
+  
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  
+  
+  const [show1, setShow1] = useState(false);
+  const handleClose1 = () => setShow1(false);
+  const handleShow1 = () => setShow1(true);
+
+  const id = useParams();
+
+  
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
-  const url = "http://192.168.5.115:8081/"
+  const url = "http://52.77.236.78:8081/";
   let toastId = null;
   const navigate = useNavigate();
   const {
-    register, setValue,
+    register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
   const columns = [
     {
-      dataField: "id",
+      dataField: "sl no.",
       text: "Serial No",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
+      formatter: (cell, row, rowIndex, formatExtraData) => {
+        return rowIndex + 1;
+      },
     },
+    // {
+    //   dataField: "id",
+    //   text: "Serial No",
+    //   sort: true,
+    //   headerSortingStyle,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
     {
       dataField: "imageUrl",
       text: "Categories Image",
@@ -58,13 +92,15 @@ const CategoriesTable = () => {
       headerAlign: "center",
       align: "center",
       formatter: (rowContent, row) => {
-       
         return (
-           
           <div className="d-flex align-items-center justify-content-evenly">
-          {row.MediaObjects.map(rows => 
-          <img className="categoryImages"src={url+rows.imageUrl} alt="food_image"/>
-          )}
+            {row.MediaObjects.map((rows) => (
+              <img
+                className="categoryImages"
+                src={url + rows.imageUrl}
+                alt="food_image"
+              />
+            ))}
           </div>
         );
       },
@@ -86,8 +122,8 @@ const CategoriesTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex align-items-center justify-content-evenly">
-            <EditIcon className="edit-icon mt-1" />
-            <DeleteIcon
+            <EditIcon className="edit-icon mt-1" onClick={() => handleEdit(row.id, row.name)}/>
+            <DeleteIcon 
               className="iconHover delete-icon"
               onClick={() => handleDelete(row.id, row.name)}
             />
@@ -105,43 +141,58 @@ const CategoriesTable = () => {
   ];
 
   useEffect(() => {
-    category();
-  }, [])
+    categories();
+  }, []);
 
-  async function category()
-  { 
-    await viewCategoryService().then(function (res) {
-   res.data.data.map(items => items.MediaObjects.map(item => setImage(item.imageUrl)));
-      setCategoryData(res.data.data);
-    })
-    .catch(function (error)
-    {
-      console.log(error)
-    })
+
+
+  async function categories() {
+    await viewCategoryService()
+      .then(function (res) {
+        res.data.data.map((items) =>
+          items.MediaObjects.map((item) => setImage(item.imageUrl))
+        );
+        setCategoryData(res.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
-console.log(image);
   var products = categoryData.map((custom) => [
     {
       id: custom.id,
-      // imageUrl: image,
       name: custom.name,
     },
   ]);
 
-
-  // products.map(items => items.map(item => console.log(item)));
-  products.map(items => console.log(items))
-// }
-  
-
-  // console.log(JSON.stringify(products))
-
   const onSubmit = (data) => {
-    setCat(data.category);
-    setSubCat(data.subcategory);
-    console.log(categoryy);
-    console.log(subCategoryy);
+    var formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("category", data.category[0]);
+    setFormData({ name: data.name, category: data.category[0]});
+    category(formData)
+      .then(function (res) {
+        console.log(res);
+        handleClose();
+        toast.success("Category Added Successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 3000);
+      })
+      
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   function handleDelete(rowId, name) {
@@ -153,7 +204,6 @@ console.log(image);
           label: "Yes",
           className: "btn btn-danger",
           onClick: () => {
-            // console.log("ROW ID: ", rowId);
             confirmDelete(rowId);
           },
         },
@@ -164,104 +214,170 @@ console.log(image);
     });
   }
 
-  function confirmDelete(rowId) { 
-    const deleteById = {
-      id: rowId
-    }
-    deleteCategoryService(deleteById).then(function (res) {
-     console.log(res.data.data)
-     toast.success(res.data.data, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: 0,
-      toastId: "my_toast",
-    });
-    setTimeout(() => {
-      window.location.reload(false);
-    }, 1000);
-    
-       })
-       .catch(function (error)
-       {
-         console.log(error)
-       })
-  }
- 
+  async function handleEdit(rowId, rowName) {
+    console.log(rowId)
+    localStorage.setItem("catID", rowId)
+    handleShow1(rowId);
+// Getting Data for Specific category
+    await viewCategorybyId(id(rowId))
+    .then(function (response) {
+    console.log(response.data.data);
+    response.data.data.map((items) =>
+    items.MediaObjects.map((item) => setEditImage(item.imageUrl))
+  );
+    }).catch(function (error) {
+      console.log(error);
+    })
 
- 
+  }
+
+  function confirmDelete(rowId) {
+    const deleteById = {
+      id: rowId,
+    };
+    deleteCategoryService(deleteById)
+      .then(function (res) {
+        console.log(res.data.data);
+        toast.success(res.data.data, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 1000);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4 justify-content-between">
-          <div className="page-heading-wapper d-flex">
-            <BagIcon className="page-icon m-0" />
-            <h3 className="page-sec-heading m-0 mx-2">Categories </h3>
-          </div>
-       
-        <div className="d-flex align-items-center ">
+        <div className="page-heading-wapper d-flex">
+          <BagIcon className="page-icon m-0" />
+          <h3 className="page-sec-heading m-0 mx-2">Categories </h3>
+        </div>
+
+        <div className="d-flex align-items-center my-4">
           <button
             type="submit"
             className="btn btn-secondary"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
+            // data-bs-toggle="modal"
+            // data-bs-target="#exampleModal"
+            onClick={handleShow}
           >
             {" "}
             <AddIcon /> Add New Categories
           </button>
         </div>
-        </div>
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header border-0">
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="modal-body p-4 pt-0">
-                <div className="mb-3">
-                  <label htmlFor="recipient-name" className="col-form-label">
-                    Cuisine
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control shadow-none"
-                    id="category"
-                    name="category"
-                    placeholder="cuisine"
-                    autoComplete="off"
-                    {...register("category", {
-                      required: "Cuisine is required",
-                    })}
-                  />
-                  {errors.category && (
-                    <p className="errors">{errors.category.message}</p>
-                  )}
-                </div>
-                
-                <div className="modal-footer border-0 d-flex justify-content-center">
-                  <button type="submit" className="btn btn-primary">
-                    Add Categories
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
+{/* Modal for Adding New Category */}
+      <Modal
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header
+          className="border-0 shadow-none"
+          closeButton
+        ></Modal.Header>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Modal.Body className="p-4 pt-0">
+            <Form.Group className="mb-1">
+              <Form.Label>Cuisine name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="cuisine"
+                autoComplete="off"
+                {...register("name", {
+                  required: "Cuisine is required!",
+                })}
+              />
+            </Form.Group>
+            {errors.name && <p className="errors">{errors.name.message}</p>}
+            <Form.Group className="mt-3">
+              <Form.Label>Category image</Form.Label>
+              <Form.Control
+                type="file"
+                id="formFile"
+                {...register("category", {
+                  required: "Please provide an image!",
+                })}
+              />
+            </Form.Group>
+            {errors.category && (
+              <p className="errors">{errors.category.message}</p>
+            )}
+         
+        </Modal.Body>
+        <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
+          <Button variant="primary" type="submit">
+            Add Categories
+          </Button>
+        </Modal.Footer>
+        </Form>
+      </Modal>
+
+{/* Modal for Edit */}
+
+<Modal
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={show1}
+        onHide={handleClose1}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header
+          className="border-0 shadow-none"
+          closeButton
+        ></Modal.Header>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Modal.Body className="p-4 pt-0">
+            <Form.Group className="mb-1">
+              <Form.Label>Cuisine name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="cuisine"
+                autoComplete="off"
+                {...register("name", {
+                  required: "Cuisine is required!",
+                })}
+              />
+            </Form.Group>
+            {errors.name && <p className="errors">{errors.name.message}</p>}
+            <Form.Group className="mt-3">
+              <Form.Label>Category image</Form.Label>
+              <Form.Control
+                type="file"
+                id="formFile"
+                {...register("category", {
+                  required: "Please provide an image!",
+                })}
+              />
+            </Form.Group>
+            {errors.category && (
+              <p className="errors">{errors.category.message}</p>
+            )}
+         
+        </Modal.Body>
+        <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
+          <Button variant="success" type="submit">
+            Update
+          </Button>
+        </Modal.Footer>
+        </Form>
+      </Modal>
 
       <div className="card">
         {/* {products.map(items => items.map((item) => <tr>
@@ -304,20 +420,20 @@ console.log(image);
             })}
             keyField="id"
             columns={columns}
-            data={products.map(items => items.map((item) => item))}
+            data={products.map((items) => items.map((item) => item))}
           >
             {({ paginationProps, paginationTableProps }) => (
               <ToolkitProvider
                 keyField="id"
                 columns={columns}
-                data={products.map(items => items.map((item) => item))}
+                data={products.map((items) => items.map((item) => item))}
                 search
               >
                 {(toolkitprops) => (
                   <>
                     <div className="d-flex justify-content-between mb-3">
                       <SizePerPageDropdownStandalone {...paginationProps} />
-                      <SearchBar {...toolkitprops.searchProps}  srText=" "/>
+                      <SearchBar {...toolkitprops.searchProps} srText=" " />
                     </div>
                     <BootstrapTable
                       {...toolkitprops.baseProps}
