@@ -34,7 +34,7 @@ const CustomerDetail = () => {
             <h3 className="page-sec-heading m-0 ms-2">Customer-Details </h3>
           </div>
         </div>
-        <h6>
+        <h6 className="pt-3">
           Customer ID <b>{customerDetail?.id}</b>
         </h6>
       </div>

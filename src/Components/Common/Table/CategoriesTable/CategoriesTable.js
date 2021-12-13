@@ -173,7 +173,6 @@ const CategoriesTable = () => {
   ]);
 
   const EditSubmit = (data) => {
-    alert("Udemy")
     var formData = new FormData();
     let ids = localStorage.getItem("catID");
     console.log("category", data.category[0])
@@ -253,10 +252,6 @@ const CategoriesTable = () => {
           );
           setValue("name", response.data.data.name);
           setValue("category", response.data.data.MediaObjects.map((items) => items.imageUrl));
-        // response.data.data.map((items) =>
-        // items.MediaObjects.map((item) => console.log("HELLO : ",item))
-        // )
-        setModalData(response.data.data);
       })
       .catch(function (error) {
         console.log(error);

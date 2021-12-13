@@ -6,6 +6,7 @@ import paginationFactory, {
   SizePerPageDropdownStandalone,
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
+import { Modal, Button, Form, FormControl } from "react-bootstrap";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { ReactComponent as EditIcon } from "../../../../Assets/Icon/Edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
@@ -19,10 +20,14 @@ import {
   addTags,
   deleteTags,
   getAllTagFun,
+  getTagsbyId,
+  editTagsFun,
 } from "../../../../Services/tagServices";
 
 const TagsTable = () => {
+  const [editTag, setEditTag] = useState([]);
   const [tag, setTag] = useState([]);
+
   const {
     register,
     handleSubmit,
@@ -39,6 +44,11 @@ const TagsTable = () => {
       .then((res) => {
         console.log("taggsss data", res.data.data);
         setTag(res.data.data);
+        {
+          res.data.data.map((items) => {
+            setValue("tags", items.name);
+          });
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -61,25 +71,25 @@ const TagsTable = () => {
       });
   };
 
-  
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
   // Deleting tag API
-
- const handleDelete = (rowId) => {
-
-  let params = {
-    id: rowId,
+  const handleDelete = (rowId) => {
+    let params = {
+      id: rowId,
+    };
+    deleteTags(params)
+      .then((data) => {
+        console.log("post tag id deleted data", data);
+        tagdata();
+      })
+      .catch((error) => {
+        console.log("post data error", error);
+      });
   };
-  deleteTags(params)
-    .then((data) => {
-      console.log("post tag id deleted data", data);
-    })
-    .catch((error) => {
-      console.log("post data error", error);
-    });
 
+  const confirmDelete = (rowId) => {
     confirmAlert({
       title: "Delete",
       message: `Are you sure you want to remove this item from the table?`,
@@ -96,9 +106,40 @@ const TagsTable = () => {
         },
       ],
     });
-    tagdata();
-  }
+  };
 
+  // edit tags = open modal and display items
+  const handleEdit = (rowId) => {
+    getTagsbyId()
+      .then((res) => {
+        console.log("handle edit tags data", res.data.data);
+        setEditTag(res.data.data);
+        {
+          res.data.data.map((item) => {
+            // console.log("fersfacasghvxa", rowId);
+            setValue("name", item.name);
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  // put tags
+  const EditSubmit = (data) => {
+    const params = {
+      name: data.name,
+    };
+    editTagsFun(params)
+      .then(function (res) {
+        console.log("responseeeeeee", res);
+        tagdata();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   const columns = [
     {
@@ -137,10 +178,16 @@ const TagsTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex justify-content-evenly">
-            <EditIcon className="mt-1 edit-icon" />
+            <EditIcon
+              className="mt-1 edit-icon"
+              type="submit"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal2"
+              onClick={() => handleEdit(row.id)}
+            />
             <DeleteIcon
               className="iconHover delete-icon"
-              onClick={() => handleDelete(row.id)}
+              onClick={() => confirmDelete(row.id)}
             />
           </div>
         );
@@ -174,6 +221,7 @@ const TagsTable = () => {
           </button>
         </div>
       </div>
+      {/* ============================== Modal for adding tag ========================= */}
       <div
         className="modal fade"
         id="exampleModal1"
@@ -213,7 +261,11 @@ const TagsTable = () => {
                   )}
                 </div>
                 <div className="modal-footer border-0 d-flex justify-content-center">
-                  <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">
+                  <button
+                    type="submit"
+                    data-bs-dismiss="modal"
+                    className="btn btn-primary"
+                  >
                     Add Tags
                   </button>
                 </div>
@@ -223,6 +275,93 @@ const TagsTable = () => {
         </div>
       </div>
 
+      {/* Modal for Edit */}
+      {/* 
+      <Modal
+        aria-labelledby="contained-modal-title-2-vcenter"
+        centered
+        show={show1}
+        onHide={handleClose1}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header
+          className="border-0 shadow-none"
+          closeButton
+        ></Modal.Header>
+        <Form onSubmit={handleSubmit(EditSubmit)}>
+          <Modal.Body className="p-4 pt-0">
+            <Form.Group className="mb-1">
+              <Form.Label>Tag name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="tag"
+                autoComplete="off"
+                {...register("name", {
+                  required: "Tag is required!",
+                })}
+              />
+            </Form.Group>
+            {errors.name && <p className="errors">{errors.name.message}</p>}
+          </Modal.Body>
+          <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
+            <Button variant="success" type="submit">
+              Update
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal> */}
+
+      {/* ============================== Modal for Edit ========================= */}
+      <div
+        className="modal fade"
+        id="exampleModal2"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header border-0">
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body p-4 pt-0">
+              <form onSubmit={handleSubmit(EditSubmit)}>
+                <div className="mb-3">
+                  <label htmlFor="recipient-name" className="col-form-label">
+                    Edit Tag
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control shadow-none"
+                    id="tags"
+                    name="tags"
+                    autoComplete="off"
+                    {...register("name")}
+                  />
+                </div>
+                <div className="modal-footer border-0 d-flex justify-content-center">
+                  <button
+                    type="submit"
+                    // data-bs-dismiss="modal"
+                    className="btn btn-primary"
+                  >
+                    Update Tag
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* =====================modal end============= */}
+
       <div className="card">
         <div className="table-responsive" style={{ padding: "20px" }}>
           <PaginationProvider
@@ -231,7 +370,6 @@ const TagsTable = () => {
               prePageText: "Previous",
               nextPageText: "Next",
               page: 1,
-              sizePerPage: 4,
               sizePerPageList: [
                 {
                   text: "5",

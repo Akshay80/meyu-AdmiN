@@ -13,7 +13,7 @@ export function addTags(payload) {
 }
 
 // edit tag
-export function editTags(payload) {
+export function editTagsFun(payload) {
   return ApiInstance?.put(`${Api.editTag}`,payload);
 }
 
@@ -24,5 +24,5 @@ export function deleteTags(payload) {
 
 //   get tags by ID
 export function getTagsbyId() {
-    return ApiInstance?.get(`${Api.deleteTag}`);
+    return ApiInstance?.get(`${Api.getTagId}`);
   }

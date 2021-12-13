@@ -32,7 +32,6 @@ const ChefTable = () => {
       .then(function (res) {
         console.log("chef data", res.data.data);
         setChef(res.data.data);
-        // chef.map((items) => localStorage.setItem("id", items.id));
       })
       .catch(function (error) {
         console.log(error);
