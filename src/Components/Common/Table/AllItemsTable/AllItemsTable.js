@@ -128,7 +128,6 @@ const AllItemsTable = () => {
           prePageText: "Previous",
           nextPageText: "Next",
           page: 1,
-          sizePerPage: 4,
           sizePerPageList: [
             {
               text: "5",

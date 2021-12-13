@@ -12,8 +12,9 @@
 
   .categoryImages
   {
-    width: 90px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
     object-fit: cover;
   }
 
@@ -24,10 +25,15 @@
 
   /* .categoryImages:hover
   {
-    height: 100px;
-    width: 100px;
+    height: 250px;
+    width: 300px;
+    background-color: gray;
+    border-radius: unset!important;
+    border: none;
     transform: scale(2);
+    transition: 0.3s;
     overflow: hidden;
+
   } */
 
   tr{

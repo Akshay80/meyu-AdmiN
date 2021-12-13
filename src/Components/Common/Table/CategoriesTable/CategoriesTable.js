@@ -30,6 +30,8 @@ import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Modal, Button, Form, FormControl } from "react-bootstrap";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 
 let toastId = null;
 
@@ -42,8 +44,9 @@ const CategoriesTable = () => {
   const [catImage, setCatImage] = useState();
   const [product, setProducts] = useState([]);
   const [formData, setFormData] = useState();
-  const [formData2, setFormData2] = useState();
   const [modalData, setModalData] = useState([]);
+  const [isOpen, setOpen] = useState(false);
+  const [categImg, setCategImg] = useState();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -91,7 +94,7 @@ const CategoriesTable = () => {
     // },
     {
       dataField: "imageUrl",
-      text: "Categories Image",
+      text: "Image",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
@@ -100,10 +103,11 @@ const CategoriesTable = () => {
         return (
           <div className="d-flex align-items-center justify-content-evenly">
             {row.MediaObjects.map((rows) => (
-              <img
+              <input type="image"
                 className="categoryImages"
                 src={url + rows.imageUrl}
                 alt="food_image"
+                onClick={() => openLightbox(rows.imageUrl)}
               />
             ))}
           </div>
@@ -140,6 +144,12 @@ const CategoriesTable = () => {
       },
     },
   ];
+
+  async function openLightbox(MyUrl) {
+    console.log(MyUrl);
+    setOpen(true);
+    await setCategImg(url+MyUrl)
+  }
 
   const defaultSorted = [
     {
@@ -179,7 +189,6 @@ const CategoriesTable = () => {
     formData2.append("name", data.name);
     formData2.append("id", ids);
     formData2.append("category", data.category[0]);
-    setFormData2({ name: data.name, id: ids, category: data.category[0]});
     console.log("FormData: ", formData2);
     editCategoryFun(formData2)
       .then(function (res) {
@@ -202,7 +211,16 @@ const CategoriesTable = () => {
       })
       
       .catch(function (error) {
-        console.log(error);
+        toast.error(error.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
       });
   };
 
@@ -210,7 +228,6 @@ const CategoriesTable = () => {
     var formData = new FormData();
     formData.append("name", data.name);
     formData.append("category", data.category[0]);
-    setFormData({ name: data.name, category: data.category[0] });
     category(formData)
       .then(function (res) {
         console.log(res);
@@ -230,7 +247,16 @@ const CategoriesTable = () => {
       })
 
       .catch(function (error) {
-        console.log(error);
+        toast.error(error.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
       });
   };
 
@@ -302,6 +328,10 @@ const CategoriesTable = () => {
       });
   }
 
+  
+
+ 
+
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4 justify-content-between">
@@ -370,6 +400,11 @@ const CategoriesTable = () => {
         </Form>
       </Modal>
 
+      {isOpen === true? <Lightbox
+  mainSrc={categImg}
+  onCloseRequest={() => setOpen(false)}
+/>: null}
+
       {/* Modal for Edit */}
 
       <Modal
@@ -429,7 +464,6 @@ const CategoriesTable = () => {
               prePageText: "Previous",
               nextPageText: "Next",
               page: 1,
-              sizePerPage: 4,
               sizePerPageList: [
                 {
                   text: "5",
