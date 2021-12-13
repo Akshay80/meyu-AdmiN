@@ -19,9 +19,13 @@ const UserDropdown = () => {
   const logoutFunction = () => {
     logoutFun()
       .then((res) => {
+        setTimeout(() => {
+        clearToken(); 
+        navigate("/login");
+        }, 2000);
         toast.success(res.data.data.message, {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
@@ -29,9 +33,6 @@ const UserDropdown = () => {
           progress: 0,
           toastId: "my_toast",
         });
-        console.log("logout clicked", res);
-        clearToken(); 
-        navigate("/login");
       })
       .catch(function (error) {
         console.log("error logout", error);
@@ -62,7 +63,7 @@ const UserDropdown = () => {
       })}
          <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={2000}
         hideProgressBar
         closeOnClick
         rtl={false}

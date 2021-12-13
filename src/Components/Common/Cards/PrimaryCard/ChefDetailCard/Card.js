@@ -38,7 +38,7 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
                   </h5>
                   <p>{chefDetail?.phone}</p>
                   <p>{chefDetail?.email}</p>
-                  <p>{chefDetail?.id}</p>
+                  {/* <p>{chefDetail?.id}</p> */}
                   <p>Chef Timing</p>
                 </div>
                 <div className="d-flex flex-column">

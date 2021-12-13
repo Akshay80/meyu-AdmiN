@@ -33,8 +33,6 @@ import { Modal, Button, Form, FormControl } from "react-bootstrap";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 
-let toastId = null;
-
 const CategoriesTable = () => {
   const [categoryy, setCat] = useState();
   const [subCategoryy, setSubCat] = useState();
@@ -73,17 +71,17 @@ const CategoriesTable = () => {
   } = useForm();
 
   const columns = [
-    {
-      dataField: "sl no.",
-      text: "Serial No",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-      formatter: (cell, row, rowIndex, formatExtraData) => {
-        return rowIndex + 1;
-      },
-    },
+    // {
+    //   dataField: "sl no.",
+    //   text: "Serial No",
+    //   sort: true,
+    //   headerSortingStyle,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   formatter: (cell, row, rowIndex, formatExtraData) => {
+    //     return rowIndex + 1;
+    //   },
+    // },
     // {
     //   dataField: "id",
     //   text: "Serial No",
@@ -247,7 +245,7 @@ const CategoriesTable = () => {
       })
 
       .catch(function (error) {
-        toast.error(error.error, {
+          toast.error(error.error, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
@@ -428,7 +426,15 @@ const CategoriesTable = () => {
                 placeholder="cuisine"
                 autoComplete="off"
                 {...register("name", {
-                  required: "Cuisine is required!",
+                  required: "Cuisine is required!", 
+                  pattern: {
+                    value: /^[A-Za-z]+$/,
+                    message: "Only alphabets are allowed!"
+                  },
+                  minLength: {
+                    value: 4,
+                    message: "Must be greater than 4 words!"
+                    },
                 })}
               />
             </Form.Group>
