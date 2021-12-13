@@ -22,7 +22,6 @@ const Path = {
     categories : "product-categories",
     addCategory : "/add-category",
     tags : "tags",
-    addTag : "/add-tags",
     orders : "orders",
     orderManage : "order-management",
     orderDetails : "/order-details",

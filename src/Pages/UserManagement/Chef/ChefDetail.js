@@ -6,9 +6,12 @@ import {
   getchefDetails,
 } from "../../../Services/chefServices";
 import { useParams } from "react-router";
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 const ChefDetail = ({ menuToggleState }) => {
   const [chefDetail, setchefDetail] = useState({});
+  const [status, setStatus] = useState('');
   const {chefId} = useParams();
 
   useEffect(() => {
@@ -35,6 +38,18 @@ const ChefDetail = ({ menuToggleState }) => {
       .then((data) => {
         console.log("confirm chef account", data.statusText);
         if (data.statusText === "OK") {
+          setStatus(data.statusText);
+          console.log(data.data.data.message)
+          toast.success(data.data.data.message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
           fetchChefDetail();
         }
       })
@@ -56,7 +71,19 @@ const ChefDetail = ({ menuToggleState }) => {
           Chef ID : <b>{chefDetail?.createdBy}</b>
         </h6> 
       </div>
-      <ChefCard changeStatus={changeStatus} chefDetail={chefDetail} />
+      <ChefCard changeStatus={changeStatus} status={status} chefDetail={chefDetail}/>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        limit={1}
+        transition={Flip}
+      />
     </div>
   );
 };

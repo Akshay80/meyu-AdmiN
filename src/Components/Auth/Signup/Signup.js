@@ -102,6 +102,10 @@ const Signup = () => {
                       value: /^[0-9]*$/,
                       message: "Invalid Phone Number",
                     },
+                    minLength: {
+                      value: 10,
+                      message: "Phone number must have atleast 10 digits.",
+                    }
                   })}
                 />
                 {errors.phone && (

@@ -10,8 +10,9 @@ import { Modal, Button, Form, FormControl } from "react-bootstrap";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { ReactComponent as EditIcon } from "../../../../Assets/Icon/Edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
-import "./Tags.css";
+import "./Tags.scss";
 import { confirmAlert } from "react-confirm-alert";
+import { ToastContainer, toast, Flip } from "react-toastify";
 import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbasket.svg";
 import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -23,10 +24,13 @@ import {
   getTagsbyId,
   editTagsFun,
 } from "../../../../Services/tagServices";
+import { useParams } from "react-router-dom";
 
 const TagsTable = () => {
   const [editTag, setEditTag] = useState([]);
   const [tag, setTag] = useState([]);
+
+  const {rowId} = useParams();
 
   const {
     register,
@@ -46,7 +50,7 @@ const TagsTable = () => {
         setTag(res.data.data);
         {
           res.data.data.map((items) => {
-            setValue("tags", items.name);
+            setValue("tags", items.tags);
           });
         }
       })
@@ -57,17 +61,34 @@ const TagsTable = () => {
 
   // Adding Tags API
   const onSubmit = (data) => {
-    console.log("data", data);
     let params = {
       name: data.tags,
     };
     addTags(params)
       .then((data) => {
-        console.log("post profile data", data);
+        toast.success("Tag Added Successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
         tagdata();
       })
       .catch((error) => {
-        console.log("post data error", error);
+        toast.error(error.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
       });
   };
 
@@ -82,6 +103,16 @@ const TagsTable = () => {
     deleteTags(params)
       .then((data) => {
         console.log("post tag id deleted data", data);
+        toast.success("Tag Deleted Successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
         tagdata();
       })
       .catch((error) => {
@@ -110,37 +141,52 @@ const TagsTable = () => {
 
   // edit tags = open modal and display items
   const handleEdit = (rowId) => {
-    getTagsbyId()
+
+    getTagsbyId(rowId)
       .then((res) => {
+        console.log("handle edit id", rowId);
         console.log("handle edit tags data", res.data.data);
         setEditTag(res.data.data);
-        {
-          res.data.data.map((item) => {
-            // console.log("fersfacasghvxa", rowId);
-            setValue("name", item.name);
-          });
-        }
+        {editTag.map((item) => {
+          // setValue("name",item.name)
+          console.log("gtgdejhsvhc", item)
+        })}
+        // setEditTag(rowId);
       })
       .catch(function (error) {
         console.log(error);
+        toast.error(error.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
       });
   };
 
-  // put tags
-  const EditSubmit = (data) => {
-    const params = {
-      name: data.name,
-    };
-    editTagsFun(params)
-      .then(function (res) {
-        console.log("responseeeeeee", res);
+    // put api to edit tags
+    const EditSubmit = (data) => {
+      console.log("rowiddd",rowId);
+      const params = {
+        name: data.name,
+      };
+      editTagsFun(params)
+        .then(function (res) {
+          // console.log("responseeeeeee", res);
+          console.log("rrfrfrfrfr",rowId);
+          // handleEdit();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
         tagdata();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+    };
 
+    
   const columns = [
     {
       dataField: "serialno",
@@ -153,14 +199,6 @@ const TagsTable = () => {
       headerAlign: "center",
       align: "center",
     },
-    // {
-    //   dataField: "id",
-    //   text: "ID",
-    //   sort: true,
-    //   headerSortingStyle,
-    //   headerAlign: "center",
-    //   align: "center",
-    // },
     {
       dataField: "name",
       text: "Name",
@@ -209,10 +247,10 @@ const TagsTable = () => {
           <BagIcon className="page-icon m-0" />
           <h3 className="page-sec-heading m-0 mx-2">Tags </h3>
         </div>
-        <div className="d-flex align-items-center ">
+        <div className="add-btn d-flex align-items-center">
           <button
             type="submit"
-            className="btn btn-secondary"
+            className="btn btn-secondary "
             data-bs-toggle="modal"
             data-bs-target="#exampleModal1"
           >
@@ -274,43 +312,6 @@ const TagsTable = () => {
           </div>
         </div>
       </div>
-
-      {/* Modal for Edit */}
-      {/* 
-      <Modal
-        aria-labelledby="contained-modal-title-2-vcenter"
-        centered
-        show={show1}
-        onHide={handleClose1}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header
-          className="border-0 shadow-none"
-          closeButton
-        ></Modal.Header>
-        <Form onSubmit={handleSubmit(EditSubmit)}>
-          <Modal.Body className="p-4 pt-0">
-            <Form.Group className="mb-1">
-              <Form.Label>Tag name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="tag"
-                autoComplete="off"
-                {...register("name", {
-                  required: "Tag is required!",
-                })}
-              />
-            </Form.Group>
-            {errors.name && <p className="errors">{errors.name.message}</p>}
-          </Modal.Body>
-          <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
-            <Button variant="success" type="submit">
-              Update
-            </Button>
-          </Modal.Footer>
-        </Form>
-      </Modal> */}
 
       {/* ============================== Modal for Edit ========================= */}
       <div

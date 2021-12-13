@@ -16,6 +16,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { viewCustomerService } from '../../../../Services/customerServices';
 import Path from "../../../../Constant/RouterConstant";
 
+
 const headerSortingStyle = { backgroundColor: "#e3edf8" };
 function CustomerTable() {
   const [customerData, setCustomerData] = useState([]);
@@ -148,7 +149,6 @@ function CustomerTable() {
           prePageText: "Previous",
           nextPageText: "Next",
           page: 1,
-          sizePerPage: 4,
           sizePerPageList: [
             {
               text: "5",

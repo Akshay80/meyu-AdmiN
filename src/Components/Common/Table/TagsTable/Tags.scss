@@ -8,3 +8,8 @@
     margin-bottom: 1px!important;
     text-align: left;
   }
+  @media (max-width : 576px) {
+    .add-btn{
+     margin-top: 12px; 
+    }
+  }
