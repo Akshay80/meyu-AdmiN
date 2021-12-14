@@ -9,14 +9,15 @@ const Year = () => {
         {value}
       </button>
     ));
-    // console.log(startDate.getFullYear())
     return (
       <DatePicker
         selected={startDate}
         onChange={(date) => setStartDate(date)}
         showYearPicker
         dateFormat="yyyy"
+        maxDate={new Date()}
         customInput={<ExampleCustomInput />}
+        yearItemNumber={11}
       />
     )   
 }

@@ -32,7 +32,6 @@ const ChefTable = () => {
       .then(function (res) {
         console.log("chef data", res.data.data);
         setChef(res.data.data);
-        // chef.map((items) => localStorage.setItem("id", items.id));
       })
       .catch(function (error) {
         console.log(error);
@@ -73,22 +72,15 @@ const ChefTable = () => {
       headerAlign: "center",
       align: "center",
     },
-    {
-      dataField: "id",
-      text: "Chef ID",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      dataField: "verificationDate",
-      text: "Join Date",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   dataField: "id",
+    //   text: "Chef ID",
+    //   sort: true,
+    //   headerSortingStyle,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
+   
     {
       dataField: "fullName",
       text: "Chef Name",
@@ -113,7 +105,14 @@ const ChefTable = () => {
       headerAlign: "center",
       align: "center",
     },
-
+    {
+      dataField: "verificationDate",
+      text: "Join Date",
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+    },
     {
       dataField: "link",
       text: "Action",

@@ -15,6 +15,7 @@ import OrderManagement from "../Pages/OrderManagement";
 import OrderProfile from "../Pages/OrderManagement/OrderProfile/OrderProfile";
 import EditItems from "../Pages/ProductManagement/Allitems/EditItems";
 import ChangePassword from '../Components/Auth/ChangePassword/ChangePassword'
+import UnitTable from "../Components/Common/Table/UnitTable/UnitTable";
 
 function PrivateRoute() {
 
@@ -36,6 +37,7 @@ function PrivateRoute() {
         <Route path={Path.categories} element={<Categories />} />
 
         <Route path={Path.tags} element={<Tags />} />
+        <Route path={Path.unit} element={<UnitTable />}/>
 
         <Route path={Path.orderManagement} element={<OrderManagement />} />
         <Route path={Path.orderDetails} element={<OrderProfile />} />

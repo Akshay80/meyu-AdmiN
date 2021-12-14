@@ -40,5 +40,11 @@ export default (() => {
     addTag: `${setting.api.url}admin/tag`,
     editTag: `${setting.api.url}admin/edittag`,
     deleteTag: `${setting.api.url}admin/deletetag`,
+    getTagId: `${setting.api.url}common/tag`,
+
+    // Unit
+    postUnit: `${setting.api.url}admin/unit`,
+    putUnit: `${setting.api.url}admin/unit`,
+    deleteUnit: `${setting.api.url}admin/deleteunit`
   };
 })();

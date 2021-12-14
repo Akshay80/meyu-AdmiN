@@ -142,7 +142,6 @@ a {
   .content-wrapper {
     width: calc(100% - 30%) !important ;
     margin-left: auto;
-    background-color: #f1f5f9;
     transition: all ease-in-out 250ms;
     &.full-width {
       // width: 100% !important;
@@ -154,7 +153,6 @@ a {
   .content-wrapper {
     min-width: 100%;
     transition: all ease-in-out 250ms;
-    background-color: #f1f5f9;
     &.full-width {
       min-width: 100%;
       transition: all ease-in-out 250ms;

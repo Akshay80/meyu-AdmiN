@@ -90,6 +90,14 @@ function CustomerTable() {
       align: "center",
     },
     {
+      dataField: "createdAt",
+      text: "Join Date",
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
       dataField: "link",
       text: "Action",
       headerAlign: "center",

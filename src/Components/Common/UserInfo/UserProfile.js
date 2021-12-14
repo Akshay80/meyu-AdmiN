@@ -111,27 +111,6 @@ const UserProfile = () => {
       .catch((error) => {
         console.log("post data error", error);
       });
-
-    // let token = localStorage.getItem("token");
-    // axios
-    //   .post(`${setting.api.url}auth/profile-image`, formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //       Authorization: token,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     // console.log("res", res?.data);
-    //     if (res?.data?.status === 201) {
-    //       // console.log("test", res?.data?.data);
-    //       setImage(res?.data?.data);
-    //     } else {
-    //       // console.log("test", res);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log("error", err);
-    //   });
   };
   // ========================= Return data ===========================
 
@@ -148,10 +127,7 @@ const UserProfile = () => {
 
       <div className="profile-pic-wrapper">
         <div className="profile-pic-holder">
-          {/* {console.log("response", profileData)} */}
-          <label htmlFor="upload-button">
-            {console.log("OUUURRRRRRRR URRLLLLRRRLLLLR: ", url)}
-            
+          <label htmlFor="upload-button">            
               <img
                 id="profilePic"
                 className="pic"
