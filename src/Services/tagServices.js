@@ -23,6 +23,6 @@ export function deleteTags(payload) {
 }
 
 //   get tags by ID
-export function getTagsbyId() {
-    return ApiInstance?.get(`${Api.getTagId}`);
+export function getTagsbyId(id) {
+    return ApiInstance?.get(`${Api.getTagId}/${id}`);
   }

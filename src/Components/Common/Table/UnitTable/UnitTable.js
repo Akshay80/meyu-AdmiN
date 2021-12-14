@@ -23,7 +23,9 @@ import {} from "../../../../Services/userService";
 import {
     postUnits,
     putUnits,
-    deleteUnits
+    deleteUnits,
+    allUnits,
+    singleUnits
 } from "../../../../Services/unitService";
 import Path from "../../../../Constant/RouterConstant";
 import { ToastContainer, toast, Flip } from "react-toastify";
@@ -36,7 +38,7 @@ import "react-image-lightbox/style.css";
 const UnitTable = () => {
   const [categoryy, setCat] = useState();
   const [subCategoryy, setSubCat] = useState();
-  const [categoryData, setCategoryData] = useState([]);
+  const [unitData, setUnitData] = useState([]);
   const [image, setImage] = useState([]);
   const [editImage, setEditImage] = useState({});
   const [catImage, setCatImage] = useState();
@@ -81,6 +83,8 @@ const UnitTable = () => {
         return rowIndex + 1;
       },
     },
+
+
     // {
     //   dataField: "id",
     //   text: "Serial No",
@@ -90,7 +94,7 @@ const UnitTable = () => {
     //   align: "center",
     // },
     {
-      dataField: "imageUrl",
+      dataField: "unitName",
       text: "Unit Name",
       sort: true,
       headerSortingStyle,
@@ -98,7 +102,7 @@ const UnitTable = () => {
       align: "center",
     },
     {
-      dataField: "sortname",
+      dataField: "sortName",
       text: "Sort Name",
       headerSortingStyle,
       sort: true,
@@ -136,26 +140,25 @@ const UnitTable = () => {
   ];
 
   useEffect(() => {
-    // categories();
+    units();
   }, []);
 
-//   async function categories() {
-//     await viewCategoryService()
-//       .then(function (res) {
-//         res.data.data.map((items) =>
-//           items.MediaObjects.map((item) => setImage(item.imageUrl))
-//         );
-//         setCategoryData(res.data.data);
-//       })
-//       .catch(function (error) {
-//         console.log(error);
-//       });
-//   }
+  async function units() {
+    await allUnits()
+      .then(function (res) {
+        setUnitData(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
-  var products = categoryData.map((custom) => [
+  var products = unitData.map((custom) => [
     {
       id: custom.id,
-      name: custom.name,
+      unitName: custom.unitName,
+      sortName: custom.sortName
     },
   ]);
 
@@ -179,7 +182,7 @@ const UnitTable = () => {
           progress: 0,
           toastId: "my_toast",
         })
-        // categories()
+        units()
       })
       
       .catch(function (error) {
@@ -216,7 +219,7 @@ const UnitTable = () => {
           progress: 0,
           toastId: "my_toast",
         });
-        // categories();
+        units();
         reset();
       })
 
@@ -261,17 +264,15 @@ const UnitTable = () => {
     handleShow1();
     reset()
     // Getting Data for Specific category
-    // await viewCategorybyId(rowId)
-    //   .then(function (response) {   
-    //     // response.data.data.MediaObjects.map((items) =>
-    //     //   setEditImage(items.imageUrl)
-    //     //   );
-    //     console.log(response.data.data)
-    //       setValue("name", response.data.data.name);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    await singleUnits(rowId)
+      .then(function (response) {   
+        console.log(response.data.data)
+          setValue("unitname", response.data.data.unitName);
+          setValue("sortname", response.data.data.sortName);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   function confirmDelete(rowId) {
@@ -291,7 +292,7 @@ const UnitTable = () => {
           progress: 0,
           toastId: "my_toast",
         });
-        // categories();
+        units();
       })
       .catch(function (error) {
         console.log(error);
@@ -438,7 +439,7 @@ const UnitTable = () => {
               totalSize: products.length,
               prePageText: "Previous",
               nextPageText: "Next",
-              page: 1,
+              page:1,
               sizePerPageList: [
                 {
                   text: "5",
@@ -489,7 +490,7 @@ const UnitTable = () => {
                       wrapperClasses="table-responsive"
                       hover
                       striped
-                      data={categoryData}
+                      data={unitData}
                       condensed={false}
                       noDataIndication="No Data Is Available"
                     />

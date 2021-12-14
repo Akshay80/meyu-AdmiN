@@ -16,4 +16,14 @@ export function deleteUnits(payload) {
     return ApiInstance?.post(`${Api.deleteUnit}`, payload);
   }
 
+// All Units
+export function allUnits() {
+    return ApiInstance?.get(`${Api.allUnit}`);
+  }
+
+// Specific Unit
+export function singleUnits(id) {
+    return ApiInstance?.get(`${Api.singleUnit}/${id}`);
+  }
+
   

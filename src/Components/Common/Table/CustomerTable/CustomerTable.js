@@ -67,6 +67,13 @@ function CustomerTable() {
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex align-items-center justify-content-evenly">
+            {row.createdAt.substring(0, row.createdAt.length - 14)}
+          </div>
+        );
+      },
     },
     {
       dataField: "fullName",
@@ -89,14 +96,14 @@ function CustomerTable() {
       headerAlign: "center",
       align: "center",
     },
-    {
-      dataField: "createdAt",
-      text: "Join Date",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   dataField: "createdAt",
+    //   text: "Join Date",
+    //   sort: true,
+    //   headerSortingStyle,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
     {
       dataField: "link",
       text: "Action",

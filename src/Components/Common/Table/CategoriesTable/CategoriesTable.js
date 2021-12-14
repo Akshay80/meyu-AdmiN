@@ -71,17 +71,17 @@ const CategoriesTable = () => {
   } = useForm();
 
   const columns = [
-    // {
-    //   dataField: "sl no.",
-    //   text: "Serial No",
-    //   sort: true,
-    //   headerSortingStyle,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   formatter: (cell, row, rowIndex, formatExtraData) => {
-    //     return rowIndex + 1;
-    //   },
-    // },
+    {
+      dataField: "sl no.",
+      text: "Serial No",
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+      formatter: (cell, row, rowIndex, formatExtraData) => {
+        return rowIndex + 1;
+      },
+    },
     // {
     //   dataField: "id",
     //   text: "Serial No",
