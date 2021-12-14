@@ -25,6 +25,7 @@ const Path = {
     orders : "orders",
     orderManage : "order-management",
     orderDetails : "/order-details",
+    unit: "unit"
 };
 
 export default Path

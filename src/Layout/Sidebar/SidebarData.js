@@ -45,6 +45,10 @@ export const SidebarData = [
         title: "Tags",
         link: Path.tags,
       },
+      {
+        title: "Unit",
+        link: Path.unit,
+      }
     ],
   },
   {

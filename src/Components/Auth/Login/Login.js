@@ -7,13 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { loginApiFun } from "../../../Services/authService";
 import { Loader } from "../../util/Loader";
 import { setUserToken } from "../../helper/uitility";
+import { ToastContainer, toast, Flip } from "react-toastify";
 
 
 const Login = (props) => {
   let navigate = useNavigate();
   const [loader, setLoader] = useState(false);
-  const [isValidForm, setIsValidForm] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
   const {
     register,
     handleSubmit,
@@ -32,28 +31,31 @@ const Login = (props) => {
       .then(res => {
         console.log("res login", res)
         if (res?.data?.status !== "Error") {
-          console.log("test",res)
+          toast.error(res.data.error, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
           setUserToken(res?.data?.data?.token);
           localStorage.setItem('user', JSON.stringify(res.data.data.user));
           navigate("/");
-        }
-        else {
-          setErrorMessage(res?.data.error);
-          setIsValidForm(false);
         }
         setLoader(false);
       })
       .catch(err => {
         console.log("error", err)
-        setErrorMessage(err?.data.error);
         setLoader(false);
-        setIsValidForm(false);
       })
   }
 
   return (
-    <div className="auth-wrapper align-items-center bg-dark">
-       {loader ? <div className="loader_lg"><Loader /></div> : ''}
+    <><div className="auth-wrapper align-items-center bg-dark">
+      {loader ? <div className="loader_lg"><Loader /></div> : ''}
       <div className="row text-center justify-content-center">
         <div className="cards1 mb-5 align-middle">
           <div className="card-body">
@@ -71,7 +73,7 @@ const Login = (props) => {
                 <div className="col-sm-12">
                   <input
                     type="email"
-                    className="form-control shadow-none"  
+                    className="form-control shadow-none"
                     placeholder="Email"
                     {...register("email", {
                       required: "Email is required",
@@ -79,7 +81,6 @@ const Login = (props) => {
                         value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                         message: "Invalid Email",
                       },
-                     
                     })} />
                   {errors.email && (
                     <p className="errors">{errors.email.message}</p>
@@ -103,26 +104,36 @@ const Login = (props) => {
                     <p className="errors">{errors.password.message}</p>
                   )}
                 </div>
+              </div>
+              <div className="mt-4 mb-4 row justify-content-center">
+                <div className="col-sm-12">
+                  <button type="submit" className="btn btn-auth">
+                    Sign In
+                  </button>
                 </div>
-                <div className="mt-4 mb-4 row justify-content-center">
-                  <div className="col-sm-12">
-                    <button type="submit" className="btn btn-auth">
-                      Sign In
-                    </button>
-                  </div>
-                </div>
+              </div>
 
-                <p>
-                  Forgot Password?{" "}
-                  <a href={Path.forgotPassword} className="link">
-                    Click Here
-                  </a>
-                </p>
-              </form>
-            </div>
+              <p>
+                Forgot Password?{" "}
+                <a href={Path.forgotPassword} className="link">
+                  Click Here
+                </a>
+              </p>
+            </form>
           </div>
         </div>
       </div>
+    </div><ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        limit={1}
+        transition={Flip} /></>
   );
 };
 

@@ -41,26 +41,40 @@ function CustomerTable() {
 
   
   const columns = [
-    {
-      dataField: 'sl.no',
-      text: 'Serial no.',
-      formatter: (cell, row, rowIndex, formatExtraData) => {
-        return rowIndex + 1;
-      },
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
     // {
-    //   dataField: "createdBy",
-    //   text: "Customer ID",
+    //   dataField: 'sl.no',
+    //   text: 'Serial no.',
+    //   formatter: (cell, row, rowIndex, formatExtraData) => {
+    //     return rowIndex + 1;
+    //   },
     //   sort: true,
     //   headerSortingStyle,
     //   headerAlign: "center",
     //   align: "center",
     // },
-  
+    {
+      dataField: "createdBy",
+      text: "Customer ID",
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      dataField: "createdAt",
+      text: "Join Date",
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex align-items-center justify-content-evenly">
+            {row.createdAt.substring(0, row.createdAt.length - 14)}
+          </div>
+        );
+      },
+    },
     {
       dataField: "fullName",
       text: "Customer Name",
@@ -82,14 +96,14 @@ function CustomerTable() {
       headerAlign: "center",
       align: "center",
     },
-    {
-      dataField: "createdAt",
-      text: "Join Date",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   dataField: "createdAt",
+    //   text: "Join Date",
+    //   sort: true,
+    //   headerSortingStyle,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
     {
       dataField: "link",
       text: "Action",
@@ -113,7 +127,7 @@ function CustomerTable() {
 
   const defaultSorted = [
     {
-      dataField: "createdBy",
+      dataField: "sl.no",
       order: "asc",
     },
   ];
@@ -146,8 +160,10 @@ function CustomerTable() {
       <PaginationProvider
         pagination={paginationFactory({
           custom: true,
+          totalSize: customerData.length,
           prePageText: "Previous",
           nextPageText: "Next",
+          sizePerPage: 4,
           page: 1,
           sizePerPageList: [
             {
@@ -168,10 +184,12 @@ function CustomerTable() {
               value: 50,
             },
           ],
+          hideSizePerPage: customerData.length === 0,
         })}
         keyField="createdBy"
         columns={columns}
         data={customerData}
+        
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider

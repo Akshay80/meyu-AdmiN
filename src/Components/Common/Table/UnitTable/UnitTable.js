@@ -9,7 +9,7 @@ import paginationFactory, {
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { ReactComponent as EditIcon } from "../../../../Assets/Icon/Edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
-import "./CategoryTable.css";
+import "./UnitTable.css";
 import { confirmAlert } from "react-confirm-alert";
 import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbasket.svg";
 import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
@@ -21,10 +21,12 @@ import {
 } from "../../../../Services/userService";
 import {} from "../../../../Services/userService";
 import {
-  category,
-  viewCategorybyId,
-  editCategoryFun,
-} from "../../../../Services/categoryService";
+    postUnits,
+    putUnits,
+    deleteUnits,
+    allUnits,
+    singleUnits
+} from "../../../../Services/unitService";
 import Path from "../../../../Constant/RouterConstant";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -33,10 +35,10 @@ import { Modal, Button, Form, FormControl } from "react-bootstrap";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 
-const CategoriesTable = () => {
+const UnitTable = () => {
   const [categoryy, setCat] = useState();
   const [subCategoryy, setSubCat] = useState();
-  const [categoryData, setCategoryData] = useState([]);
+  const [unitData, setUnitData] = useState([]);
   const [image, setImage] = useState([]);
   const [editImage, setEditImage] = useState({});
   const [catImage, setCatImage] = useState();
@@ -59,7 +61,6 @@ const CategoriesTable = () => {
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
-  const url = "http://52.77.236.78:8081/";
   let toastId = null;
   const navigate = useNavigate();
   const {
@@ -82,6 +83,8 @@ const CategoriesTable = () => {
         return rowIndex + 1;
       },
     },
+
+
     // {
     //   dataField: "id",
     //   text: "Serial No",
@@ -91,30 +94,16 @@ const CategoriesTable = () => {
     //   align: "center",
     // },
     {
-      dataField: "imageUrl",
-      text: "Image",
+      dataField: "unitName",
+      text: "Unit Name",
       sort: true,
       headerSortingStyle,
       headerAlign: "center",
       align: "center",
-      formatter: (rowContent, row) => {
-        return (
-          <div className="d-flex align-items-center justify-content-evenly">
-            {row.MediaObjects.map((rows) => (
-              <input type="image"
-                className="categoryImages"
-                src={url + rows.imageUrl}
-                alt="food_image"
-                onClick={() => openLightbox(rows.imageUrl)}
-              />
-            ))}
-          </div>
-        );
-      },
     },
     {
-      dataField: "name",
-      text: "Cuisine",
+      dataField: "sortName",
+      text: "Sort Name",
       headerSortingStyle,
       sort: true,
       headerAlign: "center",
@@ -143,12 +132,6 @@ const CategoriesTable = () => {
     },
   ];
 
-  async function openLightbox(MyUrl) {
-    console.log(MyUrl);
-    setOpen(true);
-    await setCategImg(url+MyUrl)
-  }
-
   const defaultSorted = [
     {
       dataField: "id",
@@ -157,44 +140,39 @@ const CategoriesTable = () => {
   ];
 
   useEffect(() => {
-    categories();
+    units();
   }, []);
 
-  async function categories() {
-    await viewCategoryService()
+  async function units() {
+    await allUnits()
       .then(function (res) {
-        res.data.data.map((items) =>
-          items.MediaObjects.map((item) => setImage(item.imageUrl))
-        );
-        setCategoryData(res.data.data);
+        setUnitData(res.data.data);
+        console.log(res.data.data);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
 
-  var products = categoryData.map((custom) => [
+  var products = unitData.map((custom) => [
     {
       id: custom.id,
-      name: custom.name,
+      unitName: custom.unitName,
+      sortName: custom.sortName
     },
   ]);
 
   const EditSubmit = (data) => {
-    var formData2 = new FormData();
-    let ids = localStorage.getItem("catID");
-    console.log("category", data.category[0])
-    formData2.append("name", data.name);
-    formData2.append("id", ids);
-    formData2.append("category", data.category[0]);
-    console.log("FormData: ", formData2);
-    editCategoryFun(formData2)
+    let ids = localStorage.getItem("uID");
+    const editData = {
+        id: ids,
+        unitName: data.unitname,
+        sortName: data.sortname
+    }
+    putUnits(editData)
       .then(function (res) {
-        
-        if(res.data.data[0] === 1)
-        {
           handleClose1();
-        toast.info("Category Edited Successfully", {
+        toast.info("Units Edited Successfully", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
@@ -203,9 +181,8 @@ const CategoriesTable = () => {
           draggable: false,
           progress: 0,
           toastId: "my_toast",
-        });
-        categories()
-      }
+        })
+        units()
       })
       
       .catch(function (error) {
@@ -223,14 +200,16 @@ const CategoriesTable = () => {
   };
 
   const onSubmit = (data) => {
-    var formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("category", data.category[0]);
-    category(formData)
+    const unitData = { 
+        unitName: data.unitname,
+        sortName: data.sortname
+    }
+    console.log(data)
+    postUnits(unitData)
       .then(function (res) {
         console.log(res);
         handleClose();
-        toast.success("Category Added Successfully", {
+        toast.success("Unit Added Successfully", {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: true,
@@ -240,7 +219,7 @@ const CategoriesTable = () => {
           progress: 0,
           toastId: "my_toast",
         });
-        categories();
+        units();
         reset();
       })
 
@@ -281,21 +260,15 @@ const CategoriesTable = () => {
 
   async function handleEdit(rowId) {
     console.log(rowId);
-    localStorage.setItem("catID", rowId);
+    localStorage.setItem("uID", rowId);
     handleShow1();
     reset()
     // Getting Data for Specific category
-    await viewCategorybyId(rowId)
+    await singleUnits(rowId)
       .then(function (response) {   
-        // response.data.data.MediaObjects.map((items) =>
-        //   setEditImage(items.imageUrl)
-        //   );
         console.log(response.data.data)
-       
-          setValue("name", response.data.data.name);
-          // setValue("category",  response.data.data.MediaObjects.map((items) => url+items.imageUrl));
-          // setValue("category", response.data.data.MediaObjects.map((item) => item.imageUrl));
-        // setModalData(response.data.data);
+          setValue("unitname", response.data.data.unitName);
+          setValue("sortname", response.data.data.sortName);
       })
       .catch(function (error) {
         console.log(error);
@@ -306,10 +279,10 @@ const CategoriesTable = () => {
     const deleteById = {
       id: rowId,
     };
-    deleteCategoryService(deleteById)
+    deleteUnits(deleteById)
       .then(function (res) {
         console.log(res.data.data);
-        toast.success(res.data.data, {
+        toast.success("Unit Deleted Successfully", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
@@ -319,7 +292,7 @@ const CategoriesTable = () => {
           progress: 0,
           toastId: "my_toast",
         });
-        categories();
+        units();
       })
       .catch(function (error) {
         console.log(error);
@@ -335,7 +308,7 @@ const CategoriesTable = () => {
       <div className="page-heading d-flex align-items-center p-4 justify-content-between">
         <div className="page-heading-wapper d-flex">
           <BagIcon className="page-icon m-0" />
-          <h3 className="page-sec-heading m-0 mx-2">Categories </h3>
+          <h3 className="page-sec-heading m-0 mx-2">Unit </h3>
         </div>
 
         <div className="d-flex align-items-center my-4">
@@ -345,7 +318,7 @@ const CategoriesTable = () => {
             onClick={handleShow}
           >
             {" "}
-            <AddIcon /> Add New Categories
+            <AddIcon /> Add New Unit
           </button>
         </div>
       </div>
@@ -365,34 +338,35 @@ const CategoriesTable = () => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Modal.Body className="p-4 pt-0">
             <Form.Group className="mb-1">
-              <Form.Label>Cuisine name</Form.Label>
+              <Form.Label>Unit Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="cuisine"
+                placeholder="unit name"
                 autoComplete="off"
-                {...register("name", {
-                  required: "Cuisine is required!",
+                {...register("unitname", {
+                  required: "Unit Name is required!",
                 })}
               />
             </Form.Group>
-            {errors.name && <p className="errors">{errors.name.message}</p>}
+            {errors.unitname && <p className="errors">{errors.unitname.message}</p>}
             <Form.Group className="mt-3">
-              <Form.Label>Category image</Form.Label>
+              <Form.Label>Sort Name</Form.Label>
               <Form.Control
-                type="file"
-                id="formFile"
-                {...register("category", {
-                  required: "Please provide an image!",
+                type="text"
+                placeholder="sort name"
+                autoComplete="off"
+                {...register("sortname", {
+                  required: "Sort Name is required!",
                 })}
               />
             </Form.Group>
-            {errors.category && (
-              <p className="errors">{errors.category.message}</p>
+            {errors.sortname && (
+              <p className="errors">{errors.sortname.message}</p>
             )}
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
             <Button variant="primary" type="submit">
-              Add Categories
+              Add Units
             </Button>
           </Modal.Footer>
         </Form>
@@ -420,37 +394,33 @@ const CategoriesTable = () => {
         <Form onSubmit={handleSubmit(EditSubmit)}>
           <Modal.Body className="p-4 pt-0">
             <Form.Group className="mb-1">
-              <Form.Label>Cuisine name</Form.Label>
+              <Form.Label>Unit Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="cuisine"
+                placeholder="unit name"
                 autoComplete="off"
-                {...register("name", {
-                  required: "Cuisine is required!", 
+                {...register("unitname", {
+                  required: "Unit Name is required!"
+                })}
+              />
+            </Form.Group>
+            {errors.unitname && <p className="errors">{errors.unitname.message}</p>}
+            <Form.Group className="mt-3">
+              <Form.Label>Sort Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="sort name"
+                autoComplete="off"
+                {...register("sortname", {
+                  required: "Sort Name is required!", 
                   pattern: {
                     value: /^[A-Za-z]+$/,
                     message: "Only alphabets are allowed!"
-                  },
-                  minLength: {
-                    value: 4,
-                    message: "Must be greater than 4 words!"
-                    },
-                })}
-              />
+                  }
+                })}/>
             </Form.Group>
-            {errors.name && <p className="errors">{errors.name.message}</p>}
-            <Form.Group className="mt-3">
-              <Form.Label>Category image</Form.Label>
-              <Form.Control
-                type="file"
-                id="formFile"
-                {...register("category", {
-                  required: "Please provide an image!",
-                })}
-              />
-            </Form.Group>
-            {errors.category && (
-              <p className="errors">{errors.category.message}</p>
+            {errors.sortname && (
+              <p className="errors">{errors.sortname.message}</p>
             )}
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
@@ -469,7 +439,7 @@ const CategoriesTable = () => {
               totalSize: products.length,
               prePageText: "Previous",
               nextPageText: "Next",
-              page: 1,
+              page:1,
               sizePerPageList: [
                 {
                   text: "5",
@@ -520,7 +490,7 @@ const CategoriesTable = () => {
                       wrapperClasses="table-responsive"
                       hover
                       striped
-                      data={categoryData}
+                      data={unitData}
                       condensed={false}
                       noDataIndication="No Data Is Available"
                     />
@@ -551,4 +521,4 @@ const CategoriesTable = () => {
   );
 };
 
-export default CategoriesTable;
+export default UnitTable;
