@@ -4,15 +4,12 @@ import { ReactComponent as UserIcon } from "../../../Assets/Icon/user.svg";
 import "./UserProfile.scss";
 import "../Buttons/buttons.scss";
 import { useForm } from "react-hook-form";
-import UserImage from "../../../Assets/Images/blank-user.png";
 import {
   profileService,
   viewprofileService,
   changeProfileImage,
 } from "../../../Services/userService";
-import axios from "axios";
-import setting from "../../../config/settings";
-import camera from '../../../Assets/Icon/camera.svg'
+
 
 const UserProfile = () => {
   // To view the filled information

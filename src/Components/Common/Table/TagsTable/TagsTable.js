@@ -29,7 +29,6 @@ import { useParams } from "react-router-dom";
 const TagsTable = () => {
   const [editId, setEditId] = useState();
   const [tag, setTag] = useState([]);
-  const [tagDetail, setTagDetail] = useState({});
 
   const { rowId } = useParams();
 
@@ -47,8 +46,8 @@ const TagsTable = () => {
   const tagdata = () => {
     getAllTagFun()
       .then((res) => {
-        console.log("taggsss data", res.data.data);
-        setTag(res.data.data);
+        console.log("taggsss data", res?.data?.data);
+        setTag(res?.data?.data);
         // {
         //   res.data.data.map((items) => {
         //     // setValue("tags", items.tags);
@@ -63,22 +62,24 @@ const TagsTable = () => {
   // Adding Tags API
   const onSubmit = (data) => {
     let params = {
-      name: data.name,
+      name: data?.name,
     };
     addTags(params)
       .then((data) => {
         console.log("tagggas addded", data);
-        toast.success("Tag Added Successfully", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-        tagdata();
+        if(data?.statusText === "Created") {
+          toast.success("Tag Added Successfully", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+          tagdata();
+        }
       })
       .catch((error) => {
         toast.error(error.error, {
@@ -147,9 +148,8 @@ const TagsTable = () => {
       .then((res) => {
         setValue("tags", rowName);
         console.log("rowididid", rowName);
-        setEditId(res.data.data);
-        // setEditId(rowId)
-        console.log("handle edit tags data", rowId);
+        setEditId(res?.data?.data);
+        console.log("handle edit tags data", res.data.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -176,17 +176,27 @@ const TagsTable = () => {
 
   // // put api to edit tags
 
-  const EditSubmits = (data) => {
-    console.log("jaadu", data);
-    const params = {
-      id: editId.id,
-      name: data.tags,
+  const EditSubmit = (tagss) => {
+    const param = {
+      id: editId?.id,
+      name: tagss?.tags,
     };
-    console.log("paramns", params);
-    editTagsFun(params)
-      .then((res) => {
-        console.log("response edited", res);
-        tagdata();
+    editTagsFun(param)
+    .then((res) => {
+        console.log("edited params", res);
+        // if(res?.statusText === 'OK') {
+          toast.success("Tag edited Successfully", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+          tagdata();
+        // }
       })
       .catch(function (error) {
         console.log(error);
@@ -301,7 +311,7 @@ const TagsTable = () => {
                     })}
                   />
                   {errors.name && (
-                    <p className="errors">{errors.name.message}</p>
+                    <p className="errors">{errors?.name?.message}</p>
                   )}
                 </div>
                 <div className="modal-footer border-0 d-flex justify-content-center">
@@ -338,7 +348,7 @@ const TagsTable = () => {
               ></button>
             </div>
             <div className="modal-body p-4 pt-0">
-              <form onSubmit={handleSubmit(EditSubmits)}>
+              <form onSubmit={handleSubmit(EditSubmit)}>
                 <div className="mb-3">
                   <label htmlFor="recipient-name" className="col-form-label">
                     Edit Tag
@@ -354,17 +364,18 @@ const TagsTable = () => {
                     })}
                   />
                     {errors.tags && (
-                    <p className="errors">{errors.tags.message}</p>
+                    <p className="errors">{errors?.tags?.message}</p>
                   )}
                 </div>
-                <div className="border-0 d-flex justify-content-center">
+                <div className="border-0 d-flex">
                   <button
                     type="submit"
-                    // data-bs-dismiss="modal"
+                    data-bs-dismiss="modal"
                     className="btn btn-success"
                   >
-                    Update Tag
+                    Update
                   </button>
+                <button type="button" className="btn btn-dark ms-3" data-bs-dismiss="modal">Close</button>
                 </div>
               </form>
             </div>
