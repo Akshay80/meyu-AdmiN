@@ -27,10 +27,11 @@ import {
 import { useParams } from "react-router-dom";
 
 const TagsTable = () => {
-  const [editTag, setEditTag] = useState([]);
+  const [editId, setEditId] = useState();
   const [tag, setTag] = useState([]);
+  const [tagDetail, setTagDetail] = useState({});
 
-  const {rowId} = useParams();
+  const { rowId } = useParams();
 
   const {
     register,
@@ -48,11 +49,11 @@ const TagsTable = () => {
       .then((res) => {
         console.log("taggsss data", res.data.data);
         setTag(res.data.data);
-        {
-          res.data.data.map((items) => {
-            setValue("tags", items.tags);
-          });
-        }
+        // {
+        //   res.data.data.map((items) => {
+        //     // setValue("tags", items.tags);
+        //   });
+        // }
       })
       .catch(function (error) {
         console.log(error);
@@ -62,10 +63,11 @@ const TagsTable = () => {
   // Adding Tags API
   const onSubmit = (data) => {
     let params = {
-      name: data.tags,
+      name: data.name,
     };
     addTags(params)
       .then((data) => {
+        console.log("tagggas addded", data);
         toast.success("Tag Added Successfully", {
           position: "top-right",
           autoClose: 2000,
@@ -140,18 +142,14 @@ const TagsTable = () => {
   };
 
   // edit tags = open modal and display items
-  const handleEdit = (rowId) => {
-
+  const handleEdit = (rowId, rowName) => {
     getTagsbyId(rowId)
       .then((res) => {
-        console.log("handle edit id", rowId);
-        console.log("handle edit tags data", res.data.data);
-        setEditTag(res.data.data);
-        {editTag.map((item) => {
-          // setValue("name",item.name)
-          console.log("gtgdejhsvhc", item)
-        })}
-        // setEditTag(rowId);
+        setValue("tags", rowName);
+        console.log("rowididid", rowName);
+        setEditId(res.data.data);
+        // setEditId(rowId)
+        console.log("handle edit tags data", rowId);
       })
       .catch(function (error) {
         console.log(error);
@@ -168,25 +166,33 @@ const TagsTable = () => {
       });
   };
 
-    // put api to edit tags
-    const EditSubmit = (data) => {
-      console.log("rowiddd",rowId);
-      const params = {
-        name: data.name,
-      };
-      editTagsFun(params)
-        .then(function (res) {
-          // console.log("responseeeeeee", res);
-          console.log("rrfrfrfrfr",rowId);
-          // handleEdit();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-        tagdata();
-    };
+  // useEffect(() => {
+  //   setValue("tags", tagDetail?.name);
+  // }, [tagDetail]);
 
-    
+  // const getTagDetail = (id, name) => {
+  //   setTagDetail({ id: id, name: name });
+  // };
+
+  // // put api to edit tags
+
+  const EditSubmits = (data) => {
+    console.log("jaadu", data);
+    const params = {
+      id: editId.id,
+      name: data.tags,
+    };
+    console.log("paramns", params);
+    editTagsFun(params)
+      .then((res) => {
+        console.log("response edited", res);
+        tagdata();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const columns = [
     {
       dataField: "serialno",
@@ -221,7 +227,7 @@ const TagsTable = () => {
               type="submit"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal2"
-              onClick={() => handleEdit(row.id)}
+              onClick={() => handleEdit(row.id, row.name)}
             />
             <DeleteIcon
               className="iconHover delete-icon"
@@ -286,16 +292,16 @@ const TagsTable = () => {
                   <input
                     type="text"
                     className="form-control shadow-none"
-                    id="tags"
-                    placeholder="Tags"
-                    name="tags"
+                    id="name"
+                    placeholder="name"
+                    name="name"
                     autoComplete="off"
-                    {...register("tags", {
-                      required: "Tag is required",
+                    {...register("name", {
+                      required: "Tag Name is required",
                     })}
                   />
-                  {errors.tags && (
-                    <p className="errors">{errors.tags.message}</p>
+                  {errors.name && (
+                    <p className="errors">{errors.name.message}</p>
                   )}
                 </div>
                 <div className="modal-footer border-0 d-flex justify-content-center">
@@ -332,7 +338,7 @@ const TagsTable = () => {
               ></button>
             </div>
             <div className="modal-body p-4 pt-0">
-              <form onSubmit={handleSubmit(EditSubmit)}>
+              <form onSubmit={handleSubmit(EditSubmits)}>
                 <div className="mb-3">
                   <label htmlFor="recipient-name" className="col-form-label">
                     Edit Tag
@@ -343,14 +349,19 @@ const TagsTable = () => {
                     id="tags"
                     name="tags"
                     autoComplete="off"
-                    {...register("name")}
+                    {...register("tags", {
+                      required: "Tag Name is required",
+                    })}
                   />
+                    {errors.tags && (
+                    <p className="errors">{errors.tags.message}</p>
+                  )}
                 </div>
-                <div className="modal-footer border-0 d-flex justify-content-center">
+                <div className="border-0 d-flex justify-content-center">
                   <button
                     type="submit"
                     // data-bs-dismiss="modal"
-                    className="btn btn-primary"
+                    className="btn btn-success"
                   >
                     Update Tag
                   </button>
