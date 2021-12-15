@@ -10,20 +10,17 @@ import PrivateRoute from "./Routes/PrivateRoute";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route exact path={Path.dashboard} element={<LoginRoute />}>
-          {/* <Route exact path={Path.dashboard} element={<PrivateRoute />} /> */}
-        </Route>
-        <Route exact path={Path.dashboard} element={<RestrictedRoute />}>
-          <Route exact path={Path.login} element={<Login />} />
-        </Route>
-        <Route path={Path.signup} element={<Signup />} />
-        <Route path={Path.login} element={<Login />} />
-        <Route path={Path.forgotPassword} element={<ForgotPassword />} />
-      </Routes>
-      <PrivateRoute />
-    </Router>
+      <><Routes>
+      <Route exact path={Path.dashboard} element={<LoginRoute />}>
+        {/* <Route exact path={Path.dashboard} element={<PrivateRoute />} /> */}
+      </Route>
+      <Route exact path={Path.dashboard} element={<RestrictedRoute />}>
+        <Route exact path={Path.login} element={<Login />} />
+      </Route>
+      <Route path={Path.signup} element={<Signup />} />
+      <Route path={Path.login} element={<Login />} />
+      <Route path={Path.forgotPassword} element={<ForgotPassword />} />
+    </Routes><PrivateRoute /></>
   );
 }
 

@@ -42,7 +42,6 @@ const Login = (props) => {
             toastId: "my_toast",
           });
           setUserToken(res?.data?.data?.token);
-          localStorage.setItem('user', JSON.stringify(res.data.data.user));
           navigate("/");
         }
         setLoader(false);

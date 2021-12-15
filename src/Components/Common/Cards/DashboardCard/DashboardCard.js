@@ -1,6 +1,7 @@
 import React from "react";
 import { DashboardCardData } from "./DashboardCardData";
 import "./DashboardCard.scss";
+import CountUp from "react-countup";
 
 export const DashboardCard = () => {
   return (
@@ -9,7 +10,10 @@ export const DashboardCard = () => {
         {DashboardCardData.map((val, key) => {
           return (
             <div className="dashboard-card col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-4">
-              <div className="card h-100 w-100 py-2" style={{ maxWidth: "250px" }}>
+              <div
+                className="card h-100 w-100 py-2"
+                style={{ maxWidth: "250px" }}
+              >
                 <div key={key} className="row p-3">
                   <div className="col-4">
                     <div className=" svg-icon d-flex mt-1">{val.icon}</div>
@@ -17,7 +21,9 @@ export const DashboardCard = () => {
                   <div className="col-8">
                     <div className="card-body p-0">
                       <p className="card-text cardTitle">{val.title}</p>
-                      <h3 className="cardNumber">{val.number}</h3>
+                      <h3 className="cardNumber">
+                        <CountUp start={0} end={val.number} duration={5} />
+                      </h3>
                     </div>
                   </div>
                 </div>

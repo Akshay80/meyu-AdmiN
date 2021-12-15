@@ -397,11 +397,7 @@ async function handleEdit(rowId) {
                 placeholder="sort name"
                 autoComplete="off"
                 {...register("sortname", {
-                  required: "Sort Name is required!", 
-                  pattern: {
-                    value: /^[A-Za-z]+$/,
-                    message: "Only alphabets are allowed!"
-                  }
+                  required: "Sort Name is required!"
                 })}/>
             </Form.Group>
             {errors.sortname && (
