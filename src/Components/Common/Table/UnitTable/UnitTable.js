@@ -32,19 +32,10 @@ import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Modal, Button, Form, FormControl } from "react-bootstrap";
-import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css";
 
 const UnitTable = () => {
-  const [categoryy, setCat] = useState();
-  const [subCategoryy, setSubCat] = useState();
+  const [unitId, setUnitId] = useState();
   const [unitData, setUnitData] = useState([]);
-  const [image, setImage] = useState([]);
-  const [editImage, setEditImage] = useState({});
-  const [catImage, setCatImage] = useState();
-  const [product, setProducts] = useState([]);
-  const [formData, setFormData] = useState();
-  const [modalData, setModalData] = useState([]);
   const [isOpen, setOpen] = useState(false);
   const [categImg, setCategImg] = useState();
 
@@ -139,6 +130,7 @@ const UnitTable = () => {
     },
   ];
 
+  // ================= get all units ==============
   useEffect(() => {
     units();
   }, []);
@@ -154,50 +146,7 @@ const UnitTable = () => {
       });
   }
 
-  var products = unitData.map((custom) => [
-    {
-      id: custom.id,
-      unitName: custom.unitName,
-      sortName: custom.sortName
-    },
-  ]);
-
-  const EditSubmit = (data) => {
-    let ids = localStorage.getItem("uID");
-    const editData = {
-        id: ids,
-        unitName: data.unitname,
-        sortName: data.sortname
-    }
-    putUnits(editData)
-      .then(function (res) {
-          handleClose1();
-        toast.info("Units Edited Successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        })
-        units()
-      })
-      
-      .catch(function (error) {
-        toast.error(error.error, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-      });
-  };
+  // ==================== add unit ============
 
   const onSubmit = (data) => {
     const unitData = { 
@@ -237,43 +186,67 @@ const UnitTable = () => {
       });
   };
 
+// ================ put unit in modal ===============
+
+async function handleEdit(rowId) {
+  console.log(rowId);
+  handleShow1();
+  reset()
+  // Getting Data for Specific category
+  await singleUnits(rowId)
+    .then(function (response) {   
+      console.log("datattaa",response.data.data)
+      setUnitId( response.data.data.id)
+        setValue("unitname", response.data.data.unitName);
+        setValue("sortname", response.data.data.sortName);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+  const EditSubmit = (data) => {
+    const editData = {
+        id: unitId,
+        unitName: data.unitname,
+        sortName: data.sortname
+    }
+    putUnits(editData)
+      .then(function (res) {
+          handleClose1();
+        toast.info("Units Edited Successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        })
+        units()
+      })
+      
+      .catch(function (error) {
+        toast.error(error.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      });
+  };
+
+  
  
 
-  function handleDelete(rowId, name) {
-    confirmAlert({
-      title: "Delete",
-      message: `Are you sure you want to remove this item from the table?`,
-      buttons: [
-        {
-          label: "Yes",
-          className: "btn btn-danger",
-          onClick: () => {
-            confirmDelete(rowId);
-          },
-        },
-        {
-          label: "No",
-        },
-      ],
-    });
-  }
 
-  async function handleEdit(rowId) {
-    console.log(rowId);
-    localStorage.setItem("uID", rowId);
-    handleShow1();
-    reset()
-    // Getting Data for Specific category
-    await singleUnits(rowId)
-      .then(function (response) {   
-        console.log(response.data.data)
-          setValue("unitname", response.data.data.unitName);
-          setValue("sortname", response.data.data.sortName);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+
+  // ===================== confirm delete unit =============
 
   function confirmDelete(rowId) {
     const deleteById = {
@@ -299,7 +272,24 @@ const UnitTable = () => {
       });
   }
 
-  
+  function handleDelete(rowId, name) {
+    confirmAlert({
+      title: "Delete",
+      message: `Are you sure you want to remove this item from the table?`,
+      buttons: [
+        {
+          label: "Yes",
+          className: "btn btn-danger",
+          onClick: () => {
+            confirmDelete(rowId);
+          },
+        },
+        {
+          label: "No",
+        },
+      ],
+    });
+  }
 
  
 
@@ -372,11 +362,6 @@ const UnitTable = () => {
         </Form>
       </Modal>
 
-      {isOpen === true? <Lightbox
-  mainSrc={categImg}
-  onCloseRequest={() => setOpen(false)}
-/>: null}
-
       {/* Modal for Edit */}
 
       <Modal
@@ -436,7 +421,7 @@ const UnitTable = () => {
           <PaginationProvider
             pagination={paginationFactory({
               custom: true,
-              totalSize: products.length,
+              totalSize:unitData.length,
               prePageText: "Previous",
               nextPageText: "Next",
               page:1,
@@ -460,20 +445,20 @@ const UnitTable = () => {
                 },
                 {
                   text: "All",
-                  value: products.length,
+                  value: unitData.length,
                 },
               ],
-              hideSizePerPage: products.length === 0,
+              hideSizePerPage: unitData.length === 0,
             })}
             keyField="id"
             columns={columns}
-            data={products.map((items) => items.map((item) => item))}
+            data={unitData}
           >
             {({ paginationProps, paginationTableProps }) => (
               <ToolkitProvider
                 keyField="id"
                 columns={columns}
-                data={products.map((items) => items.map((item) => item))}
+                data={unitData}
                 search
               >
                 {(toolkitprops) => (

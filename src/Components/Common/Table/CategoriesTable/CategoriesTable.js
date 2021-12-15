@@ -211,11 +211,11 @@ const CategoriesTable = () => {
 
 // ===================== get api in modal ================
 
-  async const handleEdit = (rowId, rowName) => {
+const handleEdit = (rowId, rowName) => {
     handleShow1();
     reset()
     // Getting Data for Specific category
-    await viewCategorybyId(rowId)
+   viewCategorybyId(rowId)
       .then(function (response) {   
         console.log("dattattattatat",response.data.data)
         setCatId(response.data.data.id)
@@ -448,7 +448,7 @@ const CategoriesTable = () => {
           <PaginationProvider
             pagination={paginationFactory({
               custom: true,
-              totalSize: products.length,
+              totalSize: categoryData.length,
               prePageText: "Previous",
               nextPageText: "Next",
               page: 1,
@@ -472,20 +472,20 @@ const CategoriesTable = () => {
                 },
                 {
                   text: "All",
-                  value: products.length,
+                  value: categoryData.length,
                 },
               ],
-              hideSizePerPage: products.length === 0,
+              hideSizePerPage: categoryData.length === 0,
             })}
             keyField="id"
             columns={columns}
-            data={products.map((items) => items.map((item) => item))}
+            data={categoryData}
           >
             {({ paginationProps, paginationTableProps }) => (
               <ToolkitProvider
                 keyField="id"
                 columns={columns}
-                data={products.map((items) => items.map((item) => item))}
+                data={categoryData}
                 search
               >
                 {(toolkitprops) => (
