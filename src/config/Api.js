@@ -25,7 +25,6 @@ export default (() => {
     // Category
     category: `${setting.api.url}admin/category`,
     editCategory: `${setting.api.url}admin/editcategory`,
-    // Categories
     categories: `${setting.api.url}common/category`,
     deletecategories: `${setting.api.url}admin/deletecategory`,
     catergoryById: `${setting.api.url}auth/category`,

@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoriesTable from '../../../Components/Common/Table/CategoriesTable/CategoriesTable';
+import CategoriesTable from '../../../Components/Common/Table/CategoriesTable/CategoriesTable1';
 
 const Categories = () => {
     return (

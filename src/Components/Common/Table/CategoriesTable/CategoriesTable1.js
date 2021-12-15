@@ -34,11 +34,17 @@ import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 
 const CategoriesTable = () => {
+  const [categoryy, setCat] = useState();
+  const [subCategoryy, setSubCat] = useState();
   const [categoryData, setCategoryData] = useState([]);
   const [image, setImage] = useState([]);
+  const [editImage, setEditImage] = useState({});
+  const [catImage, setCatImage] = useState();
+  const [product, setProducts] = useState([]);
+  const [formData, setFormData] = useState();
+  const [modalData, setModalData] = useState([]);
   const [isOpen, setOpen] = useState(false);
   const [categImg, setCategImg] = useState();
-  const [catId, setCatId] = useState();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -55,7 +61,6 @@ const CategoriesTable = () => {
 
   const url = "http://52.77.236.78:8081/";
   let toastId = null;
-
   const navigate = useNavigate();
   const {
     register,
@@ -151,15 +156,13 @@ const CategoriesTable = () => {
     },
   ];
 
-  // ====================  get all data =================
-  
   useEffect(() => {
     categories();
   }, []);
 
-  const categories = () => {
-    viewCategoryService()
-      .then((res) => {
+  async function categories() {
+    await viewCategoryService()
+      .then(function (res) {
         res.data.data.map((items) =>
           items.MediaObjects.map((item) => setImage(item.imageUrl))
         );
@@ -170,7 +173,55 @@ const CategoriesTable = () => {
       });
   }
 
-//  ================= add categrory =============
+  var products = categoryData.map((custom) => [
+    {
+      id: custom.id,
+      name: custom.name,
+    },
+  ]);
+
+  const EditSubmit = (data) => {
+    var formData2 = new FormData();
+    let ids = localStorage.getItem("catID");
+    console.log("category", data.category[0])
+    formData2.append("name", data.name);
+    formData2.append("id", ids);
+    formData2.append("category", data.category[0]);
+    console.log("FormData: ", formData2);
+    editCategoryFun(formData2)
+      .then(function (res) {
+        
+        if(res.data.data[0] === 1)
+        {
+          handleClose1();
+        toast.info("Category Edited Successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+        categories()
+      }
+      })
+      
+      .catch(function (error) {
+        toast.error(error.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      });
+  };
+
   const onSubmit = (data) => {
     var formData = new FormData();
     formData.append("name", data.name);
@@ -209,66 +260,48 @@ const CategoriesTable = () => {
 
  
 
-// ===================== get api in modal ================
+  function handleDelete(rowId, name) {
+    confirmAlert({
+      title: "Delete",
+      message: `Are you sure you want to remove this item from the table?`,
+      buttons: [
+        {
+          label: "Yes",
+          className: "btn btn-danger",
+          onClick: () => {
+            confirmDelete(rowId);
+          },
+        },
+        {
+          label: "No",
+        },
+      ],
+    });
+  }
 
-  async const handleEdit = (rowId, rowName) => {
+  async function handleEdit(rowId) {
+    console.log(rowId);
+    localStorage.setItem("catID", rowId);
     handleShow1();
     reset()
     // Getting Data for Specific category
     await viewCategorybyId(rowId)
       .then(function (response) {   
-        console.log("dattattattatat",response.data.data)
-        setCatId(response.data.data.id)
+        // response.data.data.MediaObjects.map((items) =>
+        //   setEditImage(items.imageUrl)
+        //   );
+        console.log(response.data.data)
+       
           setValue("name", response.data.data.name);
+          // setValue("category",  response.data.data.MediaObjects.map((items) => url+items.imageUrl));
+          // setValue("category", response.data.data.MediaObjects.map((item) => item.imageUrl));
+        // setModalData(response.data.data);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
 
-  // =================== edit category modal ==================
-  const EditSubmit = (data) => {
-    var formData2 = new FormData();
-    console.log("category", data.category[0])
-    formData2.append("name", data.name);
-    formData2.append("id", catId);
-    formData2.append("category", data.category[0]);
-    console.log("FormData: ", formData2);
-    editCategoryFun(formData2)
-      .then(function (res) {
-        
-        if(res.data.data[0] === 1)
-        {
-          handleClose1();
-        toast.info("Category Edited Successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-        categories()
-      }
-      })
-      
-      .catch(function (error) {
-        toast.error(error.error, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-      });
-  };
-
-  // ========================= delete api =================
   function confirmDelete(rowId) {
     const deleteById = {
       id: rowId,
@@ -293,24 +326,9 @@ const CategoriesTable = () => {
       });
   }
 
-  function handleDelete(rowId, name) {
-    confirmAlert({
-      title: "Delete",
-      message: `Are you sure you want to remove this item from the table?`,
-      buttons: [
-        {
-          label: "Yes",
-          className: "btn btn-danger",
-          onClick: () => {
-            confirmDelete(rowId);
-          },
-        },
-        {
-          label: "No",
-        },
-      ],
-    });
-  }
+  
+
+ 
 
   return (
     <>

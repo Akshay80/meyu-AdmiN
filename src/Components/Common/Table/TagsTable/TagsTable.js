@@ -306,9 +306,7 @@ const TagsTable = () => {
                     placeholder="name"
                     name="name"
                     autoComplete="off"
-                    {...register("name", {
-                      required: "Tag Name is required",
-                    })}
+                    {...register("name", {})}
                   />
                   {errors.name && (
                     <p className="errors">{errors?.name?.message}</p>
@@ -359,9 +357,7 @@ const TagsTable = () => {
                     id="tags"
                     name="tags"
                     autoComplete="off"
-                    {...register("tags", {
-                      required: "Tag Name is required",
-                    })}
+                    {...register("tags", {})}
                   />
                     {errors.tags && (
                     <p className="errors">{errors?.tags?.message}</p>
