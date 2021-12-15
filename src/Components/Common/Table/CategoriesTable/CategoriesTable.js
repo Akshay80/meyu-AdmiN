@@ -95,8 +95,8 @@ const CategoriesTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex align-items-center justify-content-evenly">
-            {row.MediaObjects.map((rows) => (
-              <input type="image"
+            {row.MediaObjects.map((rows, key) => (
+              <input key={key} type="image"
                 className="categoryImages"
                 src={url + rows.imageUrl}
                 alt="food_image"

@@ -9,12 +9,15 @@ export const DashboardCard = () => {
       <div className="row">
         {DashboardCardData.map((val, key) => {
           return (
-            <div className="dashboard-card col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-4">
+            <div
+              key={key}
+              className="dashboard-card col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-4"
+            >
               <div
                 className="card h-100 w-100 py-2"
                 style={{ maxWidth: "250px" }}
               >
-                <div key={key} className="row p-3">
+                <div className="row p-3">
                   <div className="col-4">
                     <div className=" svg-icon d-flex mt-1">{val.icon}</div>
                   </div>

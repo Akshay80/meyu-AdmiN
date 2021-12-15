@@ -36,8 +36,6 @@ import { Modal, Button, Form, FormControl } from "react-bootstrap";
 const UnitTable = () => {
   const [unitId, setUnitId] = useState();
   const [unitData, setUnitData] = useState([]);
-  const [isOpen, setOpen] = useState(false);
-  const [categImg, setCategImg] = useState();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -51,9 +49,6 @@ const UnitTable = () => {
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
-
-  let toastId = null;
-  const navigate = useNavigate();
   const {
     register,
     setValue,
@@ -74,16 +69,6 @@ const UnitTable = () => {
         return rowIndex + 1;
       },
     },
-
-
-    // {
-    //   dataField: "id",
-    //   text: "Serial No",
-    //   sort: true,
-    //   headerSortingStyle,
-    //   headerAlign: "center",
-    //   align: "center",
-    // },
     {
       dataField: "unitName",
       text: "Unit Name",
@@ -240,11 +225,6 @@ async function handleEdit(rowId) {
         });
       });
   };
-
-  
- 
-
-
 
   // ===================== confirm delete unit =============
 

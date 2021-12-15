@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^2.8.3",
+    "@rsuite/icons": "^1.0.2",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -33,6 +34,7 @@
     "react-toastify": "^8.1.0",
     "reactstrap": "^9.0.1",
     "read-more-react": "^1.0.10",
+    "rsuite": "^5.3.0",
     "web-vitals": "^1.1.2",
     "yup": "^0.32.11"
   },
