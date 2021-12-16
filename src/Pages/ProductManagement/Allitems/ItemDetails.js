@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Row } from "react-bootstrap";
 import { Input } from "reactstrap";
 import "../../../Components/Common/Buttons/buttons.scss";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import { getAllTagFun } from "../../../Services/tagServices";
 
 const ItemDetails = () => {
+  const [tags, setTags] = useState([]);
+  const [tagname, setTagName] = useState();
+  const animatedComponents = makeAnimated();
+
+  useEffect(() => {
+    tagdata();
+  }, []);
+
+  const tagdata = () => {
+    getAllTagFun()
+      .then((res) => {
+        console.log("response", res?.data?.data);
+        setTags(res?.data?.data);
+        tags.map((items) => console.log("responsededed", items.name),
+        setTagName(res?.data?.data.map((items) => items.name))
+        );
+        console.log("tagnamee",tagname)
+      })
+      .catch(function (error) {});
+  };
+
   return (
     <div className="card p-5 m-3">
       <div className="pb-5">
@@ -83,7 +107,21 @@ const ItemDetails = () => {
                 <option>Tag 2..</option>
               </Form.Select>
             </Form.Group>
+            {/* =============================== tagss multiple ============ */}
+            <Form.Group
+              className="col-md-6 col-sm-6 col-xs-12 mb-3"
+              controlId="formGridTags"
+            >
+              <Form.Label className="mb-1">Tags</Form.Label>
+              <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                isMulti={true}
+                options={tagname}
+              />
+            </Form.Group>
 
+            {/* ======================================== */}
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridDelivery"
