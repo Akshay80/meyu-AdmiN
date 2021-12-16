@@ -37,20 +37,19 @@ const Sidebar = ({ menuToggleState, toggleMenu }) => {
               <ProSidebar key={key}>
                 <Menu iconShape="square">
                   <SubMenu icon={val.icon} title={val.title}>
-                    <MenuItem>
                       {val.subMenus.map((submenu, i) => {
                         return (
                           <MenuItem key={i} onClick={toggleMenu}>
                             <NavLink
                               className="sidebar-menu-links"
                               to={submenu.link}
-                            >
-                              <MenuItem>{submenu.title}</MenuItem>
+                              >
+                              <span className="ms-3">{submenu.title}</span>
+                              {/* <MenuItem>{submenu.title}</MenuItem> */}
                             </NavLink>
                           </MenuItem>
                         );
                       })}
-                    </MenuItem>
                   </SubMenu>
                 </Menu>
               </ProSidebar>

@@ -1,7 +1,7 @@
 @import "./_theme.scss";
 @import "../Components/Common/Buttons/buttons.scss";
 
-a {
+.dropdown-item a {
   text-decoration: none !important;
   color: black;
   &:hover {
