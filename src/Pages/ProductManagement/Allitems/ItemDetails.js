@@ -1,50 +1,44 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Row } from "react-bootstrap";
 import { Input } from "reactstrap";
 import "../../../Components/Common/Buttons/buttons.scss";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import { getAllTagFun } from "../../../Services/tagServices";
 import { viewCategoryService } from "../../../Services/userService";
-import {
-  getAllTagFun
-} from "../../../Services/tagServices";
-import TagPicker from 'rsuite/TagPicker';
-import './ItemDetails.css';
-import 'rsuite/dist/rsuite.min.css';
 
 const ItemDetails = () => {
-  const [category, setCategory] = useState([]);
   const [tags, setTags] = useState([]);
-  const [name, setName] = useState([]);
+  const [category, setCategory] = useState([]);
+  const animatedComponents = makeAnimated();
+
   useEffect(() => {
-    categories();
     tagdata();
+    categories();
   }, []);
-
-
-  const data = [
-    {
-      "label": tags.map((item) => item.name),
-      "value": name
-    }
-  ]
-
-  const categories = () => {
-    viewCategoryService()
-      .then((res) => {
-        setCategory(res.data.data)
-        console.log(res.data.data)
-        
-      })
-      .catch(function (error) {});
-  };
 
   const tagdata = () => {
     getAllTagFun()
       .then((res) => {
-        setTags(res?.data?.data);
-        // setName(res.data.data.map((item) => console.log(item.name)))
+        console.log("response", res?.data?.data);
+        setTags(res.data.data);
       })
       .catch(function (error) {});
   };
+
+  const categories = () => {
+    viewCategoryService()
+      .then((res) => {
+        setCategory(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch(function (error) {});
+  };
+
+  let options = tags.map(function (tag) {
+    return { value: tag.id, label: tag.name };
+  });
+
   return (
     <div className="card p-5 m-3">
       <div className="pb-5">
@@ -103,35 +97,37 @@ const ItemDetails = () => {
               <Form.Control type="text" placeholder="Product Name" />
             </Form.Group>
 
-           
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridCategory"
             >
               <Form.Label className="mb-1">Category</Form.Label>
-              <Form.Select defaultValue="Choose..." onChange={(e) => console.log(e.target.value)}>
-                {category.map((items) => <option>{items.name}</option>)}
+              <Form.Select
+                defaultValue="Choose..."
+                onChange={(e) => console.log(e.target.value)}
+              >
+                {category.map((items) => (
+                  <option>{items.name}</option>
+                ))}
               </Form.Select>
             </Form.Group>
 
+            {/* =============================== tagss multiple ============ */}
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridTags"
             >
-            <p className="mb-1">Tags</p>
-            <TagPicker width="100" placeholder="Choose..." data={data}  />
+              <Form.Label className="mb-1">Tags</Form.Label>
+              <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                isMulti={true}
+                options={options}
+                onChange={(e) => console.log(e.map((item) => item.label))}
+              />
             </Form.Group>
 
-            {/* <Form.Group
-              className="col-md-6 col-sm-6 col-xs-12 mb-3"
-              controlId="formGridTags"
-            >
-              <Form.Label className="mb-1">Tags</Form.Label>
-              <Form.Select defaultValue="Choose..." onChange={(e) => console.log(e.target.value)}>
-              {tags.map((items) => <option>{items.name}</option>)}
-              </Form.Select>
-            </Form.Group> */}
-
+            {/* ======================================== */}
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridDelivery"

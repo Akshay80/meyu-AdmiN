@@ -7,8 +7,7 @@ import {
   ProSidebar,
   Menu,
   MenuItem,
-  SubMenu,
-  SidebarContent,
+  SubMenu
 } from "react-pro-sidebar";
 import CloseMenu from "./../../Assets/Icon/close_white.svg";
 
