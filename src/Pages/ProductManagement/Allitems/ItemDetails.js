@@ -3,22 +3,41 @@ import { Form, Row } from "react-bootstrap";
 import { Input } from "reactstrap";
 import "../../../Components/Common/Buttons/buttons.scss";
 import { getAllTagFun } from "../../../Services/tagServices";
+import { viewCategoryService } from "../../../Services/userService";
+import Select from "react-select";
+import makeAnimated from "react-select/animated"
 
 const ItemDetails = () => {
   const [tags, setTags] = useState([]);
+  const [category, setCategory] = useState([]);
+  const animatedComponents = makeAnimated();
 
   useEffect(() => {
     tagdata();
+    categories();
   }, []);
 
   const tagdata = () => {
     getAllTagFun()
       .then((res) => {
         console.log("response", res?.data?.data);
-        setTags(res?.data?.data);
+        setTags(res.data.data);
       })
       .catch(function (error) {});
   };
+
+  const categories = () => {
+    viewCategoryService()
+      .then((res) => {
+        setCategory(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch(function (error) {});
+  };
+
+  let options = tags.map(function (tag) {
+    return { value: tag.id, label: tag.name };
+  });
 
   return (
     <div className="card p-5 m-3">
@@ -83,31 +102,30 @@ const ItemDetails = () => {
               controlId="formGridCategory"
             >
               <Form.Label className="mb-1">Category</Form.Label>
-              <Form.Select defaultValue="Choose...">
-                <option>Category 1..</option>
-                <option>Category 2..</option>
+              <Form.Select
+                defaultValue="Choose..."
+                onChange={(e) => console.log(e.target.value)}
+              >
+                {category.map((items) => (
+                  <option>{items.name}</option>
+                ))}
               </Form.Select>
             </Form.Group>
 
+            {/* =============================== tagss multiple ============ */}
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridTags"
             >
               <Form.Label className="mb-1">Tags</Form.Label>
-              <Form.Select defaultValue="Choose...">
-                <option>Tag 1..</option>
-                <option>Tag 2..</option>
-              </Form.Select>
+              <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                isMulti={true}
+                options={options}
+                onChange={(e) => console.log(e.map((item) => item.label))}
+              />
             </Form.Group>
-
-            {/* =============================== tagss multiple ============ */}
-            {/* <Form.Group
-              className="col-md-6 col-sm-6 col-xs-12 mb-3"
-              controlId="formGridTags"
-            >
-              <Form.Label className="mb-1">Tags</Form.Label>
-
-            </Form.Group> */}
             {/* ======================================== */}
 
             <Form.Group

@@ -15,7 +15,7 @@ const EditItems = () => {
             </h3>
           </div>
         </div>
-        <h6>
+        <h6 className="mt-2">
           Chef ID <b>#543210</b>
         </h6>
       </div>

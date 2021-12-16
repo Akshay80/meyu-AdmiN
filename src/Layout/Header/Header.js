@@ -43,7 +43,7 @@ const Header = ({ menuToggleState, toggleMenu }) => {
         <Hamburger onClick={toggleMenu} />
       </span>
       <div className="user-container d-flex">
-        <div className="me-2">
+        <div className="user-info">
           <h6 className="pb-0 mb-0 fw-bold">{fullName}</h6>
           {email}
           {/* <img
