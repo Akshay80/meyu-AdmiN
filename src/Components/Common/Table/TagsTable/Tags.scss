@@ -1,15 +1,15 @@
 .react-bootstrap-table table {
-    table-layout: auto;
+  table-layout: auto;
+}
+.errors {
+  color: red !important;
+  font-size: 14px !important;
+  margin-top: 5px !important;
+  margin-bottom: 1px !important;
+  text-align: left;
+}
+@media (max-width: 576px) {
+  .add-btn {
+    margin-top: 12px;
   }
-  .errors {
-    color: red!important;
-    font-size: 14px!important;
-    margin-top: 5px!important;
-    margin-bottom: 1px!important;
-    text-align: left;
-  }
-  @media (max-width : 576px) {
-    .add-btn{
-     margin-top: 12px; 
-    }
-  }
+}

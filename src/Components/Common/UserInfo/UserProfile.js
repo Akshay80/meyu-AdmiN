@@ -17,7 +17,7 @@ const UserProfile = () => {
 
   const [image, setImage] = useState({ preview: "", raw: "" });
   const [url, setURL] = useState();
-  const [limit, setLimit] = useState(1);
+  // eslint-disable-next-line no-unused-vars
   const [profileData, setProfileData] = useState({});
   const toastId = useRef(123);
 
@@ -35,6 +35,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     getProfileData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getProfileData = () => {
@@ -58,9 +59,7 @@ const UserProfile = () => {
           );
         }
       })
-      .catch((error) => {
-        console.log("errors", error);
-      });
+      .catch((error) => {});
   };
 
   // ============================= Post Profile Data ==========================
@@ -82,15 +81,10 @@ const UserProfile = () => {
       },
     };
     profileService(params)
-      .then((data) => {
-        console.log("post profile data", data);
-      })
+      .then((data) => {})
       .catch((error) => {
-        console.log("post data error", error.error.split(",").join("\n"));
         const error1 = error.error.substr(0, 79);
-        // console.log("ERROR1 : ", error1);
         const error2 = error.error.substr(80, 157);
-        // console.log("Error 2 : ", error2);
         if (error.error.length === 159) {
           if (!toast.isActive(toastId.current)) {
             toastId.current = toast.error(error1, {
@@ -139,16 +133,12 @@ const UserProfile = () => {
     }
 
     let formData = new FormData();
-    console.log("target image", e?.target?.files[0]);
     formData.append("profile", e?.target?.files[0]);
     changeProfileImage(formData)
       .then((response) => {
-        console.log("post profile data", response);
         getProfileData();
       })
-      .catch((error) => {
-        console.log("post data error", error);
-      });
+      .catch((error) => {});
   };
   // ========================= Return data ===========================
 

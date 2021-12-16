@@ -12,16 +12,11 @@ import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg
 import "./ChefTable.css";
 import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import { chefDetailsService } from "../../../../Services/chefServices";
-import { useParams } from "react-router-dom";
 
 const ChefTable = () => {
   const [chef, setChef] = useState([]);
-  const navigate = useNavigate();
-
-  const { id } = useParams();
 
   useEffect(() => {
     data();
@@ -30,12 +25,9 @@ const ChefTable = () => {
   const data = () => {
     chefDetailsService()
       .then(function (res) {
-        console.log("chef data", res.data.data);
         setChef(res.data.data);
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(function (error) {});
   };
 
   const { SearchBar } = Search;
@@ -48,10 +40,8 @@ const ChefTable = () => {
         {
           label: "Yes",
           className: "btn btn-danger",
-          onClick: () => {
-            console.log("ROW ID: ", rowId);
-            console.log("ROW NAME: ", name);
-          },
+          // onClick: () => {
+          // },
         },
         {
           label: "No",
@@ -80,7 +70,7 @@ const ChefTable = () => {
     //   headerAlign: "center",
     //   align: "center",
     // },
-   
+
     {
       dataField: "fullName",
       text: "Chef Name",

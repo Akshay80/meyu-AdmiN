@@ -60,7 +60,7 @@ const ItemDetails = () => {
             >
               <Form.Label className="mb-1">Product Name</Form.Label>
               <Form.Control type="text" placeholder="Product Name" />
-            </Form.Group> 
+            </Form.Group>
 
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"

@@ -8,6 +8,7 @@ import "./Header.scss";
 const Header = ({ menuToggleState, toggleMenu }) => {
   const [email, setEmail] = useState();
   const [fullName, setFullName] = useState();
+  // eslint-disable-next-line no-unused-vars
   const [url, setURL] = useState();
   const baseUrl = "http://52.77.236.78:8081/";
   const navigate = useNavigate();
@@ -22,7 +23,6 @@ const Header = ({ menuToggleState, toggleMenu }) => {
     viewprofileService()
       .then((response) => {
         if (response?.statusText === "OK") {
-          console.log(response?.data?.data.Profile);
           setEmail(response?.data?.data?.Profile?.email);
           setURL(baseUrl + response?.data?.data?.Profile.profileUrl);
           setFullName(
@@ -32,9 +32,7 @@ const Header = ({ menuToggleState, toggleMenu }) => {
           );
         }
       })
-      .catch((error) => {
-        console.log("errors", error);
-      });
+      .catch((error) => {});
   };
 
   return (
@@ -46,10 +44,8 @@ const Header = ({ menuToggleState, toggleMenu }) => {
       </span>
       <div className="user-container d-flex">
         <div className="me-2">
-          <h6 className="pb-0 mb-0 fw-bold">
-           {fullName}
-          </h6>
-            {email}
+          <h6 className="pb-0 mb-0 fw-bold">{fullName}</h6>
+          {email}
           {/* <img
             src={url}
             alt="user_Image"

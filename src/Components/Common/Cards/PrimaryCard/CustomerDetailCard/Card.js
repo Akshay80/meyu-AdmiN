@@ -1,22 +1,21 @@
 import React from "react";
-import UserImage from '../../../../../Assets/Images/blank-user.png';
+import UserImage from "../../../../../Assets/Images/blank-user.png";
 import "./Card.scss";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
-const CustomerCard = ({customerDetail}) => {
-
+const CustomerCard = ({ customerDetail }) => {
   const disContinue = () => {
     confirmAlert({
       title: "Discontinue!",
-      message: `Are you sure you want to discontinue this customer?`,  
+      message: `Are you sure you want to discontinue this customer?`,
       buttons: [
         {
           label: "Yes",
           className: "btn btn-danger",
           color: "red",
           onClick: () => {
-            alert("Customer Discontinued!")
+            alert("Customer Discontinued!");
           },
         },
         {
@@ -24,10 +23,7 @@ const CustomerCard = ({customerDetail}) => {
         },
       ],
     });
-  }
-
-
-
+  };
 
   return (
     <div className="container">
@@ -36,10 +32,14 @@ const CustomerCard = ({customerDetail}) => {
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src={(customerDetail?.profileUrl === null)? UserImage: customerDetail?.profileUrl}
+                src={
+                  customerDetail?.profileUrl === null
+                    ? UserImage
+                    : customerDetail?.profileUrl
+                }
                 className="img"
                 alt="..."
-                style={{ borderRadius: "50%", width: 100, height:100 }}
+                style={{ borderRadius: "50%", width: 100, height: 100 }}
               />
             </div>
           </div>

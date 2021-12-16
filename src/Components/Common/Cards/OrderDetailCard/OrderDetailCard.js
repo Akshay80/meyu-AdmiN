@@ -6,13 +6,13 @@ const OrderDetailCard = () => {
   return (
     <div className="container">
       <div className="card mb-3 p-3">
-          <div className="card-title d-flex align-items-center pb-3 ps-3">
-            <OrderIcon className="svg-icon"/>
-            <div className="d-block mx-3">
-              <h5 className="mb-0">Delivered</h5>
-              <p>Date</p>
-            </div>
+        <div className="card-title d-flex align-items-center pb-3 ps-3">
+          <OrderIcon className="svg-icon" />
+          <div className="d-block mx-3">
+            <h5 className="mb-0">Delivered</h5>
+            <p>Date</p>
           </div>
+        </div>
         <div className="row g-0 food-detail">
           <div className="col-md-3 col-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">

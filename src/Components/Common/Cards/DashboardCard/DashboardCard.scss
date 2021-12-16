@@ -1,24 +1,21 @@
 @import "../../../../Styles/custom";
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600&display=swap");
 
 .dashboard-card {
   .card {
-  background:linear-gradient(135deg, #ffffff 0%,#ffe5d785 100%) !important;
-  font-family: 'Mulish', sans-serif;
-}
-}
-
-.cardTitle
-{
-  font-size: 15px!important;
-  color: #ee4528!important
+    background: linear-gradient(135deg, #ffffff 0%, #ffe5d785 100%) !important;
+    font-family: "Mulish", sans-serif;
+  }
 }
 
-.cardNumber
-{
-font-size: 30px!important;
-font-weight: 800!important;
+.cardTitle {
+  font-size: 15px !important;
+  color: #ee4528 !important;
+}
+
+.cardNumber {
+  font-size: 30px !important;
+  font-weight: 800 !important;
 }
 
 @media (max-width: 575px) {

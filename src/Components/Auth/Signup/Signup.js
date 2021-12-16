@@ -13,7 +13,6 @@ const Signup = () => {
   } = useForm();
 
   function onSubmit(data) {
-    console.log("data", data);
     const params = {
       user: {
         firstName: data.firstname,
@@ -26,13 +25,10 @@ const Signup = () => {
     };
     signupFun(params)
       .then((data) => {
-        console.log("post profile data", data);
-
         reset();
       })
 
       .catch(function (error) {
-        console.log("post data error", error);
       });
   }
 

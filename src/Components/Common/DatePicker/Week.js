@@ -8,11 +8,10 @@ const Week = () => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
-    console.log(dates)
-  };  
+  };
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
     <button className="example-custom-input" onClick={onClick} ref={ref}>
-      {value.length === 13 ? value.slice(0,-2): value }
+      {value.length === 13 ? value.slice(0, -2) : value}
     </button>
   ));
   return (

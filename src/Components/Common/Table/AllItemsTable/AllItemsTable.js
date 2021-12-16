@@ -37,10 +37,8 @@ const AllItemsTable = () => {
         {
           label: 'Yes',
           className: 'btn btn-danger',
-          onClick: () => {
-            console.log('ROW ID: ',rowId);
-            console.log('ROW NAME: ',name);
-          }
+          // onClick: () => {
+          // }
         },
         {
           label: 'No',

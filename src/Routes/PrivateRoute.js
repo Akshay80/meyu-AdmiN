@@ -14,20 +14,22 @@ import Tags from "../Pages/ProductManagement/Tags/Tags";
 import OrderManagement from "../Pages/OrderManagement";
 import OrderProfile from "../Pages/OrderManagement/OrderProfile/OrderProfile";
 import EditItems from "../Pages/ProductManagement/Allitems/EditItems";
-import ChangePassword from '../Components/Auth/ChangePassword/ChangePassword'
+import ChangePassword from "../Components/Auth/ChangePassword/ChangePassword";
 import UnitTable from "../Components/Common/Table/UnitTable/UnitTable";
 
 function PrivateRoute() {
-
   return (
     <Routes>
       <Route path={Path.dashboard} element={<DefaultLayout />}>
-      <Route path={Path.changePassword} element={<ChangePassword />} />
+        <Route path={Path.changePassword} element={<ChangePassword />} />
 
         <Route path={""} element={<Dashboard />} />
 
         <Route path={Path.customer} element={<Customer />} />
-        <Route path={`${Path.customerDetails}/:customerId`} element={<CustomerDetail />} />
+        <Route
+          path={`${Path.customerDetails}/:customerId`}
+          element={<CustomerDetail />}
+        />
         <Route path={`${Path.chefDetails}/:chefId`} element={<ChefDetail />} />
 
         <Route path={Path.chef} element={<Chef />} />
@@ -37,7 +39,7 @@ function PrivateRoute() {
         <Route path={Path.categories} element={<Categories />} />
 
         <Route path={Path.tags} element={<Tags />} />
-        <Route path={Path.unit} element={<UnitTable />}/>
+        <Route path={Path.unit} element={<UnitTable />} />
 
         <Route path={Path.orderManagement} element={<OrderManagement />} />
         <Route path={Path.orderDetails} element={<OrderProfile />} />

@@ -29,7 +29,6 @@ const Login = (props) => {
 
     loginApiFun(params)
       .then(res => {
-        console.log("res login", res)
         if (res?.data?.status !== "Error") {
           toast.error(res.data.error, {
             position: "top-right",
@@ -47,7 +46,6 @@ const Login = (props) => {
         setLoader(false);
       })
       .catch(err => {
-        console.log("error", err)
         setLoader(false);
       })
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
 const Month = () => {
@@ -8,7 +8,6 @@ const Month = () => {
       {value}
     </button>
   ));
-  // console.log(startDate.getMonth()+1);
   return (
     <DatePicker
       selected={startDate}

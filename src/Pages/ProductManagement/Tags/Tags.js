@@ -1,12 +1,12 @@
-import React from 'react'
-import TagsTable from '../../../Components/Common/Table/TagsTable/TagsTable'
+import React from "react";
+import TagsTable from "../../../Components/Common/Table/TagsTable/TagsTable";
 
 const Tags = () => {
-    return (
-        <div>
-           <TagsTable />
-        </div>
-    )
-}
+  return (
+    <div>
+      <TagsTable />
+    </div>
+  );
+};
 
-export default Tags
+export default Tags;

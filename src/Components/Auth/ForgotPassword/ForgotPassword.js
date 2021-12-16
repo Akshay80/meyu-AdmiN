@@ -5,7 +5,6 @@ import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { forgotPasswordService } from "../../../Services/authService";
 
-let toastId = null;
 const ForgotPassword = () => {
   const {
     register,
@@ -20,10 +19,17 @@ const ForgotPassword = () => {
     };
     forgotPasswordService(params)
       .then((response) => {
-        console.log("response", response);
+        toast.error(response.data.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0
+        });
       })
       .catch((error) => {
-        console.log("error", error);
       });
   };
 

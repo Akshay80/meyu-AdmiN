@@ -10,17 +10,15 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
 import "./CustomerTable.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { viewCustomerService } from '../../../../Services/customerServices';
+import { viewCustomerService } from "../../../../Services/customerServices";
 import Path from "../../../../Constant/RouterConstant";
-
 
 const headerSortingStyle = { backgroundColor: "#e3edf8" };
 function CustomerTable() {
   const [customerData, setCustomerData] = useState([]);
-  const navigate = useNavigate();
   const { SearchBar } = Search;
 
   useEffect(() => {
@@ -30,16 +28,11 @@ function CustomerTable() {
   const data = () => {
     viewCustomerService()
       .then(function (res) {
-        console.log("customer data", res.data.data);
         setCustomerData(res.data.data);
-        // customerData.map((items) => localStorage.setItem("id", items.id));
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(function (error) {});
   };
 
-  
   const columns = [
     // {
     //   dataField: 'sl.no',
@@ -70,7 +63,11 @@ function CustomerTable() {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex align-items-center justify-content-evenly">
-            {row.createdAt.substring(0, row.createdAt.length - 14).split("-").reverse().join("-")}
+            {row.createdAt
+              .substring(0, row.createdAt.length - 14)
+              .split("-")
+              .reverse()
+              .join("-")}
           </div>
         );
       },
@@ -112,7 +109,7 @@ function CustomerTable() {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex justify-content-evenly align-items-center">
-             <NavLink to={`${Path.customerDetails}/${row?.id}`}>
+            <NavLink to={`${Path.customerDetails}/${row?.id}`}>
               <ViewIcon className="view-icon" />
             </NavLink>
             <DeleteIcon
@@ -132,21 +129,17 @@ function CustomerTable() {
     },
   ];
 
-
-
   function handleDelete(rowId, name) {
     confirmAlert({
       title: "Delete",
-      message: `Are you sure you want to remove ${name} from this table?`,  
+      message: `Are you sure you want to remove ${name} from this table?`,
       buttons: [
         {
           label: "Yes",
           className: "btn btn-danger",
           color: "red",
-          onClick: () => {
-            console.log("ROW ID: ", rowId);
-            console.log("ROW NAME: ", name);
-          },
+          // onClick: () => {
+          // },
         },
         {
           label: "No",
@@ -189,7 +182,6 @@ function CustomerTable() {
         keyField="createdBy"
         columns={columns}
         data={customerData}
-        
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider

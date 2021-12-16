@@ -8,21 +8,19 @@ import { useParams } from "react-router-dom";
 
 const CustomerDetail = () => {
   const [customerDetail, setCustomerDetail] = useState({});
-  const {customerId} = useParams();
+  const { customerId } = useParams();
 
   useEffect(() => {
     fetchCustomerDetail();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchCustomerDetail = () => {
     getCustomerDetails(customerId)
       .then((response) => {
         setCustomerDetail(response?.data?.data);
-        console.log("customer details", response?.data?.data);
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(function (error) {});
   };
 
   return (
