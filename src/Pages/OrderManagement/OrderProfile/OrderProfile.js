@@ -38,7 +38,7 @@ const OrderProfile = () => {
               <Form.Group
                 className="col-md-6 col-sm-6 col-xs-12 mb-3"
                 controlId="formGridID"
-              > 
+              >
                 <Form.Label className="mb-0">Order ID</Form.Label>
                 <Form.Control type="text" placeholder="Order ID" />
               </Form.Group>

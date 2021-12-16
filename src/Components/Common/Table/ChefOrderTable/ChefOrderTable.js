@@ -18,7 +18,7 @@ const ChefOrderTable = () => {
       name: custom.name,
       address: custom.address,
       amount: custom.amount,
-      status: custom.status
+      status: custom.status,
     },
   ]);
 
@@ -67,15 +67,13 @@ const ChefOrderTable = () => {
       align: "center",
     },
     {
-        dataField: "status",
-        text: "Status",
-        sort: true,
-        headerSortingStyle,
-        headerAlign: "center",
-        align: "center",
-      },
-
-   
+      dataField: "status",
+      text: "Status",
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+    },
   ];
 
   const defaultSorted = [
@@ -134,7 +132,11 @@ const ChefOrderTable = () => {
               <>
                 <div className="d-flex justify-content-between mb-3">
                   <SizePerPageDropdownStandalone {...paginationProps} />
-                  <SearchBar className="ms-2" {...toolkitprops.searchProps} srText=" " />
+                  <SearchBar
+                    className="ms-2"
+                    {...toolkitprops.searchProps}
+                    srText=" "
+                  />
                 </div>
                 <BootstrapTable
                   {...toolkitprops.baseProps}

@@ -6,7 +6,6 @@ import { changePasswordService } from "../../../Services/authService";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { useNavigate } from "react-router-dom";
-import PrivateRoute from "../../../Routes/PrivateRoute";
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -18,14 +17,12 @@ const ChangePassword = () => {
   } = useForm();
 
   const changePassword = async (data) => {
-    console.log(data);
     const changePasswordData = {
       oldPassword: data.oldpassword,
       newPassword: data.newpassword,
     };
     await changePasswordService(changePasswordData)
       .then(function (response) {
-        console.log(response.data.data.message);
         toast.success(response.data.data.message, {
           position: "top-right",
           autoClose: 2000,
@@ -42,7 +39,6 @@ const ChangePassword = () => {
       })
 
       .catch(function (error) {
-        console.log(error.error);
         toast.error(error.error, {
           position: "top-right",
           autoClose: 5000,

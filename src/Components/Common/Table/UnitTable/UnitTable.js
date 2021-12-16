@@ -16,22 +16,15 @@ import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useForm } from "react-hook-form";
 import {
-  viewCategoryService,
-  deleteCategoryService,
-} from "../../../../Services/userService";
-import {} from "../../../../Services/userService";
-import {
     postUnits,
     putUnits,
     deleteUnits,
     allUnits,
     singleUnits
 } from "../../../../Services/unitService";
-import Path from "../../../../Constant/RouterConstant";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { Modal, Button, Form, FormControl } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 
 const UnitTable = () => {
   const [unitId, setUnitId] = useState();
@@ -44,8 +37,6 @@ const UnitTable = () => {
   const [show1, setShow1] = useState(false);
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
-
-  const id = useParams();
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
@@ -124,10 +115,8 @@ const UnitTable = () => {
     await allUnits()
       .then(function (res) {
         setUnitData(res.data.data);
-        console.log(res.data.data);
       })
       .catch(function (error) {
-        console.log(error);
       });
   }
 
@@ -138,10 +127,8 @@ const UnitTable = () => {
         unitName: data.unitname,
         sortName: data.sortname
     }
-    console.log(data)
     postUnits(unitData)
       .then(function (res) {
-        console.log(res);
         handleClose();
         toast.success("Unit Added Successfully", {
           position: "top-right",
@@ -174,19 +161,16 @@ const UnitTable = () => {
 // ================ put unit in modal ===============
 
 async function handleEdit(rowId) {
-  console.log(rowId);
   handleShow1();
   reset()
   // Getting Data for Specific category
   await singleUnits(rowId)
     .then(function (response) {   
-      console.log("datattaa",response.data.data)
       setUnitId( response.data.data.id)
         setValue("unitname", response.data.data.unitName);
         setValue("sortname", response.data.data.sortName);
     })
     .catch(function (error) {
-      console.log(error);
     });
 }
 
@@ -234,7 +218,6 @@ async function handleEdit(rowId) {
     };
     deleteUnits(deleteById)
       .then(function (res) {
-        console.log(res.data.data);
         toast.success("Unit Deleted Successfully", {
           position: "top-right",
           autoClose: 3000,
@@ -248,7 +231,6 @@ async function handleEdit(rowId) {
         units();
       })
       .catch(function (error) {
-        console.log(error);
       });
   }
 

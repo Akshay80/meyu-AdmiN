@@ -11,35 +11,30 @@ import "react-toastify/dist/ReactToastify.min.css";
 
 const ChefDetail = ({ menuToggleState }) => {
   const [chefDetail, setchefDetail] = useState({});
-  const [status, setStatus] = useState('');
-  const {chefId} = useParams();
+  const [status, setStatus] = useState("");
+  const { chefId } = useParams();
 
   useEffect(() => {
     fetchChefDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchChefDetail = () => {
     getchefDetails(chefId)
       .then((response) => {
         setchefDetail(response?.data?.data?.chefProfile);
-        console.log("chef details", response?.data?.data?.chefProfile);
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(function (error) {});
   };
 
   const changeStatus = (data) => {
-    console.log("data", data);
     let params = {
       isVerified: "true",
     };
     confirmChefAccount(params)
       .then((data) => {
-        console.log("confirm chef account", data.statusText);
         if (data.statusText === "OK") {
           setStatus(data.statusText);
-          console.log(data.data.data.message)
           toast.success(data.data.data.message, {
             position: "top-right",
             autoClose: 3000,
@@ -53,9 +48,7 @@ const ChefDetail = ({ menuToggleState }) => {
           fetchChefDetail();
         }
       })
-      .catch((error) => {
-        console.log("errrorrr chef", error);
-      });
+      .catch((error) => {});
   };
 
   return (
@@ -69,9 +62,13 @@ const ChefDetail = ({ menuToggleState }) => {
         </div>
         <h6>
           Chef ID : <b>{chefDetail?.createdBy}</b>
-        </h6> 
+        </h6>
       </div>
-      <ChefCard changeStatus={changeStatus} status={status} chefDetail={chefDetail}/>
+      <ChefCard
+        changeStatus={changeStatus}
+        status={status}
+        chefDetail={chefDetail}
+      />
       <ToastContainer
         position="top-right"
         autoClose={3000}

@@ -19,44 +19,38 @@ import {
   viewCategoryService,
   deleteCategoryService,
 } from "../../../../Services/userService";
-import {} from "../../../../Services/userService";
 import {
   category,
   viewCategorybyId,
   editCategoryFun,
 } from "../../../../Services/categoryService";
-import Path from "../../../../Constant/RouterConstant";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { Modal, Button, Form, FormControl } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 
 const CategoriesTable = () => {
   const [categoryData, setCategoryData] = useState([]);
-  const [image, setImage] = useState([]);
   const [isOpen, setOpen] = useState(false);
   const [categImg, setCategImg] = useState();
   const [catId, setCatId] = useState();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => {reset();setShow(true);}
+  const handleShow = () => {
+    reset();
+    setShow(true);
+  };
 
   const [show1, setShow1] = useState(false);
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
 
-  const id = useParams();
-
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
   const url = "http://52.77.236.78:8081/";
-  let toastId = null;
-
-  const navigate = useNavigate();
   const {
     register,
     setValue,
@@ -77,14 +71,6 @@ const CategoriesTable = () => {
         return rowIndex + 1;
       },
     },
-    // {
-    //   dataField: "id",
-    //   text: "Serial No",
-    //   sort: true,
-    //   headerSortingStyle,
-    //   headerAlign: "center",
-    //   align: "center",
-    // },
     {
       dataField: "imageUrl",
       text: "Image",
@@ -96,7 +82,9 @@ const CategoriesTable = () => {
         return (
           <div className="d-flex align-items-center justify-content-evenly">
             {row.MediaObjects.map((rows, key) => (
-              <input key={key} type="image"
+              <input
+                key={key}
+                type="image"
                 className="categoryImages"
                 src={url + rows.imageUrl}
                 alt="food_image"
@@ -139,9 +127,8 @@ const CategoriesTable = () => {
   ];
 
   async function openLightbox(MyUrl) {
-    console.log(MyUrl);
     setOpen(true);
-    await setCategImg(url+MyUrl)
+    await setCategImg(url + MyUrl);
   }
 
   const defaultSorted = [
@@ -152,7 +139,7 @@ const CategoriesTable = () => {
   ];
 
   // ====================  get all data =================
-  
+
   useEffect(() => {
     categories();
   }, []);
@@ -160,24 +147,18 @@ const CategoriesTable = () => {
   const categories = () => {
     viewCategoryService()
       .then((res) => {
-        res.data.data.map((items) =>
-          items.MediaObjects.map((item) => setImage(item.imageUrl))
-        );
         setCategoryData(res.data.data);
       })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+      .catch(function (error) {});
+  };
 
-//  ================= add categrory =============
+  //  ================= add categrory =============
   const onSubmit = (data) => {
     var formData = new FormData();
     formData.append("name", data.name);
     formData.append("category", data.category[0]);
     category(formData)
       .then(function (res) {
-        console.log(res);
         handleClose();
         toast.success("Category Added Successfully", {
           position: "top-right",
@@ -194,7 +175,7 @@ const CategoriesTable = () => {
       })
 
       .catch(function (error) {
-          toast.error(error.error, {
+        toast.error(error.error, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
@@ -207,53 +188,44 @@ const CategoriesTable = () => {
       });
   };
 
- 
+  // ===================== get api in modal ================
 
-// ===================== get api in modal ================
-
-const handleEdit = (rowId, rowName) => {
+  const handleEdit = (rowId, rowName) => {
     handleShow1();
-    reset()
+    reset();
     // Getting Data for Specific category
-   viewCategorybyId(rowId)
-      .then(function (response) {   
-        console.log("dattattattatat",response.data.data)
-        setCatId(response.data.data.id)
-          setValue("name", response.data.data.name);
+    viewCategorybyId(rowId)
+      .then(function (response) {
+        setCatId(response.data.data.id);
+        setValue("name", response.data.data.name);
       })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+      .catch(function (error) {});
+  };
 
   // =================== edit category modal ==================
   const EditSubmit = (data) => {
     var formData2 = new FormData();
-    console.log("category", data.category[0])
     formData2.append("name", data.name);
     formData2.append("id", catId);
     formData2.append("category", data.category[0]);
-    console.log("FormData: ", formData2);
     editCategoryFun(formData2)
       .then(function (res) {
-        
-        if(res.data.data[0] === 1)
-        {
+        if (res.data.data[0] === 1) {
           handleClose1();
-        toast.info("Category Edited Successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-        categories()
-      }
+          toast.info("Category Edited Successfully", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+          categories();
+        }
       })
-      
+
       .catch(function (error) {
         toast.error(error.error, {
           position: "top-right",
@@ -275,7 +247,6 @@ const handleEdit = (rowId, rowName) => {
     };
     deleteCategoryService(deleteById)
       .then(function (res) {
-        console.log(res.data.data);
         toast.success(res.data.data, {
           position: "top-right",
           autoClose: 3000,
@@ -288,9 +259,7 @@ const handleEdit = (rowId, rowName) => {
         });
         categories();
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(function (error) {});
   }
 
   function handleDelete(rowId, name) {
@@ -380,10 +349,9 @@ const handleEdit = (rowId, rowName) => {
         </Form>
       </Modal>
 
-      {isOpen === true? <Lightbox
-  mainSrc={categImg}
-  onCloseRequest={() => setOpen(false)}
-/>: null}
+      {isOpen === true ? (
+        <Lightbox mainSrc={categImg} onCloseRequest={() => setOpen(false)} />
+      ) : null}
 
       {/* Modal for Edit */}
 
@@ -408,15 +376,15 @@ const handleEdit = (rowId, rowName) => {
                 placeholder="cuisine"
                 autoComplete="off"
                 {...register("name", {
-                  required: "Cuisine is required!", 
+                  required: "Cuisine is required!",
                   pattern: {
                     value: /^[A-Za-z]+$/,
-                    message: "Only alphabets are allowed!"
+                    message: "Only alphabets are allowed!",
                   },
                   minLength: {
                     value: 4,
-                    message: "Must be greater than 4 words!"
-                    },
+                    message: "Must be greater than 4 words!",
+                  },
                 })}
               />
             </Form.Group>

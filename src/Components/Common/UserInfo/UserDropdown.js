@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UserInfo } from "./UserInfo";
 import "react-toastify/dist/ReactToastify.min.css";
 import { useNavigate } from "react-router-dom";
 import "./userDropDown.css";
-import Path from "../../../Constant/RouterConstant";
 import "../Buttons/buttons.scss";
 import { logoutFun } from "../../../Services/authService";
 import { clearToken } from "../../helper/uitility";
-import axios from "axios";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
@@ -20,8 +18,8 @@ const UserDropdown = () => {
     logoutFun()
       .then((res) => {
         setTimeout(() => {
-        clearToken(); 
-        navigate("/login");
+          clearToken();
+          navigate("/login");
         }, 2000);
         toast.success(res.data.data.message, {
           position: "top-right",
@@ -31,12 +29,9 @@ const UserDropdown = () => {
           pauseOnHover: true,
           draggable: false,
           progress: 0,
-          toastId: "my_toast",
         });
       })
-      .catch(function (error) {
-        console.log("error logout", error);
-      });
+      .catch(function (error) {});
   };
 
   return (
@@ -61,7 +56,7 @@ const UserDropdown = () => {
           </Dropdown>
         );
       })}
-         <ToastContainer
+      <ToastContainer
         position="top-right"
         autoClose={2000}
         hideProgressBar

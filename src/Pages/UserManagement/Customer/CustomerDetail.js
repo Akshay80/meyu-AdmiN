@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 const CustomerDetail = () => {
   const [customerDetail, setCustomerDetail] = useState({});
-  const {customerId} = useParams();
+  const { customerId } = useParams();
 
   useEffect(() => {
     fetchCustomerDetail();
@@ -18,11 +18,8 @@ const CustomerDetail = () => {
     getCustomerDetails(customerId)
       .then((response) => {
         setCustomerDetail(response?.data?.data);
-        console.log("customer details", response?.data?.data);
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(function (error) {});
   };
 
   return (

@@ -10,7 +10,6 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
   const toggleMenu = () => {
     setToggleMenu(true);
   };
-  console.log("cedjwcsjckb", chefDetail);
   return (
     <div className="container mb-5">
       <div className="card mb-3 p-3">
@@ -51,13 +50,17 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
                   </button>
                   <button
                     disabled={status ? true : false}
-                    className={status? "btn btn-success shadow-none": "btn btn-danger shadow-none"}
+                    className={
+                      status
+                        ? "btn btn-success shadow-none"
+                        : "btn btn-danger shadow-none"
+                    }
                     type="button"
                     data-bs-toggle="button"
                     onClick={changeStatus}
                   >
                     {/* {chefDetail?.status} */}
-                   {status?"Approved": "Rejected"}
+                    {status ? "Approved" : "Rejected"}
                   </button>
                 </div>
               </div>

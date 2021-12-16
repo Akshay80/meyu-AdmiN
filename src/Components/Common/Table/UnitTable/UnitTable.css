@@ -1,28 +1,26 @@
 .react-bootstrap-table table {
-    table-layout: auto;
-  }
+  table-layout: auto;
+}
 
-  .errors {
-    color: red!important;
-    font-size: 14px!important;
-    margin-top: 5px!important;
-    margin-bottom: 1px!important;
-    text-align: left;
-  }
+.errors {
+  color: red !important;
+  font-size: 14px !important;
+  margin-top: 5px !important;
+  margin-bottom: 1px !important;
+  text-align: left;
+}
 
-  .categoryImages
-  {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+.categoryImages {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
-  .edit-icon
-  {
-    cursor: pointer;
-  }
+.edit-icon {
+  cursor: pointer;
+}
 
-  tr{
-    vertical-align: middle!important;
-  }
+tr {
+  vertical-align: middle !important;
+}

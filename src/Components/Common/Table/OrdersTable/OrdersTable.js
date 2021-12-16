@@ -10,9 +10,8 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { OrdersData } from "./OrdersTableData";
 import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
 import "./OrdersTable.css";
-import Path from '../../../../Constant/RouterConstant';
+import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
-
 
 const OrdersTable = () => {
   const products = OrdersData.map((custom) => [
@@ -55,13 +54,13 @@ const OrdersTable = () => {
       align: "center",
     },
     {
-        dataField: "chefname",
-        text: "Chef Name",
-        headerSortingStyle,
-        sort: true,
-        headerAlign: "center",
-        align: "center",
-      },
+      dataField: "chefname",
+      text: "Chef Name",
+      headerSortingStyle,
+      sort: true,
+      headerAlign: "center",
+      align: "center",
+    },
     {
       dataField: "amount",
       text: "Amount",

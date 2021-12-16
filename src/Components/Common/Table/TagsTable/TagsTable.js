@@ -6,7 +6,6 @@ import paginationFactory, {
   SizePerPageDropdownStandalone,
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
-import { Modal, Button, Form, FormControl } from "react-bootstrap";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { ReactComponent as EditIcon } from "../../../../Assets/Icon/Edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
@@ -24,13 +23,10 @@ import {
   getTagsbyId,
   editTagsFun,
 } from "../../../../Services/tagServices";
-import { useParams } from "react-router-dom";
 
 const TagsTable = () => {
   const [editId, setEditId] = useState();
   const [tag, setTag] = useState([]);
-
-  const { rowId } = useParams();
 
   const {
     register,
@@ -46,17 +42,9 @@ const TagsTable = () => {
   const tagdata = () => {
     getAllTagFun()
       .then((res) => {
-        console.log("taggsss data", res?.data?.data);
         setTag(res?.data?.data);
-        // {
-        //   res.data.data.map((items) => {
-        //     // setValue("tags", items.tags);
-        //   });
-        // }
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(function (error) {});
   };
 
   // Adding Tags API
@@ -66,8 +54,7 @@ const TagsTable = () => {
     };
     addTags(params)
       .then((data) => {
-        console.log("tagggas addded", data);
-        if(data?.statusText === "Created") {
+        if (data?.statusText === "Created") {
           toast.success("Tag Added Successfully", {
             position: "top-right",
             autoClose: 2000,
@@ -105,7 +92,6 @@ const TagsTable = () => {
     };
     deleteTags(params)
       .then((data) => {
-        console.log("post tag id deleted data", data);
         toast.success("Tag Deleted Successfully", {
           position: "top-right",
           autoClose: 2000,
@@ -118,9 +104,7 @@ const TagsTable = () => {
         });
         tagdata();
       })
-      .catch((error) => {
-        console.log("post data error", error);
-      });
+      .catch((error) => {});
   };
 
   const confirmDelete = (rowId) => {
@@ -147,12 +131,9 @@ const TagsTable = () => {
     getTagsbyId(rowId)
       .then((res) => {
         setValue("tags", rowName);
-        console.log("rowididid", rowName);
         setEditId(res?.data?.data);
-        console.log("handle edit tags data", res.data.data);
       })
       .catch(function (error) {
-        console.log(error);
         toast.error(error.error, {
           position: "top-right",
           autoClose: 3000,
@@ -166,14 +147,6 @@ const TagsTable = () => {
       });
   };
 
-  // useEffect(() => {
-  //   setValue("tags", tagDetail?.name);
-  // }, [tagDetail]);
-
-  // const getTagDetail = (id, name) => {
-  //   setTagDetail({ id: id, name: name });
-  // };
-
   // // put api to edit tags
 
   const EditSubmit = (tagss) => {
@@ -182,25 +155,22 @@ const TagsTable = () => {
       name: tagss?.tags,
     };
     editTagsFun(param)
-    .then((res) => {
-        console.log("edited params", res);
+      .then((res) => {
         // if(res?.statusText === 'OK') {
-          toast.success("Tag edited Successfully", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-            toastId: "my_toast",
-          });
-          tagdata();
+        toast.success("Tag edited Successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+        tagdata();
         // }
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(function (error) {});
   };
 
   const columns = [
@@ -359,7 +329,7 @@ const TagsTable = () => {
                     autoComplete="off"
                     {...register("tags", {})}
                   />
-                    {errors.tags && (
+                  {errors.tags && (
                     <p className="errors">{errors?.tags?.message}</p>
                   )}
                 </div>
@@ -371,7 +341,13 @@ const TagsTable = () => {
                   >
                     Update
                   </button>
-                <button type="button" className="btn btn-dark ms-3" data-bs-dismiss="modal">Close</button>
+                  <button
+                    type="button"
+                    className="btn btn-dark ms-3"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
                 </div>
               </form>
             </div>
@@ -448,6 +424,18 @@ const TagsTable = () => {
           </PaginationProvider>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        limit={1}
+        transition={Flip}
+      />
     </>
   );
 };
