@@ -46,6 +46,10 @@ export default (() => {
     putUnit: `${setting.api.url}admin/unit`,
     deleteUnit: `${setting.api.url}admin/deleteunit`,
     allUnit: `${setting.api.url}common/unit`,
-    singleUnit: `${setting.api.url}auth/unit`
+    singleUnit: `${setting.api.url}auth/unit`,
+
+    // All Items
+    allItemsList: `${setting.api.url}admin/getrecpies`,
+    allItembyId: `${setting.api.url}admin/getrecpiedetails`,
   };
 })();
