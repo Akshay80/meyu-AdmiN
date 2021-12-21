@@ -35,12 +35,13 @@ const UserProfile = () => {
 
   useEffect(() => {
     getProfileData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getProfileData = () => {
     viewprofileService()
       .then((response) => {
+        console.log("pic url", response);
         if (response?.statusText === "OK") {
           setProfileData(response?.data?.data);
           setValue("firstName", response.data.data.Profile.firstName);
@@ -136,7 +137,10 @@ const UserProfile = () => {
     formData.append("profile", e?.target?.files[0]);
     changeProfileImage(formData)
       .then((response) => {
-        getProfileData();
+        console.log("pic", response);
+        if (response?.success === "true") {
+          getProfileData();
+        }
       })
       .catch((error) => {});
   };

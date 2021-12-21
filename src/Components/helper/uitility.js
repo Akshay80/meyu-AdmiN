@@ -16,9 +16,7 @@ export function setUserToken(token) {
   if (token !== undefined) {
     localStorage.setItem("token", token);
   } else {
-    console.log("tokennnnnn");
   }
-  console.log("token", token);
 }
 
 export function getUserToken() {

@@ -1,6 +1,5 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
-import Path from "../Constant/RouterConstant";
+import { Outlet } from "react-router-dom";
 import Login from "../Components/Auth/Login/Login";
 import { getToken } from "../Components/helper/uitility";
 const RestrictedRoute = () => {
