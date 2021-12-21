@@ -44,6 +44,9 @@ const UserProfile = () => {
         console.log("pic url", response);
         if (response?.statusText === "OK") {
           setProfileData(response?.data?.data);
+          setURL(
+            `http://52.77.236.78:8081/${response.data.data.Profile.profileUrl}`
+          );
           setValue("firstName", response.data.data.Profile.firstName);
           setValue("lastName", response.data.data.Profile.lastName);
           setValue("email", response.data.data.Profile.email);
@@ -54,10 +57,6 @@ const UserProfile = () => {
           setValue("state", response.data.data.Profile.Address.state);
           setValue("city", response.data.data.Profile.Address.city);
           setValue("zip", response.data.data.Profile.Address.zipCode);
-          // setURL("uploadedimage", response.data.data.Profile.profileUrl);
-          setURL(
-            `http://52.77.236.78:8081/${response.data.data.Profile.profileUrl}`
-          );
         }
       })
       .catch((error) => {});
