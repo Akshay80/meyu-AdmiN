@@ -10,7 +10,6 @@ ApiInstance.interceptors.request.use(
     if (request.method === 'get') {
       request.data = true
     }
-    // console.log('req', request)
     let token = localStorage.getItem("token");
     const headers = {
       "Content-Type": "application/json",

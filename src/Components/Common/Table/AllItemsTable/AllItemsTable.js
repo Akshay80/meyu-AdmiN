@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
@@ -7,44 +7,57 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { AllItemsData } from "./AllItemsData";
-import {ReactComponent as EditIcon} from '../../../../Assets/Icon/Edit.svg';
-import {ReactComponent as DeleteIcon} from '../../../../Assets/Icon/Delete.svg';
+import { ReactComponent as EditIcon } from "../../../../Assets/Icon/Edit.svg";
+import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
 import "./AllItemsTable.css";
 import { NavLink } from "react-router-dom";
 import Path from "../../../../Constant/RouterConstant";
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { getAllItemsList } from "../../../../Services/itemsService.js";
+import { useForm } from "react-hook-form";
 
 const AllItemsTable = () => {
-  const products = AllItemsData.map((custom) => [
-    {
-      id: custom.id,
-      date: custom.date,
-      name: custom.name,
-      product: custom.product,
-      status: custom.status
-    },
-  ]);
+  const [getItem, setgetItem] = useState([]);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+
+  useEffect(() => {
+    getItems();
+  }, []);
+
+  const getItems = () => {
+    getAllItemsList()
+      .then((res) => {
+        console.log("datatta", res?.data);
+        // setgetItem(res?.data?.data);
+      })
+      .catch(function (error) {});
+  };
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
   function handleDelete(rowId, name) {
     confirmAlert({
-      title: 'Delete',
+      title: "Delete",
       message: `Are you sure you want to remove ${name} from this table?`,
       buttons: [
         {
-          label: 'Yes',
-          className: 'btn btn-danger',
+          label: "Yes",
+          className: "btn btn-danger",
           // onClick: () => {
           // }
         },
         {
-          label: 'No',
+          label: "No",
           // onClick: () => alert('Click No')
-        }
-      ]
+        },
+      ],
     });
   }
   const columns = [
@@ -56,24 +69,9 @@ const AllItemsTable = () => {
       headerAlign: "center",
       align: "center",
     },
+
     {
-      dataField: "date",
-      text: "Date",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      dataField: "name",
-      text: "Chef Name",
-      headerSortingStyle,
-      sort: true,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      dataField: "product",
+      dataField: "dishName",
       text: "Product Name",
       sort: true,
       headerSortingStyle,
@@ -81,33 +79,50 @@ const AllItemsTable = () => {
       align: "center",
     },
     {
-        dataField: "status",
-        text: "Status",
-        sort: true,
-        headerSortingStyle,
-        headerAlign: "center",
-        align: "center",
-      },
-      {
-        dataField: "link",
-        text: "Action",
-        headerAlign: "center",
-        align: "center",
-        formatter: (rowContent, row) => {
-          return (
-            <div className="d-flex justify-content-evenly align-items-center">
-              <NavLink to={Path.editItems}>
-                <EditIcon className="edit-icon"/>
-                </NavLink>
-             
-                <DeleteIcon className="iconHover delete-icon" onClick={() => handleDelete(row.id, row.name)}/>
-            
-            </div>
-          );
-        },
-      },
+      dataField: "tags",
+      text: "Tags",
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+    },
 
-   
+    {
+      dataField: "totalCostOfRecipe",
+      text: "Price",
+      headerSortingStyle,
+      sort: true,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      dataField: "isVerified",
+      text: "Status",
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      dataField: "link",
+      text: "Action",
+      headerAlign: "center",
+      align: "center",
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex justify-content-evenly align-items-center">
+            <NavLink to={Path.editItems}>
+              <EditIcon className="edit-icon" />
+            </NavLink>
+
+            <DeleteIcon
+              className="iconHover delete-icon"
+              onClick={() => handleDelete(row.id, row.name)}
+            />
+          </div>
+        );
+      },
+    },
   ];
 
   const defaultSorted = [
@@ -122,7 +137,6 @@ const AllItemsTable = () => {
       <PaginationProvider
         pagination={paginationFactory({
           custom: true,
-          totalSize: products.length,
           prePageText: "Previous",
           nextPageText: "Next",
           page: 1,
@@ -144,22 +158,17 @@ const AllItemsTable = () => {
               text: "50",
               value: 50,
             },
-            {
-              text: "All",
-              value: products.length,
-            },
           ],
-          hideSizePerPage: products.length === 0,
         })}
         keyField="id"
         columns={columns}
-        data={AllItemsData.map((item) => item)}
+        data={getItems}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={AllItemsData.map((item) => item)}
+            data={getItem}
             search
           >
             {(toolkitprops) => (
@@ -176,6 +185,7 @@ const AllItemsTable = () => {
                   wrapperClasses="table-responsive"
                   hover
                   striped
+                  data={getItem}
                   condensed={false}
                   noDataIndication="No Data Is Available"
                 />

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Form, Row } from "react-bootstrap";
 import { Input } from "reactstrap";
 import "../../../Components/Common/Buttons/buttons.scss";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
 import { getAllTagFun } from "../../../Services/tagServices";
 import { viewCategoryService } from "../../../Services/userService";
+import Select from "react-select";
+import makeAnimated from "react-select/animated"
 
 const ItemDetails = () => {
   const [tags, setTags] = useState([]);
@@ -124,8 +124,8 @@ const ItemDetails = () => {
                 onChange={(e) => console.log(e.map((item) => item.label))}
               />
             </Form.Group>
-
             {/* ======================================== */}
+
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridDelivery"

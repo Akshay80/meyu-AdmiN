@@ -17,7 +17,7 @@ import EditItems from "../Pages/ProductManagement/Allitems/EditItems";
 import ChangePassword from "../Components/Auth/ChangePassword/ChangePassword";
 import UnitTable from "../Components/Common/Table/UnitTable/UnitTable";
 
-function PrivateRoute() {
+function PrivateRoutes() {
   return (
     <Routes>
       <Route path={Path.dashboard} element={<DefaultLayout />}>
@@ -50,4 +50,4 @@ function PrivateRoute() {
   );
 }
 
-export default PrivateRoute;
+export default PrivateRoutes;
