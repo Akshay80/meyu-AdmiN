@@ -20,6 +20,7 @@ const ItemDetails = () => {
   const tagdata = () => {
     getAllTagFun()
       .then((res) => {
+        console.log("response", res?.data?.data);
         setTags(res.data.data);
       })
       .catch(function (error) {});
@@ -29,6 +30,7 @@ const ItemDetails = () => {
     viewCategoryService()
       .then((res) => {
         setCategory(res.data.data);
+        console.log(res.data.data);
       })
       .catch(function (error) {});
   };
@@ -105,7 +107,7 @@ const ItemDetails = () => {
                 onChange={(e) => console.log(e.target.value)}
               >
                 {category.map((items) => (
-                  <option key={items.id}>{items.name}</option>
+                  <option>{items.name}</option>
                 ))}
               </Form.Select>
             </Form.Group>
