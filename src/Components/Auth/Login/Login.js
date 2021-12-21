@@ -41,14 +41,16 @@ const Login = (props) => {
             progress: 0,
             toastId: "my_toast",
           });
-          setUserToken(res?.data?.data?.token);
-          navigate("/");
+          if (res?.data?.data?.token !== undefined) {
+            setUserToken(res?.data?.data?.token);
+            navigate("/");
+          }
         }
         setLoader(false);
       })
       .catch((err) => {
-        setErrorMessage(err?.data?.message);
         console.log("error", err);
+        setErrorMessage(err?.data?.message);
         setLoader(false);
         setIsValidForm(false);
       });
