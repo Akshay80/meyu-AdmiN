@@ -41,7 +41,6 @@ const UserProfile = () => {
   const getProfileData = () => {
     viewprofileService()
       .then((response) => {
-        console.log("pic url", response);
         if (response?.statusText === "OK") {
           setProfileData(response?.data?.data);
           setURL(
