@@ -54,7 +54,7 @@
           justify-content: center;
           color: black;
           flex-wrap: wrap;
-          line-height: 1.0;
+          line-height: 1;
         }
       }
 
@@ -73,16 +73,59 @@
         height: 45px;
         width: 45px;
         padding: 10px;
-        border-radius: 50%;
+        border-radius: 10px;
       }
+
+      .btn-close {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+
       .view-icon {
-        color: $view;
+        background-color: #2dce89;
+        border-radius: 10px;
+        color: white;
+        padding: 7px;
+        height: 30px;
+        width: 30px;
+        transition: 0.3s;
+      }
+      .view-icon:hover {
+        box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        transform: translate(0, -3px) !important;
       }
       .delete-icon {
-        color: $delete;
+        // background-color: #2DCE89;
+        background-color: #f5365c;
+        border-radius: 10px;
+        color: white;
+        padding: 7px;
+        height: 30px;
+        width: 30px;
+        transition: 0.3s;
+      }
+      .delete-icon:hover {
+        box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        transform: translate(0, -3px) !important;
       }
       .edit-icon {
-        color: $edit;
+        background-color: #5e72e4;
+        border-radius: 10px;
+        color: white;
+        padding: 7px;
+        height: 30px;
+        width: 30px;
+        transition: 0.3s;
+      }
+      .edit-icon:hover {
+        box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.75);
+        transform: translate(0, -3px) !important;
       }
       .item-pic {
         width: 100% !important;
@@ -120,10 +163,10 @@
         font-weight: bold;
       }
       h6 {
-        color:rgb(100, 100, 100);
+        color: rgb(100, 100, 100);
       }
       p {
-        color: $sidebar-bg; 
+        color: $sidebar-bg;
       }
     }
   }
