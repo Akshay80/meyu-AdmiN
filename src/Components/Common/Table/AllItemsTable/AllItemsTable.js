@@ -35,7 +35,7 @@ const AllItemsTable = () => {
     getAllItemsList()
       .then((res) => {
         console.log("datatta", res?.data);
-        // setgetItem(res?.data?.data);
+        setgetItem(res?.data?.data);
       })
       .catch(function (error) {});
   };

@@ -27,7 +27,7 @@ const UserProfile = () => {
     register,
     setValue,
     handleSubmit,
-    resetField,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -35,7 +35,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     getProfileData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getProfileData = () => {
@@ -80,7 +80,17 @@ const UserProfile = () => {
       },
     };
     profileService(params)
-      .then((data) => {})
+      .then((data) => {
+        toast.success("Profile Updated Successfully.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+        });
+      })
       .catch((error) => {
         const error1 = error.error.substr(0, 79);
         const error2 = error.error.substr(80, 157);
@@ -199,9 +209,13 @@ const UserProfile = () => {
             <input
               type="text"
               placeholder="firstName"
-              {...register("firstName", {})}
+              {...register("firstName", { required: true })}
               className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
             />
+            {/* {errors.firstName && (
+                  <p className="errorss">{errors.firstName.message}</p>
+                )} */}
+            <div class="invalid-feedback">First name is required!</div>
           </div>
 
           <div className="col-md-6 col-sm-12">
@@ -211,9 +225,10 @@ const UserProfile = () => {
             <input
               type="text"
               placeholder="lastName"
-              {...register("lastName", {})}
-              className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
+              {...register("lastName", { required: true })}
+              className={`form-control ${errors.lastName ? "is-invalid" : ""}`}
             />
+            <div class="invalid-feedback">Last name is required!</div>
           </div>
 
           <div>
@@ -223,9 +238,10 @@ const UserProfile = () => {
             <input
               type="text"
               placeholder="email"
-              {...register("email", {})}
-              className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
+              {...register("email", { required: true })}
+              className={`form-control ${errors.email ? "is-invalid" : ""}`}
             />
+            <div class="invalid-feedback">Email is required!</div>
           </div>
 
           <div>
@@ -235,32 +251,42 @@ const UserProfile = () => {
             <input
               type="text"
               placeholder="contact"
-              {...register("contact", {})}
-              className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
+              {...register("contact", { required: true })}
+              className={`form-control ${errors.contact ? "is-invalid" : ""}`}
             />
+            <div class="invalid-feedback">Contact Number is required!</div>
           </div>
 
           <div>
             <label htmlFor="validationCustom007" className="form-label me-2">
               Gender
             </label>
-            <div className="form-check form-check-inline">
+            <div class="form-check">
               <input
-                className="form-check-input"
                 type="radio"
+                className={`form-check-input ${
+                  errors.gender ? "is-invalid" : ""
+                }`}
+                id="validationFormCheck2"
                 value="m"
-                {...register("gender")}
+                {...register("gender", { required: true })}
               />
-              <label className="form-check-label">Male</label>
+              <label class="form-check-label">Male</label>
             </div>
-            <div className="form-check form-check-inline">
+            <div class="form-check">
               <input
-                className="form-check-input"
                 type="radio"
+                className={`form-check-input ${
+                  errors.gender ? "is-invalid" : ""
+                }`}
+                id="validationFormCheck3"
                 value="f"
-                {...register("gender")}
+                {...register("gender", { required: true })}
               />
-              <label className="form-check-label">Female</label>
+              <label class="form-check-label">Female</label>
+              <div class="invalid-feedback" style={{ marginLeft: -23 }}>
+                Select a gender!
+              </div>
             </div>
           </div>
 
@@ -271,9 +297,10 @@ const UserProfile = () => {
             <input
               type="text"
               placeholder="street"
-              {...register("street", {})}
-              className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
+              {...register("street", { required: true })}
+              className={`form-control ${errors.street ? "is-invalid" : ""}`}
             />
+            <div class="invalid-feedback">Street is required!</div>
           </div>
 
           <div className="col-md-6 col-sm-12">
@@ -281,12 +308,13 @@ const UserProfile = () => {
               Country
             </label>
             <select
-              {...register("country")}
+              {...register("country", { required: true })}
               className={`form-select ${errors.country ? "is-invalid" : ""}`}
             >
               <option value="">Choose...</option>
               <option value="India">India</option>
             </select>
+            <div class="invalid-feedback">Please provide a valid country!</div>
           </div>
 
           <div className="col-md-6 col-sm-12">
@@ -294,12 +322,13 @@ const UserProfile = () => {
               State
             </label>
             <select
-              {...register("state")}
+              {...register("state", { required: true })}
               className={`form-select ${errors.state ? "is-invalid" : ""}`}
             >
               <option value="">Choose...</option>
               <option value="Uttrakhand">Uttrakhand</option>
             </select>
+            <div class="invalid-feedback">Please provide a valid state!</div>
           </div>
           <div className="col-md-6 col-sm-12">
             <label htmlFor="validationCustom08" className="form-label">
@@ -307,10 +336,11 @@ const UserProfile = () => {
             </label>
             <input
               type="text"
-              {...register("city", {})}
+              {...register("city", { required: true })}
               className={`form-control ${errors.city ? "is-invalid" : ""}`}
               placeholder="Singapore"
             />
+            <div class="invalid-feedback">City is required!</div>
           </div>
           <div className="col-md-6 col-sm-12">
             <label htmlFor="validationCustom09" className="form-label">
@@ -318,10 +348,11 @@ const UserProfile = () => {
             </label>
             <input
               type="text"
-              {...register("zip", {})}
+              {...register("zip", { required: true })}
               className={`form-control ${errors.zip ? "is-invalid" : ""}`}
               placeholder="238282"
             />
+            <div class="invalid-feedback">Zip is required!</div>
           </div>
 
           <div className="d-flex pb-5 align-items-center justify-content-center flex-wrap-wrap">
@@ -329,7 +360,7 @@ const UserProfile = () => {
               Update
             </button>
             <button
-              onClick={() => resetField()}
+              onClick={() => reset()}
               className="btn btn-danger m-2"
               type="reset"
             >

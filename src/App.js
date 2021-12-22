@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "./Components/Auth/Login/Login";
 import ForgotPassword from "./Components/Auth/ForgotPassword/ForgotPassword";
 import Signup from "./Components/Auth/Signup/Signup";
@@ -6,21 +6,8 @@ import Path from "./Constant/RouterConstant";
 import LoginRoute from "./Routes/LoginRoute";
 import RestrictedRoute from "./Routes/RestrictedRoute";
 import PrivateRoutes from "./Routes/PrivateRoutes";
-import { getToken } from "./Components/helper/uitility";
-import { useState } from "react";
-
-// const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => (
-//   <Route
-//     {...rest}
-//     render={(props) =>
-//       getToken() ? <Component {...props} /> : <Navigate to="/login" />
-//     }
-//   />
-// );
 
 function App() {
-  const [token, setToken] = useState(false);
-  let navigate = useNavigate();
   return (
     <>
       <Routes>
