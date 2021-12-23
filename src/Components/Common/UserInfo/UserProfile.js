@@ -215,9 +215,7 @@ const UserProfile = () => {
               {...register("firstName", { required: true })}
               className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
             />
-            {/* {errors.firstName && (
-                  <p className="errorss">{errors.firstName.message}</p>
-                )} */}
+          
             <div className="invalid-feedback">First name is required!</div>
           </div>
 
@@ -246,6 +244,9 @@ const UserProfile = () => {
             />
             <div className="invalid-feedback">Email is required!</div>
           </div>
+            {errors.firstName && (
+                  <p className="errorss">{errors.firstName.message}</p>
+                )}
 
           <div>
             <label htmlFor="validationCustom04" className="form-label">
