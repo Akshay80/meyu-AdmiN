@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Path from "../../../Constant/RouterConstant";
 import { useForm } from "react-hook-form";
 import "./ChangePassword.scss";
@@ -24,7 +24,7 @@ const ChangePassword = () => {
     setPasswordShown1(passwordShown1 ? false : true);
   };
 
-  const showPassword2= () => {
+  const showPassword2 = () => {
     setPasswordShown2(passwordShown2 ? false : true);
   };
 
@@ -93,28 +93,28 @@ const ChangePassword = () => {
                 </div>
                 <div className="mb-3 row justify-content-center">
                   <div className="col-sm-12">
-                  <div className="input-group">
-                    <input
-                      autoComplete="off"
-                      name="password"
-                      placeholder="New Password"
-                      className="form-control shadow-none"
-                      type={passwordShown1 ? "text" : "password"}
-                      {...register("newpassword", {
-                        required: "New password is required",
-                        pattern: {
-                          value:
-                            /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9]).{8,24}/,
-                          message:
-                            "Password must include at least 1 lowercase, 1 uppercase, 1 number and 1 special character as \n (!@#$%^&*)",
-                        },
-                        minLength: {
-                          value: 8,
-                          message: "Password must have at least 8 characters",
-                        },
-                      })}
-                    />
-                     <button
+                    <div className="input-group">
+                      <input
+                        autoComplete="off"
+                        name="password"
+                        placeholder="New Password"
+                        className="form-control shadow-none"
+                        type={passwordShown1 ? "text" : "password"}
+                        {...register("newpassword", {
+                          required: "New password is required",
+                          pattern: {
+                            value:
+                              /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9]).{8,24}/,
+                            message:
+                              "Password must include at least 1 lowercase, 1 uppercase, 1 number and 1 special character as \n (!@#$%^&*)",
+                          },
+                          minLength: {
+                            value: 8,
+                            message: "Password must have at least 8 characters",
+                          },
+                        })}
+                      />
+                      <button
                         className="eyebtn"
                         type="button"
                         onClick={showPassword1}
@@ -130,20 +130,20 @@ const ChangePassword = () => {
                 <div className="mb-3 row justify-content-center">
                   <div className="col-12">
                     <div className="input-group">
-                    <input
-                      name="password_repeat"
-                      className="form-control shadow-none"
-                      placeholder="Confirm Password"
-                      type={passwordShown2 ? "text" : "password"}
-                      {...register("cpassword", {
-                        required: "Confirm Password is required",
+                      <input
+                        name="password_repeat"
+                        className="form-control shadow-none"
+                        placeholder="Confirm Password"
+                        type={passwordShown2 ? "text" : "password"}
+                        {...register("cpassword", {
+                          required: "Confirm Password is required",
 
-                        validate: (value) =>
-                          value === watch("newpassword") ||
-                          "Passwords don't match.",
-                      })}
-                    />
-                 <button
+                          validate: (value) =>
+                            value === watch("newpassword") ||
+                            "Passwords don't match.",
+                        })}
+                      />
+                      <button
                         className="eyebtn"
                         type="button"
                         onClick={showPassword2}
