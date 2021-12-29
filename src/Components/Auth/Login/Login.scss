@@ -71,6 +71,19 @@ h3.card-title1 {
   margin-bottom: 1px;
   text-align: left;
 }
+
+.eyebtn {
+  width: 35px;
+  padding: 5px;
+  padding-right: 7px;
+  border-top-right-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
+  color: gray !important;
+  border: 1px solid #ced4da !important;
+  background-color: unset !important;
+  outline: none!important;
+}
+
 // Small devices (landscape phones, 576px and up)
 @media (max-width: 400px) {
   .cards1 {
