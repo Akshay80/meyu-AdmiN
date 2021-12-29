@@ -8,18 +8,25 @@ import { loginApiFun } from "../../../Services/authService";
 import { Loader } from "../../util/Loader";
 import { setUserToken } from "../../helper/uitility";
 import { ToastContainer, toast, Flip } from "react-toastify";
+import { ReactComponent as Eyeopen } from "../../../Assets/Icon/Eye.svg";
+import { ReactComponent as Eyeclose } from "../../../Assets/Icon/Eyeclose.svg";
 
 const Login = (props) => {
   let navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [isValidForm, setIsValidForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [passwordShown, setPasswordShown] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const showPassword = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
 
   const onSubmit = (data) => {
     setLoader(true);
@@ -109,23 +116,33 @@ const Login = (props) => {
                 </div>
                 <div className="mb-3 row justify-content-center">
                   <div className="col-sm-12">
-                    <input
-                      placeholder="Password"
-                      className="form-control shadow-none"
-                      type="password"
-                      {...register("password", {
-                        required: "Password is required",
-                        minLength: {
-                          value: 8,
-                          message: "Password must have at least 8 characters",
-                        },
-                      })}
-                    />
-                    {errors.password && (
-                      <p className="errors">{errors.password.message}</p>
-                    )}
+                    <div className="input-group">
+                      <input
+                        type={passwordShown ? "text" : "password"}
+                        className="form-control shadow-none"
+                        placeholder="Password"
+                        {...register("password", {
+                          required: "Password is required",
+                          minLength: {
+                            value: 8,
+                            message: "Password must have at least 8 characters",
+                          },
+                        })}
+                      />
+                      <button
+                        className="eyebtn"
+                        type="button"
+                        onClick={showPassword}
+                      >
+                        {passwordShown ? <Eyeopen /> : <Eyeclose />}
+                      </button>
+                    </div>
                   </div>
+                  {errors.password && (
+                    <p className="errors">{errors.password.message}</p>
+                  )}
                 </div>
+
                 <div className="mt-4 mb-4 row justify-content-center">
                   <div className="col-sm-12">
                     <button type="submit" className="btn btn-auth">
