@@ -49,7 +49,6 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
                     View
                   </button>
                   <button
-                    disabled={status ? true : false}
                     className={
                       status
                         ? "btn btn-success shadow-none"
@@ -59,8 +58,8 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
                     data-bs-toggle="button"
                     onClick={changeStatus}
                   >
-                    {/* {chefDetail?.status} */}
-                    {status ? "Approved" : "Rejected"}
+                    {console.log("CHEF KA STAUS : ",status)}
+                    {(status === true) ? "Approved" : "Rejected"}
                   </button>
                 </div>
               </div>

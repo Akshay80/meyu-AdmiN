@@ -13,6 +13,7 @@ const ChefDetail = ({ menuToggleState }) => {
   const [chefDetail, setchefDetail] = useState({});
   const [status, setStatus] = useState("");
   const { chefId } = useParams();
+  const [apiState, setApiState] = useState(false);
 
   useEffect(() => {
     fetchChefDetail();
@@ -28,25 +29,39 @@ const ChefDetail = ({ menuToggleState }) => {
   };
 
   const changeStatus = (data) => {
+    setApiState(apiState ? false : true)
     let params = {
-      isVerified: "true",
+      isVerified: apiState.toString(),
     };
     confirmChefAccount(params)
       .then((data) => {
-        if (data.statusText === "OK") {
-          setStatus(data.statusText);
+        if(data.data.data.message === "User profile verified successfully.")
+        {
           toast.success(data.data.data.message, {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: false,
             progress: 0,
-            toastId: "my_toast",
+            // toastId: "my_toast",
           });
-          fetchChefDetail();
         }
+
+        if (data.data.data.message === "User profile rejected successfully.") {
+          toast.error(data.data.data.message, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            // toastId: "my_toast",
+          });
+        }
+        fetchChefDetail();
       })
       .catch((error) => {});
   };
@@ -66,7 +81,7 @@ const ChefDetail = ({ menuToggleState }) => {
       </div>
       <ChefCard
         changeStatus={changeStatus}
-        status={status}
+        status={apiState}
         chefDetail={chefDetail}
       />
       <ToastContainer
