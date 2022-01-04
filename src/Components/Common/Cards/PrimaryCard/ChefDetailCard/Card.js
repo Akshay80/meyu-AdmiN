@@ -48,8 +48,9 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
                   >
                     View
                   </button>
+                  {console.log("chef status", status  )}
                   <button
-                    disabled={status ? true : false}
+                    // disabled={status ? true : false}
                     className={
                       status
                         ? "btn btn-success shadow-none"

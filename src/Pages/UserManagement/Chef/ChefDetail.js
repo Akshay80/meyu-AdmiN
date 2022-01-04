@@ -33,6 +33,7 @@ const ChefDetail = ({ menuToggleState }) => {
     };
     confirmChefAccount(params)
       .then((data) => {
+        console.log("cheff acount", data);
         if (data.statusText === "OK") {
           setStatus(data.statusText);
           toast.success(data.data.data.message, {
