@@ -11,7 +11,6 @@ import "react-toastify/dist/ReactToastify.min.css";
 
 const ChefDetail = ({ menuToggleState }) => {
   const [chefDetail, setchefDetail] = useState({});
-  const [status, setStatus] = useState("");
   const { chefId } = useParams();
   const [apiState, setApiState] = useState(false);
 
