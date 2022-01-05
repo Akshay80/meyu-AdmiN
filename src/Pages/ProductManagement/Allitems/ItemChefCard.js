@@ -1,7 +1,9 @@
 import React from "react";
 import "../../../Components/Common/Cards/PrimaryCard/ChefDetailCard/Card.scss";
+import UserImage from "../../../Assets/Images/blank-user.png";
 
 const ItemChefCard = ({ chefDetail }) => {
+  const URL = "http://52.77.236.78:8081/";
   return (
     <div className="container">
       <div className="card mb-3 p-3">
@@ -9,10 +11,14 @@ const ItemChefCard = ({ chefDetail }) => {
           <div className="col-md-3 col-sm-6 col-xs-12 d-flex align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src="https://source.unsplash.com/random/111x111"
+                src={
+                  chefDetail?.profileUrl === null
+                    ? UserImage
+                    : URL + chefDetail?.profileUrl
+                }
                 className="img"
                 alt="..."
-                style={{ borderRadius: "50%", margin: "5px" }}
+                style={{ borderRadius: "50%", width: 100, height: 100, objectFit: 'cover' }}
               />
             </div>
           </div>

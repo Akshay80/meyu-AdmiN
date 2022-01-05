@@ -51,6 +51,6 @@ export default (() => {
     // All Items
     allItemsList: `${setting.api.url}admin/getrecpies`,
     allItembyId: `${setting.api.url}admin/getrecpiedetails`,
-    confirmItem: `${setting.api.url}admin/confirmrecipie/:id`,
+    confirmItem: `${setting.api.url}admin/confirmrecipie`,
   };
 })();

@@ -8,39 +8,32 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import UserImage from "../../../Assets/Images/blank-user.png";
 import { confirmItemsbyId } from "../../../Services/itemsService";
-import { toast } from "react-toastify";
+import { ToastContainer, toast, Flip } from "react-toastify";
+import { useForm, Controller } from "react-hook-form";
 
-const ItemDetails = ({
-  itemDetail,
-  itemImage,
-  itemStatus,
-  fetchItemDetail,
-}) => {
+const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
   const [togglemenu, setToggleMenu] = useState(false);
+  const [imageUrl, setImageUrl] = useState(false);
+  const [myValue, setmyValue] = useState();
+  const [apiValue, setApiValue] = useState(false);
+  // const [togglemenu, setToggleMenu] = useState(false);
   const [status, setStatus] = useState();
-  // const [itemStatus, setItemStatus] = useState(false);
-  const animatedComponents = makeAnimated();
-  const toggleMenu = () => {
-    setToggleMenu(true);
-  };
 
+  const { control } = useForm();
   // handle selection
   const options = [
     { value: itemStatus === true, label: "Approved" },
     { value: itemStatus === false, label: "Rejected" },
   ];
 
-  const changeStatus = (data) => {
-    // setItemStatus(itemStatus ? false : true);
+  const changeStatus = (options) => {
     let params = {
-      isVerified: "true",
+      isVerified: options.value ? true : false,
     };
-    confirmItemsbyId(params)
+    confirmItemsbyId(itemDetail.id, params)
       .then((data) => {
-        console.log("item Status", data);
+        console.log("datata", data);
         if (data.statusText === "OK") {
-          setStatus(data.statusText);
-          fetchItemDetail();
           toast.success(data.data.data.message, {
             position: "top-right",
             autoClose: 3000,
@@ -55,6 +48,8 @@ const ItemDetails = ({
       })
       .catch((error) => {});
   };
+
+  const price = itemDetail.currencySymbol + itemDetail?.totalCostOfRecipe;
 
   return (
     <div className="card p-5 m-3">
@@ -93,12 +88,28 @@ const ItemDetails = ({
               controlId="formGridName"
             >
               <Form.Label className="mb-1">Status</Form.Label>
-              <Select
-                value={options.label}
-                options={options}
+              {/* <Select
+                defaultValue={itemDetail?.isVerified}
                 onChange={changeStatus}
-              ></Select>
+                options={options}
+              >
+                {options?.label}
+              </Select> */}
+              <Controller
+                control={control}
+                defaultValue={options.map((a) => a.value)}
+                name="options"
+                render={({ field: { ref } }) => (
+                  <Select
+                    inputRef={ref}
+                    defaultValue={options.map((a) => a.value)}  
+                    onChange={changeStatus}
+                    options={options}
+                  />
+                )}
+              />
             </Form.Group>
+
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridID"
@@ -126,21 +137,14 @@ const ItemDetails = ({
               ></Form.Control>
             </Form.Group>
             {/* =============================== tagss multiple ============ */}
+            {/* {itemDetail?.tags?.map((tags) => { */}
+            {/* })} */}
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridTags"
             >
               <Form.Label className="mb-1">Tags</Form.Label>
               <Form.Control defaultValue={itemDetail?.tags}></Form.Control>
-
-              {/* <Select
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti={true}
-                Value={itemDetail?.tags}
-                options={itemDetail?.tags}
-                onChange={(e) => console.log(e.map((item) => item.label))}
-              /> */}
             </Form.Group>
             {/* ======================================== */}
             <Form.Group
@@ -155,10 +159,8 @@ const ItemDetails = ({
               controlId="formGridDate"
             >
               <Form.Label className="mb-1">Price</Form.Label>
-              <Form.Control
-                value={itemDetail?.totalCostOfRecipe}
-                type="number"
-              />
+
+              <Form.Control value={price} type="text" />
             </Form.Group>
             <div className="d-flex flex-column w-100 flex-direction-column pb-2 align-items-start">
               <label>Description</label>

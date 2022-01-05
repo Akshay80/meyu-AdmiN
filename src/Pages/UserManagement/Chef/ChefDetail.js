@@ -9,8 +9,8 @@ import "react-toastify/dist/ReactToastify.min.css";
 const ChefDetail = ({ menuToggleState }) => {
   const [chefDetail, setChefDetail] = useState({});
   const { chefId } = useParams();
-  const [apiState, setApiState] = useState(false);
-  const [chefImage, setChefImage] = useState("");
+  const [apiState, setApiState] = useState(true);
+  const [chefImage, setChefImage] = useState(true);
 
   useEffect(() => {
     fetchChefDetail();

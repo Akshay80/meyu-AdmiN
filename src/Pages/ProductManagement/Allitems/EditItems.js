@@ -22,7 +22,6 @@ const EditItems = () => {
     getItemsbyId(itemId)
       .then((response) => {
         if (response.statusText === "OK") {
-          console.log("status", response?.data?.data?.recipeDetails);
           setItemStatus(response?.data?.data?.recipeDetails?.isVerified);
           setChefDetail(response?.data?.data?.profile);
           setItemDetail(response?.data?.data?.recipeDetails);
@@ -46,7 +45,7 @@ const EditItems = () => {
           </div>
         </div>
         <h6 className="mt-2">
-          Chef ID <b>{chefDetail?.createdBy}</b>
+          Chef ID <b>{chefDetail.createdBy}</b>
         </h6>
       </div>
 
@@ -56,7 +55,6 @@ const EditItems = () => {
           itemDetail={itemDetail}
           itemImage={itemImage}
           itemStatus={itemStatus}
-          fetchItemDetail={fetchItemDetail}
         />
       </div>
     </div>

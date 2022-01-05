@@ -9,6 +9,6 @@ export function getAllItemsList() {
 export function getItemsbyId(id) {
   return ApiInstance?.get(`${Api.allItembyId}/${id}`);
 }
-export function confirmItemsbyId(payload) {
-  return ApiInstance?.put(`${Api.confirmItem}`, payload);
+export function confirmItemsbyId(id, payload) {
+  return ApiInstance?.put(`${Api.confirmItem}/${id}`, payload);
 }

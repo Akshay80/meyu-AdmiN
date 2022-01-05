@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Card.scss";
 import ChefOrderDetails from "../../../../../Pages/UserManagement/Chef/ChefOrderDetails";
 import FoodCard from "../../FoodCard/FoodCard";
@@ -9,21 +9,35 @@ import { toast } from "react-toastify";
 
 const ChefCard = ({ chefDetail, chefImage }) => {
   const [togglemenu, setToggleMenu] = useState(false);
-  const [apiState, setApiState] = useState(" ");
-  const [chefStatus, setChefStatus] = useState("Pending");
+  const URL = "http://52.77.236.78:8081/";
+  const [apiState, setApiState] = useState();
+  const [chefStatus, setChefStatus] = useState();
 
   const toggleMenu = () => {
     setToggleMenu(true);
   };
 
-  const changeStatus = (id) => {
+  function onApproval() {
+    localStorage.setItem("status", "Approved");
+    setApiState("true");
+  }
+
+  function onReject() {
+    localStorage.setItem("status", "Rejected");
+    setApiState("false");
+  }
+
+  useEffect(() => {
+    changeStatus();
+  }, [apiState]);
+
+  const changeStatus = () => {
     let params = {
-      isVerified: "true",
+      isVerified: apiState,
     };
     confirmChefAccount(params)
       .then((res) => {
         console.log("cheff acount", res);
-        setApiState(res?.data?.data?.message);
         if (res.data.data.message === "User profile verified successfully.") {
           setChefStatus("Approved");
           toast.success(res.data.data.message, {
@@ -54,6 +68,8 @@ const ChefCard = ({ chefDetail, chefImage }) => {
       .catch((error) => {});
   };
 
+  console.log("API STATE: ", apiState);
+
   const confirmChange = (id) => {
     confirmAlert({
       title: "Change Chef Status",
@@ -63,8 +79,18 @@ const ChefCard = ({ chefDetail, chefImage }) => {
           label: "Approve",
           className: "btn btn-success",
           onClick: () => {
-            changeStatus(id);
+            onApproval();
           },
+        },
+        {
+          label: "Reject",
+          className: "btn btn-danger",
+          onClick: () => {
+            onReject();
+          },
+          // if (apiState === "User profile rejected successfully.") {
+          //   changeStatus(chefDetail?.id);
+          // }
         },
         // {
         //   label: "Reject",
@@ -84,10 +110,19 @@ const ChefCard = ({ chefDetail, chefImage }) => {
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src={chefImage === null ? UserImage : chefImage}
+                src={
+                  chefDetail?.profileUrl === null
+                    ? UserImage
+                    : URL + chefDetail?.profileUrl
+                }
                 className="img"
                 alt="..."
-                style={{ borderRadius: "50%", width: 100, height: 100 }}
+                style={{
+                  borderRadius: "50%",
+                  width: 100,
+                  height: 100,
+                  objectFit: "cover",
+                }}
               />
             </div>
           </div>
@@ -123,7 +158,7 @@ const ChefCard = ({ chefDetail, chefImage }) => {
                     // data-bs-toggle="button"
                     // onClick={changeStatus}
                   >
-                    {chefStatus}
+                    {localStorage.getItem("status")}
                   </button>
                 </div>
               </div>
