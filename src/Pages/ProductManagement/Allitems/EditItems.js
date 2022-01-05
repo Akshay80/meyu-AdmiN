@@ -4,7 +4,7 @@ import ItemDetails from "./ItemDetails";
 import { useParams } from "react-router";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import { ReactComponent as ShoppingCartIcon } from "../../../Assets/Icon/Shoppingbasket.svg";
-import { getItemsbyId, confirmItemsbyId } from "../../../Services/itemsService";
+import { getItemsbyId} from "../../../Services/itemsService";
 
 const EditItems = () => {
   const [itemStatus, setItemStatus] = useState("");
@@ -22,9 +22,8 @@ const EditItems = () => {
   const fetchItemDetail = () => {
     getItemsbyId(itemId)
       .then((response) => {
-        console.log("item details", response?.data?.data?.isVerified);
         if (response.statusText === "OK") {
-          setItemStatus(response?.data?.data?.isVerified);
+          setItemStatus(response?.data?.data?.recipeDetails?.isVerified);
           setChefDetail(response?.data?.data?.profile);
           setItemDetail(response?.data?.data?.recipeDetails);
           response?.data?.data?.recipeDetails?.MediaObjects?.map((recipe) =>
@@ -35,31 +34,6 @@ const EditItems = () => {
       .catch(function (error) {});
   };
 
-  console.log("MERI IMAGE : ", itemImage)
-  // const changeStatus = (data) => {
-  //   let params = {
-  //     isVerified: "true",
-  //   };
-  //   confirmItemsbyId(params)
-  //     .then((data) => {
-  //       console.log("cheff acount", data);
-  //       if (data.statusText === "OK") {
-  //         setStatus(data.statusText);
-  //         toast.success(data.data.data.message, {
-  //           position: "top-right",
-  //           autoClose: 3000,
-  //           hideProgressBar: true,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: false,
-  //           progress: 0,
-  //           toastId: "my_toast",
-  //         });
-  //         fetchItemDetail();
-  //       }
-  //     })
-  //     .catch((error) => {});
-  // };
 
   return (
     <div>
