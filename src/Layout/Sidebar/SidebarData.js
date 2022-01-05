@@ -31,10 +31,10 @@ export const SidebarData = [
     title: "Product Management",
     icon: <ProductIcon />,
     link: Path.allItems,
-    
+
     subMenus: [
       {
-        title: "All Items",
+        title: "All Recipe",
         link: Path.allItems,
       },
       {
@@ -42,13 +42,17 @@ export const SidebarData = [
         link: Path.categories,
       },
       {
-        title: "Tags",
+        title: "Dietary Tags",
         link: Path.tags,
       },
+      // {
+      //   title: "Ingredients",
+      //   link: Path.ingredients,
+      // },
       {
         title: "Unit",
         link: Path.unit,
-      }
+      },
     ],
   },
   {

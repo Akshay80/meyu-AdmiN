@@ -6,6 +6,7 @@ import UserImage from "../../../../../Assets/Images/blank-user.png";
 
 const ChefCard = ({ chefDetail, changeStatus, status }) => {
   const [togglemenu, setToggleMenu] = useState(false);
+  const URL = "http://52.77.236.78:8081/";
 
   const toggleMenu = () => {
     setToggleMenu(true);
@@ -18,13 +19,13 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={
-                  chefDetail?.coverPhotoUrl === null
+                  chefDetail?.profileUrl === null
                     ? UserImage
-                    : chefDetail?.coverPhotoUrl
+                    : URL+chefDetail?.profileUrl
                 }
                 className="img"
                 alt="..."
-                style={{ borderRadius: "50%", width: 100, height: 100 }}
+                style={{ borderRadius: "50%", width: 100, height: 100, objectFit: 'cover' }}
               />
             </div>
           </div>
@@ -48,7 +49,9 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
                   >
                     View
                   </button>
+                  {console.log("chef status", status  )}
                   <button
+                    // disabled={status ? true : false}
                     className={
                       status
                         ? "btn btn-success shadow-none"

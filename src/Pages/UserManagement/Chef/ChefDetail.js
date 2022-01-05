@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 const ChefDetail = ({ menuToggleState }) => {
   const [chefDetail, setchefDetail] = useState({});
   const { chefId } = useParams();
-  const [apiState, setApiState] = useState(false);
+  const [apiState, setApiState] = useState(true);
 
   useEffect(() => {
     fetchChefDetail();
@@ -27,7 +27,7 @@ const ChefDetail = ({ menuToggleState }) => {
       .catch(function (error) {});
   };
 
-  const changeStatus = (data) => {
+  const changeStatus = () => {
     setApiState(apiState ? false : true)
     let params = {
       isVerified: apiState.toString(),

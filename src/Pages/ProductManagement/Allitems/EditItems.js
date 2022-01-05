@@ -1,9 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ItemChefCard from "./ItemChefCard";
 import ItemDetails from "./ItemDetails";
+import { useParams } from "react-router";
+import { ToastContainer, toast, Flip } from "react-toastify";
 import { ReactComponent as ShoppingCartIcon } from "../../../Assets/Icon/Shoppingbasket.svg";
+import { getItemsbyId, confirmItemsbyId } from "../../../Services/itemsService";
 
 const EditItems = () => {
+  const [itemDetail, setItemDetail] = useState({});
+  const [chefDetail, setChefDetail] = useState({});
+  const [status, setStatus] = useState("");
+  const [itemImage, setItemImage] = useState("");
+  const { itemId } = useParams();
+
+  useEffect(() => {
+    fetchItemDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchItemDetail = () => {
+    getItemsbyId(itemId)
+      .then((response) => {
+        if (response.statusText === "OK") {
+          setChefDetail(response?.data?.data?.profile);
+          setItemDetail(response?.data?.data?.recipeDetails);
+          response?.data?.data?.recipeDetails?.MediaObjects?.map((recipe) =>
+            setItemImage(`http://52.77.236.78:8081/${recipe?.imageUrl}`)
+          );
+        }
+      })
+      .catch(function (error) {});
+  };
+
+  console.log("MERI IMAGE : ", itemImage)
+  // const changeStatus = (data) => {
+  //   let params = {
+  //     isVerified: "true",
+  //   };
+  //   confirmItemsbyId(params)
+  //     .then((data) => {
+  //       console.log("cheff acount", data);
+  //       if (data.statusText === "OK") {
+  //         setStatus(data.statusText);
+  //         toast.success(data.data.data.message, {
+  //           position: "top-right",
+  //           autoClose: 3000,
+  //           hideProgressBar: true,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: false,
+  //           progress: 0,
+  //           toastId: "my_toast",
+  //         });
+  //         fetchItemDetail();
+  //       }
+  //     })
+  //     .catch((error) => {});
+  // };
+
   return (
     <div>
       <div className="page-heading d-flex align-items-center justify-content-between p-4">
@@ -16,13 +70,17 @@ const EditItems = () => {
           </div>
         </div>
         <h6 className="mt-2">
-          Chef ID <b>#543210</b>
+          Chef ID <b>{chefDetail.createdBy}</b>
         </h6>
       </div>
 
       <div className="d-flex flex-column justify-content-around">
-        <ItemChefCard />
-        <ItemDetails />
+        <ItemChefCard chefDetail={chefDetail} />
+        <ItemDetails
+          status={status}
+          itemDetail={itemDetail}
+          itemImage={itemImage}
+        />
       </div>
     </div>
   );
