@@ -32,6 +32,7 @@ const ChefTable = () => {
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
+
   function handleDelete(rowId, name) {
     confirmAlert({
       title: "Delete",

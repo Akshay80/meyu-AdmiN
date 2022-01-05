@@ -1,16 +1,101 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Card.scss";
 import ChefOrderDetails from "../../../../../Pages/UserManagement/Chef/ChefOrderDetails";
 import FoodCard from "../../FoodCard/FoodCard";
 import UserImage from "../../../../../Assets/Images/blank-user.png";
+import { confirmAlert } from "react-confirm-alert";
+import { confirmChefAccount } from "../../../../../Services/chefServices";
+import { toast } from "react-toastify";
 
-const ChefCard = ({ chefDetail, changeStatus, status }) => {
+const ChefCard = ({ chefDetail }) => {
   const [togglemenu, setToggleMenu] = useState(false);
   const URL = "http://52.77.236.78:8081/";
+  const [apiState, setApiState] = useState();
+  const [chefStatus, setChefStatus] = useState();
 
   const toggleMenu = () => {
     setToggleMenu(true);
   };
+
+  function onApproval() {
+    localStorage.setItem("status", "Approved");
+    setApiState("true");
+  }
+
+  function onReject() {
+    localStorage.setItem("status", "Rejected");
+    setApiState("false");
+  }
+
+  useEffect(() => {
+    changeStatus()
+  }, [apiState])
+  
+
+  const changeStatus = () => {
+    let params = {
+      isVerified: apiState,
+    };
+    confirmChefAccount(params)
+      .then((res) => {
+        console.log("cheff acount", res);
+        if (res.data.data.message === "User profile verified successfully.") {
+          setChefStatus("Approved");
+          toast.success(res.data.data.message, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            // toastId: "my_toast",
+          });
+        }
+
+        if (res.data.data.message === "User profile rejected successfully.") {
+          setChefStatus("Rejected");
+          toast.error(res.data.data.message, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            // toastId: "my_toast",
+          });
+        }
+      })
+      .catch((error) => {});
+  };
+
+console.log("API STATE: ",apiState)
+
+
+
+  const confirmChange = (id) => {
+    confirmAlert({
+      title: "Change Chef Status",
+      message: `Do you want to change status of Chef?`,
+      buttons: [
+        {
+          label: "Approve",
+          className: "btn btn-success",
+          onClick: () => {onApproval()}
+        },
+        {
+          label: "Reject",
+          className: "btn btn-danger",
+          onClick: () => {onReject()}
+            // if (apiState === "User profile rejected successfully.") {
+            //   changeStatus(chefDetail?.id);
+            // }
+        },
+      ],
+    });
+  };
+
   return (
     <div className="container mb-5">
       <div className="card mb-3 p-3">
@@ -49,20 +134,19 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
                   >
                     View
                   </button>
-                  {console.log("chef status", status  )}
                   <button
-                    // disabled={status ? true : false}
                     className={
-                      status
+                      chefStatus === "Approved"
                         ? "btn btn-success shadow-none"
                         : "btn btn-danger shadow-none"
                     }
                     type="button"
-                    data-bs-toggle="button"
-                    onClick={changeStatus}
+                    onClick={() => confirmChange(chefDetail?.id)}
+
+                    // data-bs-toggle="button"
+                    // onClick={changeStatus}
                   >
-                    {console.log("CHEF KA STAUS : ",status)}
-                    {(status === true) ? "Approved" : "Rejected"}
+                    {localStorage.getItem("status")}
                   </button>
                 </div>
               </div>
