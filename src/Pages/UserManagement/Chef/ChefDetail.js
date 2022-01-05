@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import ChefCard from "../../../Components/Common/Cards/PrimaryCard/ChefDetailCard/Card";
 import { ReactComponent as ChefIcon } from "../../../Assets/Icon/Chef.svg";
-import {
-  confirmChefAccount,
-  getchefDetails,
-} from "../../../Services/chefServices";
+import { getchefDetails } from "../../../Services/chefServices";
 import { useParams } from "react-router";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 const ChefDetail = ({ menuToggleState }) => {
-  const [chefDetail, setchefDetail] = useState({});
+  const [chefDetail, setChefDetail] = useState({});
   const { chefId } = useParams();
   const [apiState, setApiState] = useState(false);
+  const [chefImage, setChefImage] = useState("");
 
   useEffect(() => {
     fetchChefDetail();
@@ -22,52 +20,13 @@ const ChefDetail = ({ menuToggleState }) => {
   const fetchChefDetail = () => {
     getchefDetails(chefId)
       .then((response) => {
-        console.log("cheff detailsss", response?.data);
-        setchefDetail(response?.data?.data?.chefProfile);
+        setChefDetail(response?.data?.data?.chefProfile);
+        setChefImage(
+          `http://52.77.236.78:8081/${response?.data?.data?.chefProfile?.profileUrl}`
+        );
       })
       .catch(function (error) {});
   };
-
-  // const changeStatus = (data) => {
-  //   // setApiState(apiState ? false : true);
-  //   let params = {
-  //     isVerified: apiState.toString(),
-  //   };
-  //   confirmChefAccount(params)
-  //     .then((res) => {
-  //       console.log("cheff acount", res);
-  //       if (res.data.data.message === "User profile verified successfully.") {
-  //         setApiState(true);
-  //         toast.success(res.data.data.message, {
-  //           position: "top-right",
-  //           autoClose: 1000,
-  //           hideProgressBar: true,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: false,
-  //           progress: 0,
-  //           // toastId: "my_toast",
-  //         });
-  //       }
-
-  //       if (res.data.data.message === "User profile rejected successfully.") {
-  //         setApiState(false);
-  //         toast.error(res.data.data.message, {
-  //           position: "top-right",
-  //           autoClose: 1000,
-  //           hideProgressBar: true,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: false,
-  //           progress: 0,
-  //           // toastId: "my_toast",
-  //         });
-  //       }
-  //       fetchChefDetail();
-  //     })
-  //     .catch((error) => {});
-  // };
-
   return (
     <div>
       <div className="page-heading d-flex align-items-center justify-content-between p-4">
@@ -81,11 +40,7 @@ const ChefDetail = ({ menuToggleState }) => {
           Chef ID : <b>{chefDetail?.createdBy}</b>
         </h6>
       </div>
-      <ChefCard
-        // changeStatus={changeStatus}
-        // status={apiState}
-        chefDetail={chefDetail}
-      />
+      <ChefCard chefDetail={chefDetail} chefImage={chefImage} />
       <ToastContainer
         position="top-right"
         autoClose={3000}

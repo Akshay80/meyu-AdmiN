@@ -10,7 +10,12 @@ import UserImage from "../../../Assets/Images/blank-user.png";
 import { confirmItemsbyId } from "../../../Services/itemsService";
 import { toast } from "react-toastify";
 
-const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
+const ItemDetails = ({
+  itemDetail,
+  itemImage,
+  itemStatus,
+  fetchItemDetail,
+}) => {
   const [togglemenu, setToggleMenu] = useState(false);
   const [status, setStatus] = useState();
   // const [itemStatus, setItemStatus] = useState(false);
@@ -21,8 +26,8 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
 
   // handle selection
   const options = [
-    { value: itemStatus === "true", label: "Approved" },
-    { value: itemStatus === "false", label: "Pending" },
+    { value: itemStatus === true, label: "Approved" },
+    { value: itemStatus === false, label: "Rejected" },
   ];
 
   const changeStatus = (data) => {
@@ -32,9 +37,10 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
     };
     confirmItemsbyId(params)
       .then((data) => {
-        console.log("cheff acount", data);
+        console.log("item Status", data);
         if (data.statusText === "OK") {
           setStatus(data.statusText);
+          fetchItemDetail();
           toast.success(data.data.data.message, {
             position: "top-right",
             autoClose: 3000,
@@ -56,10 +62,10 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
         <div className="profile-pic-wrapper pb-2">
           <div className="pic-holder">
             <img
+              src={itemImage === null ? UserImage : itemImage}
               id="itemPic"
               className="item-pic"
               alt="Image"
-              src={itemImage === null ? UserImage : itemImage}
             />
           </div>
 
@@ -88,7 +94,7 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
             >
               <Form.Label className="mb-1">Status</Form.Label>
               <Select
-                // defaultValue={status}
+                value={options.label}
                 options={options}
                 onChange={changeStatus}
               ></Select>

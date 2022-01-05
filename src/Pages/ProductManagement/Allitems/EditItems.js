@@ -11,7 +11,6 @@ const EditItems = () => {
   const [itemDetail, setItemDetail] = useState({});
   const [chefDetail, setChefDetail] = useState({});
   const [itemImage, setItemImage] = useState("");
-
   const { itemId } = useParams();
 
   useEffect(() => {
@@ -22,9 +21,9 @@ const EditItems = () => {
   const fetchItemDetail = () => {
     getItemsbyId(itemId)
       .then((response) => {
-        console.log("item details", response?.data?.data?.isVerified);
         if (response.statusText === "OK") {
-          setItemStatus(response?.data?.data?.isVerified);
+          console.log("status", response?.data?.data?.recipeDetails);
+          setItemStatus(response?.data?.data?.recipeDetails?.isVerified);
           setChefDetail(response?.data?.data?.profile);
           setItemDetail(response?.data?.data?.recipeDetails);
           response?.data?.data?.recipeDetails?.MediaObjects?.map((recipe) =>
@@ -47,7 +46,7 @@ const EditItems = () => {
           </div>
         </div>
         <h6 className="mt-2">
-          Chef ID <b>#543210</b>
+          Chef ID <b>{chefDetail?.createdBy}</b>
         </h6>
       </div>
 
@@ -57,6 +56,7 @@ const EditItems = () => {
           itemDetail={itemDetail}
           itemImage={itemImage}
           itemStatus={itemStatus}
+          fetchItemDetail={fetchItemDetail}
         />
       </div>
     </div>

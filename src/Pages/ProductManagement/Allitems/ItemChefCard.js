@@ -1,7 +1,7 @@
 import React from "react";
 import "../../../Components/Common/Cards/PrimaryCard/ChefDetailCard/Card.scss";
 
-const ItemChefCard = () => {
+const ItemChefCard = ({ chefDetail }) => {
   return (
     <div className="container">
       <div className="card mb-3 p-3">
@@ -19,10 +19,11 @@ const ItemChefCard = () => {
           <div className="col-md-9 col-sm-6 col-xs-12">
             <div className="user-card-info d-flex mx-3 align-items-center">
               <div className="info-x">
-                <h5 className="mb-0">Name</h5>
-                <p>Phone No</p>
+                <h5 className="mb-0">
+                  {chefDetail?.firstName} {chefDetail?.lastName}
+                </h5>
+                <p>Phone Number</p>
                 <p>Email</p>
-                <p>Join Date</p>
                 <p>Chef Timing</p>
               </div>
             </div>

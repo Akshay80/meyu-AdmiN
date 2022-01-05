@@ -7,7 +7,7 @@ import { confirmAlert } from "react-confirm-alert";
 import { confirmChefAccount } from "../../../../../Services/chefServices";
 import { toast } from "react-toastify";
 
-const ChefCard = ({ chefDetail }) => {
+const ChefCard = ({ chefDetail, chefImage }) => {
   const [togglemenu, setToggleMenu] = useState(false);
   const [apiState, setApiState] = useState(" ");
   const [chefStatus, setChefStatus] = useState("Pending");
@@ -37,7 +37,6 @@ const ChefCard = ({ chefDetail }) => {
             // toastId: "my_toast",
           });
         }
-
         if (res.data.data.message === "User profile rejected successfully.") {
           setChefStatus("Rejected");
           toast.error(res.data.data.message, {
@@ -64,21 +63,16 @@ const ChefCard = ({ chefDetail }) => {
           label: "Approve",
           className: "btn btn-success",
           onClick: () => {
-            console.log("message", apiState);
-            if (apiState === "User profile rejected successfully.") {
-              changeStatus(id);
-            }
+            changeStatus(id);
           },
         },
-        {
-          label: "Reject",
-          className: "btn btn-danger",
-          onClick: () => {
-            if (apiState === "User profile rejected successfully.") {
-              changeStatus(chefDetail?.id);
-            }
-          },
-        },
+        // {
+        //   label: "Reject",
+        //   className: "btn btn-danger",
+        //   onClick: () => {
+        //     changeStatus(id);
+        //   },
+        // },
       ],
     });
   };
@@ -90,11 +84,7 @@ const ChefCard = ({ chefDetail }) => {
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src={
-                  chefDetail?.coverPhotoUrl === null
-                    ? UserImage
-                    : chefDetail?.coverPhotoUrl
-                }
+                src={chefImage === null ? UserImage : chefImage}
                 className="img"
                 alt="..."
                 style={{ borderRadius: "50%", width: 100, height: 100 }}
