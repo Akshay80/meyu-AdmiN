@@ -7,10 +7,11 @@ import { ReactComponent as ShoppingCartIcon } from "../../../Assets/Icon/Shoppin
 import { getItemsbyId, confirmItemsbyId } from "../../../Services/itemsService";
 
 const EditItems = () => {
+  const [itemStatus, setItemStatus] = useState("");
   const [itemDetail, setItemDetail] = useState({});
   const [chefDetail, setChefDetail] = useState({});
-  const [status, setStatus] = useState("");
   const [itemImage, setItemImage] = useState("");
+
   const { itemId } = useParams();
 
   useEffect(() => {
@@ -21,7 +22,9 @@ const EditItems = () => {
   const fetchItemDetail = () => {
     getItemsbyId(itemId)
       .then((response) => {
+        console.log("item details", response?.data?.data?.isVerified);
         if (response.statusText === "OK") {
+          setItemStatus(response?.data?.data?.isVerified);
           setChefDetail(response?.data?.data?.profile);
           setItemDetail(response?.data?.data?.recipeDetails);
           response?.data?.data?.recipeDetails?.MediaObjects?.map((recipe) =>
@@ -30,31 +33,6 @@ const EditItems = () => {
         }
       })
       .catch(function (error) {});
-  };
-
-  const changeStatus = (data) => {
-    let params = {
-      isVerified: "true",
-    };
-    confirmItemsbyId(params)
-      .then((data) => {
-        console.log("cheff acount", data);
-        if (data.statusText === "OK") {
-          setStatus(data.statusText);
-          toast.success(data.data.data.message, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-            toastId: "my_toast",
-          });
-          fetchItemDetail();
-        }
-      })
-      .catch((error) => {});
   };
 
   return (
@@ -76,10 +54,9 @@ const EditItems = () => {
       <div className="d-flex flex-column justify-content-around">
         <ItemChefCard chefDetail={chefDetail} />
         <ItemDetails
-          changeStatus={changeStatus}
-          status={status}
           itemDetail={itemDetail}
           itemImage={itemImage}
+          itemStatus={itemStatus}
         />
       </div>
     </div>

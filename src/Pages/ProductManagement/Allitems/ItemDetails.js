@@ -7,19 +7,49 @@ import { viewCategoryService } from "../../../Services/userService";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import UserImage from "../../../Assets/Images/blank-user.png";
+import { confirmItemsbyId } from "../../../Services/itemsService";
+import { toast } from "react-toastify";
 
-const ItemDetails = ({ itemDetail, changeStatus, status, itemImage }) => {
+const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
   const [togglemenu, setToggleMenu] = useState(false);
-  const [imageUrl, setImageUrl] = useState(false);
+  const [status, setStatus] = useState();
+  // const [itemStatus, setItemStatus] = useState(false);
   const animatedComponents = makeAnimated();
   const toggleMenu = () => {
     setToggleMenu(true);
   };
 
-  // let options = tags.map(function (tag) {
-  //   return { value: tag.id, label: tag.name };
-  // });
-  console.log(itemDetail);
+  // handle selection
+  const options = [
+    { value: itemStatus === "true", label: "Approved" },
+    { value: itemStatus === "false", label: "Pending" },
+  ];
+
+  const changeStatus = (data) => {
+    // setItemStatus(itemStatus ? false : true);
+    let params = {
+      isVerified: "true",
+    };
+    confirmItemsbyId(params)
+      .then((data) => {
+        console.log("cheff acount", data);
+        if (data.statusText === "OK") {
+          setStatus(data.statusText);
+          toast.success(data.data.data.message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+        }
+      })
+      .catch((error) => {});
+  };
+
   return (
     <div className="card p-5 m-3">
       <div className="pb-5">
@@ -57,10 +87,11 @@ const ItemDetails = ({ itemDetail, changeStatus, status, itemImage }) => {
               controlId="formGridName"
             >
               <Form.Label className="mb-1">Status</Form.Label>
-              <Form.Select defaultValue={itemDetail?.isVerified}>
-                <option>Approved...</option>
-                <option>Pending...</option>
-              </Form.Select>
+              <Select
+                // defaultValue={status}
+                options={options}
+                onChange={changeStatus}
+              ></Select>
             </Form.Group>
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
@@ -86,38 +117,26 @@ const ItemDetails = ({ itemDetail, changeStatus, status, itemImage }) => {
               <Form.Label className="mb-1">Category</Form.Label>
               <Form.Control
                 defaultValue={itemDetail?.Category?.name}
-                // onChange={(e) => console.log(e.target.value)}
-              >
-                {/* {category.map((items) => (
-                  <option>{items.name}</option>
-                ))} */}
-              </Form.Control>
+              ></Form.Control>
             </Form.Group>
             {/* =============================== tagss multiple ============ */}
-            {itemDetail?.tags?.map((tags) => {
-              <Form.Group
-                className="col-md-6 col-sm-6 col-xs-12 mb-3"
-                controlId="formGridTags"
-              >
-                <Form.Label className="mb-1">Tags</Form.Label>
-                <Form.Control
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti={true}
-                  defaultValue={tags}
-                >
-                  {/* <Select
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti={true}
-                  // options={options}
-                  // onChange={(e) => console.log(e.map((item) => item.label))}
-                /> */}
-                </Form.Control>
-              </Form.Group>;
-            })}
-            {/* ======================================== */}
+            <Form.Group
+              className="col-md-6 col-sm-6 col-xs-12 mb-3"
+              controlId="formGridTags"
+            >
+              <Form.Label className="mb-1">Tags</Form.Label>
+              <Form.Control defaultValue={itemDetail?.tags}></Form.Control>
 
+              {/* <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                isMulti={true}
+                Value={itemDetail?.tags}
+                options={itemDetail?.tags}
+                onChange={(e) => console.log(e.map((item) => item.label))}
+              /> */}
+            </Form.Group>
+            {/* ======================================== */}
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridDelivery"
