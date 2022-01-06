@@ -15,3 +15,9 @@ export function getchefDetails(id) {
 export function chefDetailsService() {
   return ApiInstance?.get(`${Api.chefDetails}`);
 }
+
+// Delete Chef
+export function deleteChef(id) {
+  return ApiInstance?.delete(`${Api.deleteChef}/${id}`);
+}
+

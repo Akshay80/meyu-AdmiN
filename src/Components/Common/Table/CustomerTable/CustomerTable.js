@@ -13,8 +13,12 @@ import "./CustomerTable.css";
 import { NavLink } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { viewCustomerService } from "../../../../Services/customerServices";
+import {
+  viewCustomerService,
+  deleteCustomer,
+} from "../../../../Services/customerServices";
 import Path from "../../../../Constant/RouterConstant";
+import { toast } from "react-toastify";
 
 const headerSortingStyle = { backgroundColor: "#e3edf8" };
 function CustomerTable() {
@@ -114,7 +118,7 @@ function CustomerTable() {
             </NavLink>
             <DeleteIcon
               className="iconHover delete-icon"
-              onClick={() => handleDelete(row.id, row.fullName)}
+              onClick={() => handleDelete(row.createdBy, row.fullName)}
             />
           </div>
         );
@@ -138,8 +142,21 @@ function CustomerTable() {
           label: "Yes",
           className: "btn btn-danger",
           color: "red",
-          // onClick: () => {
-          // },
+          onClick: () => { deleteCustomer(rowId).then((response) => {
+            toast.success(response.data.data.message, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: 0,
+              toastId: "my_toast",
+            });
+            data();
+          });
+          
+          },
         },
         {
           label: "No",

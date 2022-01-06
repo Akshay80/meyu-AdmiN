@@ -6,11 +6,14 @@ import UserImage from "../../../../../Assets/Images/blank-user.png";
 import { confirmAlert } from "react-confirm-alert";
 import { confirmChefAccount } from "../../../../../Services/chefServices";
 import { toast } from "react-toastify";
+import { getAllItemsList } from "../../../../../Services/itemsService";
 
 const ChefCard = ({ chefDetail }) => {
   const [togglemenu, setToggleMenu] = useState(false);
   const URL = "http://52.77.236.78:8081/";
   const [apiState, setApiState] = useState();
+  const [items, setItems] = useState();
+  const [foodimage, setFoodImage] = useState();
 
   const toggleMenu = () => {
     setToggleMenu(true);
@@ -27,10 +30,23 @@ const ChefCard = ({ chefDetail }) => {
   }
 
   useEffect(() => {
-    changeStatus()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiState])
-  
+    changeStatus();
+    getFood();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiState]);
+
+  const getFood = () => {
+    getAllItemsList()
+      .then(function (response) {
+        setItems(response?.data?.data);
+        response?.data?.data?.map((item) =>
+          item?.MediaObjects?.map((food) =>
+            setFoodImage(`http://52.77.236.78:8081/${food?.imageUrl}`)
+          )
+        );
+      })
+      .catch(function (error) {});
+  };
 
   const changeStatus = () => {
     let params = {
@@ -73,12 +89,16 @@ const ChefCard = ({ chefDetail }) => {
         {
           label: "Approve",
           className: "btn btn-success",
-          onClick: () => {onApproval()}
+          onClick: () => {
+            onApproval();
+          },
         },
         {
           label: "Reject",
           className: "btn btn-danger",
-          onClick: () => {onReject()}
+          onClick: () => {
+            onReject();
+          },
         },
       ],
     });
@@ -94,11 +114,16 @@ const ChefCard = ({ chefDetail }) => {
                 src={
                   chefDetail?.profileUrl === null
                     ? UserImage
-                    : URL+chefDetail?.profileUrl
+                    : URL + chefDetail?.profileUrl
                 }
                 className="img"
                 alt="..."
-                style={{ borderRadius: "50%", width: 100, height: 100, objectFit: 'cover' }}
+                style={{
+                  borderRadius: "50%",
+                  width: 100,
+                  height: 100,
+                  objectFit: "cover",
+                }}
               />
             </div>
           </div>
@@ -131,7 +156,7 @@ const ChefCard = ({ chefDetail }) => {
                     type="button"
                     onClick={() => confirmChange(chefDetail?.id)}
                   >
-                    {localStorage.getItem("status") || 'Rejected'}
+                    {localStorage.getItem("status") || "Rejected"}
                   </button>
                 </div>
               </div>
@@ -150,7 +175,7 @@ const ChefCard = ({ chefDetail }) => {
           </div>
         </div>
       </div>
-      {togglemenu ? <FoodCard /> : <ChefOrderDetails />}
+      {togglemenu ? <FoodCard items={items} foodimage={foodimage}/> : <ChefOrderDetails />}
     </div>
   );
 };

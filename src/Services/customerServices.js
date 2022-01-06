@@ -10,4 +10,10 @@ export function viewCustomerService() {
   export function getCustomerDetails(id) {
     return ApiInstance?.get(`${Api.getcustomerDetails}/${id}`);
   }
+
+  // Delete Customer
+  export function deleteCustomer(id) {
+    return ApiInstance?.delete(`${Api.deletecustomers}/${id}`);
+  }
+  
   

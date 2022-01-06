@@ -78,14 +78,14 @@ const AllItemsTable = () => {
       headerAlign: "center",
       align: "center",
     },
-    {
-      dataField: "tags",
-      text: "Tags",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   dataField: "tags",
+    //   text: "Tags",
+    //   sort: true,
+    //   headerSortingStyle,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
 
     {
       dataField: "totalCostOfRecipe",

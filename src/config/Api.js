@@ -21,6 +21,7 @@ export default (() => {
     // Customer
     customers: `${setting.api.url}admin/getusers`,
     getcustomerDetails: `${setting.api.url}admin/getuserdetails`,
+    deletecustomers: `${setting.api.url}admin/user`,
 
     // Category
     category: `${setting.api.url}admin/category`,
@@ -33,6 +34,7 @@ export default (() => {
     chefDetails: `${setting.api.url}admin/getallchef`,
     getchefDetails: `${setting.api.url}common/chef-profile`,
     confirmChef: `${setting.api.url}admin/confirmchef/:id`,
+    deleteChef: `${setting.api.url}admin/user`,
 
     // tags
     getAllTags: `${setting.api.url}common/tag`,
@@ -52,5 +54,6 @@ export default (() => {
     allItemsList: `${setting.api.url}admin/getrecpies`,
     allItembyId: `${setting.api.url}admin/getrecpiedetails`,
     confirmItem: `${setting.api.url}admin/confirmrecipie`,
+
   };
 })();
