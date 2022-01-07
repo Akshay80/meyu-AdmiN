@@ -11,9 +11,8 @@ import { getAllItemsList } from "../../../../../Services/itemsService";
 const ChefCard = ({ chefDetail }) => {
   const [togglemenu, setToggleMenu] = useState(false);
   const URL = "http://52.77.236.78:8081/";
-  const [apiState, setApiState] = useState();
+  const [apiState, setApiState] = useState("false");
   const [items, setItems] = useState();
-  const [foodimage, setFoodImage] = useState();
 
   const toggleMenu = () => {
     setToggleMenu(true);
@@ -39,11 +38,6 @@ const ChefCard = ({ chefDetail }) => {
     getAllItemsList()
       .then(function (response) {
         setItems(response?.data?.data);
-        response?.data?.data?.map((item) =>
-          item?.MediaObjects?.map((food) =>
-            setFoodImage(`http://52.77.236.78:8081/${food?.imageUrl}`)
-          )
-        );
       })
       .catch(function (error) {});
   };
@@ -175,7 +169,7 @@ const ChefCard = ({ chefDetail }) => {
           </div>
         </div>
       </div>
-      {togglemenu ? <FoodCard items={items} foodimage={foodimage}/> : <ChefOrderDetails />}
+      {togglemenu ? <FoodCard items={items} /> : <ChefOrderDetails />}
     </div>
   );
 };
