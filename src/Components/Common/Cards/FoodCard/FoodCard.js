@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ReactComponent as ListIcon } from "../../../../Assets/Icon/Menu.svg";
 import "./FoodCard.scss";
 import ReactStars from "react-stars";
 import ReadMoreReact from "read-more-react";
+import Carousel from "react-bootstrap/Carousel";
 
 const FoodCard = ({ items }) => {
   console.log("itemss", items);
@@ -20,52 +21,25 @@ const FoodCard = ({ items }) => {
           console.log(val.id);
           let price = val.currencySymbol + val.totalCostOfRecipe;
           return (
-            <div key={val.id} className="col-md-4 gy-3 gx-5 mb-3">
-              <div className="card">
-                <div
-                  id="carouselExampleIndicators"
-                  className="carousel slide"
-                  data-bs-ride="carousel"
-                >
-                  <div className="carousel-inner">
-                    <div className="carousel-item active">
-                      {val?.MediaObjects?.map((food) => {
-                        return (
-                          <img
-                            key={food?.id}
-                            src={`http://52.77.236.78:8081/${food?.imageUrl}`}
-                            className="d-block w-100"
-                            alt="..."
-                          />
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <button
-                    className="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev"
-                  >
-                    <span
-                      className="carousel-control-prev-icon"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="visually-hidden">Previous</span>
-                  </button>
-                  <button
-                    className="carousel-control-next"
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next"
-                  >
-                    <span
-                      className="carousel-control-next-icon"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="visually-hidden">Next</span>
-                  </button>
-                </div>
+            <div
+              key={val?.MediaObjects?.map((food) => food?.id)}
+              className="col-md-4 gy-3 gx-5 mb-3"
+            >
+              <div
+                key={val?.MediaObjects?.map((food) => food?.id)}
+                className="card"
+              >
+                <Carousel fade>
+                  {val?.MediaObjects?.map((food, key) => (
+                    <Carousel.Item key={key}>
+                      <img
+                        className="d-block w-100 cardImages"
+                        src={`http://52.77.236.78:8081/${food?.imageUrl}`}
+                        alt="First slide"
+                      />
+                    </Carousel.Item>
+                  ))}
+                </Carousel>
 
                 <div className="card-body">
                   <h6 className="card-title">{val.dishName}</h6>
@@ -84,27 +58,6 @@ const FoodCard = ({ items }) => {
             </div>
           );
         })}
-        {/* <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="http://52.77.236.78:8081/uploads/recipe/recipe-1641536043110.jpg" class="d-block w-100" alt="..." />
-    </div>
-    <div class="carousel-item">
-      <img src="http://52.77.236.78:8081/uploads/recipe/recipe-1641536043114.jpg" class="d-block w-100" alt="..." />
-    </div>
-    <div class="carousel-item">
-      <img src="http://52.77.236.78:8081/uploads/recipe/recipe-1641536043022.jpg" class="d-block w-100" alt="..." />
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div> */}
       </div>
     </>
   );
