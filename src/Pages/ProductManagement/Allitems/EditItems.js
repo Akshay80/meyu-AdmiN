@@ -12,6 +12,7 @@ const EditItems = () => {
   const [chefDetail, setChefDetail] = useState({});
   const [selectedTag, setSelectedTag] = useState([]);
   const [itemImage, setItemImage] = useState("");
+  const [chefImage, setChefImage] = useState("");
   const { itemId } = useParams();
 
   useEffect(() => {
@@ -26,17 +27,28 @@ const EditItems = () => {
           setItemStatus(response?.data?.data?.recipeDetails?.isVerified);
           setChefDetail(response?.data?.data?.profile);
           setItemDetail(response?.data?.data?.recipeDetails);
+
+          // set item image
           response?.data?.data?.recipeDetails?.MediaObjects?.map((recipe) =>
             setItemImage(`http://52.77.236.78:8081/${recipe?.imageUrl}`)
           );
+
+          // set chef image
+          response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
+            setChefImage(`http://52.77.236.78:8081/${chefPic?.imageUrl}`)
+          );
+          // ===========================
+          //  set Tags Data
           let tempTag = [];
-          response?.data?.data?.recipeDetails?.tags?.map((tagName, index) => {
-            let tempTagObj = {
-              value: tagName[index],
-              label: tagName[index],
-            };
-            tempTag.push(tempTagObj);
-          });
+          response?.data?.data?.recipeDetails?.tags?.forEach(
+            (tagName, index) => {
+              let tempTagObj = {
+                value: tagName[index],
+                label: tagName[index],
+              };
+              tempTag.push(tempTagObj);
+            }
+          );
           setSelectedTag(tempTag);
         }
       })
@@ -60,7 +72,7 @@ const EditItems = () => {
       </div>
 
       <div className="d-flex flex-column justify-content-around">
-        <ItemChefCard chefDetail={chefDetail} />
+        <ItemChefCard chefDetail={chefDetail} chefImage={chefImage} />
         <ItemDetails
           itemDetail={itemDetail}
           itemImage={itemImage}

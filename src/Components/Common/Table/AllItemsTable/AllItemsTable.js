@@ -30,6 +30,7 @@ const AllItemsTable = () => {
   const getItems = () => {
     getAllItemsList()
       .then((res) => {
+        console.log(res?.data?.data);
         setgetItem(res?.data?.data);
       })
       .catch(function (error) {});

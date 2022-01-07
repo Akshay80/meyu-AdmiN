@@ -6,13 +6,12 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import UserImage from "../../../Assets/Images/blank-user.png";
 import { confirmItemsbyId } from "../../../Services/itemsService";
-import { ToastContainer, toast, Flip } from "react-toastify";
+import { toast } from "react-toastify";
 import { getAllTagFun } from "../../../Services/tagServices";
 
 const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
-  const [tag, setTag] = useState([]);
   const [tagOption, setTagOption] = useState([]);
-
+  // change status of Item/Recipe
   const changeStatus = (value) => {
     let params = {
       isVerified: value,
@@ -34,7 +33,7 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
       })
       .catch((error) => {});
   };
-
+  // set Tags Options
   useEffect(() => {
     tagdata();
   }, []);
@@ -42,9 +41,8 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
   const tagdata = () => {
     getAllTagFun()
       .then((res) => {
-        setTag(res?.data?.data);
         let tempTag = [];
-        res?.data?.data?.map((tagName) => {
+        res?.data?.data?.forEach((tagName) => {
           let tempTagObj = {
             value: tagName.id,
             label: tagName.name,
@@ -67,7 +65,7 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
               src={itemImage === null ? UserImage : itemImage}
               id="itemPic"
               className="item-pic"
-              alt="Image"
+              alt=""
             />
           </div>
 
