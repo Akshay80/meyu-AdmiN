@@ -11,7 +11,7 @@ import { getAllItemsList } from "../../../../../Services/itemsService";
 const ChefCard = ({ chefDetail }) => {
   const [togglemenu, setToggleMenu] = useState(false);
   const URL = "http://52.77.236.78:8081/";
-  const [apiState, setApiState] = useState("false");
+  const [apiState, setApiState] = useState();
   const [items, setItems] = useState();
 
   const toggleMenu = () => {

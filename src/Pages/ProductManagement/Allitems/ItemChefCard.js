@@ -2,8 +2,7 @@ import React from "react";
 import "../../../Components/Common/Cards/PrimaryCard/ChefDetailCard/Card.scss";
 import UserImage from "../../../Assets/Images/blank-user.png";
 
-const ItemChefCard = ({ chefDetail }) => {
-  const URL = "http://52.77.236.78:8081/";
+const ItemChefCard = ({ chefDetail, chefImage }) => {
   return (
     <div className="container">
       <div className="card mb-3 p-3">
@@ -11,14 +10,15 @@ const ItemChefCard = ({ chefDetail }) => {
           <div className="col-md-3 col-sm-6 col-xs-12 d-flex align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src={
-                  chefDetail?.profileUrl === null
-                    ? UserImage
-                    : URL + chefDetail?.profileUrl
-                }
+                src={chefImage === null ? UserImage : chefImage}
                 className="img"
                 alt="..."
-                style={{ borderRadius: "50%", width: 100, height: 100, objectFit: 'cover' }}
+                style={{
+                  borderRadius: "50%",
+                  width: 100,
+                  height: 100,
+                  objectFit: "cover",
+                }}
               />
             </div>
           </div>
@@ -26,11 +26,10 @@ const ItemChefCard = ({ chefDetail }) => {
             <div className="user-card-info d-flex mx-3 align-items-center">
               <div className="info-x">
                 <h5 className="mb-0">
-                  {chefDetail.firstName} {chefDetail.lastName}
+                  {chefDetail?.firstName} {chefDetail?.lastName}
                 </h5>
-                <p>Phone No</p>
+                <p>Phone Number</p>
                 <p>Email</p>
-                <p>Join Date</p>
                 <p>Chef Timing</p>
               </div>
             </div>

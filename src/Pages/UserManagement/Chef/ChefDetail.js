@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ChefCard from "../../../Components/Common/Cards/PrimaryCard/ChefDetailCard/Card";
 import { ReactComponent as ChefIcon } from "../../../Assets/Icon/Chef.svg";
-import {
-  getchefDetails,
-} from "../../../Services/chefServices";
+import { getchefDetails } from "../../../Services/chefServices";
 import { useParams } from "react-router";
 import "react-toastify/dist/ReactToastify.min.css";
 
 const ChefDetail = ({ menuToggleState }) => {
-  const [chefDetail, setchefDetail] = useState({});
+  const [chefDetail, setChefDetail] = useState({});
   const { chefId } = useParams();
 
   useEffect(() => {
@@ -19,7 +17,7 @@ const ChefDetail = ({ menuToggleState }) => {
   const fetchChefDetail = () => {
     getchefDetails(chefId)
       .then((response) => {
-        setchefDetail(response?.data?.data?.chefProfile);
+        setChefDetail(response?.data?.data?.chefProfile);
       })
       .catch(function (error) {});
   };

@@ -41,10 +41,12 @@ const FoodCard = ({ items }) => {
                       class="carousel-item active"
                     >
                       {val?.MediaObjects?.map((food, key) => {
-                        {console.log(food)}
+                        {
+                          console.log(food);
+                        }
                         return (
                           <img
-                          key={val?.MediaObjects?.map((food) => food?.id)}
+                            key={val?.MediaObjects?.map((food) => food?.id)}
                             src={`http://52.77.236.78:8081/${food?.imageUrl}`}
                             class="d-block w-100"
                             alt="..."

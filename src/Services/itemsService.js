@@ -12,3 +12,7 @@ export function getItemsbyId(id) {
 export function confirmItemsbyId(id, payload) {
   return ApiInstance?.put(`${Api.confirmItem}/${id}`, payload);
 }
+
+export function deleteItemsbyId(id) {
+  return ApiInstance?.delete(`${Api.deleteItem}/${id}`);
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Row } from "react-bootstrap";
 import { Input } from "reactstrap";
 import "../../../Components/Common/Buttons/buttons.scss";
@@ -6,10 +6,12 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import UserImage from "../../../Assets/Images/blank-user.png";
 import { confirmItemsbyId } from "../../../Services/itemsService";
-import { ToastContainer, toast, Flip } from "react-toastify";
+import { toast } from "react-toastify";
+import { getAllTagFun } from "../../../Services/tagServices";
 
-const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
-
+const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
+  const [tagOption, setTagOption] = useState([]);
+  // change status of Item/Recipe
   const changeStatus = (value) => {
     let params = {
       isVerified: value,
@@ -31,8 +33,28 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
       })
       .catch((error) => {});
   };
+  // set Tags Options
+  useEffect(() => {
+    tagdata();
+  }, []);
 
-  const price = itemDetail.currencySymbol + itemDetail?.totalCostOfRecipe;
+  const tagdata = () => {
+    getAllTagFun()
+      .then((res) => {
+        let tempTag = [];
+        res?.data?.data?.forEach((tagName) => {
+          let tempTagObj = {
+            value: tagName.id,
+            label: tagName.name,
+          };
+          tempTag.push(tempTagObj);
+        });
+        setTagOption(tempTag);
+      })
+      .catch(function (error) {});
+  };
+
+  const animatedComponents = makeAnimated();
 
   return (
     <div className="card p-5 m-3">
@@ -40,10 +62,10 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
         <div className="profile-pic-wrapper pb-2">
           <div className="pic-holder">
             <img
+              src={itemImage === null ? UserImage : itemImage}
               id="itemPic"
               className="item-pic"
-              alt="pic"
-              src={itemImage === null ? UserImage : itemImage}
+              alt=""
             />
           </div>
 
@@ -71,26 +93,23 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
               controlId="formGridName"
             >
               <Form.Label className="mb-1">Status</Form.Label>
-              <Form.Select
-                // defaultValue={itemDetail?.isVerified}
-                // onChange={(e) => console.log(e.target.value)}
-                onChange={(e) => changeStatus(e.target.value)}
-                // onSelect={itemStatus === true ? "Approved" : "Pending"}
-                //   options={options}
-              >
-
-                {itemStatus === true ? <option value='true'>Approved</option> : <option value='false'>Pending</option>}
-                {/* <option value="true">Approved...</option> */}
-                <option value={itemStatus=== false?"true":"false"}>{itemStatus=== false?"Approved":"Pending"}</option>
+              <Form.Select onChange={(e) => changeStatus(e.target.value)}>
+                {itemStatus === true ? (
+                  <option value="true">Approved</option>
+                ) : (
+                  <option value="false">Pending</option>
+                )}
+                <option value={itemStatus === false ? "true" : "false"}>
+                  {itemStatus === false ? "Approved" : "Pending"}
+                </option>
               </Form.Select>
             </Form.Group>
-
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridID"
             >
               <Form.Label className="mb-1">Product ID</Form.Label>
-              <Form.Control type="text" value={itemDetail?.id} />
+              <Form.Control type="text" defaultValue={itemDetail?.id} />
             </Form.Group>
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
@@ -99,7 +118,7 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
               <Form.Label className="mb-1">Product Name</Form.Label>
               <Form.Control
                 type="text"
-                value={itemDetail?.dishName}
+                defaultValue={itemDetail?.dishName}
               ></Form.Control>
             </Form.Group>
             <Form.Group
@@ -111,31 +130,43 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
                 defaultValue={itemDetail?.Category?.name}
               ></Form.Control>
             </Form.Group>
+
             {/* =============================== tagss multiple ============ */}
-            {/* {itemDetail?.tags?.map((tags) => { */}
-            {/* })} */}
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridTags"
             >
               <Form.Label className="mb-1">Tags</Form.Label>
-              <Form.Control defaultValue={itemDetail?.tags}></Form.Control>
+              {selectedTag.length ? (
+                <Select
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  defaultValue={selectedTag}
+                  isMulti
+                  options={tagOption}
+                />
+              ) : (
+                ""
+              )}
             </Form.Group>
+
             {/* ======================================== */}
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridDelivery"
             >
               <Form.Label className="mb-1">Preparation Time</Form.Label>
-              <Form.Control value={itemDetail?.preparationTime} />
+              <Form.Control defaultValue={itemDetail?.preparationTime} />
             </Form.Group>
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridDate"
             >
               <Form.Label className="mb-1">Price</Form.Label>
-
-              <Form.Control value={price} type="text" />
+              <Form.Control
+                defaultValue={itemDetail?.totalCostOfRecipe}
+                type="number"
+              ></Form.Control>
             </Form.Group>
             <div className="d-flex flex-column w-100 flex-direction-column pb-2 align-items-start">
               <label>Description</label>
@@ -143,15 +174,17 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
                 rows="4"
                 className="text-area mx-1 form-control w-100 h-100"
                 placeholder="About Product"
-                value={itemDetail?.description}
+                defaultValue={itemDetail?.description}
                 id="floatingTextarea2"
               ></textarea>
             </div>
           </Row>
+          <div className="d-flex align-items-center justify-content-center">
+            <button type="submit" className="btn btn-success w-25">
+              Save
+            </button>
+          </div>
         </Form>
-        <div className="d-flex align-items-center justify-content-center">
-          <button className="btn btn-success w-25">Save</button>
-        </div>
       </div>
     </div>
   );

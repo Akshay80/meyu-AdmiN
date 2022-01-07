@@ -14,18 +14,14 @@ import { NavLink } from "react-router-dom";
 import Path from "../../../../Constant/RouterConstant";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { getAllItemsList } from "../../../../Services/itemsService.js";
-import { useForm } from "react-hook-form";
+import {
+  getAllItemsList,
+  deleteItemsbyId,
+} from "../../../../Services/itemsService.js";
+import { toast } from "react-toastify";
 
 const AllItemsTable = () => {
   const [getItem, setgetItem] = useState([]);
-
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm();
 
   useEffect(() => {
     getItems();
@@ -34,7 +30,7 @@ const AllItemsTable = () => {
   const getItems = () => {
     getAllItemsList()
       .then((res) => {
-        console.log("datatta", res?.data);
+        console.log(res?.data?.data);
         setgetItem(res?.data?.data);
       })
       .catch(function (error) {});
@@ -42,16 +38,35 @@ const AllItemsTable = () => {
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
-  function handleDelete(rowId, name) {
+
+  const handleDelete = (rowId) => {
+    deleteItemsbyId(rowId)
+      .then((res) => {
+        toast.success("Item Deleted Successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+        getItems();
+      })
+      .catch((error) => {});
+  };
+  const confirmDelete = (rowId) => {
     confirmAlert({
       title: "Delete",
-      message: `Are you sure you want to remove ${name} from this table?`,
+      message: `Are you sure you want to remove item from this table?`,
       buttons: [
         {
           label: "Yes",
           className: "btn btn-danger",
-          // onClick: () => {
-          // }
+          onClick: () => {
+            handleDelete(rowId);
+          },
         },
         {
           label: "No",
@@ -59,7 +74,8 @@ const AllItemsTable = () => {
         },
       ],
     });
-  }
+  };
+
   const columns = [
     {
       dataField: "id",
@@ -78,14 +94,6 @@ const AllItemsTable = () => {
       headerAlign: "center",
       align: "center",
     },
-    // {
-    //   dataField: "tags",
-    //   text: "Tags",
-    //   sort: true,
-    //   headerSortingStyle,
-    //   headerAlign: "center",
-    //   align: "center",
-    // },
 
     {
       dataField: "totalCostOfRecipe",
@@ -117,7 +125,7 @@ const AllItemsTable = () => {
 
             <DeleteIcon
               className="iconHover delete-icon"
-              onClick={() => handleDelete(row.id, row.name)}
+              onClick={() => confirmDelete(row.id)}
             />
           </div>
         );

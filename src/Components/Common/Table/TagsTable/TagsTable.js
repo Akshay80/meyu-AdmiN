@@ -23,15 +23,10 @@ import {
   getTagsbyId,
   editTagsFun,
 } from "../../../../Services/tagServices";
-import { Button, Form, Modal } from "react-bootstrap";
 
 const TagsTable = () => {
   const [editId, setEditId] = useState();
   const [tag, setTag] = useState([]);
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const {
     register,
@@ -225,7 +220,6 @@ const TagsTable = () => {
               data-bs-toggle="modal"
               data-bs-target="#exampleModal2"
               onClick={() => handleEdit(row.id, row.name)}
-              // onClick={handleShow(row.id, row.name)}
             />
             <DeleteIcon
               className="iconHover delete-icon"
@@ -351,7 +345,7 @@ const TagsTable = () => {
                   <button
                     // type="submit"
                     className="btn btn-success"
-                    onClick={handleClose}
+                    data-bs-dismiss="modal"
                   >
                     Update
                   </button>
