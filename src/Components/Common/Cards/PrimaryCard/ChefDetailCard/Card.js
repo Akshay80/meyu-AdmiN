@@ -1,15 +1,109 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Card.scss";
 import ChefOrderDetails from "../../../../../Pages/UserManagement/Chef/ChefOrderDetails";
 import FoodCard from "../../FoodCard/FoodCard";
 import UserImage from "../../../../../Assets/Images/blank-user.png";
+import { confirmAlert } from "react-confirm-alert";
+import { confirmChefAccount } from "../../../../../Services/chefServices";
+import { toast } from "react-toastify";
+import { getAllItemsList } from "../../../../../Services/itemsService";
 
-const ChefCard = ({ chefDetail, changeStatus, status }) => {
+const ChefCard = ({ chefDetail }) => {
   const [togglemenu, setToggleMenu] = useState(false);
+  const URL = "http://52.77.236.78:8081/";
+  const [apiState, setApiState] = useState();
+  const [items, setItems] = useState();
+  const [foodimage, setFoodImage] = useState();
 
   const toggleMenu = () => {
     setToggleMenu(true);
   };
+
+  function onApproval() {
+    localStorage.setItem("status", "Approved");
+    setApiState("true");
+  }
+
+  function onReject() {
+    localStorage.setItem("status", "Rejected");
+    setApiState("false");
+  }
+
+  useEffect(() => {
+    changeStatus();
+    getFood();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiState]);
+
+  const getFood = () => {
+    getAllItemsList()
+      .then(function (response) {
+        setItems(response?.data?.data);
+        response?.data?.data?.map((item) =>
+          item?.MediaObjects?.map((food) =>
+            setFoodImage(`http://52.77.236.78:8081/${food?.imageUrl}`)
+          )
+        );
+      })
+      .catch(function (error) {});
+  };
+
+  const changeStatus = () => {
+    let params = {
+      isVerified: apiState,
+    };
+    confirmChefAccount(params)
+      .then((res) => {
+        if (res.data.data.message === "User profile verified successfully.") {
+          toast.success(res.data.data.message, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+          });
+        }
+
+        if (res.data.data.message === "User profile rejected successfully.") {
+          toast.error(res.data.data.message, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+          });
+        }
+      })
+      .catch((error) => {});
+  };
+
+  const confirmChange = (id) => {
+    confirmAlert({
+      title: "Change Chef Status",
+      message: `Do you want to change status of Chef?`,
+      buttons: [
+        {
+          label: "Approve",
+          className: "btn btn-success",
+          onClick: () => {
+            onApproval();
+          },
+        },
+        {
+          label: "Reject",
+          className: "btn btn-danger",
+          onClick: () => {
+            onReject();
+          },
+        },
+      ],
+    });
+  };
+
   return (
     <div className="container mb-5">
       <div className="card mb-3 p-3">
@@ -18,13 +112,18 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={
-                  chefDetail?.coverPhotoUrl === null
+                  chefDetail?.profileUrl === null
                     ? UserImage
-                    : chefDetail?.coverPhotoUrl
+                    : URL + chefDetail?.profileUrl
                 }
                 className="img"
                 alt="..."
-                style={{ borderRadius: "50%", width: 100, height: 100 }}
+                style={{
+                  borderRadius: "50%",
+                  width: 100,
+                  height: 100,
+                  objectFit: "cover",
+                }}
               />
             </div>
           </div>
@@ -49,18 +148,15 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
                     View
                   </button>
                   <button
-                    disabled={status ? true : false}
                     className={
-                      status
+                      localStorage.getItem("status") === "Approved"
                         ? "btn btn-success shadow-none"
                         : "btn btn-danger shadow-none"
                     }
                     type="button"
-                    data-bs-toggle="button"
-                    onClick={changeStatus}
+                    onClick={() => confirmChange(chefDetail?.id)}
                   >
-                    {/* {chefDetail?.status} */}
-                    {status ? "Approved" : "Rejected"}
+                    {localStorage.getItem("status") || "Rejected"}
                   </button>
                 </div>
               </div>
@@ -79,7 +175,7 @@ const ChefCard = ({ chefDetail, changeStatus, status }) => {
           </div>
         </div>
       </div>
-      {togglemenu ? <FoodCard /> : <ChefOrderDetails />}
+      {togglemenu ? <FoodCard items={items} foodimage={foodimage}/> : <ChefOrderDetails />}
     </div>
   );
 };

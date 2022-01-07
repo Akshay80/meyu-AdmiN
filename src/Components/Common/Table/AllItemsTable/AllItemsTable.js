@@ -78,14 +78,14 @@ const AllItemsTable = () => {
       headerAlign: "center",
       align: "center",
     },
-    {
-      dataField: "tags",
-      text: "Tags",
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   dataField: "tags",
+    //   text: "Tags",
+    //   sort: true,
+    //   headerSortingStyle,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
 
     {
       dataField: "totalCostOfRecipe",
@@ -111,7 +111,7 @@ const AllItemsTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex justify-content-evenly align-items-center">
-            <NavLink to={Path.editItems}>
+            <NavLink to={`${Path.editItems}/${row.id}`}>
               <EditIcon className="edit-icon" />
             </NavLink>
 

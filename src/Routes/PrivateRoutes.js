@@ -11,6 +11,7 @@ import ChefDetail from "../Pages/UserManagement/Chef/ChefDetail";
 import AllItems from "../Pages/ProductManagement/Allitems/AllItems";
 import Categories from "../Pages/ProductManagement/Categories/Categories";
 import Tags from "../Pages/ProductManagement/Tags/Tags";
+import Ingredients from "../Pages/ProductManagement/Ingredients/Ingredients";
 import OrderManagement from "../Pages/OrderManagement";
 import OrderProfile from "../Pages/OrderManagement/OrderProfile/OrderProfile";
 import EditItems from "../Pages/ProductManagement/Allitems/EditItems";
@@ -34,12 +35,13 @@ function PrivateRoutes() {
 
         <Route path={Path.chef} element={<Chef />} />
         <Route path={Path.allItems} element={<AllItems />} />
-        <Route path={Path.editItems} element={<EditItems />} />
+        <Route path={`${Path.editItems}/:itemId`} element={<EditItems />} />
 
         <Route path={Path.categories} element={<Categories />} />
 
         <Route path={Path.tags} element={<Tags />} />
         <Route path={Path.unit} element={<UnitTable />} />
+        <Route path={Path.ingredients} element={<Ingredients />} />
 
         <Route path={Path.orderManagement} element={<OrderManagement />} />
         <Route path={Path.orderDetails} element={<OrderProfile />} />

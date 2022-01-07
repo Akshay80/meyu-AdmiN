@@ -1,43 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Form, Row } from "react-bootstrap";
 import { Input } from "reactstrap";
 import "../../../Components/Common/Buttons/buttons.scss";
-import { getAllTagFun } from "../../../Services/tagServices";
-import { viewCategoryService } from "../../../Services/userService";
 import Select from "react-select";
-import makeAnimated from "react-select/animated"
+import makeAnimated from "react-select/animated";
+import UserImage from "../../../Assets/Images/blank-user.png";
+import { confirmItemsbyId } from "../../../Services/itemsService";
+import { ToastContainer, toast, Flip } from "react-toastify";
 
-const ItemDetails = () => {
-  const [tags, setTags] = useState([]);
-  const [category, setCategory] = useState([]);
-  const animatedComponents = makeAnimated();
+const ItemDetails = ({ itemDetail, itemImage, itemStatus }) => {
 
-  useEffect(() => {
-    tagdata();
-    categories();
-  }, []);
-
-  const tagdata = () => {
-    getAllTagFun()
-      .then((res) => {
-        console.log("response", res?.data?.data);
-        setTags(res.data.data);
+  const changeStatus = (value) => {
+    let params = {
+      isVerified: value,
+    };
+    confirmItemsbyId(itemDetail.id, params)
+      .then((data) => {
+        if (data.statusText === "OK") {
+          toast.success(data.data.data.message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+        }
       })
-      .catch(function (error) {});
+      .catch((error) => {});
   };
 
-  const categories = () => {
-    viewCategoryService()
-      .then((res) => {
-        setCategory(res.data.data);
-        console.log(res.data.data);
-      })
-      .catch(function (error) {});
-  };
-
-  let options = tags.map(function (tag) {
-    return { value: tag.id, label: tag.name };
-  });
+  const price = itemDetail.currencySymbol + itemDetail?.totalCostOfRecipe;
 
   return (
     <div className="card p-5 m-3">
@@ -47,10 +42,11 @@ const ItemDetails = () => {
             <img
               id="itemPic"
               className="item-pic"
-              alt=""
-              src="https://source.unsplash.com/random/512x512"
+              alt="pic"
+              src={itemImage === null ? UserImage : itemImage}
             />
           </div>
+
           <label htmlFor="newProfilePhoto" className="upload-file-block">
             <div className="text-center">
               <div className="mb-2">
@@ -75,9 +71,17 @@ const ItemDetails = () => {
               controlId="formGridName"
             >
               <Form.Label className="mb-1">Status</Form.Label>
-              <Form.Select defaultValue="Choose...">
-                <option>Approved...</option>
-                <option>Pending...</option>
+              <Form.Select
+                // defaultValue={itemDetail?.isVerified}
+                // onChange={(e) => console.log(e.target.value)}
+                onChange={(e) => changeStatus(e.target.value)}
+                // onSelect={itemStatus === true ? "Approved" : "Pending"}
+                //   options={options}
+              >
+
+                {itemStatus === true ? <option value='true'>Approved</option> : <option value='false'>Pending</option>}
+                {/* <option value="true">Approved...</option> */}
+                <option value={itemStatus=== false?"true":"false"}>{itemStatus=== false?"Approved":"Pending"}</option>
               </Form.Select>
             </Form.Group>
 
@@ -86,70 +90,60 @@ const ItemDetails = () => {
               controlId="formGridID"
             >
               <Form.Label className="mb-1">Product ID</Form.Label>
-              <Form.Control type="text" placeholder="Product ID" />
+              <Form.Control type="text" value={itemDetail?.id} />
             </Form.Group>
-
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridProductName"
             >
               <Form.Label className="mb-1">Product Name</Form.Label>
-              <Form.Control type="text" placeholder="Product Name" />
+              <Form.Control
+                type="text"
+                value={itemDetail?.dishName}
+              ></Form.Control>
             </Form.Group>
-
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridCategory"
             >
               <Form.Label className="mb-1">Category</Form.Label>
-              <Form.Select
-                defaultValue="Choose..."
-                onChange={(e) => console.log(e.target.value)}
-              >
-                {category.map((items) => (
-                  <option>{items.name}</option>
-                ))}
-              </Form.Select>
+              <Form.Control
+                defaultValue={itemDetail?.Category?.name}
+              ></Form.Control>
             </Form.Group>
-
             {/* =============================== tagss multiple ============ */}
+            {/* {itemDetail?.tags?.map((tags) => { */}
+            {/* })} */}
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridTags"
             >
               <Form.Label className="mb-1">Tags</Form.Label>
-              <Select
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti={true}
-                options={options}
-                onChange={(e) => console.log(e.map((item) => item.label))}
-              />
+              <Form.Control defaultValue={itemDetail?.tags}></Form.Control>
             </Form.Group>
             {/* ======================================== */}
-
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridDelivery"
             >
               <Form.Label className="mb-1">Preparation Time</Form.Label>
-              <Form.Control placeholder="30 min" />
+              <Form.Control value={itemDetail?.preparationTime} />
             </Form.Group>
-
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridDate"
             >
               <Form.Label className="mb-1">Price</Form.Label>
-              <Form.Control placeholder="Price" type="number" />
-            </Form.Group>
 
+              <Form.Control value={price} type="text" />
+            </Form.Group>
             <div className="d-flex flex-column w-100 flex-direction-column pb-2 align-items-start">
               <label>Description</label>
               <textarea
                 rows="4"
                 className="text-area mx-1 form-control w-100 h-100"
                 placeholder="About Product"
+                value={itemDetail?.description}
                 id="floatingTextarea2"
               ></textarea>
             </div>

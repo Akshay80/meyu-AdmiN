@@ -13,7 +13,8 @@ import "./ChefTable.css";
 import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
-import { chefDetailsService } from "../../../../Services/chefServices";
+import { chefDetailsService, deleteChef } from "../../../../Services/chefServices";
+import { toast } from "react-toastify";
 
 const ChefTable = () => {
   const [chef, setChef] = useState([]);
@@ -32,6 +33,7 @@ const ChefTable = () => {
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
+
   function handleDelete(rowId, name) {
     confirmAlert({
       title: "Delete",
@@ -40,8 +42,20 @@ const ChefTable = () => {
         {
           label: "Yes",
           className: "btn btn-danger",
-          // onClick: () => {
-          // },
+          onClick: () => { deleteChef(rowId).then((response) => {
+            toast.success(response.data.data.message, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: 0,
+              toastId: "my_toast",
+            });
+            data();
+          });
+        },
         },
         {
           label: "No",
@@ -51,25 +65,25 @@ const ChefTable = () => {
     });
   }
   const columns = [
-    {
-      dataField: "sl.no",
-      text: "Serial no.",
-      formatter: (cell, row, rowIndex, formatExtraData) => {
-        return rowIndex + 1;
-      },
-      sort: true,
-      headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
-    },
     // {
-    //   dataField: "id",
-    //   text: "Chef ID",
+    //   dataField: "sl.no",
+    //   text: "Serial no.",
+    //   formatter: (cell, row, rowIndex, formatExtraData) => {
+    //     return rowIndex + 1;
+    //   },
     //   sort: true,
     //   headerSortingStyle,
     //   headerAlign: "center",
     //   align: "center",
     // },
+    {
+      dataField: "createdBy",
+      text: "Chef ID",
+      sort: true,
+      headerSortingStyle,
+      headerAlign: "center",
+      align: "center",
+    },
 
     {
       dataField: "fullName",
@@ -117,7 +131,7 @@ const ChefTable = () => {
 
             <DeleteIcon
               className="iconHover delete-icon"
-              onClick={() => handleDelete(row.id, row.fullName)}
+              onClick={() => handleDelete(row.createdBy, row.fullName)}
             />
           </div>
         );

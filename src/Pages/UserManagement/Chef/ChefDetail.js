@@ -2,16 +2,13 @@ import React, { useState, useEffect } from "react";
 import ChefCard from "../../../Components/Common/Cards/PrimaryCard/ChefDetailCard/Card";
 import { ReactComponent as ChefIcon } from "../../../Assets/Icon/Chef.svg";
 import {
-  confirmChefAccount,
   getchefDetails,
 } from "../../../Services/chefServices";
 import { useParams } from "react-router";
-import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 const ChefDetail = ({ menuToggleState }) => {
   const [chefDetail, setchefDetail] = useState({});
-  const [status, setStatus] = useState("");
   const { chefId } = useParams();
 
   useEffect(() => {
@@ -25,30 +22,6 @@ const ChefDetail = ({ menuToggleState }) => {
         setchefDetail(response?.data?.data?.chefProfile);
       })
       .catch(function (error) {});
-  };
-
-  const changeStatus = (data) => {
-    let params = {
-      isVerified: "true",
-    };
-    confirmChefAccount(params)
-      .then((data) => {
-        if (data.statusText === "OK") {
-          setStatus(data.statusText);
-          toast.success(data.data.data.message, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-            toastId: "my_toast",
-          });
-          fetchChefDetail();
-        }
-      })
-      .catch((error) => {});
   };
 
   return (
@@ -65,21 +38,9 @@ const ChefDetail = ({ menuToggleState }) => {
         </h6>
       </div>
       <ChefCard
-        changeStatus={changeStatus}
-        status={status}
+        // changeStatus={changeStatus}
+        // status={apiState}
         chefDetail={chefDetail}
-      />
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover
-        limit={1}
-        transition={Flip}
       />
     </div>
   );
