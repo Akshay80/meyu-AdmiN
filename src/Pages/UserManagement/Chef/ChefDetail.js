@@ -3,14 +3,11 @@ import ChefCard from "../../../Components/Common/Cards/PrimaryCard/ChefDetailCar
 import { ReactComponent as ChefIcon } from "../../../Assets/Icon/Chef.svg";
 import { getchefDetails } from "../../../Services/chefServices";
 import { useParams } from "react-router";
-import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 const ChefDetail = ({ menuToggleState }) => {
   const [chefDetail, setChefDetail] = useState({});
   const { chefId } = useParams();
-  const [apiState, setApiState] = useState(true);
-  const [chefImage, setChefImage] = useState(true);
 
   useEffect(() => {
     fetchChefDetail();
@@ -21,12 +18,10 @@ const ChefDetail = ({ menuToggleState }) => {
     getchefDetails(chefId)
       .then((response) => {
         setChefDetail(response?.data?.data?.chefProfile);
-        setChefImage(
-          `http://52.77.236.78:8081/${response?.data?.data?.chefProfile?.profileUrl}`
-        );
       })
       .catch(function (error) {});
   };
+
   return (
     <div>
       <div className="page-heading d-flex align-items-center justify-content-between p-4">
@@ -40,18 +35,10 @@ const ChefDetail = ({ menuToggleState }) => {
           Chef ID : <b>{chefDetail?.createdBy}</b>
         </h6>
       </div>
-      <ChefCard chefDetail={chefDetail} chefImage={chefImage} />
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover
-        limit={1}
-        transition={Flip}
+      <ChefCard
+        // changeStatus={changeStatus}
+        // status={apiState}
+        chefDetail={chefDetail}
       />
     </div>
   );

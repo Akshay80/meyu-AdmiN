@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import ItemChefCard from "./ItemChefCard";
 import ItemDetails from "./ItemDetails";
 import { useParams } from "react-router";
-import { ToastContainer, toast, Flip } from "react-toastify";
+// import { ToastContainer, toast, Flip } from "react-toastify";
 import { ReactComponent as ShoppingCartIcon } from "../../../Assets/Icon/Shoppingbasket.svg";
-import { getItemsbyId, confirmItemsbyId } from "../../../Services/itemsService";
+import { getItemsbyId } from "../../../Services/itemsService";
 
 const EditItems = () => {
   const [itemStatus, setItemStatus] = useState("");
   const [itemDetail, setItemDetail] = useState({});
   const [chefDetail, setChefDetail] = useState({});
+  const [selectedTag, setSelectedTag] = useState([]);
   const [itemImage, setItemImage] = useState("");
   const { itemId } = useParams();
 
@@ -28,6 +29,15 @@ const EditItems = () => {
           response?.data?.data?.recipeDetails?.MediaObjects?.map((recipe) =>
             setItemImage(`http://52.77.236.78:8081/${recipe?.imageUrl}`)
           );
+          let tempTag = [];
+          response?.data?.data?.recipeDetails?.tags?.map((tagName, index) => {
+            let tempTagObj = {
+              value: tagName[index],
+              label: tagName[index],
+            };
+            tempTag.push(tempTagObj);
+          });
+          setSelectedTag(tempTag);
         }
       })
       .catch(function (error) {});
@@ -55,6 +65,7 @@ const EditItems = () => {
           itemDetail={itemDetail}
           itemImage={itemImage}
           itemStatus={itemStatus}
+          selectedTag={selectedTag}
         />
       </div>
     </div>
