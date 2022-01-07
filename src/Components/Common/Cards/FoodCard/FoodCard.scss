@@ -4,9 +4,9 @@
   border-top-left-radius: 10px !important;
   border-top-right-radius: 10px !important;
   font-family: "Roboto", sans-serif;
-  height: 250px!important;
+  height: 250px !important;
   object-fit: cover;
-    object-position: center;
+  object-position: center;
 }
 
 .card-title {
@@ -29,4 +29,12 @@
   font-size: 16px !important;
   font-weight: 500;
   font-family: "Roboto", sans-serif;
+}
+
+.cardImages {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: 250px;
+  object-fit: cover;
+  object-position: center;
 }

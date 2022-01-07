@@ -13,6 +13,7 @@
     "formik": "^2.2.9",
     "gh-pages": "^3.2.3",
     "glamor": "^2.20.40",
+    "jquery": "^3.6.0",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.2",
