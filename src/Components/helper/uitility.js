@@ -9,7 +9,6 @@ export function getToken() {
 
 export function setUserDetail(userDetail) {
   localStorage.setItem("userDetail", userDetail);
-  console.log("parse detail", JSON.parse(userDetail));
 }
 
 export function setUserToken(token) {

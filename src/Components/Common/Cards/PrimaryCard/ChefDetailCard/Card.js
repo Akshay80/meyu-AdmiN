@@ -8,9 +8,8 @@ import { confirmChefAccount } from "../../../../../Services/chefServices";
 import { toast } from "react-toastify";
 import { getAllItemsList } from "../../../../../Services/itemsService";
 
-const ChefCard = ({ chefDetail }) => {
+const ChefCard = ({ chefDetail, chefPic }) => {
   const [togglemenu, setToggleMenu] = useState(false);
-  const URL = "http://52.77.236.78:8081/";
   const [apiState, setApiState] = useState();
   const [items, setItems] = useState();
 
@@ -29,9 +28,7 @@ const ChefCard = ({ chefDetail }) => {
   }
 
   useEffect(() => {
-    changeStatus();
     getFood();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiState]);
 
   const getFood = () => {
@@ -105,11 +102,7 @@ const ChefCard = ({ chefDetail }) => {
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src={
-                  chefDetail?.profileUrl === null
-                    ? UserImage
-                    : URL + chefDetail?.profileUrl
-                }
+                src={chefPic === null ? UserImage : chefPic}
                 className="img"
                 alt="..."
                 style={{
@@ -130,7 +123,6 @@ const ChefCard = ({ chefDetail }) => {
                   </h5>
                   <p>{chefDetail?.phone}</p>
                   <p>{chefDetail?.email}</p>
-                  {/* <p>{chefDetail?.id}</p> */}
                   <p>Chef Timing</p>
                 </div>
                 <div className="d-flex flex-column">

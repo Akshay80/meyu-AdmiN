@@ -145,7 +145,6 @@ const UserProfile = () => {
     formData.append("profile", e?.target?.files[0]);
     changeProfileImage(formData)
       .then((response) => {
-        console.log("pic", response);
         if (response?.success === "true") {
           getProfileData();
         }

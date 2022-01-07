@@ -5,6 +5,7 @@ import ReactStars from "react-stars";
 import ReadMoreReact from "read-more-react";
 
 const FoodCard = ({ items }) => {
+  console.log("itemss", items);
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4">
@@ -16,39 +17,24 @@ const FoodCard = ({ items }) => {
 
       <div className="row col-md-12">
         {items?.map((val) => {
+          console.log(val.id);
           let price = val.currencySymbol + val.totalCostOfRecipe;
           return (
-            <div
-              key={val?.MediaObjects?.map((food) => food?.id)}
-              className="col-md-4 gy-3 gx-5 mb-3"
-            >
-              <div
-                key={val?.MediaObjects?.map((food) => food?.id)}
-                className="card"
-              >
+            <div key={val.id} className="col-md-4 gy-3 gx-5 mb-3">
+              <div className="card">
                 <div
                   id="carouselExampleIndicators"
-                  key={val?.MediaObjects?.map((food) => food?.id)}
-                  class="carousel slide"
+                  className="carousel slide"
                   data-bs-ride="carousel"
                 >
-                  <div
-                    key={val?.MediaObjects?.map((food) => food?.id)}
-                    class="carousel-inner"
-                  >
-                    <div
-                      key={val?.MediaObjects?.map((food) => food?.id)}
-                      class="carousel-item active"
-                    >
-                      {val?.MediaObjects?.map((food, key) => {
-                        {
-                          console.log(food);
-                        }
+                  <div className="carousel-inner">
+                    <div className="carousel-item active">
+                      {val?.MediaObjects?.map((food) => {
                         return (
                           <img
-                            key={val?.MediaObjects?.map((food) => food?.id)}
+                            key={food?.id}
                             src={`http://52.77.236.78:8081/${food?.imageUrl}`}
-                            class="d-block w-100"
+                            className="d-block w-100"
                             alt="..."
                           />
                         );
@@ -56,28 +42,28 @@ const FoodCard = ({ items }) => {
                     </div>
                   </div>
                   <button
-                    class="carousel-control-prev"
+                    className="carousel-control-prev"
                     type="button"
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide="prev"
                   >
                     <span
-                      class="carousel-control-prev-icon"
+                      className="carousel-control-prev-icon"
                       aria-hidden="true"
                     ></span>
-                    <span class="visually-hidden">Previous</span>
+                    <span className="visually-hidden">Previous</span>
                   </button>
                   <button
-                    class="carousel-control-next"
+                    className="carousel-control-next"
                     type="button"
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide="next"
                   >
                     <span
-                      class="carousel-control-next-icon"
+                      className="carousel-control-next-icon"
                       aria-hidden="true"
                     ></span>
-                    <span class="visually-hidden">Next</span>
+                    <span className="visually-hidden">Next</span>
                   </button>
                 </div>
 

@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 
 const ChefDetail = ({ menuToggleState }) => {
   const [chefDetail, setChefDetail] = useState({});
+  const [chefPic, setChefPic] = useState("");
   const { chefId } = useParams();
 
   useEffect(() => {
@@ -18,10 +19,13 @@ const ChefDetail = ({ menuToggleState }) => {
     getchefDetails(chefId)
       .then((response) => {
         setChefDetail(response?.data?.data?.chefProfile);
+        setChefPic(
+          `http://52.77.236.78:8081/${response?.data?.data?.chefProfile?.profileUrl}`
+        );
       })
       .catch(function (error) {});
   };
-
+  
   return (
     <div>
       <div className="page-heading d-flex align-items-center justify-content-between p-4">
@@ -35,11 +39,7 @@ const ChefDetail = ({ menuToggleState }) => {
           Chef ID : <b>{chefDetail?.createdBy}</b>
         </h6>
       </div>
-      <ChefCard
-        // changeStatus={changeStatus}
-        // status={apiState}
-        chefDetail={chefDetail}
-      />
+      <ChefCard chefPic={chefPic} chefDetail={chefDetail} />
     </div>
   );
 };

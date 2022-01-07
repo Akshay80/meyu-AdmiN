@@ -56,7 +56,6 @@ const Login = (props) => {
         setLoader(false);
       })
       .catch((err) => {
-        console.log("error", err);
         setErrorMessage(err?.data?.message);
         setLoader(false);
         setIsValidForm(false);

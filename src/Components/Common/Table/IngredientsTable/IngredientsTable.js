@@ -128,7 +128,6 @@
 //   // const handleEdit = (rowId, rowName) => {
 //   //   getTagsbyId(rowId)
 //   //     .then((res) => {
-//   //       console.log("tags", res?.data?.data);
 //   //       setValue("tags", rowName);
 //   //       setEditId(res?.data?.data);
 //   //     })
@@ -156,7 +155,6 @@
 //   //   editTagsFun(param)
 //   //     .then((res) => {
 //   //       if (res?.statusText === "OK") {
-//   //         console.log("response", res);
 //   //         toast.success("Tag edited Successfully", {
 //   //           position: "top-right",
 //   //           autoClose: 2000,

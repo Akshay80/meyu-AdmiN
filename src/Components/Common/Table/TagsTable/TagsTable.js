@@ -130,7 +130,6 @@ const TagsTable = () => {
   const handleEdit = (rowId, rowName) => {
     getTagsbyId(rowId)
       .then((res) => {
-        console.log("tags", res?.data?.data);
         setValue("tags", rowName);
         setEditId(res?.data?.data);
       })
@@ -148,8 +147,6 @@ const TagsTable = () => {
       });
   };
 
-  // // put api to edit tags
-
   const EditSubmit = (tagss) => {
     const param = {
       id: editId?.id,
@@ -158,7 +155,6 @@ const TagsTable = () => {
     editTagsFun(param)
       .then((res) => {
         if (res?.statusText === "OK") {
-          console.log("response", res);
           toast.success("Tag edited Successfully", {
             position: "top-right",
             autoClose: 2000,
