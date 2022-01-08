@@ -1,5 +1,5 @@
-import ApiInstance from "../config/Intercepter";
 import Api from "../config/Api";
+import ApiInstance from "../config/Intercepter";
 // import { resHandle } from "../helper";
 
 // login
