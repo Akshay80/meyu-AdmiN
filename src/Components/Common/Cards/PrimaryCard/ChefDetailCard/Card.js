@@ -3,33 +3,22 @@ import "./Card.scss";
 import ChefOrderDetails from "../../../../../Pages/UserManagement/Chef/ChefOrderDetails";
 import FoodCard from "../../FoodCard/FoodCard";
 import UserImage from "../../../../../Assets/Images/blank-user.png";
-import { confirmAlert } from "react-confirm-alert";
 import { confirmChefAccount } from "../../../../../Services/chefServices";
 import { toast } from "react-toastify";
 import { getAllItemsList } from "../../../../../Services/itemsService";
 
 const ChefCard = ({ chefDetail, chefPic }) => {
   const [togglemenu, setToggleMenu] = useState(false);
-  const [apiState, setApiState] = useState();
+  const [apiState, setApiState] = useState("false");
   const [items, setItems] = useState();
 
   const toggleMenu = () => {
     setToggleMenu(true);
   };
 
-  function onApproval() {
-    localStorage.setItem("status", "Approved");
-    setApiState("true");
-  }
-
-  function onReject() {
-    localStorage.setItem("status", "Rejected");
-    setApiState("false");
-  }
-
   useEffect(() => {
     getFood();
-  }, [apiState]);
+  }, []);
 
   const getFood = () => {
     getAllItemsList()
@@ -39,7 +28,14 @@ const ChefCard = ({ chefDetail, chefPic }) => {
       .catch(function (error) {});
   };
 
-  const changeStatus = () => {
+  const changeStatus = (id) => {
+    if (apiState === "false") {
+      setApiState("true");
+      localStorage.setItem("status", "Approved");
+    } else {
+      setApiState("false");
+      localStorage.setItem("status", "Rejected");
+    }
     let params = {
       isVerified: apiState,
     };
@@ -72,29 +68,6 @@ const ChefCard = ({ chefDetail, chefPic }) => {
       .catch((error) => {});
   };
 
-  const confirmChange = (id) => {
-    confirmAlert({
-      title: "Change Chef Status",
-      message: `Do you want to change status of Chef?`,
-      buttons: [
-        {
-          label: "Approve",
-          className: "btn btn-success",
-          onClick: () => {
-            onApproval();
-          },
-        },
-        {
-          label: "Reject",
-          className: "btn btn-danger",
-          onClick: () => {
-            onReject();
-          },
-        },
-      ],
-    });
-  };
-
   return (
     <div className="container mb-5">
       <div className="card mb-3 p-3">
@@ -102,7 +75,11 @@ const ChefCard = ({ chefDetail, chefPic }) => {
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src={chefPic === null ? UserImage : chefPic}
+                src={
+                  chefPic === `http://52.77.236.78:8081/null`
+                    ? UserImage
+                    : chefPic
+                }
                 className="img"
                 alt="..."
                 style={{
@@ -140,7 +117,7 @@ const ChefCard = ({ chefDetail, chefPic }) => {
                         : "btn btn-danger shadow-none"
                     }
                     type="button"
-                    onClick={() => confirmChange(chefDetail?.id)}
+                    onClick={() => changeStatus(chefDetail?.id)}
                   >
                     {localStorage.getItem("status") || "Rejected"}
                   </button>

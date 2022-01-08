@@ -27,7 +27,7 @@ const FoodCard = ({ items }) => {
                 key={val?.MediaObjects?.map((food) => food?.id)}
                 className="card"
               >
-                <Carousel fade>
+                <Carousel fade indicators={false}>
                   {val?.MediaObjects?.map((food, key) => (
                     <Carousel.Item key={key}>
                       <img
@@ -45,7 +45,7 @@ const FoodCard = ({ items }) => {
                     <ReadMoreReact ideal={120} text={val.description} />
                   </div>
                   <ReactStars
-                    count={val.count}
+                    count={Math.random() * 5}
                     size={16}
                     edit={false}
                     color1={"#04AA6D"}
