@@ -3,10 +3,10 @@ import Api from "../config/Api";
 
 //  confirm chef account
 export function confirmChefAccount(payload) {
-    return ApiInstance?.put(`${Api.confirmChef}`, payload);
-  }
-  
-  // chef card details
+  return ApiInstance?.put(`${Api.confirmChef}`, payload);
+}
+
+// chef card details
 export function getchefDetails(id) {
   return ApiInstance?.get(`${Api.getchefDetails}/${id}`);
 }
@@ -20,4 +20,3 @@ export function chefDetailsService() {
 export function deleteChef(id) {
   return ApiInstance?.delete(`${Api.deleteChef}/${id}`);
 }
-

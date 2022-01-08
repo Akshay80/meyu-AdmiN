@@ -14,15 +14,15 @@ export function addTags(payload) {
 
 // edit tag
 export function editTagsFun(payload) {
-  return ApiInstance?.put(`${Api.editTag}`,payload);
+  return ApiInstance?.put(`${Api.editTag}`, payload);
 }
 
 //   delete tags
 export function deleteTags(payload) {
-  return ApiInstance?.post(`${Api.deleteTag}`,payload);
+  return ApiInstance?.post(`${Api.deleteTag}`, payload);
 }
 
 //   get tags by ID
 export function getTagsbyId(id) {
-    return ApiInstance?.get(`${Api.getTagId}/${id}`);
-  }
+  return ApiInstance?.get(`${Api.getTagId}/${id}`);
+}

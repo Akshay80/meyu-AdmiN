@@ -11,7 +11,7 @@ export function profileService(payload) {
 export function viewprofileService() {
   return ApiInstance?.get(`${Api.viewuserProfile}`);
 }
-// Change Profile Image 
+// Change Profile Image
 export function changeProfileImage(payload) {
   return ApiInstance?.post(`${Api.changeProfileImage}`, payload);
 }
@@ -25,4 +25,3 @@ export function viewCategoryService() {
 export function deleteCategoryService(payload) {
   return ApiInstance?.post(`${Api.deletecategories}`, payload);
 }
-

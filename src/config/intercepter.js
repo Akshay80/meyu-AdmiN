@@ -1,4 +1,4 @@
-import setting from './settings';
+import setting from "./settings";
 
 import axios from "axios";
 const ApiInstance = axios.create({
@@ -7,18 +7,18 @@ const ApiInstance = axios.create({
 // request interceptor
 ApiInstance.interceptors.request.use(
   (request) => {
-    if (request.method === 'get') {
-      request.data = true
+    if (request.method === "get") {
+      request.data = true;
     }
     let token = localStorage.getItem("token");
     const headers = {
       "Content-Type": "application/json",
-      "Authorization": token,
+      Authorization: token,
     };
-    request.headers["Content-Type"] = "application/json"
+    request.headers["Content-Type"] = "application/json";
     if (token) {
-      request.headers.common['Authorization'] = token;
-    } 
+      request.headers.common["Authorization"] = token;
+    }
     request.headers = headers;
     return request;
   },
@@ -51,6 +51,3 @@ ApiInstance.interceptors.response.use(
   }
 );
 export default ApiInstance;
-
-
-
