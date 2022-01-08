@@ -1,12 +1,11 @@
 import React from "react";
 import { ReactComponent as ListIcon } from "../../../../Assets/Icon/Menu.svg";
 import "./FoodCard.scss";
-import ReactStars from "react-stars";
+import ReactStars from "react-stars-new";
 import ReadMoreReact from "read-more-react";
 import Carousel from "react-bootstrap/Carousel";
 
 const FoodCard = ({ items }) => {
-  console.log("itemss", items);
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4">
@@ -18,7 +17,6 @@ const FoodCard = ({ items }) => {
 
       <div className="row col-md-12">
         {items?.map((val) => {
-          console.log(val.id);
           let price = val.currencySymbol + val.totalCostOfRecipe;
           return (
             <div
@@ -29,7 +27,7 @@ const FoodCard = ({ items }) => {
                 key={val?.MediaObjects?.map((food) => food?.id)}
                 className="card"
               >
-                <Carousel fade>
+                <Carousel fade indicators={false}>
                   {val?.MediaObjects?.map((food, key) => (
                     <Carousel.Item key={key}>
                       <img
@@ -47,7 +45,7 @@ const FoodCard = ({ items }) => {
                     <ReadMoreReact ideal={120} text={val.description} />
                   </div>
                   <ReactStars
-                    count={val.count}
+                    count={Math.random() * 5}
                     size={16}
                     edit={false}
                     color1={"#04AA6D"}
