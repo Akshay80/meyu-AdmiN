@@ -2,10 +2,10 @@ import setting from "./settings";
 
 import axios from "axios";
 const ApiInstance = axios.create({
-  baseURL: setting.api.url,
+  baseURL: setting?.api?.url,
 });
 // request interceptor
-ApiInstance.interceptors.request.use(
+ApiInstance?.interceptors?.request?.use(
   (request) => {
     if (request.method === "get") {
       request.data = true;

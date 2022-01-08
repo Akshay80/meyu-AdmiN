@@ -1,6 +1,5 @@
 import Api from "../config/Api";
 import ApiInstance from "../config/Intercepter";
-// import { resHandle } from "../helper";
 
 // login
 export function loginApiFun(payload) {

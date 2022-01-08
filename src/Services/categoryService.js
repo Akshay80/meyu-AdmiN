@@ -8,7 +8,7 @@ export function viewCategoryFun() {
 }
 
 export function deleteCategoryFun(payload) {
-  return ApiInstance.post(`${Api.deleteCategory}`, payload);
+  return ApiInstance.post(`${Api.deletecategories}`, payload);
 }
 
 export function category(payload) {
