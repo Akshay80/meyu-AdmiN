@@ -11,7 +11,7 @@ export function logoutFun() {
   return ApiInstance.get(`${Api.logout}`);
 }
 
-// signup 
+// signup
 export function signupFun(payload) {
   return ApiInstance.post(`${Api.signup}`, payload);
 }
