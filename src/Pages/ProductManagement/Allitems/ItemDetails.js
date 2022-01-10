@@ -180,7 +180,7 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
             </div>
           </Row>
           <div className="d-flex align-items-center justify-content-center">
-            <button type="submit" className="btn btn-success w-25">
+            <button type="submit" className="btn btn-success px-5">
               Save
             </button>
           </div>
