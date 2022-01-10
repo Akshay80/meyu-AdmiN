@@ -109,7 +109,11 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
               controlId="formGridID"
             >
               <Form.Label className="mb-1">Product ID</Form.Label>
-              <Form.Control type="text" defaultValue={itemDetail?.id} />
+              <Form.Control
+                type="text"
+                readOnly
+                defaultValue={itemDetail?.id}
+              />
             </Form.Group>
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
@@ -162,12 +166,25 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
               controlId="formGridDate"
             >
-              <Form.Label className="mb-1">Price</Form.Label>
+              <Form.Label className="mb-1">Chef Price</Form.Label>
+              <Form.Control
+                defaultValue={itemDetail?.totalCostOfRecipe}
+                type="number"
+                readOnly
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group
+              className="col-md-6 col-sm-6 col-xs-12 mb-3"
+              controlId="formGridDate"
+            >
+              <Form.Label className="mb-1">Selling Price</Form.Label>
               <Form.Control
                 defaultValue={itemDetail?.totalCostOfRecipe}
                 type="number"
               ></Form.Control>
             </Form.Group>
+
             <div className="d-flex flex-column w-100 flex-direction-column pb-2 align-items-start">
               <label>Description</label>
               <textarea
