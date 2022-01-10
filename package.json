@@ -1,6 +1,5 @@
 {
   "version": "0.1.0",
-  "homepage": "https://maddyahmad.github.io/meyu-admin",
   "private": false,
   "dependencies": {
     "@hookform/resolvers": "^2.8.3",
