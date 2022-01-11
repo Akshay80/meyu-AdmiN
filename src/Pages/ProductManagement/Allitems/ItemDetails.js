@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Row } from "react-bootstrap";
 import { Input } from "reactstrap";
 import "../../../Components/Common/Buttons/buttons.scss";
+import { useForm } from "react-hook-form";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import UserImage from "../../../Assets/Images/blank-user.png";
@@ -11,6 +12,13 @@ import { getAllTagFun } from "../../../Services/tagServices";
 
 const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
   const [tagOption, setTagOption] = useState([]);
+  const [err, setError] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   // change status of Item/Recipe
   const changeStatus = (value) => {
     let params = {
@@ -54,10 +62,23 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
       .catch(function (error) {});
   };
 
+function submitdata(data)
+{
+  if(Math.floor(itemDetail.totalCostOfRecipe) < data.sellingPrice)
+  {
+    setError('');
+  }
+  else
+  {
+    setError("Selling Price must be greater than Chef Price!");
+  }
+}
+
+
   const animatedComponents = makeAnimated();
 
   return (
-    <div className="card p-5 m-3">
+    <div className="card p-5 m-3" onSubmit={handleSubmit(submitdata)}>
       <div className="pb-5">
         <div className="profile-pic-wrapper pb-2">
           <div className="pic-holder">
@@ -180,9 +201,18 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
             >
               <Form.Label className="mb-1">Selling Price</Form.Label>
               <Form.Control
-                defaultValue={itemDetail?.totalCostOfRecipe}
+                // defaultValue={itemDetail?.totalCostOfRecipe}
+                // onChange={(e) => PriceFun(e.target.value)}
                 type="number"
+                step={'0.01'}
+                {...register("sellingPrice", {
+                  required: "Selling Price is required" || err,
+                })}
               ></Form.Control>
+               {errors.sellingPrice?
+                      <p className="errors">{errors.sellingPrice.message}</p>
+                    :<p className="errors">{err}</p>}
+              
             </Form.Group>
 
             <div className="d-flex flex-column w-100 flex-direction-column pb-2 align-items-start">
