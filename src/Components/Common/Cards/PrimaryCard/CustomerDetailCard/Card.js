@@ -4,7 +4,7 @@ import "./Card.scss";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
-const CustomerCard = ({ customerDetail }) => {
+const CustomerCard = ({ customerDetail, customerImage }) => {
   const disContinue = () => {
     confirmAlert({
       title: "Discontinue!",
@@ -33,9 +33,9 @@ const CustomerCard = ({ customerDetail }) => {
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={
-                  customerDetail?.profileUrl === null
+                  customerImage === `http://52.77.236.78:8081/null`
                     ? UserImage
-                    : customerDetail?.profileUrl
+                    : customerImage
                 }
                 className="img"
                 alt="..."

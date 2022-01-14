@@ -4,8 +4,11 @@ import "./FoodCard.scss";
 import ReactStars from "react-stars-new";
 import ReadMoreReact from "read-more-react";
 import Carousel from "react-bootstrap/Carousel";
+import veg from "../../../../Assets/Icon/Veg.svg";
+import nonveg from "../../../../Assets/Icon/NonVeg.svg";
 
-const FoodCard = ({ items }) => {
+const FoodCard = ({ items, chefRecipe }) => {
+  // console.log("ChefRecipe: ", chefRecipe);
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4">
@@ -17,7 +20,7 @@ const FoodCard = ({ items }) => {
 
       <div className="row col-md-12">
         {items?.map((val) => {
-          let price = val.currencySymbol + val.totalCostOfRecipe;
+          let price = "₹" + val.totalCostOfRecipe;
           return (
             <div
               key={val?.MediaObjects?.map((food) => food?.id)}
@@ -40,7 +43,15 @@ const FoodCard = ({ items }) => {
                 </Carousel>
 
                 <div className="card-body">
-                  <h6 className="card-title">{val.dishName}</h6>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <h6 className="card-title">{val.dishName}</h6>
+                    <img
+                      src={val.isVegetarian === true ? veg : nonveg}
+                      alt="dishtype"
+                      width={val.isVegetarian === true ? 21 : 26}
+                    />
+                  </div>
+
                   <div className="card-description text-muted">
                     <ReadMoreReact ideal={120} text={val.description} />
                   </div>

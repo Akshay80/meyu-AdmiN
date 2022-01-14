@@ -8,17 +8,21 @@ import { useParams } from "react-router-dom";
 
 const CustomerDetail = () => {
   const [customerDetail, setCustomerDetail] = useState({});
+  const [customerImage, setCustomerImage] = useState("");
   const { customerId } = useParams();
 
   useEffect(() => {
     fetchCustomerDetail();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchCustomerDetail = () => {
     getCustomerDetails(customerId)
       .then((response) => {
         setCustomerDetail(response?.data?.data);
+        setCustomerImage(
+          `http://52.77.236.78:8081/${response.data.data.profileUrl}`
+        );
       })
       .catch(function (error) {});
   };
@@ -37,7 +41,10 @@ const CustomerDetail = () => {
         </h6>
       </div>
       <div>
-        <CustomerCard customerDetail={customerDetail} />
+        <CustomerCard
+          customerDetail={customerDetail}
+          customerImage={customerImage}
+        />
       </div>
       <div className="pb-3">
         <div className="page-heading d-flex align-items-center p-4  ">

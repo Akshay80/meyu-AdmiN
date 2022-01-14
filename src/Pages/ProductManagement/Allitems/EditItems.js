@@ -34,9 +34,13 @@ const EditItems = () => {
           );
 
           // set chef image
-          response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
-            setChefImage(`http://52.77.236.78:8081/${chefPic?.imageUrl}`)
+          setChefImage(
+            `http://52.77.236.78:8081/${response?.data?.data?.profile?.profileUrl}`
           );
+
+          // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
+          //   setChefImage(`http://52.77.236.78:8081/${chefPic?.imageUrl}`)
+          // );
           // ===========================
           //  set Tags Data
           let tempTag = [];

@@ -7,7 +7,7 @@ import { confirmChefAccount } from "../../../../../Services/chefServices";
 import { toast } from "react-toastify";
 import { getAllItemsList } from "../../../../../Services/itemsService";
 
-const ChefCard = ({ chefDetail, chefPic }) => {
+const ChefCard = ({ chefRecipe, chefDetail, chefPic }) => {
   const [togglemenu, setToggleMenu] = useState(false);
   const [apiState, setApiState] = useState("false");
   const [items, setItems] = useState();
@@ -138,7 +138,12 @@ const ChefCard = ({ chefDetail, chefPic }) => {
           </div>
         </div>
       </div>
-      {togglemenu ? <FoodCard items={items} /> : <ChefOrderDetails />}
+
+      {togglemenu ? (
+        <FoodCard items={items} chefRecipe={chefRecipe} />
+      ) : (
+        <ChefOrderDetails />
+      )}
     </div>
   );
 };

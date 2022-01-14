@@ -28,8 +28,9 @@ const ItemChefCard = ({ chefDetail, chefImage }) => {
                 <h5 className="mb-0">
                   {chefDetail?.firstName} {chefDetail?.lastName}
                 </h5>
+                <p>{chefDetail?.email}</p>
                 <p>Phone Number</p>
-                <p>Email</p>
+                <br />
                 <p>Chef Timing</p>
               </div>
             </div>
