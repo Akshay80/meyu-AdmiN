@@ -78,7 +78,6 @@ const ChangePassword = () => {
                     <input
                       autoComplete="off"
                       name="oldpassword"
-                      // maxLength="8"
                       placeholder="Old Password"
                       className="form-control shadow-none"
                       type="oldpassword"
