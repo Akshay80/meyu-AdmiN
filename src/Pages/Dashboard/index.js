@@ -15,7 +15,6 @@ const Dashboard = () => {
           <div className="page-heading-wapper align-items-center d-flex">
             <Home className="page-icon m-0" />
             <h3 className="page-sec-heading m-0 mx-2">Dashboard</h3>
-            {console.log("hello world")}
           </div>
         </div>
         <div className="date-filters d-flex">
