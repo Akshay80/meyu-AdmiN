@@ -28,10 +28,7 @@ import {
 const TagsTable = () => {
   const [editId, setEditId] = useState();
   const [tag, setTag] = useState([]);
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const {
     register,
     handleSubmit,
@@ -316,10 +313,10 @@ const TagsTable = () => {
                 autoComplete="off"
                 {...register("tags", {
                   required: "Tag is required!",
-                  pattern: {
-                    value: /^[A-Za-z]+$/,
-                    message: "Only alphabets are allowed!",
-                  },
+                  // pattern: {
+                  //   value: /^[A-Za-z]+$/,
+                  //   message: "Only alphabets are allowed!",
+                  // },
                 })}
               />
             </Form.Group>
