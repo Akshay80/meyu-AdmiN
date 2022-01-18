@@ -147,6 +147,7 @@ const CategoriesTable = () => {
   const categories = () => {
     viewCategoryService()
       .then((res) => {
+        console.log(res);
         setCategoryData(res.data.data);
       })
       .catch(function (error) {});
@@ -259,7 +260,18 @@ const CategoriesTable = () => {
         });
         categories();
       })
-      .catch(function (error) {});
+      .catch(function (error) {
+        toast.error("Category is added to a recipe so it cannot be deleted", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      });
   }
 
   function handleDelete(rowId, name) {

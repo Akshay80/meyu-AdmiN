@@ -145,7 +145,7 @@ const UserProfile = () => {
     formData.append("profile", e?.target?.files[0]);
     changeProfileImage(formData)
       .then((response) => {
-        if (response?.success === "true") {
+        if (response?.statusText === "OK") {
           getProfileData();
         }
       })
@@ -214,7 +214,7 @@ const UserProfile = () => {
               {...register("firstName", { required: true })}
               className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
             />
-          
+
             <div className="invalid-feedback">First name is required!</div>
           </div>
 
@@ -243,9 +243,9 @@ const UserProfile = () => {
             />
             <div className="invalid-feedback">Email is required!</div>
           </div>
-            {errors.firstName && (
-                  <p className="errorss">{errors.firstName.message}</p>
-                )}
+          {errors.firstName && (
+            <p className="errorss">{errors.firstName.message}</p>
+          )}
 
           <div>
             <label htmlFor="validationCustom04" className="form-label">
