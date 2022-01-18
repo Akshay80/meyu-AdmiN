@@ -8,8 +8,7 @@ const DefaultLayout = () => {
   const menuToggleHandle = () => {
     setMenuToggle(!menuToggle);
   };
-  
-  
+
   return (
     <div className="main-wrapper">
       <Sidebar menuToggleState={menuToggle} toggleMenu={menuToggleHandle} />

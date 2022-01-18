@@ -23,29 +23,22 @@ function PrivateRoutes() {
     <Routes>
       <Route path={Path.dashboard} element={<DefaultLayout />}>
         <Route path={Path.changePassword} element={<ChangePassword />} />
-
         <Route path={""} element={<Dashboard />} />
-
         <Route path={Path.customer} element={<Customer />} />
         <Route
           path={`${Path.customerDetails}/:customerId`}
           element={<CustomerDetail />}
         />
         <Route path={`${Path.chefDetails}/:chefId`} element={<ChefDetail />} />
-
         <Route path={Path.chef} element={<Chef />} />
         <Route path={Path.allItems} element={<AllItems />} />
         <Route path={`${Path.editItems}/:itemId`} element={<EditItems />} />
-
         <Route path={Path.categories} element={<Categories />} />
-
         <Route path={Path.tags} element={<Tags />} />
         <Route path={Path.unit} element={<UnitTable />} />
         <Route path={Path.ingredients} element={<Ingredients />} />
-
         <Route path={Path.orderManagement} element={<OrderManagement />} />
         <Route path={Path.orderDetails} element={<OrderProfile />} />
-
         <Route path={Path.userProfile} element={<UserProfile />} />
       </Route>
     </Routes>
