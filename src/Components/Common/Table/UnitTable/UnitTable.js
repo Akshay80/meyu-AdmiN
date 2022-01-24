@@ -71,14 +71,14 @@ const UnitTable = () => {
       headerAlign: "center",
       align: "center",
     },
-    {
-      dataField: "sortName",
-      text: "Quantity",
-      headerSortingStyle,
-      sort: true,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   dataField: "sortName",
+    //   text: "Quantity",
+    //   headerSortingStyle,
+    //   sort: true,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
 
     {
       dataField: "link",
@@ -127,11 +127,12 @@ const UnitTable = () => {
   const onSubmit = (data) => {
     const unitData = {
       unitName: data.unitname,
-      sortName: data.sortname,
+      // sortName: data.sortname,
     };
     postUnits(unitData)
       .then(function (res) {
         handleClose();
+        console.log("res");
         toast.success("Unit Added Successfully", {
           position: "top-right",
           autoClose: 2000,
@@ -170,7 +171,7 @@ const UnitTable = () => {
       .then(function (response) {
         setUnitId(response.data.data.id);
         setValue("unitname", response.data.data.unitName);
-        setValue("sortname", response.data.data.sortName);
+        // setValue("sortname", response.data.data.sortName);
       })
       .catch(function (error) {});
   }
@@ -179,7 +180,7 @@ const UnitTable = () => {
     const editData = {
       id: unitId,
       unitName: data.unitname,
-      sortName: data.sortname,
+      // sortName: data.sortname,
     };
     putUnits(editData)
       .then(function (res) {
@@ -301,7 +302,7 @@ const UnitTable = () => {
             {errors.unitname && (
               <p className="errors">{errors.unitname.message}</p>
             )}
-            <Form.Group className="mt-3">
+            {/* <Form.Group className="mt-3">
               <Form.Label>Quantity</Form.Label>
               <Form.Control
                 type="text"
@@ -314,7 +315,7 @@ const UnitTable = () => {
             </Form.Group>
             {errors.sortname && (
               <p className="errors">{errors.sortname.message}</p>
-            )}
+            )} */}
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
             <Button variant="primary" type="submit">
@@ -354,7 +355,7 @@ const UnitTable = () => {
             {errors.unitname && (
               <p className="errors">{errors.unitname.message}</p>
             )}
-            <Form.Group className="mt-3">
+            {/* <Form.Group className="mt-3">
               <Form.Label>Quantity</Form.Label>
               <Form.Control
                 type="text"
@@ -367,7 +368,7 @@ const UnitTable = () => {
             </Form.Group>
             {errors.sortname && (
               <p className="errors">{errors.sortname.message}</p>
-            )}
+            )} */}
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
             <Button variant="success" type="submit">
