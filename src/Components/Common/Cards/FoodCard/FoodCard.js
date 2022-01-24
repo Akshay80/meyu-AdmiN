@@ -53,7 +53,12 @@ const FoodCard = ({ items, chefRecipe }) => {
                   </div>
 
                   <div className="card-description text-muted">
-                    <ReadMoreReact min={100} ideal={120} max={140} text={val.description}  />
+                    <ReadMoreReact
+                      min={100}
+                      ideal={120}
+                      max={140}
+                      text={val.description}
+                    />
                   </div>
                   <ReactStars
                     count={Math.random() * 5}
