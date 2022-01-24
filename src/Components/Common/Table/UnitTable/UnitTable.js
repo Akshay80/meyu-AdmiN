@@ -73,7 +73,7 @@ const UnitTable = () => {
     },
     {
       dataField: "sortName",
-      text: "Sort Name",
+      text: "Quantity",
       headerSortingStyle,
       sort: true,
       headerAlign: "center",
@@ -92,10 +92,10 @@ const UnitTable = () => {
               className="edit-icon"
               onClick={() => handleEdit(row.id, row.name)}
             />
-            <DeleteIcon
+            {/* <DeleteIcon
               className="iconHover delete-icon"
               onClick={() => handleDelete(row.id, row.name)}
-            />
+            /> */}
           </div>
         );
       },
@@ -117,7 +117,6 @@ const UnitTable = () => {
   async function units() {
     await allUnits()
       .then(function (res) {
-        console.log("unit data", res);
         setUnitData(res.data.data);
       })
       .catch(function (error) {});
@@ -273,7 +272,7 @@ const UnitTable = () => {
           </button>
         </div>
       </div>
-      {/* Modal for Adding New Category */}
+      {/* Modal for Adding New Unit */}
       <Modal
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -303,13 +302,13 @@ const UnitTable = () => {
               <p className="errors">{errors.unitname.message}</p>
             )}
             <Form.Group className="mt-3">
-              <Form.Label>Sort Name</Form.Label>
+              <Form.Label>Quantity</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="sort name"
+                placeholder="quantity"
                 autoComplete="off"
                 {...register("sortname", {
-                  required: "Sort Name is required!",
+                  required: "Quantity is required!",
                 })}
               />
             </Form.Group>
@@ -356,13 +355,13 @@ const UnitTable = () => {
               <p className="errors">{errors.unitname.message}</p>
             )}
             <Form.Group className="mt-3">
-              <Form.Label>Sort Name</Form.Label>
+              <Form.Label>Quantity</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="sort name"
+                placeholder="quantity"
                 autoComplete="off"
                 {...register("sortname", {
-                  required: "Sort Name is required!",
+                  required: "Quantity is required!",
                 })}
               />
             </Form.Group>
