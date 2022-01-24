@@ -43,8 +43,8 @@ const FoodCard = ({ items, chefRecipe }) => {
                 </Carousel>
 
                 <div className="card-body">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <h6 className="card-title">{val.dishName}</h6>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h6 className="card-title mb-0">{val.dishName}</h6>
                     <img
                       src={val.isVegetarian === true ? veg : nonveg}
                       alt="dishtype"
@@ -53,7 +53,7 @@ const FoodCard = ({ items, chefRecipe }) => {
                   </div>
 
                   <div className="card-description text-muted">
-                    <ReadMoreReact ideal={120} text={val.description} />
+                    <ReadMoreReact min={100} ideal={120} max={140} text={val.description}  />
                   </div>
                   <ReactStars
                     count={Math.random() * 5}

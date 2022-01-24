@@ -16,11 +16,11 @@ import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useForm } from "react-hook-form";
 import {
-    postUnits,
-    putUnits,
-    deleteUnits,
-    allUnits,
-    singleUnits
+  postUnits,
+  putUnits,
+  deleteUnits,
+  allUnits,
+  singleUnits,
 } from "../../../../Services/unitService";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -32,7 +32,10 @@ const UnitTable = () => {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => {reset();setShow(true);}
+  const handleShow = () => {
+    reset();
+    setShow(true);
+  };
 
   const [show1, setShow1] = useState(false);
   const handleClose1 = () => setShow1(false);
@@ -70,7 +73,7 @@ const UnitTable = () => {
     },
     {
       dataField: "sortName",
-      text: "Sort Name",
+      text: "Quantity",
       headerSortingStyle,
       sort: true,
       headerAlign: "center",
@@ -89,10 +92,10 @@ const UnitTable = () => {
               className="edit-icon"
               onClick={() => handleEdit(row.id, row.name)}
             />
-            <DeleteIcon
+            {/* <DeleteIcon
               className="iconHover delete-icon"
               onClick={() => handleDelete(row.id, row.name)}
-            />
+            /> */}
           </div>
         );
       },
@@ -116,17 +119,16 @@ const UnitTable = () => {
       .then(function (res) {
         setUnitData(res.data.data);
       })
-      .catch(function (error) {
-      });
+      .catch(function (error) {});
   }
 
   // ==================== add unit ============
 
   const onSubmit = (data) => {
-    const unitData = { 
-        unitName: data.unitname,
-        sortName: data.sortname
-    }
+    const unitData = {
+      unitName: data.unitname,
+      sortName: data.sortname,
+    };
     postUnits(unitData)
       .then(function (res) {
         handleClose();
@@ -145,7 +147,7 @@ const UnitTable = () => {
       })
 
       .catch(function (error) {
-          toast.error(error.error, {
+        toast.error(error.error, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
@@ -158,31 +160,30 @@ const UnitTable = () => {
       });
   };
 
-// ================ put unit in modal ===============
+  // ================ put unit in modal ===============
 
-async function handleEdit(rowId) {
-  handleShow1();
-  reset()
-  // Getting Data for Specific category
-  await singleUnits(rowId)
-    .then(function (response) {   
-      setUnitId( response.data.data.id)
+  async function handleEdit(rowId) {
+    handleShow1();
+    reset();
+    // Getting Data for Specific category
+    await singleUnits(rowId)
+      .then(function (response) {
+        setUnitId(response.data.data.id);
         setValue("unitname", response.data.data.unitName);
         setValue("sortname", response.data.data.sortName);
-    })
-    .catch(function (error) {
-    });
-}
+      })
+      .catch(function (error) {});
+  }
 
   const EditSubmit = (data) => {
     const editData = {
-        id: unitId,
-        unitName: data.unitname,
-        sortName: data.sortname
-    }
+      id: unitId,
+      unitName: data.unitname,
+      sortName: data.sortname,
+    };
     putUnits(editData)
       .then(function (res) {
-          handleClose1();
+        handleClose1();
         toast.info("Units Edited Successfully", {
           position: "top-right",
           autoClose: 3000,
@@ -192,10 +193,10 @@ async function handleEdit(rowId) {
           draggable: false,
           progress: 0,
           toastId: "my_toast",
-        })
-        units()
+        });
+        units();
       })
-      
+
       .catch(function (error) {
         toast.error(error.error, {
           position: "top-right",
@@ -230,8 +231,7 @@ async function handleEdit(rowId) {
         });
         units();
       })
-      .catch(function (error) {
-      });
+      .catch(function (error) {});
   }
 
   function handleDelete(rowId, name) {
@@ -253,8 +253,6 @@ async function handleEdit(rowId) {
     });
   }
 
- 
-
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4 justify-content-between">
@@ -274,7 +272,7 @@ async function handleEdit(rowId) {
           </button>
         </div>
       </div>
-      {/* Modal for Adding New Category */}
+      {/* Modal for Adding New Unit */}
       <Modal
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -300,15 +298,17 @@ async function handleEdit(rowId) {
                 })}
               />
             </Form.Group>
-            {errors.unitname && <p className="errors">{errors.unitname.message}</p>}
+            {errors.unitname && (
+              <p className="errors">{errors.unitname.message}</p>
+            )}
             <Form.Group className="mt-3">
-              <Form.Label>Sort Name</Form.Label>
+              <Form.Label>Quantity</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="sort name"
+                placeholder="quantity"
                 autoComplete="off"
                 {...register("sortname", {
-                  required: "Sort Name is required!",
+                  required: "Quantity is required!",
                 })}
               />
             </Form.Group>
@@ -347,20 +347,23 @@ async function handleEdit(rowId) {
                 placeholder="unit name"
                 autoComplete="off"
                 {...register("unitname", {
-                  required: "Unit Name is required!"
+                  required: "Unit Name is required!",
                 })}
               />
             </Form.Group>
-            {errors.unitname && <p className="errors">{errors.unitname.message}</p>}
+            {errors.unitname && (
+              <p className="errors">{errors.unitname.message}</p>
+            )}
             <Form.Group className="mt-3">
-              <Form.Label>Sort Name</Form.Label>
+              <Form.Label>Quantity</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="sort name"
+                placeholder="quantity"
                 autoComplete="off"
                 {...register("sortname", {
-                  required: "Sort Name is required!"
-                })}/>
+                  required: "Quantity is required!",
+                })}
+              />
             </Form.Group>
             {errors.sortname && (
               <p className="errors">{errors.sortname.message}</p>
@@ -379,10 +382,10 @@ async function handleEdit(rowId) {
           <PaginationProvider
             pagination={paginationFactory({
               custom: true,
-              totalSize:unitData.length,
+              totalSize: unitData.length,
               prePageText: "Previous",
               nextPageText: "Next",
-              page:1,
+              page: 1,
               sizePerPageList: [
                 {
                   text: "5",

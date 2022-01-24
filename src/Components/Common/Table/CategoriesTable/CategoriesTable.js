@@ -116,10 +116,10 @@ const CategoriesTable = () => {
               className="edit-icon"
               onClick={() => handleEdit(row.id, row.name)}
             />
-            <DeleteIcon
+            {/* <DeleteIcon
               className="iconHover delete-icon"
               onClick={() => handleDelete(row.id, row.name)}
-            />
+            /> */}
           </div>
         );
       },
