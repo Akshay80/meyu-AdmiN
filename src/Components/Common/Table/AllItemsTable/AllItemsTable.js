@@ -81,8 +81,8 @@ const AllItemsTable = () => {
       text: "Product ID",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
 
     {
@@ -90,8 +90,8 @@ const AllItemsTable = () => {
       text: "Product Name",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
 
     {
@@ -99,25 +99,25 @@ const AllItemsTable = () => {
       text: "Price",
       headerSortingStyle,
       sort: true,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     {
       dataField: "isVerified",
       text: "Status",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     {
       dataField: "link",
       text: "Action",
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex justify-content-evenly align-items-center">
+          <div className="d-flex">
             <NavLink to={`${Path.editItems}/${row.id}`}>
               <EditIcon className="edit-icon" />
             </NavLink>

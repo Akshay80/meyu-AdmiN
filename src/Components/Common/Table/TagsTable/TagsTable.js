@@ -208,26 +208,26 @@ const TagsTable = () => {
       },
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     {
       dataField: "name",
       text: "Name",
       headerSortingStyle,
       sort: true,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
 
     {
       dataField: "link",
       text: "Action",
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex justify-content-evenly">
+          <div className="d-flex">
             <EditIcon
               className="mt-1 edit-icon"
               onClick={() => handleEdits(row.id, row.name)}

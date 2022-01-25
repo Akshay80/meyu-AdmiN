@@ -65,8 +65,8 @@ const CategoriesTable = () => {
       text: "Serial No",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
       formatter: (cell, row, rowIndex, formatExtraData) => {
         return rowIndex + 1;
       },
@@ -76,11 +76,11 @@ const CategoriesTable = () => {
       text: "Image",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex align-items-center justify-content-evenly">
+          <div className="d-flex">
             {row.MediaObjects.map((rows, key) => (
               <input
                 key={key}
@@ -100,18 +100,18 @@ const CategoriesTable = () => {
       text: "Cuisine",
       headerSortingStyle,
       sort: true,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
 
     {
       dataField: "link",
       text: "Action",
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex align-items-center justify-content-evenly">
+          <div className="d-flex">
             <EditIcon
               className="edit-icon"
               onClick={() => handleEdit(row.id, row.name)}
