@@ -81,8 +81,8 @@ const ChefTable = () => {
       text: "Chef ID",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
 
     {
@@ -90,41 +90,41 @@ const ChefTable = () => {
       text: "Chef Name",
       headerSortingStyle,
       sort: true,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     {
       dataField: "email",
       text: "Email",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     {
       dataField: "phone",
       text: "Contact No.",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     {
       dataField: "verificationDate",
       text: "Join Date",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     {
       dataField: "link",
       text: "Action",
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex justify-content-evenly align-items-center">
+          <div className="d-flex">
             <NavLink to={`${Path.chefDetails}/${row.id}`}>
               <ViewIcon className="view-icon" />
             </NavLink>

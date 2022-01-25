@@ -57,8 +57,8 @@ const UnitTable = () => {
       text: "Serial No",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
       formatter: (cell, row, rowIndex, formatExtraData) => {
         return rowIndex + 1;
       },
@@ -68,8 +68,8 @@ const UnitTable = () => {
       text: "Unit Name",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     // {
     //   dataField: "sortName",
@@ -83,11 +83,11 @@ const UnitTable = () => {
     {
       dataField: "link",
       text: "Action",
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex align-items-center justify-content-evenly">
+          <div className="d-flex">
             <EditIcon
               className="edit-icon"
               onClick={() => handleEdit(row.id, row.name)}

@@ -54,19 +54,19 @@ function CustomerTable() {
       text: "Customer ID",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     {
       dataField: "createdAt",
       text: "Join Date",
       sort: true,
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex align-items-center justify-content-evenly">
+          <div className="d-flex">
             {row.createdAt
               .substring(0, row.createdAt.length - 14)
               .split("-")
@@ -80,22 +80,22 @@ function CustomerTable() {
       dataField: "fullName",
       text: "Customer Name",
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     {
       dataField: "email",
       text: "Email",
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     {
       dataField: "phone",
       text: "Contact No.",
       headerSortingStyle,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
     },
     // {
     //   dataField: "createdAt",
@@ -108,11 +108,11 @@ function CustomerTable() {
     {
       dataField: "link",
       text: "Action",
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
       formatter: (rowContent, row) => {
         return (
-          <div className="d-flex justify-content-evenly align-items-center">
+          <div className="d-flex">
             <NavLink to={`${Path.customerDetails}/${row?.id}`}>
               <ViewIcon className="view-icon" />
             </NavLink>
