@@ -2,8 +2,8 @@ import ApiInstance from "../config/Intercepter";
 import Api from "../config/Api";
 
 //  confirm chef account
-export function confirmChefAccount(payload) {
-  return ApiInstance?.put(`${Api.confirmChef}`, payload);
+export function confirmChefAccount(id, payload) {
+  return ApiInstance?.put(`${Api.confirmChef}/${id}`, payload);
 }
 
 // chef card details

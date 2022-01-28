@@ -22,7 +22,7 @@ const ChefDetail = ({ menuToggleState }) => {
         setChefDetail(response?.data?.data?.chefProfile);
         setChefRecipe(response.data.data.recipes);
         setChefPic(
-          `http://52.77.236.78:8081/${response?.data?.data?.chefProfile?.profileUrl}`
+          `http://52.77.236.78:8082/${response?.data?.data?.chefProfile?.profileUrl}`
         );
       })
       .catch(function (error) {});
@@ -45,6 +45,7 @@ const ChefDetail = ({ menuToggleState }) => {
         chefPic={chefPic}
         chefDetail={chefDetail}
         chefRecipe={chefRecipe}
+        chefId={chefId}
       />
     </div>
   );

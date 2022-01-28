@@ -15,6 +15,7 @@ import { NavLink } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import { chefDetailsService, deleteChef } from "../../../../Services/chefServices";
 import { toast } from "react-toastify";
+import moment from 'moment'
 
 const ChefTable = () => {
   const [chef, setChef] = useState([]);
@@ -110,12 +111,19 @@ const ChefTable = () => {
       // align: "center",
     },
     {
-      dataField: "verificationDate",
+      dataField: "createdAt",
       text: "Join Date",
       sort: true,
       headerSortingStyle,
       // headerAlign: "center",
       // align: "center",
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            {moment(row.createdAt).format("MMMM Do YYYY")}
+          </div>
+        );
+      },
     },
     {
       dataField: "link",

@@ -39,7 +39,8 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic }) => {
     let params = {
       isVerified: apiState,
     };
-    confirmChefAccount(params)
+    console.log(id);
+    confirmChefAccount(id, params)
       .then((res) => {
         if (res.data.data.message === "User profile verified successfully.") {
           toast.success(res.data.data.message, {
@@ -76,7 +77,7 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic }) => {
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={
-                  chefPic === `http://52.77.236.78:8081/null`
+                  chefPic === `http://52.77.236.78:8082/null`
                     ? UserImage
                     : chefPic
                 }

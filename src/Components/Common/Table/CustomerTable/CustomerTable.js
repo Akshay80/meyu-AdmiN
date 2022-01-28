@@ -19,6 +19,7 @@ import {
 } from "../../../../Services/customerServices";
 import Path from "../../../../Constant/RouterConstant";
 import { toast } from "react-toastify";
+import moment from 'moment'
 
 const headerSortingStyle = { backgroundColor: "#e3edf8" };
 function CustomerTable() {
@@ -67,11 +68,7 @@ function CustomerTable() {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex">
-            {row.createdAt
-              .substring(0, row.createdAt.length - 14)
-              .split("-")
-              .reverse()
-              .join("-")}
+            {moment(row.createdAt).format("MMMM Do YYYY")}
           </div>
         );
       },

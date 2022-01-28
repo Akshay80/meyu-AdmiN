@@ -33,7 +33,7 @@ export default (() => {
     //Chef
     chefDetails: `${setting.api.url}admin/getallchef`,
     getchefDetails: `${setting.api.url}common/chef-profile`,
-    confirmChef: `${setting.api.url}admin/confirmchef/:id`,
+    confirmChef: `${setting.api.url}admin/confirmchef`,
     deleteChef: `${setting.api.url}admin/user`,
 
     // tags
