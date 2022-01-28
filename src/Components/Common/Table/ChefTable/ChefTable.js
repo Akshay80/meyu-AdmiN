@@ -13,9 +13,12 @@ import "./ChefTable.css";
 import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
-import { chefDetailsService, deleteChef } from "../../../../Services/chefServices";
+import {
+  chefDetailsService,
+  deleteChef,
+} from "../../../../Services/chefServices";
 import { toast } from "react-toastify";
-import moment from 'moment'
+import moment from "moment";
 
 const ChefTable = () => {
   const [chef, setChef] = useState([]);
@@ -43,20 +46,21 @@ const ChefTable = () => {
         {
           label: "Yes",
           className: "btn btn-danger",
-          onClick: () => { deleteChef(rowId).then((response) => {
-            toast.success(response.data.data.message, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: 0,
-              toastId: "my_toast",
+          onClick: () => {
+            deleteChef(rowId).then((response) => {
+              toast.success(response.data.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: 0,
+                toastId: "my_toast",
+              });
+              data();
             });
-            data();
-          });
-        },
+          },
         },
         {
           label: "No",
