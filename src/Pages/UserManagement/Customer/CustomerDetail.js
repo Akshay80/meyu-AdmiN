@@ -21,7 +21,7 @@ const CustomerDetail = () => {
       .then((response) => {
         setCustomerDetail(response?.data?.data);
         setCustomerImage(
-          `http://52.77.236.78:8081/${response.data.data.profileUrl}`
+          `http://52.77.236.78:8082/${response.data.data.profileUrl}`
         );
       })
       .catch(function (error) {});

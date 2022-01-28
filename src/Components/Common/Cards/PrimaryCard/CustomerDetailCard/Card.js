@@ -33,7 +33,7 @@ const CustomerCard = ({ customerDetail, customerImage }) => {
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={
-                  customerImage === `http://52.77.236.78:8081/null`
+                  customerImage === `http://52.77.236.78:8082/null`
                     ? UserImage
                     : customerImage
                 }
