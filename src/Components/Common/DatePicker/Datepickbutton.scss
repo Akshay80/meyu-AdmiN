@@ -1,0 +1,12 @@
+.example-custom-input {
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 5px 10px;
+  &:hover {
+      background-color: lightgrey;
+  }
+}
+.react-datepicker-wrapper { 
+  width: unset !important;
+}

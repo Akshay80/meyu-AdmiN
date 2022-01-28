@@ -1,0 +1,11 @@
+.dropdown-action {
+  border: none;
+  text-align: start;
+  width: 100%;
+  background-color: transparent;
+  padding: 0;
+}
+
+.dropdown-action:hover {
+  color: #f27125 !important;
+}

@@ -1,0 +1,24 @@
+@import '../../Styles/custom';
+
+.page-heading {
+        color: black;
+        flex-wrap: wrap;
+    }
+    .dashboard-content {
+        height: 100%;
+    }
+    
+    @media (max-width: 576px) {
+    .dashboard-wrapper {
+        align-items: center;
+               justify-content: center;
+               display: flex;
+               flex-direction: column;
+    }
+    .page-heading {
+        flex-direction:column;
+    }
+    .date-filters {
+        margin-bottom: 15px;
+    }
+}

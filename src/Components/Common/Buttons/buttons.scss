@@ -1,0 +1,39 @@
+@import "../../../Styles/theme";
+
+.btn-auth
+{
+  color: #fff !important;
+    border: 1px solid #f27125 !important;
+    background-color: #f27125!important;
+    width: 100%;
+}
+
+.btn:focus, a:focus
+{
+         outline: none!important;
+         box-shadow: none!important;
+}
+
+.btn-secondary {
+  color: $sec-color !important;
+  border: 1px solid $sec-color !important;
+  background-color: inherit !important;
+}
+
+.btn-dropdown {
+  background-color: transparent !important;
+  color: black !important;
+  border: unset !important;
+  font-size: x-large;
+
+  &:hover {
+    background-color: transparent !important;
+  }
+  &:active {
+    background-color: transparent !important;
+  }
+  &:focus {
+    background-color: transparent !important;
+    box-shadow: unset !important;
+  }
+}
