@@ -109,6 +109,12 @@ const AllItemsTable = () => {
       headerSortingStyle,
       // headerAlign: "center",
       // align: "center",
+      formatter: (rowContent, row) => {
+        return(row.isVerified === true?
+        <p>Approved</p>:<p>Pending</p>
+        )}
+            
+
     },
     {
       dataField: "link",
