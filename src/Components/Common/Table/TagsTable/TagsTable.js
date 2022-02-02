@@ -206,7 +206,6 @@ const TagsTable = () => {
       formatter: (cell, row, rowIndex, formatExtraData) => {
         return rowIndex + 1;
       },
-      sort: true,
       headerSortingStyle,
       // headerAlign: "center",
       // align: "center",
@@ -386,6 +385,7 @@ const TagsTable = () => {
                       wrapperClasses="table-responsive"
                       hover
                       striped
+                      bootstrap4
                       data={tag}
                       condensed={false}
                       noDataIndication="No Data Is Available"

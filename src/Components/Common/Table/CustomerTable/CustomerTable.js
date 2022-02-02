@@ -76,6 +76,7 @@ function CustomerTable() {
     {
       dataField: "fullName",
       text: "Customer Name",
+      sort: true,
       headerSortingStyle,
       // headerAlign: "center",
       // align: "center",
@@ -83,6 +84,7 @@ function CustomerTable() {
     {
       dataField: "email",
       text: "Email",
+      sort: true,
       headerSortingStyle,
       // headerAlign: "center",
       // align: "center",
@@ -90,6 +92,7 @@ function CustomerTable() {
     {
       dataField: "phone",
       text: "Contact No.",
+      sort: true,
       headerSortingStyle,
       // headerAlign: "center",
       // align: "center",
@@ -222,6 +225,7 @@ function CustomerTable() {
                   wrapperClasses="table-responsive"
                   hover
                   striped
+                  bootstrap4
                   condensed={false}
                   noDataIndication="No Data Is Available"
                   data={customerData.map((items) => items)}

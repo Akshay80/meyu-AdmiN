@@ -9,6 +9,7 @@ const ChefDetail = ({ menuToggleState }) => {
   const [chefDetail, setChefDetail] = useState({});
   const [chefPic, setChefPic] = useState("");
   const [chefRecipe, setChefRecipe] = useState("");
+  const [isVerfied, setIsVerfied] = useState();
   const { chefId } = useParams();
 
   useEffect(() => {
@@ -22,8 +23,9 @@ const ChefDetail = ({ menuToggleState }) => {
         setChefDetail(response?.data?.data?.chefProfile);
         setChefRecipe(response.data.data.recipes);
         setChefPic(
-          `http://52.77.236.78:8082/${response?.data?.data?.chefProfile?.profileUrl}`
+          `http://meyu.sg:8081/${response?.data?.data?.chefProfile?.profileUrl}`
         );
+        setIsVerfied(response.data.data.chefProfile?.isVerified);  
       })
       .catch(function (error) {});
   };
@@ -46,6 +48,7 @@ const ChefDetail = ({ menuToggleState }) => {
         chefDetail={chefDetail}
         chefRecipe={chefRecipe}
         chefId={chefId}
+        isVerfied={isVerfied}
       />
     </div>
   );

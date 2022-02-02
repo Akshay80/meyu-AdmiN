@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Signup.scss";
 import Path from "../../../Constant/RouterConstant";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,8 @@ import { signupFun } from "../../../Services/authService";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as Eyeopen } from "../../../Assets/Icon/Eye.svg";
+import { ReactComponent as Eyeclose } from "../../../Assets/Icon/Eyeclose.svg";
 
 const Signup = () => {
   const {
@@ -15,7 +17,10 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-
+  const [passwordShown, setPasswordShown] = useState(false);
+  const showPassword = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
   function onSubmit(data) {
     const params = {
       user: {
@@ -25,12 +30,18 @@ const Signup = () => {
         email: data.email,
         userRole: 4,
         password: data.password,
+        onWhatsApp:false
+			},
+		address:{
+        latitude: "1.3189",
+        longitude: "103.8914",
+		    zipCode:"248171"
       },
     };
     signupFun(params)
       .then((data) => {
         if (data.data.success === false) {
-          toast.error(data.data.error, {
+          toast.error(data.data.error.message, {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: true,
@@ -41,12 +52,35 @@ const Signup = () => {
             toastId: "my_toast",
           });
         } else {
+          toast.success(data.data.data.message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
           reset();
-          navigate("/login");
+          setTimeout(() => {
+            navigate("/login");  
+          }, 3000);
         }
       })
 
-      .catch(function (error) {});
+      .catch(function (error) {
+        toast.error(error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      });
   }
 
   return (
@@ -145,12 +179,13 @@ const Signup = () => {
                     <p className="errorss">{errors.email.message}</p>
                   )}
                 </div>
-                <div className="col-12">
+                <div className="col-sm-12">
+                    <div className="input-group">
                   <input
                     name="password"
                     placeholder="Password"
                     className="form-control shadow-none"
-                    type="password"
+                    type={passwordShown ? "text" : "password"}
                     {...register("password", {
                       required: "Password is required",
                       minLength: {
@@ -159,10 +194,19 @@ const Signup = () => {
                       },
                     })}
                   />
+                     <button
+                        className="eyebtn"
+                        type="button"
+                        onClick={showPassword}
+                      >
+                        {passwordShown ? <Eyeopen /> : <Eyeclose />}
+                      </button>
+                      </div>
+                      </div>
                   {errors.password && (
                     <p className="errorss">{errors.password.message}</p>
                   )}
-                </div>
+                
 
                 <div className="mb-2 col-12 mt-4">
                   <button type="submit" className="btn btn-auth">

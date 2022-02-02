@@ -20,7 +20,7 @@ const FoodCard = ({ items, chefRecipe }) => {
 
       <div className="row col-md-12">
         {items?.map((val) => {
-          let price = "₹" + val.totalCostOfRecipe;
+          let price = "₹" + val.costPerServing;
           return (
             <div
               key={val?.MediaObjects?.map((food) => food?.id)}
@@ -35,7 +35,7 @@ const FoodCard = ({ items, chefRecipe }) => {
                     <Carousel.Item key={key}>
                       <img
                         className="d-block w-100 cardImages"
-                        src={`http://52.77.236.78:8082/${food?.imageUrl}`}
+                        src={`http://meyu.sg:8081/${food?.imageUrl}`}
                         alt="First slide"
                       />
                     </Carousel.Item>
@@ -56,7 +56,7 @@ const FoodCard = ({ items, chefRecipe }) => {
                     <ReadMoreReact
                       min={100}
                       ideal={120}
-                      max={140}
+                      max={120}
                       text={val.description}
                     />
                   </div>
