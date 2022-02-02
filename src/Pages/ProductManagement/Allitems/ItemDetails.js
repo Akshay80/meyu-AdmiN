@@ -76,7 +76,7 @@ const submitdata = (data) =>
 
 
   // Selling Price Part
-  if(Math.floor(itemDetail.costPerServing) < data.sellingPrice)
+  if(Math.floor(itemDetail.totalCostOfRecipe) < data.sellingPrice)
   {
     setError('');
   }
@@ -197,11 +197,12 @@ const submitdata = (data) =>
             <input
               type="text"
               value={itemDetail.preparationTime}
-              {...register("prepTime", { required: true })}
-              className={`form-control ${errors.prepTime ? "is-invalid" : ""}`}
+              className="form-control"
+              // {...register("prepTime", { required: true })}
+              // className={`form-control ${errors.prepTime ? "is-invalid" : ""}`}
             />
 
-            <div className="invalid-feedback">Preparation time is required!</div>
+            {/* <div className="invalid-feedback">Preparation time is required!</div> */}
           </div>
 
           <div className="col-md-6 col-sm-6 col-xs-12 mb-3">
@@ -210,7 +211,7 @@ const submitdata = (data) =>
             </label>
             <input
               type="text"
-              value={itemDetail.costPerServing}
+              value={itemDetail.totalCostOfRecipe}
               {...register("chefPrice")}
               className={`form-control ${errors.chefPrice ? "is-invalid" : ""}`}
               disabled
@@ -244,10 +245,10 @@ const submitdata = (data) =>
                 placeholder="About Product"
                 defaultValue={itemDetail?.description}
                 id="floatingTextarea2"
-                {...register("description", { required: true })}
+                // {...register("description", { required: true })}
                 // className={`text-area mx-1 form-control w-100 h-100 ${errors.description ? "is-invalid" : ""}`}
               ></textarea>
-              <div className="invalid-feedback">Description is required!</div>
+              {/* <div className="invalid-feedback">Description is required!</div> */}
             </div>
           </Row>
           <div className="d-flex align-items-center justify-content-center">
