@@ -30,16 +30,16 @@ const EditItems = () => {
 
           // set item image
           response?.data?.data?.recipeDetails?.MediaObjects?.map((recipe) =>
-            setItemImage(`http://52.77.236.78:8082/${recipe?.imageUrl}`)
+            setItemImage(`http://meyu.sg:8081/${recipe?.imageUrl}`)
           );
 
           // set chef image
           setChefImage(
-            `http://52.77.236.78:8082/${response?.data?.data?.profile?.profileUrl}`
+            `http://meyu.sg:8081/${response?.data?.data?.profile?.profileUrl}`
           );
 
           // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
-          //   setChefImage(`http://52.77.236.78:8081/${chefPic?.imageUrl}`)
+          //   setChefImage(`http://meyu.sg:8081/${chefPic?.imageUrl}`)
           // );
           // ===========================
           //  set Tags Data

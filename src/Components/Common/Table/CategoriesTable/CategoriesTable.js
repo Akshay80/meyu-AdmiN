@@ -50,7 +50,7 @@ const CategoriesTable = () => {
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
-  const url = "http://52.77.236.78:8082/";
+  const url = "http://meyu.sg:8081/";
   const {
     register,
     setValue,
@@ -63,7 +63,6 @@ const CategoriesTable = () => {
     {
       dataField: "sl no.",
       text: "Serial No",
-      sort: true,
       headerSortingStyle,
       // headerAlign: "center",
       // align: "center",
@@ -74,7 +73,6 @@ const CategoriesTable = () => {
     {
       dataField: "imageUrl",
       text: "Image",
-      sort: true,
       headerSortingStyle,
       // headerAlign: "center",
       // align: "center",
@@ -485,6 +483,7 @@ const CategoriesTable = () => {
                       data={categoryData}
                       condensed={false}
                       noDataIndication="No Data Is Available"
+                      bootstrap4
                     />
                     <div className="d-flex justify-content-end">
                       <PaginationListStandalone {...paginationProps} />

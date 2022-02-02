@@ -95,7 +95,7 @@ const AllItemsTable = () => {
     },
 
     {
-      dataField: "totalCostOfRecipe",
+      dataField: "costPerServing",
       text: "Price",
       headerSortingStyle,
       sort: true,
@@ -200,6 +200,7 @@ const AllItemsTable = () => {
                   striped
                   data={getItem}
                   condensed={false}
+                  bootstrap4
                   noDataIndication="No Data Is Available"
                 />
                 <div className="d-flex justify-content-end">

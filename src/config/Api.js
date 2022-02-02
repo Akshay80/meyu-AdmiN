@@ -55,5 +55,6 @@ export default (() => {
     allItembyId: `${setting.api.url}admin/getrecpiedetails`,
     confirmItem: `${setting.api.url}admin/confirmrecipie`,
     deleteItem: `${setting.api.url}admin/recipe`,
+    updateRecipe: `${setting.api.url}admin/recipe`
   };
 })();

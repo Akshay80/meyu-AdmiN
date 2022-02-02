@@ -55,7 +55,6 @@ const UnitTable = () => {
     {
       dataField: "sl no.",
       text: "Serial No",
-      sort: true,
       headerSortingStyle,
       // headerAlign: "center",
       // align: "center",
@@ -437,6 +436,7 @@ const UnitTable = () => {
                       wrapperClasses="table-responsive"
                       hover
                       striped
+                      bootstrap4
                       data={unitData}
                       condensed={false}
                       noDataIndication="No Data Is Available"

@@ -207,6 +207,7 @@ const ChefTable = () => {
                   wrapperClasses="table-responsive"
                   hover
                   striped
+                  bootstrap4
                   data={chef}
                   condensed={false}
                   noDataIndication="No Data Is Available"

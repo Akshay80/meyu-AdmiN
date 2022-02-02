@@ -6,13 +6,14 @@ import { useForm } from "react-hook-form";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import UserImage from "../../../Assets/Images/blank-user.png";
-import { confirmItemsbyId } from "../../../Services/itemsService";
+import { confirmItemsbyId, updateRecipebyId } from "../../../Services/itemsService";
 import { toast } from "react-toastify";
 import { getAllTagFun } from "../../../Services/tagServices";
 
 const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
   const [tagOption, setTagOption] = useState([]);
   const [err, setError] = useState('');
+  
   const {
     register,
     handleSubmit,
@@ -62,9 +63,20 @@ const ItemDetails = ({ itemDetail, itemImage, itemStatus, selectedTag }) => {
       .catch(function (error) {});
   };
 
-function submitdata(data)
+const submitdata = (data) =>
 {
-  if(Math.floor(itemDetail.totalCostOfRecipe) < data.sellingPrice)
+  // let params = {
+  //   isVerified: value,
+  // };
+  updateRecipebyId(itemDetail?.id, )
+  .then((res) => console.log('Response by ID : ',res))
+  .catch((err) => {
+  console.log(err);
+  })
+
+
+  // Selling Price Part
+  if(Math.floor(itemDetail.costPerServing) < data.sellingPrice)
   {
     setError('');
   }
@@ -76,9 +88,9 @@ function submitdata(data)
 
 
   const animatedComponents = makeAnimated();
-
   return (
-    <div className="card p-5 m-3" onSubmit={handleSubmit(submitdata)}>
+    
+    <div className="card p-5 m-3">
       <div className="pb-5">
         <div className="profile-pic-wrapper pb-2">
           <div className="pic-holder">
@@ -107,7 +119,9 @@ function submitdata(data)
           />
         </div>
 
-        <Form className="profile-form mt-3">
+        
+
+        <Form className="profile-form mt-3" onSubmit={handleSubmit(submitdata)}>
           <Row className="mb-3">
             <Form.Group
               className="col-md-6 col-sm-6 col-xs-12 mb-3"
@@ -176,44 +190,51 @@ function submitdata(data)
             </Form.Group>
 
             {/* ======================================== */}
-            <Form.Group
-              className="col-md-6 col-sm-6 col-xs-12 mb-3"
-              controlId="formGridDelivery"
-            >
-              <Form.Label className="mb-1">Preparation Time</Form.Label>
-              <Form.Control defaultValue={itemDetail?.preparationTime} />
-            </Form.Group>
-            <Form.Group
-              className="col-md-6 col-sm-6 col-xs-12 mb-3"
-              controlId="formGridDate"
-            >
-              <Form.Label className="mb-1">Chef Price</Form.Label>
-              <Form.Control
-                defaultValue={itemDetail?.totalCostOfRecipe}
-                type="number"
-                readOnly
-              ></Form.Control>
-            </Form.Group>
+            <div className="col-md-6 col-sm-6 col-xs-12 mb-3">
+            <label htmlFor="validationCustom001" className="form-label">
+            Preparation Time
+            </label>
+            <input
+              type="text"
+              value={itemDetail.preparationTime}
+              {...register("prepTime", { required: true })}
+              className={`form-control ${errors.prepTime ? "is-invalid" : ""}`}
+            />
 
-            <Form.Group
-              className="col-md-6 col-sm-6 col-xs-12 mb-3"
-              controlId="formGridDate"
-            >
-              <Form.Label className="mb-1">Selling Price</Form.Label>
-              <Form.Control
-                // defaultValue={itemDetail?.totalCostOfRecipe}
-                // onChange={(e) => PriceFun(e.target.value)}
-                type="number"
-                step={'0.01'}
-                {...register("sellingPrice", {
-                  required: "Selling Price is required" || err,
-                })}
-              ></Form.Control>
-               {errors.sellingPrice?
+            <div className="invalid-feedback">Preparation time is required!</div>
+          </div>
+
+          <div className="col-md-6 col-sm-6 col-xs-12 mb-3">
+            <label htmlFor="validationCustom001" className="form-label">
+            Chef Price
+            </label>
+            <input
+              type="text"
+              value={itemDetail.costPerServing}
+              {...register("chefPrice")}
+              className={`form-control ${errors.chefPrice ? "is-invalid" : ""}`}
+              disabled
+            />
+          </div>
+
+          <div className="col-md-6 col-sm-6 col-xs-12 mb-3">
+            <label htmlFor="validationCustom001" className="form-label">
+            Selling Price
+            </label>
+            <input
+              type="text"
+              placeholder={itemDetail?.sellingPrice}
+              {...register("sellingPrice", {
+                required: "Selling Price is required" || err,
+              })}
+              className="form-control"
+              // className={`form-control ${errors.sellingPrice ? "is-invalid" : ""}`}
+            />
+{errors.sellingPrice?
                       <p className="errors">{errors.sellingPrice.message}</p>
                     :<p className="errors">{err}</p>}
-              
-            </Form.Group>
+          </div>
+           
 
             <div className="d-flex flex-column w-100 flex-direction-column pb-2 align-items-start">
               <label>Description</label>
@@ -223,7 +244,10 @@ function submitdata(data)
                 placeholder="About Product"
                 defaultValue={itemDetail?.description}
                 id="floatingTextarea2"
+                {...register("description", { required: true })}
+                // className={`text-area mx-1 form-control w-100 h-100 ${errors.description ? "is-invalid" : ""}`}
               ></textarea>
+              <div className="invalid-feedback">Description is required!</div>
             </div>
           </Row>
           <div className="d-flex align-items-center justify-content-center">

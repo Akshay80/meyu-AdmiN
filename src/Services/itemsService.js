@@ -16,3 +16,8 @@ export function confirmItemsbyId(id, payload) {
 export function deleteItemsbyId(id) {
   return ApiInstance?.delete(`${Api.deleteItem}/${id}`);
 }
+
+// Update Recipe by Id
+export function updateRecipebyId(id, payload) {
+  return ApiInstance?.put(`${Api.updateRecipe}/${id}`, payload);
+}

@@ -7,9 +7,9 @@ import { confirmChefAccount } from "../../../../../Services/chefServices";
 import { toast } from "react-toastify";
 import { getAllItemsList } from "../../../../../Services/itemsService";
 
-const ChefCard = ({ chefRecipe, chefDetail, chefPic }) => {
+const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerified }) => {
   const [togglemenu, setToggleMenu] = useState(false);
-  const [apiState, setApiState] = useState("false");
+  const [apiState, setApiState] = useState("true");
   const [items, setItems] = useState();
 
   const toggleMenu = () => {
@@ -69,6 +69,8 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic }) => {
       .catch((error) => {});
   };
 
+  console.log(chefPic);
+
   return (
     <div className="container mb-5">
       <div className="card mb-3 p-3">
@@ -77,7 +79,7 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic }) => {
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={
-                  chefPic === `http://52.77.236.78:8082/null`
+                  chefPic === `http://meyu.sg:8081/null`
                     ? UserImage
                     : chefPic
                 }

@@ -105,7 +105,7 @@ const ChangePassword = () => {
                             value:
                               /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9]).{8,24}/,
                             message:
-                              "Password must include at least 1 lowercase, 1 uppercase, 1 number and 1 special character as \n (!@#$%^&*)",
+                              "Password must include at least 1 lowercase, 1 uppercase, 2 numbers and 1 special character as \n (!@#$%^&*)",
                           },
                           minLength: {
                             value: 8,
