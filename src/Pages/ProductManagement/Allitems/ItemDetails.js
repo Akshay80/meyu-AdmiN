@@ -76,7 +76,7 @@ const submitdata = (data) =>
 
 
   // Selling Price Part
-  if(Math.floor(itemDetail.totalCostOfRecipe) < data.sellingPrice)
+  if(Math.floor(itemDetail.costPerServing) < data.sellingPrice)
   {
     setError('');
   }
@@ -211,7 +211,7 @@ const submitdata = (data) =>
             </label>
             <input
               type="text"
-              value={itemDetail.totalCostOfRecipe}
+              value={itemDetail.costPerServing}
               {...register("chefPrice")}
               className={`form-control ${errors.chefPrice ? "is-invalid" : ""}`}
               disabled
@@ -224,7 +224,7 @@ const submitdata = (data) =>
             </label>
             <input
               type="text"
-              placeholder={itemDetail?.sellingPrice}
+              // placeholder={itemDetail?.sellingPrice}
               {...register("sellingPrice", {
                 required: "Selling Price is required" || err,
               })}
