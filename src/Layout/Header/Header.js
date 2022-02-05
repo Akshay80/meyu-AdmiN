@@ -10,7 +10,7 @@ const Header = ({ menuToggleState, toggleMenu }) => {
   const [fullName, setFullName] = useState();
   // eslint-disable-next-line no-unused-vars
   const [url, setURL] = useState();
-  const baseUrl = "http://meyu.sg:8081";
+  const baseUrl = "http://meyu.sg:8082";
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   if (!token) navigate("/login");

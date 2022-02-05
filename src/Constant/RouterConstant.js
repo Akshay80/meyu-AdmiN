@@ -26,7 +26,8 @@ const Path = {
   orders: "orders",
   orderManage: "order-management",
   orderDetails: "/order-details",
-  unit: "unit",
+  tax: "tax",
+  discount: "discount",
 };
 
 export default Path;

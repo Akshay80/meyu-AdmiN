@@ -35,7 +35,7 @@ const FoodCard = ({ items, chefRecipe }) => {
                     <Carousel.Item key={key}>
                       <img
                         className="d-block w-100 cardImages"
-                        src={`http://meyu.sg:8081/${food?.imageUrl}`}
+                        src={`http://meyu.sg:8082/${food?.imageUrl}`}
                         alt="First slide"
                       />
                     </Carousel.Item>

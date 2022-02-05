@@ -21,7 +21,7 @@ const CustomerDetail = () => {
       .then((response) => {
         setCustomerDetail(response?.data?.data);
         setCustomerImage(
-          `http://meyu.sg:8081/${response.data.data.profileUrl}`
+          `http://meyu.sg:8082/${response.data.data.profileUrl}`
         );
       })
       .catch(function (error) {});

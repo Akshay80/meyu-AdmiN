@@ -43,18 +43,27 @@ export default (() => {
     deleteTag: `${setting.api.url}admin/deletetag`,
     getTagId: `${setting.api.url}auth/tag`,
 
-    // Unit
-    postUnit: `${setting.api.url}admin/unit`,
-    putUnit: `${setting.api.url}admin/unit`,
-    deleteUnit: `${setting.api.url}admin/deleteunit`,
-    allUnit: `${setting.api.url}common/unit`,
-    singleUnit: `${setting.api.url}auth/unit`,
-
     // All Items
     allItemsList: `${setting.api.url}admin/getrecpies`,
     allItembyId: `${setting.api.url}admin/getrecpiedetails`,
     confirmItem: `${setting.api.url}admin/confirmrecipie`,
     deleteItem: `${setting.api.url}admin/recipe`,
-    updateRecipe: `${setting.api.url}admin/recipe`
+    updateRecipe: `${setting.api.url}admin/recipe`,
+    updateRecipeImage: `${setting.api.url}chef/recipe-image`,
+
+    //Tax
+    addTax: `${setting.api.url}admin/tax`,
+    editTax: `${setting.api.url}admin/edittax`,
+    getTax: `${setting.api.url}admin/gettaxes`,
+    deleteTax: `${setting.api.url}admin/deletetax`,
+
+    //Discount
+    getAllCoupans: `${setting.api.url}common/genrate-discount-coupan`,
+    addCoupans: `${setting.api.url}admin/genrate-discount-coupan`,
+    editCoupans: `${setting.api.url}admin/genrate-discount-coupan`,
+    deleteCoupans: `${setting.api.url}admin/delete-genrate-discount-coupan`,
+    getCoupansByID: `${setting.api.url}common/genrate-discount-coupan`,
+
+
   };
 })();
