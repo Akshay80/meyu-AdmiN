@@ -21,3 +21,8 @@ export function deleteItemsbyId(id) {
 export function updateRecipebyId(id, payload) {
   return ApiInstance?.put(`${Api.updateRecipe}/${id}`, payload);
 }
+
+// Update Recipe Image by Id
+export function updateRecipeImagebyId(id, payload) {
+  return ApiInstance?.put(`${Api.updateRecipeImage}/${id}`, payload);
+}

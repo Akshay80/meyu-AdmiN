@@ -79,7 +79,7 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerified }) => {
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={
-                  chefPic === `http://meyu.sg:8081/null`
+                  chefPic === `http://meyu.sg:8082/null`
                     ? UserImage
                     : chefPic
                 }

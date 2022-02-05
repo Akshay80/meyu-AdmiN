@@ -23,7 +23,7 @@ const ChefDetail = ({ menuToggleState }) => {
         setChefDetail(response?.data?.data?.chefProfile);
         setChefRecipe(response.data.data.recipes);
         setChefPic(
-          `http://meyu.sg:8081/${response?.data?.data?.chefProfile?.profileUrl}`
+          `http://meyu.sg:8082/${response?.data?.data?.chefProfile?.profileUrl}`
         );
         setIsVerfied(response.data.data.chefProfile?.isVerified);  
       })

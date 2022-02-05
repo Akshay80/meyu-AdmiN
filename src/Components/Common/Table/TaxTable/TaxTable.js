@@ -9,33 +9,24 @@ import paginationFactory, {
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { ReactComponent as EditIcon } from "../../../../Assets/Icon/Edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
-import "./UnitTable.css";
+import "./TaxTable.css";
 import { confirmAlert } from "react-confirm-alert";
 import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbasket.svg";
 import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useForm } from "react-hook-form";
 import {
-  postUnits,
-  putUnits,
-  deleteUnits,
-  allUnits,
-  singleUnits,
-} from "../../../../Services/unitService";
+  postTax,
+  putTax,
+  deleteTax,
+  allTax,
+} from "../../../../Services/taxService";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { Modal, Button, Form } from "react-bootstrap";
 
-const UnitTable = () => {
-  const [unitId, setUnitId] = useState();
-  const [unitData, setUnitData] = useState([]);
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => {
-    reset();
-    setShow(true);
-  };
+const TaxTable = () => {
+  const [taxData, setTaxData] = useState([]);
 
   const [show1, setShow1] = useState(false);
   const handleClose1 = () => setShow1(false);
@@ -63,21 +54,21 @@ const UnitTable = () => {
       },
     },
     {
-      dataField: "unitName",
-      text: "Unit Name",
+      dataField: "taxName",
+      text: "Tax Name",
       sort: true,
       headerSortingStyle,
       // headerAlign: "center",
       // align: "center",
     },
-    // {
-    //   dataField: "sortName",
-    //   text: "Quantity",
-    //   headerSortingStyle,
-    //   sort: true,
-    //   headerAlign: "center",
-    //   align: "center",
-    // },
+    {
+      dataField: "taxValue",
+      text: "Tax Value",
+      headerSortingStyle,
+      sort: true,
+      //   headerAlign: "center",
+      //   align: "center",
+    },
 
     {
       dataField: "link",
@@ -108,83 +99,85 @@ const UnitTable = () => {
     },
   ];
 
-  // ================= get all units ==============
+  // ================= get all taxes ==============
   useEffect(() => {
-    units();
+    taxes();
   }, []);
 
-  async function units() {
-    await allUnits()
+  async function taxes() {
+    await allTax()
       .then(function (res) {
-        setUnitData(res.data.data);
+        setTaxData(res.data.data);
       })
       .catch(function (error) {});
   }
 
-  // ==================== add unit ============
+  // ==================== add tax ============
 
-  const onSubmit = (data) => {
-    const unitData = {
-      unitName: data.unitname,
-      // sortName: data.sortname,
-    };
-    postUnits(unitData)
-      .then(function (res) {
-        handleClose();
-        console.log("res");
-        toast.success("Unit Added Successfully", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-        units();
-        reset();
-      })
+  // const onSubmit = (data) => {
+  //   const taxData = {
+  //       taxName: data.taxname,
+  //       taxValue: data.taxvalue,
+  //   };
+  //   postTax(taxData)
+  //     .then(function (res) {
+  //       handleClose();
+  //       console.log("res");
+  //       toast.success("Tax Added Successfully", {
+  //         position: "top-right",
+  //         autoClose: 2000,
+  //         hideProgressBar: true,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: false,
+  //         progress: 0,
+  //         toastId: "my_toast",
+  //       });
+  //       taxes();
+  //       reset();
+  //     })
 
-      .catch(function (error) {
-        toast.error(error.error, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-      });
-  };
+  //     .catch(function (error) {
+  //       toast.error(error.error, {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: true,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: false,
+  //         progress: 0,
+  //         toastId: "my_toast",
+  //       });
+  //     });
+  // };
 
-  // ================ put unit in modal ===============
+  // ===================== get api in modal ================
 
-  async function handleEdit(rowId) {
+  const handleEdit = (rowId, rowName) => {
     handleShow1();
     reset();
     // Getting Data for Specific category
-    await singleUnits(rowId)
-      .then(function (response) {
-        setUnitId(response.data.data.id);
-        setValue("unitname", response.data.data.unitName);
-        // setValue("sortname", response.data.data.sortName);
-      })
-      .catch(function (error) {});
-  }
+
+    // eslint-disable-next-line array-callback-return
+    taxData.map((taxValues) => {
+        setValue("taxname", taxValues.taxName);
+        setValue("taxvalue", taxValues.taxValue);
+        setValue("id", taxValues.id);
+    });
+  };
+
+  // ================ put tax in modal ===============
 
   const EditSubmit = (data) => {
     const editData = {
-      id: unitId,
-      unitName: data.unitname,
-      // sortName: data.sortname,
+      id: data.id,
+      taxName: data.taxname,
+      taxValue: data.taxvalue,
     };
-    putUnits(editData)
+    putTax(editData)
       .then(function (res) {
         handleClose1();
-        toast.info("Units Edited Successfully", {
+        toast.info("Tax Edited Successfully", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
@@ -194,7 +187,7 @@ const UnitTable = () => {
           progress: 0,
           toastId: "my_toast",
         });
-        units();
+        taxes();
       })
 
       .catch(function (error) {
@@ -211,68 +204,68 @@ const UnitTable = () => {
       });
   };
 
-  // ===================== confirm delete unit =============
+  // ===================== confirm delete tax =============
 
-  function confirmDelete(rowId) {
-    const deleteById = {
-      id: rowId,
-    };
-    deleteUnits(deleteById)
-      .then(function (res) {
-        toast.success("Unit Deleted Successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-        units();
-      })
-      .catch(function (error) {});
-  }
+  // function confirmDelete(rowId) {
+  //   const deleteById = {
+  //     id: rowId,
+  //   };
+  //   deleteTax(deleteById)
+  //     .then(function (res) {
+  //       toast.success("Tax Deleted Successfully", {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: true,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: false,
+  //         progress: 0,
+  //         toastId: "my_toast",
+  //       });
+  //       taxes();
+  //     })
+  //     .catch(function (error) {});
+  // }
 
-  function handleDelete(rowId, name) {
-    confirmAlert({
-      title: "Delete",
-      message: `Are you sure you want to remove this item from the table?`,
-      buttons: [
-        {
-          label: "Yes",
-          className: "btn btn-danger",
-          onClick: () => {
-            confirmDelete(rowId);
-          },
-        },
-        {
-          label: "No",
-        },
-      ],
-    });
-  }
+  // function handleDelete(rowId, name) {
+  //   confirmAlert({
+  //     title: "Delete",
+  //     message: `Are you sure you want to remove this item from the table?`,
+  //     buttons: [
+  //       {
+  //         label: "Yes",
+  //         className: "btn btn-danger",
+  //         onClick: () => {
+  //           confirmDelete(rowId);
+  //         },
+  //       },
+  //       {
+  //         label: "No",
+  //       },
+  //     ],
+  //   });
+  // }
 
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4 justify-content-between">
         <div className="page-heading-wapper d-flex">
           <BagIcon className="page-icon m-0" />
-          <h3 className="page-sec-heading m-0 mx-2">Unit </h3>
+          <h3 className="page-sec-heading m-0 mx-2">Tax </h3>
         </div>
 
-        <div className="d-flex align-items-center my-4">
+        {/* <div className="d-flex align-items-center my-4">
           <button
             type="submit"
             className="btn btn-secondary"
             onClick={handleShow}
           >
             {" "}
-            <AddIcon /> Add New Unit
+            <AddIcon /> Add New Tax
           </button>
-        </div>
+        </div> */}
       </div>
-      {/* Modal for Adding New Unit */}
+      {/* Modal for Adding New Tax
       <Modal
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -288,41 +281,41 @@ const UnitTable = () => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Modal.Body className="p-4 pt-0">
             <Form.Group className="mb-1">
-              <Form.Label>Unit Name</Form.Label>
+              <Form.Label>Tax Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="unit name"
+                placeholder="tax name"
                 autoComplete="off"
-                {...register("unitname", {
-                  required: "Unit Name is required!",
+                {...register("taxname", {
+                  required: "Tax Name is required!",
                 })}
               />
             </Form.Group>
-            {errors.unitname && (
-              <p className="errors">{errors.unitname.message}</p>
+            {errors.taxname && (
+              <p className="errors">{errors.taxname.message}</p>
             )}
-            {/* <Form.Group className="mt-3">
-              <Form.Label>Quantity</Form.Label>
+            <Form.Group className="mt-3">
+              <Form.Label>Tax Value</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="quantity"
+                placeholder="tax value"
                 autoComplete="off"
-                {...register("sortname", {
-                  required: "Quantity is required!",
+                {...register("taxvalue", {
+                  required: "Tax Value is required!",
                 })}
               />
             </Form.Group>
-            {errors.sortname && (
-              <p className="errors">{errors.sortname.message}</p>
-            )} */}
+            {errors.taxvalue && (
+              <p className="errors">{errors.taxvalue.message}</p>
+            )}
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
             <Button variant="primary" type="submit">
-              Add Units
+              Add Taxes
             </Button>
           </Modal.Footer>
         </Form>
-      </Modal>
+      </Modal> */}
 
       {/* Modal for Edit */}
 
@@ -341,33 +334,41 @@ const UnitTable = () => {
         <Form onSubmit={handleSubmit(EditSubmit)}>
           <Modal.Body className="p-4 pt-0">
             <Form.Group className="mb-1">
-              <Form.Label>Unit Name</Form.Label>
+              <Form.Label>Tax Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="unit name"
+                placeholder="name"
                 autoComplete="off"
-                {...register("unitname", {
-                  required: "Unit Name is required!",
+                {...register("taxname", {
+                  required: "Tax name is required!",
+                  pattern: {
+                    value: /^[a-zA-Z\s]*$/,
+                    message: "Invalid Tax Name!",
+                  }
                 })}
               />
             </Form.Group>
-            {errors.unitname && (
-              <p className="errors">{errors.unitname.message}</p>
+            {errors.taxname && (
+              <p className="errors">{errors.taxname.message}</p>
             )}
-            {/* <Form.Group className="mt-3">
-              <Form.Label>Quantity</Form.Label>
+            <Form.Group className="mt-3">
+              <Form.Label>Tax Value</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="quantity"
+                placeholder="value"
                 autoComplete="off"
-                {...register("sortname", {
-                  required: "Quantity is required!",
+                {...register("taxvalue", {
+                  required: "Tax Value is required!",
+                  pattern: {
+                    value: /^[1-9]\d*(\.\d+)?$/,
+                    message: "Invalid Tax Value!",
+                  },
                 })}
               />
             </Form.Group>
-            {errors.sortname && (
-              <p className="errors">{errors.sortname.message}</p>
-            )} */}
+            {errors.taxvalue && (
+              <p className="errors">{errors.taxvalue.message}</p>
+            )}
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
             <Button variant="success" type="submit">
@@ -382,7 +383,7 @@ const UnitTable = () => {
           <PaginationProvider
             pagination={paginationFactory({
               custom: true,
-              totalSize: unitData.length,
+              totalSize: taxData.length,
               prePageText: "Previous",
               nextPageText: "Next",
               page: 1,
@@ -406,20 +407,20 @@ const UnitTable = () => {
                 },
                 {
                   text: "All",
-                  value: unitData.length,
+                  value: taxData.length,
                 },
               ],
-              hideSizePerPage: unitData.length === 0,
+              hideSizePerPage: taxData.length === 0,
             })}
             keyField="id"
             columns={columns}
-            data={unitData}
+            data={taxData}
           >
             {({ paginationProps, paginationTableProps }) => (
               <ToolkitProvider
                 keyField="id"
                 columns={columns}
-                data={unitData}
+                data={taxData}
                 search
               >
                 {(toolkitprops) => (
@@ -437,7 +438,7 @@ const UnitTable = () => {
                       hover
                       striped
                       bootstrap4
-                      data={unitData}
+                      data={taxData}
                       condensed={false}
                       noDataIndication="No Data Is Available"
                     />
@@ -468,4 +469,4 @@ const UnitTable = () => {
   );
 };
 
-export default UnitTable;
+export default TaxTable;
