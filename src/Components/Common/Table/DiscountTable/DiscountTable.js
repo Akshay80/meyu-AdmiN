@@ -18,16 +18,15 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import {
-    getAllCoupans,
-    addCoupans,
-    editCoupans,
-    deleteCoupans,
-    getCoupansByID,
+  getAllCoupans,
+  addCoupans,
+  editCoupans,
+  deleteCoupans,
+  getCoupansByID,
 } from "../../../../Services/discountServices";
 
 const DiscountTable = () => {
-  const [editId, setEditId] = useState();
-  const [coupan, setCoupans] = useState([]);
+  const [coupans, setCoupans] = useState([]);
 
   const {
     register,
@@ -51,6 +50,56 @@ const DiscountTable = () => {
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
+  const columns = [
+    {
+      dataField: "id",
+      text: "Serial No",
+      formatter: (cell, row, rowIndex, formatExtraData) => {
+        return rowIndex + 1;
+      },
+    },
+    {
+      dataField: "couponCode",
+      text: "Coupon Code",
+      headerSortingStyle,
+      sort: true,
+    },
+
+    {
+      dataField: "discountValue",
+      text: "Discount",
+      headerSortingStyle,
+      sort: true,
+    },
+
+    {
+      dataField: "link",
+      text: "Action",
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            <EditIcon
+              className="mt-1 edit-icon"
+              onClick={() => handleEdits(row.id, row.discountValue)}
+            />
+            <DeleteIcon
+              className="iconHover delete-icon"
+              onClick={() => confirmDelete(row.id)}
+            />
+          </div>
+        );
+      },
+    },
+  ];
+
+  const defaultSorted = [
+    {
+      dataField: "id",
+      order: "asc",
+    },
+  ];
+
+  //   Getting Discount Data
   useEffect(() => {
     discountdata();
   }, []);
@@ -58,8 +107,6 @@ const DiscountTable = () => {
   const discountdata = () => {
     getAllCoupans()
       .then((res) => {
-        // console.log(res.data.data);
-        // res.data.data.map((values) => console.log(values));
         setCoupans(res.data.data);
       })
       .catch(function (error) {});
@@ -68,7 +115,7 @@ const DiscountTable = () => {
   // Adding Tags API
   const onSubmits = (data) => {
     let params = {
-        discountValue: data?.discount,
+      discountValue: data?.discount,
     };
     addCoupans(params)
       .then((data) => {
@@ -142,14 +189,14 @@ const DiscountTable = () => {
     });
   };
 
-  // edit tags = open modal and display items
+  // edit discount = open modal and display items
   const handleEdits = (rowId, rowName) => {
     handleShow2();
     reset();
     getCoupansByID(rowId)
       .then((res) => {
         setValue("discount", rowName);
-        setEditId(res?.data?.data);
+        setValue("id", rowId);
       })
       .catch(function (error) {
         toast.error(error.error, {
@@ -167,12 +214,13 @@ const DiscountTable = () => {
 
   const EditSubmits = (data) => {
     const param = {
-      id: editId?.id,
+      id: data?.id,
       discountValue: data?.discount,
     };
     editCoupans(param)
       .then((res) => {
-        if (res?.statusText === "OK") {
+        //   console.log(res.data.error.messgae)
+        if (res.data.success === true) {
           handleClose2();
           toast.success("Coupon edited Successfully", {
             position: "top-right",
@@ -185,79 +233,22 @@ const DiscountTable = () => {
             toastId: "my_toast",
           });
           discountdata();
+        } else {
+          toast.error(res.data.error.messgae, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
         }
       })
-      .catch(function (error) {
-        toast.error(error.error, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-      });
+
+      .catch(function (error) {});
   };
-
-  const columns = [
-    {
-      dataField: "id",
-      text: "Serial No",
-      formatter: (cell, row, rowIndex, formatExtraData) => {
-        return rowIndex + 1;
-      },
-      headerSortingStyle,
-      // headerAlign: "center",
-      // align: "center",
-    },
-    {
-      dataField: "couponCode",
-      text: "Coupon Code",
-      headerSortingStyle,
-      sort: true,
-      // headerAlign: "center",
-      // align: "center",
-    },
-
-    {
-        dataField: "discountValue",
-        text: "Discount (%)",
-        headerSortingStyle,
-        sort: true,
-        // headerAlign: "center",
-        // align: "center",
-      },
-
-    {
-      dataField: "link",
-      text: "Action",
-      // headerAlign: "center",
-      // align: "center",
-      formatter: (rowContent, row) => {
-        return (
-          <div className="d-flex">
-            <EditIcon
-              className="mt-1 edit-icon"
-              onClick={() => handleEdits(row.id, row.name)}
-            />
-            <DeleteIcon
-              className="iconHover delete-icon"
-              onClick={() => confirmDelete(row.id)}
-            />
-          </div>
-        );
-      },
-    },
-  ];
-
-  const defaultSorted = [
-    {
-      dataField: "id",
-      order: "asc",
-    },
-  ];
 
   return (
     <>
@@ -297,7 +288,9 @@ const DiscountTable = () => {
                 })}
               />
             </Form.Group>
-            {errors.discount && <p className="errors">{errors.discount.message}</p>}
+            {errors.discount && (
+              <p className="errors">{errors.discount.message}</p>
+            )}
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
             <Button variant="primary" type="submit">
@@ -317,20 +310,22 @@ const DiscountTable = () => {
         <Form onSubmit={handleSubmit(EditSubmits)}>
           <Modal.Body className="p-4 pt-0">
             <Form.Group className="mb-1">
-              <Form.Label>Edit Discount</Form.Label>
+              <Form.Label>Discount Value</Form.Label>
               <Form.Control
                 type="text"
                 autoComplete="off"
                 {...register("discount", {
                   required: "Discount is required!",
-                  // pattern: {
-                  //   value: /^[A-Za-z]+$/,
-                  //   message: "Only alphabets are allowed!",
-                  // },
+                  pattern: {
+                    value: /^[1-9]/,
+                    message: "Invalid Discount!",
+                  },
                 })}
               />
             </Form.Group>
-            {errors.discount && <p className="errors">{errors.discount.message}</p>}
+            {errors.discount && (
+              <p className="errors">{errors.discount.message}</p>
+            )}
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
             <Button variant="success" type="submit">
@@ -341,7 +336,7 @@ const DiscountTable = () => {
       </Modal>
 
       {/* =====================modal end============= */}
-{/* {console.log("my data: ", coupan)} */}
+
       {/* ================= */}
       <div className="card">
         <div className="table-responsive" style={{ padding: "20px" }}>
@@ -373,14 +368,13 @@ const DiscountTable = () => {
             })}
             keyField="id"
             columns={columns}
-            // data={coupan}
+            data={coupans}
           >
-              {console.log(coupan)}
             {({ paginationProps, paginationTableProps }) => (
               <ToolkitProvider
                 keyField="id"
                 columns={columns}
-                // data={coupan}
+                data={coupans}
                 search
               >
                 {(toolkitprops) => (
@@ -398,7 +392,7 @@ const DiscountTable = () => {
                       hover
                       striped
                       bootstrap4
-                    //   data={coupan}
+                      data={coupans}
                       condensed={false}
                       noDataIndication="No Data Is Available"
                     />
