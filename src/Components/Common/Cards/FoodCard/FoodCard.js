@@ -6,9 +6,10 @@ import ReadMoreReact from "read-more-react";
 import Carousel from "react-bootstrap/Carousel";
 import veg from "../../../../Assets/Icon/Veg.svg";
 import nonveg from "../../../../Assets/Icon/NonVeg.svg";
+import noodles from "../../../../Assets/Images/noodles.png";
 
 const FoodCard = ({ items, chefRecipe }) => {
-  // console.log("ChefRecipe: ", chefRecipe);
+  console.log("ChefRecipe: ", chefRecipe);
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4">
@@ -19,7 +20,7 @@ const FoodCard = ({ items, chefRecipe }) => {
       </div>
 
       <div className="row col-md-12">
-        {items?.map((val) => {
+        {chefRecipe?.map((val) => {
           let price = "₹" + val.costPerServing;
           return (
             <div
@@ -72,6 +73,17 @@ const FoodCard = ({ items, chefRecipe }) => {
             </div>
           );
         })}
+        {chefRecipe.length === 0? 
+        <div className="d-block mx-auto">
+          <div className="card p-4 mx-auto">
+          <img className="text-center d-block mx-auto" src={noodles} alt="warn-noodles" width="90"/>
+        <h4 className="text-dark text-center fw-bold">Looks like nothing to see here?</h4>
+        <h5 class="text-muted text-justify fs-6 mx-auto">Remember, Good food never fail in bringing people together</h5>
+        <p class="fw-normal text-muted text-justify fs-6 mx-auto">Upload some delicious food or a recipes 
+        so that you can see them here.</p>
+        </div>
+        </div>
+        : null}
       </div>
     </>
   );

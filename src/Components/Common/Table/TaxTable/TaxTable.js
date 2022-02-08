@@ -8,17 +8,16 @@ import paginationFactory, {
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { ReactComponent as EditIcon } from "../../../../Assets/Icon/Edit.svg";
-import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
 import "./TaxTable.css";
-import { confirmAlert } from "react-confirm-alert";
+// import { confirmAlert } from "react-confirm-alert";
 import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbasket.svg";
-import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
+// import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useForm } from "react-hook-form";
 import {
-  postTax,
+  // postTax,
   putTax,
-  deleteTax,
+  // deleteTax,
   allTax,
 } from "../../../../Services/taxService";
 import { ToastContainer, toast, Flip } from "react-toastify";

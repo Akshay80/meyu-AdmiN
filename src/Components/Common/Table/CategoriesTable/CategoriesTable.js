@@ -8,16 +8,16 @@ import paginationFactory, {
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { ReactComponent as EditIcon } from "../../../../Assets/Icon/Edit.svg";
-import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
+// import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
 import "./CategoryTable.css";
-import { confirmAlert } from "react-confirm-alert";
+// import { confirmAlert } from "react-confirm-alert";
 import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbasket.svg";
 import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useForm } from "react-hook-form";
 import {
   viewCategoryService,
-  deleteCategoryService,
+  // deleteCategoryService,
 } from "../../../../Services/userService";
 import {
   category,
@@ -240,56 +240,56 @@ const CategoriesTable = () => {
   };
 
   // ========================= delete api =================
-  function confirmDelete(rowId) {
-    const deleteById = {
-      id: rowId,
-    };
-    deleteCategoryService(deleteById)
-      .then(function (res) {
-        toast.success(res.data.data, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-        categories();
-      })
-      .catch(function (error) {
-        toast.error("Category is added to a recipe so it cannot be deleted", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-      });
-  }
+  // function confirmDelete(rowId) {
+  //   const deleteById = {
+  //     id: rowId,
+  //   };
+  //   deleteCategoryService(deleteById)
+  //     .then(function (res) {
+  //       toast.success(res.data.data, {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: true,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: false,
+  //         progress: 0,
+  //         toastId: "my_toast",
+  //       });
+  //       categories();
+  //     })
+  //     .catch(function (error) {
+  //       toast.error("Category is added to a recipe so it cannot be deleted", {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: true,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: false,
+  //         progress: 0,
+  //         toastId: "my_toast",
+  //       });
+  //     });
+  // }
 
-  function handleDelete(rowId, name) {
-    confirmAlert({
-      title: "Delete",
-      message: `Are you sure you want to remove this item from the table?`,
-      buttons: [
-        {
-          label: "Yes",
-          className: "btn btn-danger",
-          onClick: () => {
-            confirmDelete(rowId);
-          },
-        },
-        {
-          label: "No",
-        },
-      ],
-    });
-  }
+  // function handleDelete(rowId, name) {
+  //   confirmAlert({
+  //     title: "Delete",
+  //     message: `Are you sure you want to remove this item from the table?`,
+  //     buttons: [
+  //       {
+  //         label: "Yes",
+  //         className: "btn btn-danger",
+  //         onClick: () => {
+  //           confirmDelete(rowId);
+  //         },
+  //       },
+  //       {
+  //         label: "No",
+  //       },
+  //     ],
+  //   });
+  // }
 
   return (
     <>

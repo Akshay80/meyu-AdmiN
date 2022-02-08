@@ -4,7 +4,7 @@ import "../../../Components/Common/Buttons/buttons.scss";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import UserImage from "../../../Assets/Images/blank-user.png";
+// import UserImage from "../../../Assets/Images/blank-user.png";
 import {
   confirmItemsbyId,
   updateRecipebyId,
@@ -20,13 +20,15 @@ const ItemDetails = ({
   itemImage,
   itemStatus,
   selectedTag,
-  category,
+  mediaObjectId
 }) => {
   const [tagOption, setTagOption] = useState([]);
   const [tag, setTag] = useState([]);
   const [err, setError] = useState("");
   const [paramss, setParams] = useState();
-  const [image, setImage] = useState({ preview: "", raw: "" });
+  // const [image, setImage] = useState({ preview: "", raw: "" });
+  const [recipeImage, setRecipeImage] = useState("");
+  const [recipeImageByAPI, setRecipeImagebyAPI] = useState();
 
   const { itemId } = useParams();
   const {
@@ -46,6 +48,8 @@ const ItemDetails = ({
   useEffect(() => {
     tagdata();
     fetchItemDetail();
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const tagdata = () => {
@@ -89,19 +93,12 @@ const ItemDetails = ({
             response.data.data.recipeDetails.costPerServing
           );
 
-          // set item image
-          // response?.data?.data?.recipeDetails?.MediaObjects?.map((recipe) =>
-          //   setItemImage(`http://meyu.sg:8082/${recipe?.imageUrl}`)
-          // );
-
-          // set chef image
-          // setChefImage(
-          //   `http://meyu.sg:8082/${response?.data?.data?.profile?.profileUrl}`
-          // );
+          setValue("sellingPrice", response.data.data.recipeDetails.sellingPrice);
 
           // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
           //   setChefImage(`http://meyu.sg:8082/${chefPic?.imageUrl}`)
           // );
+          response?.data?.data?.recipeDetails?.MediaObjects?.map((img) => setRecipeImagebyAPI(`http://meyu.sg:8082/${img?.imageUrl}`));
           // ===========================
           //  set Tags Data
           let tempTag = [];
@@ -121,9 +118,20 @@ const ItemDetails = ({
   };
 
   const submitdata = (data) => {
-    var formData = new FormData();
+    
+    // Selling Price Part
+    if (Math.floor(itemDetail.costPerServing) < data.sellingPrice) {
+      setError("");
+      // console.log('tags: ', data.tags)
+
+      var mytags = data.tags;
+      var t = mytags.map(s => `${s}`).join(',').replace(/["']/g, '"'); 
+      var tag = ("tags : ", "["+t+"]".toString());
+      // console.log(tag);
+
+      var formData = new FormData();
     formData.append("dishName", data.dishName);
-    formData.append("tags", data.tags);
+    formData.append("tags", tag);
     formData.append("preparationTime", data.preparationTime);
     formData.append("categoryId", data.categoryId);
     formData.append("deliveryFee", data.deliveryFee);
@@ -133,11 +141,13 @@ const ItemDetails = ({
     formData.append("isNonVegetarian", data.isNonVegetarian);
     formData.append("sellingPrice", data.sellingPrice);
 
-    console.log("form ka data : ", formData);
-    // Selling Price Part
-    if (Math.floor(itemDetail.costPerServing) < data.sellingPrice) {
-      setError("");
-
+      // var test = [];
+      // for(var i=0;i<data.tags.length;i++){
+      //   var ans=mytags[i].replace(/'/g,'"')
+      //   var pushedArray = test.push(ans)
+      //   console.log("Pushed ARRAY : ",pushedArray);
+      //  }
+    
       // Update Recipe By ID
       updateRecipebyId(itemDetail?.id, formData)
         .then((res) => {
@@ -153,7 +163,9 @@ const ItemDetails = ({
               toastId: "my_toast",
             });
           }
+          fetchItemDetail();
         })
+        
         .catch((err) => {
           console.log(err);
         });
@@ -172,30 +184,43 @@ const ItemDetails = ({
 
   const handleChange = (e) => {
     if (e?.target?.files?.length) {
-      setImage({
-        preview: URL.createObjectURL(e?.target?.files[0]),
-        raw: e?.target?.files[0],
-      });
+      // setImage({
+      //   preview: URL.createObjectURL(e?.target?.files[0]),
+      //   raw: e?.target?.files[0],
+      // });
     }
 
     let formData = new FormData();
     formData.append("recipe", e?.target?.files[0]);
-    updateRecipeImagebyId(itemDetail?.id, formData)
+    updateRecipeImagebyId(mediaObjectId, formData)
       .then((response) => {
-        if (response.data.success === true) {
-          toast.success(response.data.data.message, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-            toastId: "my_toast",
-          });
-        }
+        // if (response.data.success === true) {
+        //   toast.success(response.data.data.message, {
+        //     position: "top-right",
+        //     autoClose: 3000,
+        //     hideProgressBar: true,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: false,
+        //     progress: 0,
+        //     toastId: "my_toast",
+        //   });
+        // }
+        // window.location.reload(false);
+        setRecipeImage(`http://meyu.sg:8082/${response.data.data.profileUrl}`);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        toast.error(error.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      });
   };
 
   const animatedComponents = makeAnimated();
@@ -205,7 +230,7 @@ const ItemDetails = ({
         <div className="profile-pic-wrapper pb-2">
           <div className="pic-holder pb-2">
             <img
-               src={itemImage ? itemImage : image.preview}
+               src={recipeImage ? recipeImage : recipeImageByAPI}
               id="itemPic"
               className="item-pic"
               alt=""
@@ -270,7 +295,6 @@ const ItemDetails = ({
             </label>
             <input
               type="text"
-              onChange={(e) => console.log(e.target.value)}
               {...register("dishName", {
                 required: "Product name is required!",
                 pattern: {
@@ -312,11 +336,12 @@ const ItemDetails = ({
                 options={tagOption}
                 isSearchable
                 required={true}
-                onChange={(e) => setTag(e.map((val) => `${val.label}`))}
+                onChange={(e) => setTag(e.map((val) => JSON.stringify(val.label)))}
+                // onChange={(e) => {e.map((VAL) => console.log(VAL.label))}}
                 {...setValue(
                   "tags",
                   tag.length === 0
-                    ? selectedTag.map((val) => `${val.label}`)
+                    ? selectedTag.map((val) => JSON.stringify(val.label))
                     : tag
                 )}
               />
