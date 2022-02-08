@@ -7,9 +7,9 @@ import { confirmChefAccount } from "../../../../../Services/chefServices";
 import { toast } from "react-toastify";
 import { getAllItemsList } from "../../../../../Services/itemsService";
 
-const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerified }) => {
+const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied }) => {
   const [togglemenu, setToggleMenu] = useState(false);
-  const [apiState, setApiState] = useState("true");
+  const [apiVerify, setApiVerify] = useState();
   const [items, setItems] = useState();
 
   const toggleMenu = () => {
@@ -18,7 +18,8 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerified }) => {
 
   useEffect(() => {
     getFood();
-  }, []);
+    setApiVerify(`${isVerfied}`);
+  }, [isVerfied]);
 
   const getFood = () => {
     getAllItemsList()
@@ -29,17 +30,14 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerified }) => {
   };
 
   const changeStatus = (id) => {
-    if (apiState === "false") {
-      setApiState("true");
-      localStorage.setItem("status", "Approved");
+    if (`${apiVerify}` === "false") {
+      setApiVerify("true");
     } else {
-      setApiState("false");
-      localStorage.setItem("status", "Rejected");
+      setApiVerify("false");
     }
     let params = {
-      isVerified: apiState,
+      isVerified: apiVerify,
     };
-    console.log(id);
     confirmChefAccount(id, params)
       .then((res) => {
         if (res.data.data.message === "User profile verified successfully.") {
@@ -69,8 +67,6 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerified }) => {
       .catch((error) => {});
   };
 
-  console.log(chefPic);
-
   return (
     <div className="container mb-5">
       <div className="card mb-3 p-3">
@@ -79,9 +75,7 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerified }) => {
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={
-                  chefPic === `http://meyu.sg:8082/null`
-                    ? UserImage
-                    : chefPic
+                  chefPic === `http://meyu.sg:8082/null` ? UserImage : chefPic
                 }
                 className="img"
                 alt="..."
@@ -115,14 +109,14 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerified }) => {
                   </button>
                   <button
                     className={
-                      localStorage.getItem("status") === "Approved"
+                      apiVerify === "true"
                         ? "btn btn-success shadow-none"
                         : "btn btn-danger shadow-none"
                     }
                     type="button"
                     onClick={() => changeStatus(chefDetail?.id)}
                   >
-                    {localStorage.getItem("status") || "Rejected"}
+                    {apiVerify === "true" ? "Approved" : "Rejected"}
                   </button>
                 </div>
               </div>
