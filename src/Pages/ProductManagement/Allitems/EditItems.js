@@ -13,6 +13,7 @@ const EditItems = () => {
   const [selectedTag, setSelectedTag] = useState([]);
   const [itemImage, setItemImage] = useState("");
   const [chefImage, setChefImage] = useState("");
+  const [mediaObjectId, setMediaObjectId] = useState("");
   const { itemId } = useParams();
 
   useEffect(() => {
@@ -27,7 +28,8 @@ const EditItems = () => {
           setItemStatus(response?.data?.data?.recipeDetails?.isVerified);
           setChefDetail(response?.data?.data?.profile);
           setItemDetail(response?.data?.data?.recipeDetails);
-
+          response.data.data.recipeDetails.MediaObjects.map((element) => setMediaObjectId(element.id))
+ 
           // set item image
           response?.data?.data?.recipeDetails?.MediaObjects?.map((recipe) =>
             setItemImage(`http://meyu.sg:8082/${recipe?.imageUrl}`)
@@ -82,6 +84,7 @@ const EditItems = () => {
           itemImage={itemImage}
           itemStatus={itemStatus}
           selectedTag={selectedTag}
+          mediaObjectId={mediaObjectId}
         />
       </div>
     </div>
