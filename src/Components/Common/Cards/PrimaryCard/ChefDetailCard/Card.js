@@ -116,7 +116,7 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied }) => {
                     type="button"
                     onClick={() => changeStatus(chefDetail?.id)}
                   >
-                    {apiVerify === "true" ? "Approved" : "Rejected"}
+                    {apiVerify === "true" ? "Approve" : "Reject"}
                   </button>
                 </div>
               </div>
