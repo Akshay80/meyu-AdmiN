@@ -226,9 +226,9 @@ const ItemDetails = ({
   const animatedComponents = makeAnimated();
   return (
     <div className="card p-5 m-3">
-      <div className="pb-5">
+      <div className="pb-3">
         <div className="profile-pic-wrapper pb-2">
-          <div className="pic-holder pb-2">
+          <div className="pic-holder mb-2">
             <img
                src={recipeImage ? recipeImage : recipeImageByAPI}
               id="itemPic"

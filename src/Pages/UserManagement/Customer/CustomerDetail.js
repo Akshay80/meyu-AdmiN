@@ -8,7 +8,10 @@ import { useParams } from "react-router-dom";
 
 const CustomerDetail = () => {
   const [customerDetail, setCustomerDetail] = useState({});
+  const [customerName, setCustomerName] = useState("");
   const [customerImage, setCustomerImage] = useState("");
+  const [customerVerify, setcustomerVerify] = useState();
+  const [customerReject, setcustomerReject] = useState();
   const { customerId } = useParams();
 
   useEffect(() => {
@@ -20,6 +23,9 @@ const CustomerDetail = () => {
     getCustomerDetails(customerId)
       .then((response) => {
         setCustomerDetail(response?.data?.data);
+        setCustomerName(response?.data?.data?.fullName);
+        setcustomerVerify(response?.data?.data?.isVerified);
+        setcustomerReject(response?.data?.data?.isRejected);
         setCustomerImage(
           `http://meyu.sg:8082/${response.data.data.profileUrl}`
         );
@@ -44,6 +50,10 @@ const CustomerDetail = () => {
         <CustomerCard
           customerDetail={customerDetail}
           customerImage={customerImage}
+          customerId={customerId}
+          customerName={customerName}
+          customerVerify={customerVerify}
+          customerReject={customerReject}
         />
       </div>
       <div className="pb-3">

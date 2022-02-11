@@ -22,6 +22,7 @@ export default (() => {
     customers: `${setting.api.url}admin/getusers`,
     getcustomerDetails: `${setting.api.url}admin/getuserdetails`,
     deletecustomers: `${setting.api.url}admin/user`,
+    discontinueCustomer: `${setting.api.url}admin/confirmuser`,
 
     // Category
     category: `${setting.api.url}admin/category`,

@@ -1,25 +1,77 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import UserImage from "../../../../../Assets/Images/blank-user.png";
 import "./Card.scss";
+import { discontinueCustomer } from "../../../../../Services/customerServices";
+import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
-const CustomerCard = ({ customerDetail, customerImage }) => {
+const CustomerCard = ({
+  customerDetail,
+  customerImage,
+  customerId,
+  customerVerify,
+  customerReject,
+}) => {
+  const [disState, setDisState] = useState();
+
+  useEffect(() => {
+    setDisState(`${customerVerify}`);
+  }, [customerVerify]);
+
+  async function disCustomer() {
+    if (`${disState}` === "true") {
+      setDisState("false");
+    } else {
+      setDisState("true");
+    }
+    var params = {
+      isVerified: disState,
+    };
+    await discontinueCustomer(customerId, params)
+      .then((res) => {
+        if (res.data.data.message === "User profile verified successfully.") {
+          toast.success(res.data.data.message, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+          });
+        }
+
+        if (res.data.data.message === "User profile rejected successfully.") {
+          toast.error(res.data.data.message, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+          });
+        }
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }
+
   const disContinue = () => {
     confirmAlert({
-      title: "Discontinue!",
-      message: `Are you sure you want to discontinue this customer?`,
+      title: disState === "true"? "Continue?": "Discontinue!",
+      message: `Are you sure you want to ${disState === "true"? "continue with": "discontinue with"} ${customerDetail.fullName}?`,
       buttons: [
         {
           label: "Yes",
           className: "btn btn-danger",
-          color: "red",
-          onClick: () => {
-            alert("Customer Discontinued!");
-          },
+          onClick: () => disCustomer(),
         },
         {
           label: "No",
+          className: "btn btn-success",
         },
       ],
     });
@@ -53,11 +105,15 @@ const CustomerCard = ({ customerDetail, customerImage }) => {
                 </div>
                 <div>
                   <button
-                    className="btn btn-outline-danger shadow-none"
+                    className={
+                      disState === "true"
+                        ? "btn btn-outline-success shadow-none"
+                        : "btn btn-outline-danger shadow-none"
+                    }
                     type="button"
-                    onClick={disContinue}
+                    onClick={() => disContinue()}
                   >
-                    Discontinue
+                    {disState === "true" ? "Continue" : "Discontinue"}
                   </button>
                 </div>
               </div>
