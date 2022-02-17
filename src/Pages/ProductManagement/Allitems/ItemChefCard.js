@@ -9,6 +9,7 @@ const ItemChefCard = ({ chefDetail, chefImage }) => {
         <div className="row g-0">
           <div className="col-md-3 col-sm-6 col-xs-12 d-flex align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
+              {console.log(chefImage)}
               <img
                 src={chefImage === null ? UserImage : chefImage}
                 className="img"

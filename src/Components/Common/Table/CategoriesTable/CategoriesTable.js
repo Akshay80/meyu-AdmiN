@@ -50,7 +50,7 @@ const CategoriesTable = () => {
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
-  const url = "http://meyu.sg:8082/";
+  const url = "http://13.213.151.153:8083/";
   const {
     register,
     setValue,

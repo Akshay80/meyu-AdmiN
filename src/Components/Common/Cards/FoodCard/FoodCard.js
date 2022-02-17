@@ -9,7 +9,7 @@ import nonveg from "../../../../Assets/Icon/NonVeg.svg";
 import noodles from "../../../../Assets/Images/noodles.png";
 
 const FoodCard = ({ items, chefRecipe }) => {
-  console.log("ChefRecipe: ", chefRecipe);
+  // console.log("ChefRecipe: ", chefRecipe);
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4">
@@ -36,7 +36,7 @@ const FoodCard = ({ items, chefRecipe }) => {
                     <Carousel.Item key={key}>
                       <img
                         className="d-block w-100 cardImages"
-                        src={`http://meyu.sg:8082/${food?.imageUrl}`}
+                        src={`http://13.213.151.153:8083/${food?.imageUrl}`}
                         alt="First slide"
                       />
                     </Carousel.Item>
@@ -78,8 +78,8 @@ const FoodCard = ({ items, chefRecipe }) => {
           <div className="card p-4 mx-auto">
           <img className="text-center d-block mx-auto" src={noodles} alt="warn-noodles" width="90"/>
         <h4 className="text-dark text-center fw-bold">Looks like nothing to see here?</h4>
-        <h5 class="text-muted text-justify fs-6 mx-auto">Remember, Good food never fail in bringing people together</h5>
-        <p class="fw-normal text-muted text-justify fs-6 mx-auto">Upload some delicious food or a recipes 
+        <h5 className="text-muted text-justify fs-6 mx-auto">Remember, Good food never fail in bringing people together</h5>
+        <p className="fw-normal text-muted text-justify fs-6 mx-auto">Upload some delicious food or a recipes 
         so that you can see them here.</p>
         </div>
         </div>
