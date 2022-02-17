@@ -98,7 +98,7 @@ const ItemDetails = ({
           // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
           //   setChefImage(`http://meyu.sg:8082/${chefPic?.imageUrl}`)
           // );
-          response?.data?.data?.recipeDetails?.MediaObjects?.map((img) => setRecipeImagebyAPI(`http://meyu.sg:8082/${img?.imageUrl}`));
+          response?.data?.data?.recipeDetails?.MediaObjects?.map((img) => setRecipeImagebyAPI(`http://13.213.151.153:8083/${img?.imageUrl}`));
           // ===========================
           //  set Tags Data
           let tempTag = [];
@@ -207,7 +207,7 @@ const ItemDetails = ({
         //   });
         // }
         // window.location.reload(false);
-        setRecipeImage(`http://meyu.sg:8082/${response.data.data.profileUrl}`);
+        setRecipeImage(`http://13.213.151.153:8083/${response.data.data.profileUrl}`);
       })
       .catch((error) => {
         toast.error(error.error, {

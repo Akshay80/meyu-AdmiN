@@ -32,12 +32,12 @@ const EditItems = () => {
  
           // set item image
           response?.data?.data?.recipeDetails?.MediaObjects?.map((recipe) =>
-            setItemImage(`http://meyu.sg:8082/${recipe?.imageUrl}`)
+            setItemImage(`http://13.213.151.153:8083/${recipe?.imageUrl}`)
           );
 
           // set chef image
           setChefImage(
-            `http://meyu.sg:8082/${response?.data?.data?.profile?.profileUrl}`
+            `http://13.213.151.153:8083/${response?.data?.data?.profile?.profileUrl}`
           );
 
           // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
