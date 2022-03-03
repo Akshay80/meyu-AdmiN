@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Row } from "react-bootstrap";
 import "./OrderProfile.scss";
 import { ReactComponent as OrderIcon } from "../../../Assets/Icon/order.svg";
-
+import { useParams } from "react-router-dom";
 import "../../../Components/Common/Buttons/buttons.scss";
+import {getOrdersByID} from "../../../Services/orderService";
 
 const OrderProfile = () => {
+  const { orderId } = useParams();
+
+  useEffect(() => {
+    ordersByID();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+  
+  const ordersByID = async () => {
+    await getOrdersByID(orderId)
+      .then((response) => {
+     console.log(response.data.data)
+     console.log(response.data.data.cookDetails.firstName)
+     console.log(response.data.data.cookDetails.lastName)
+     console.log(response.data.data.orderDetail.id)
+     
+      })
+      .catch(function (error) {});
+  };
+
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4 ">
@@ -56,22 +76,6 @@ const OrderProfile = () => {
               >
                 <Form.Label className="mb-0">Total Amount</Form.Label>
                 <Form.Control type="text" placeholder="Total Amount" />
-              </Form.Group>
-
-              <Form.Group
-                className="col-md-6 col-sm-6 col-xs-12 mb-3"
-                controlId="formGridCategory"
-              >
-                <Form.Label className="mb-0">Category</Form.Label>
-                <Form.Control placeholder="Category" />
-              </Form.Group>
-
-              <Form.Group
-                className="col-md-6 col-sm-6 col-xs-12 mb-3"
-                controlId="formGridSubCategory"
-              >
-                <Form.Label className="mb-0">Sub Category</Form.Label>
-                <Form.Control placeholder="Sub Category" />
               </Form.Group>
 
               <Form.Group

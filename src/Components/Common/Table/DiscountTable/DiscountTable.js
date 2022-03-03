@@ -70,6 +70,13 @@ const DiscountTable = () => {
       text: "Discount",
       headerSortingStyle,
       sort: true,
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            {row.discountValue+"%"}
+          </div>
+        );
+      },
     },
 
     {

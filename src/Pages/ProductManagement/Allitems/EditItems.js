@@ -14,7 +14,9 @@ const EditItems = () => {
   const [itemImage, setItemImage] = useState("");
   const [chefImage, setChefImage] = useState("");
   const [mediaObjectId, setMediaObjectId] = useState("");
+  const [cook, setCook] = useState("");
   const { itemId } = useParams();
+  const [cookTime, setCookTime] = useState("");
 
   useEffect(() => {
     fetchItemDetail();
@@ -26,6 +28,8 @@ const EditItems = () => {
       .then((response) => {
         if (response.statusText === "OK") {
           setItemStatus(response?.data?.data?.recipeDetails?.isVerified);
+          response.data.data.profile.CookAvailability.Days.map((items) => setCook(items));
+          setCookTime(response.data.data.profile.CookAvailability);
           setChefDetail(response?.data?.data?.profile);
           setItemDetail(response?.data?.data?.recipeDetails);
           response.data.data.recipeDetails.MediaObjects.map((element) => setMediaObjectId(element.id))
@@ -78,7 +82,7 @@ const EditItems = () => {
       </div>
 
       <div className="d-flex flex-column justify-content-around">
-        <ItemChefCard chefDetail={chefDetail} chefImage={chefImage} />
+        <ItemChefCard chefDetail={chefDetail} chefImage={chefImage} cook={cook} cookTime={cookTime}/>
         <ItemDetails
           itemDetail={itemDetail}
           itemImage={itemImage}

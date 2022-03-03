@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
@@ -7,26 +7,40 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { OrdersData } from "./OrdersTableData";
+import { getAllOrders } from "../../../../Services/orderService";
 import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
 import "./OrdersTable.css";
 import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
+import moment from "moment";
 
 const OrdersTable = () => {
-  const products = OrdersData.map((custom) => [
-    {
-      id: custom.id,
-      date: custom.date,
-      customername: custom.customername,
-      chefname: custom.chefname,
-      amount: custom.amount,
-      status: custom.status,
-    },
-  ]);
+  const [orders, setOrders] = useState([]);
+  // const products = OrdersData.map((custom) => [
+  //   {
+  //     id: custom.id,
+  //     date: custom.date,
+  //     customername: custom.customername,
+  //     chefname: custom.chefname,
+  //     amount: custom.amount,
+  //     status: custom.status,
+  //   },
+  // ]);
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
+
+  useEffect(() => {
+    orderData();
+  }, []);
+
+  const orderData = async () => {
+    await getAllOrders()
+      .then((response) => {
+        setOrders(response.data.data);
+      })
+      .catch(function (error) {});
+  };
 
   const columns = [
     {
@@ -38,15 +52,22 @@ const OrdersTable = () => {
       // align: "center",
     },
     {
-      dataField: "date",
+      dataField: "createdAt",
       text: "Date",
       sort: true,
       headerSortingStyle,
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            {moment(row.createdAt).format("MMMM Do YYYY")}
+          </div>
+        );
+      },
       // headerAlign: "center",
       // align: "center",
     },
     {
-      dataField: "customername",
+      dataField: "customerName",
       text: "Customer Name",
       headerSortingStyle,
       sort: true,
@@ -54,7 +75,7 @@ const OrdersTable = () => {
       // align: "center",
     },
     {
-      dataField: "chefname",
+      dataField: "cookName",
       text: "Chef Name",
       headerSortingStyle,
       sort: true,
@@ -62,15 +83,22 @@ const OrdersTable = () => {
       // align: "center",
     },
     {
-      dataField: "amount",
+      dataField: "totalAmount",
       text: "Amount",
       sort: true,
       headerSortingStyle,
       // headerAlign: "center",
       // align: "center",
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            {`$`+ row.totalAmount}
+          </div>
+        );
+      },
     },
     {
-      dataField: "status",
+      dataField: "orderState",
       text: "Status",
       sort: true,
       headerSortingStyle,
@@ -86,7 +114,7 @@ const OrdersTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex">
-            <NavLink to={Path.orderDetails}>
+            <NavLink to={`${Path.orderDetails}/${row.id}`}>
               <ViewIcon className="view-icon" />
             </NavLink>
           </div>
@@ -107,7 +135,7 @@ const OrdersTable = () => {
       <PaginationProvider
         pagination={paginationFactory({
           custom: true,
-          totalSize: products.length,
+          totalSize: orders.length,
           prePageText: "Previous",
           nextPageText: "Next",
           page: 1,
@@ -132,20 +160,20 @@ const OrdersTable = () => {
             },
             {
               text: "All",
-              value: products.length,
+              value: orders.length,
             },
           ],
-          hideSizePerPage: products.length === 0,
+          hideSizePerPage: orders.length === 0,
         })}
         keyField="id"
         columns={columns}
-        data={OrdersData.map((item) => item)}
+        data={orders.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={OrdersData.map((item) => item)}
+            data={orders.map((item) => item)}
             search
           >
             {(toolkitprops) => (

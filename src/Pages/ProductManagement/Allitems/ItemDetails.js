@@ -8,27 +8,32 @@ import makeAnimated from "react-select/animated";
 import {
   confirmItemsbyId,
   updateRecipebyId,
-  updateRecipeImagebyId
+  updateRecipeImagebyId,
 } from "../../../Services/itemsService";
 import { toast } from "react-toastify";
 import { getAllTagFun } from "../../../Services/tagServices";
-import { getItemsbyId } from "../../../Services/itemsService";
+import { getItemsbyId, deleteRecipeImagebyId } from "../../../Services/itemsService";
 import { useParams } from "react-router";
+import "./ItemDetails.scss";
+import { ReactComponent as CloseIcon } from "../../../Assets/Icon/close.svg";
 
 const ItemDetails = ({
   itemDetail,
   itemImage,
   itemStatus,
   selectedTag,
-  mediaObjectId
+  mediaObjectId,
 }) => {
   const [tagOption, setTagOption] = useState([]);
   const [tag, setTag] = useState([]);
   const [err, setError] = useState("");
   const [paramss, setParams] = useState();
   // const [image, setImage] = useState({ preview: "", raw: "" });
-  const [recipeImage, setRecipeImage] = useState("");
-  const [recipeImageByAPI, setRecipeImagebyAPI] = useState();
+  // const [recipeImage, setRecipeImage] = useState("");
+  // const [recipeImageByAPI, setRecipeImagebyAPI] = useState();
+  // const [multi, setMulti] = useState([]);
+  // const [image, setImage] = useState({});
+  const [pics, setPics] = useState([]);
 
   const { itemId } = useParams();
   const {
@@ -48,9 +53,9 @@ const ItemDetails = ({
   useEffect(() => {
     tagdata();
     fetchItemDetail();
-  
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   const tagdata = () => {
     getAllTagFun()
@@ -93,12 +98,22 @@ const ItemDetails = ({
             response.data.data.recipeDetails.costPerServing
           );
 
-          setValue("sellingPrice", response.data.data.recipeDetails.sellingPrice);
+          setValue(
+            "sellingPrice",
+            response.data.data.recipeDetails.sellingPrice
+          );
 
           // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
           //   setChefImage(`http://meyu.sg:8082/${chefPic?.imageUrl}`)
           // );
-          response?.data?.data?.recipeDetails?.MediaObjects?.map((img) => setRecipeImagebyAPI(`http://13.213.151.153:8083/${img?.imageUrl}`));
+          setPics(response.data.data.recipeDetails.MediaObjects);
+          response?.data?.data?.recipeDetails?.MediaObjects?.map((img) =>
+            `http://13.213.151.153:8083/${img?.imageUrl}`
+          );
+
+          // response.data.data.recipeDetails.MediaObjects.map((url, index) => setImage({
+          //   [index]:`http://13.213.151.153:8083/${url.imageUrl}`
+          // }))
           // ===========================
           //  set Tags Data
           let tempTag = [];
@@ -117,29 +132,32 @@ const ItemDetails = ({
       .catch(function (error) {});
   };
 
+  
   const submitdata = (data) => {
-    
     // Selling Price Part
     if (Math.floor(itemDetail.costPerServing) < data.sellingPrice) {
       setError("");
       // console.log('tags: ', data.tags)
 
       var mytags = data.tags;
-      var t = mytags.map(s => `${s}`).join(',').replace(/["']/g, '"'); 
-      var tag = ("tags : ", "["+t+"]".toString());
+      var t = mytags
+        .map((s) => `${s}`)
+        .join(",")
+        .replace(/["']/g, '"');
+      var tag = ("tags : ", "[" + t + "]".toString());
       // console.log(tag);
 
       var formData = new FormData();
-    formData.append("dishName", data.dishName);
-    formData.append("tags", tag);
-    formData.append("preparationTime", data.preparationTime);
-    formData.append("categoryId", data.categoryId);
-    formData.append("deliveryFee", data.deliveryFee);
-    formData.append("costPerServing", data.costPerServing);
-    formData.append("description", data.description);
-    formData.append("isVegetarian", data.isVegetarian);
-    formData.append("isNonVegetarian", data.isNonVegetarian);
-    formData.append("sellingPrice", data.sellingPrice);
+      formData.append("dishName", data.dishName);
+      formData.append("tags", tag);
+      formData.append("preparationTime", data.preparationTime);
+      formData.append("categoryId", data.categoryId);
+      formData.append("deliveryFee", data.deliveryFee);
+      formData.append("costPerServing", data.costPerServing);
+      formData.append("description", data.description);
+      formData.append("isVegetarian", data.isVegetarian);
+      formData.append("isNonVegetarian", data.isNonVegetarian);
+      formData.append("sellingPrice", data.sellingPrice);
 
       // var test = [];
       // for(var i=0;i<data.tags.length;i++){
@@ -147,7 +165,7 @@ const ItemDetails = ({
       //   var pushedArray = test.push(ans)
       //   console.log("Pushed ARRAY : ",pushedArray);
       //  }
-    
+
       // Update Recipe By ID
       updateRecipebyId(itemDetail?.id, formData)
         .then((res) => {
@@ -165,11 +183,11 @@ const ItemDetails = ({
           }
           fetchItemDetail();
         })
-        
+
         .catch((err) => {
           console.log(err);
         });
-
+      
       //  Change Status Approved or Pending
       confirmItemsbyId(itemDetail.id, paramss)
         .then((data) => {})
@@ -177,6 +195,25 @@ const ItemDetails = ({
     } else {
       setError("Selling Price must be greater than Chef Price!");
     }
+    fetchItemDetail();
+  };
+
+  // OnClose Function
+  const handleClose = async (image) => {
+    // // Selected Image Object
+    // console.log(id);
+    // // All Images Object
+    // console.log(multi);
+    setPics((oldState) => oldState.filter((item) => item.id !== image.id));
+
+
+    // Delete Recipe Image By Media Object ID
+    deleteRecipeImagebyId(image.id)
+    .then((res) => {
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   };
 
 
@@ -207,7 +244,9 @@ const ItemDetails = ({
         //   });
         // }
         // window.location.reload(false);
-        setRecipeImage(`http://13.213.151.153:8083/${response.data.data.profileUrl}`);
+        // setRecipeImage(
+        //   `http://13.213.151.153:8083/${response.data.data.profileUrl}`
+        // );
       })
       .catch((error) => {
         toast.error(error.error, {
@@ -223,38 +262,57 @@ const ItemDetails = ({
       });
   };
 
+  // console.log("item ki image: ", itemImage)
+  // console.log("RECIEPE IMAGE: ", recipeImage);
+
   const animatedComponents = makeAnimated();
+
   return (
     <div className="card p-5 m-3">
       <div className="pb-3">
-        <div className="profile-pic-wrapper pb-2">
-          <div className="pic-holder mb-2">
-            <img
-               src={recipeImage ? recipeImage : recipeImageByAPI}
-              id="itemPic"
-              className="item-pic"
-              alt=""
-            />
-          </div>
+        <div className="container">
+          <div className="row">
+            {/* {console.log(pics)} */}
+            {pics.map((image) => (
+              <div key={image.id} className={pics.length ===1? "col-sm-12 col-md-6 mx-auto mb-3 h-100":"col-sm-12 col-md-4 mb-3"}>
+                <div className="text-end" style={{ margin: 35 }}>
+                  {pics.length !== 1?
+                  <CloseIcon className="btn-close-color" style={{ position: "absolute", marginTop: 7 }} onClick={() => handleClose(image)} />:null}
+                </div>
 
-          <label htmlFor="newProfilePhoto" className="upload-file-block">
-            <div className="text-center">
-              <div className="mb-2">
-                <i className="fa fa-camera fa-2x"></i>
+                <img
+                  key={image.id}
+                  src={`http://13.213.151.153:8083/${image.imageUrl}`}
+                  style={{ width: "100%" }}
+                  height="300"
+                  alt=""
+                  
+                />
               </div>
+            ))}
+
+            {/* </div> */}
+            <div className="text-center">
+              <label htmlFor="newProfilePhoto" className="upload-file-block">
+                <div className="text-center">
+                  <div className="mb-2">
+                    <i className="fa fa-camera fa-2x"></i>
+                  </div>
+                </div>
+                <div className="btn btn-outline-success">Change Image</div>
+              </label>
+              <Input
+                className="uploadProfileInput d-none"
+                type="file"
+                name="profile_pic"
+                id="newProfilePhoto"
+                accept="image/*"
+                onChange={handleChange}
+              />
             </div>
-            <div className="btn btn-outline-success">Change Image</div>
-          </label>
-          <Input
-            className="uploadProfileInput d-none"
-            type="file"
-            name="profile_pic"
-            id="newProfilePhoto"
-            accept="image/*"
-             onChange={handleChange}
-          />
-        </div>
           </div>
+        </div>
+      </div>
 
       <form className="profile-form mt-3" onSubmit={handleSubmit(submitdata)}>
         <div className="row mb-3">
@@ -336,7 +394,9 @@ const ItemDetails = ({
                 options={tagOption}
                 isSearchable
                 required={true}
-                onChange={(e) => setTag(e.map((val) => JSON.stringify(val.label)))}
+                onChange={(e) =>
+                  setTag(e.map((val) => JSON.stringify(val.label)))
+                }
                 // onChange={(e) => {e.map((VAL) => console.log(VAL.label))}}
                 {...setValue(
                   "tags",
@@ -346,7 +406,7 @@ const ItemDetails = ({
                 )}
               />
             ) : (
-              "" 
+              ""
             )}
           </div>
           {/* ======================================== */}

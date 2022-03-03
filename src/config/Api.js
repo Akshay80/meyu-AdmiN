@@ -51,6 +51,7 @@ export default (() => {
     deleteItem: `${setting.api.url}admin/recipe`,
     updateRecipe: `${setting.api.url}admin/recipe`,
     updateRecipeImage: `${setting.api.url}chef/recipe-image`,
+    deleteRecipeImage: `${setting.api.url}admin/delete-image`,
 
     //Tax
     addTax: `${setting.api.url}admin/tax`,
@@ -65,6 +66,8 @@ export default (() => {
     deleteCoupans: `${setting.api.url}admin/delete-genrate-discount-coupan`,
     getCoupansByID: `${setting.api.url}common/genrate-discount-coupan`,
 
-
+    //Orders
+    getAllOrders: `${setting.api.url}admin/getorders`,
+    getOrdersByID: `${setting.api.url}admin/getorderdetails`,
   };
 })();
