@@ -11,6 +11,7 @@ const ChefDetail = ({ menuToggleState }) => {
   const [chefRecipe, setChefRecipe] = useState("");
   const [isVerfied, setIsVerfied] = useState();
   const { chefId } = useParams();
+  const [cookingTime, setCookingTime] = useState("");
 
   useEffect(() => {
     fetchChefDetail();
@@ -25,7 +26,8 @@ const ChefDetail = ({ menuToggleState }) => {
         setChefPic(
           `http://13.213.151.153:8083/${response?.data?.data?.chefProfile?.profileUrl}`
         );
-        setIsVerfied(response.data.data.chefProfile?.isVerified);  
+        setIsVerfied(response.data.data.chefProfile?.isVerified);
+        response.data.data.chefProfile.CookAvailability.Days.map((items) => setCookingTime(items));
       })
       .catch(function (error) {});
   };
@@ -49,6 +51,7 @@ const ChefDetail = ({ menuToggleState }) => {
         chefRecipe={chefRecipe}
         chefId={chefId}
         isVerfied={isVerfied}
+        cookingTime={cookingTime}
       />
     </div>
   );

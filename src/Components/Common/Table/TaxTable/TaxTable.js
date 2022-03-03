@@ -65,6 +65,13 @@ const TaxTable = () => {
       text: "Tax Value",
       headerSortingStyle,
       sort: true,
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            {`$`+ row.taxValue}
+          </div>
+        );
+      },
       //   headerAlign: "center",
       //   align: "center",
     },

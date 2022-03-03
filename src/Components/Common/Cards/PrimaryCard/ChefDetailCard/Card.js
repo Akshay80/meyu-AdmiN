@@ -7,7 +7,7 @@ import { confirmChefAccount } from "../../../../../Services/chefServices";
 import { toast } from "react-toastify";
 import { getAllItemsList } from "../../../../../Services/itemsService";
 
-const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied }) => {
+const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied, cookingTime }) => {
   const [togglemenu, setToggleMenu] = useState(false);
   const [apiVerify, setApiVerify] = useState();
   const [items, setItems] = useState();
@@ -97,7 +97,8 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied }) => {
                   </h5>
                   <p>{chefDetail?.phone}</p>
                   <p>{chefDetail?.email}</p>
-                  <p>Chef Timing</p>
+                  <p>{cookingTime.isWeeekdays === true? "Monday - Friday": ""}</p>
+                  <p>{cookingTime.isWeekends === true? "Saturday - Sunday": ""}</p>
                 </div>
                 <div className="d-flex flex-column">
                   <button

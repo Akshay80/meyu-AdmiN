@@ -26,3 +26,8 @@ export function updateRecipebyId(id, payload) {
 export function updateRecipeImagebyId(id, payload) {
   return ApiInstance?.put(`${Api.updateRecipeImage}/${id}`, payload);
 }
+
+// Delete Recipe Image by MediaObject Id
+export function deleteRecipeImagebyId(id) {
+  return ApiInstance?.delete(`${Api.deleteRecipeImage}/${id}`);
+}

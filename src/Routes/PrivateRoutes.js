@@ -40,7 +40,7 @@ function PrivateRoutes() {
         <Route path={Path.discount} element={<DiscountTable />} />
         <Route path={Path.ingredients} element={<Ingredients />} />
         <Route path={Path.orderManagement} element={<OrderManagement />} />
-        <Route path={Path.orderDetails} element={<OrderProfile />} />
+        <Route path={`${Path.orderDetails}/:orderId`} element={<OrderProfile />} />
         <Route path={Path.userProfile} element={<UserProfile />} />
       </Route>
     </Routes>

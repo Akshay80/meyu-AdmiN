@@ -1,0 +1,11 @@
+@import "../../../Styles/theme";
+
+.btn-close-color {
+  color : $btn-close-color;
+  height: 30px;
+  width: 30px;
+} 
+
+.btn-close-color:hover{
+  cursor: pointer;
+}

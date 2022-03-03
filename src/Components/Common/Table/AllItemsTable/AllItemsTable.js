@@ -99,8 +99,16 @@ const AllItemsTable = () => {
       text: "Price",
       headerSortingStyle,
       sort: true,
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            {row.currencySymbol + row.costPerServing}
+          </div>
+        );
+      },
       // headerAlign: "center",
       // align: "center",
+
     },
     {
       dataField: "isVerified",
@@ -150,6 +158,7 @@ const AllItemsTable = () => {
       <PaginationProvider
         pagination={paginationFactory({
           custom: true,
+          totalSize: getItem.length,
           prePageText: "Previous",
           nextPageText: "Next",
           page: 1,
@@ -158,7 +167,6 @@ const AllItemsTable = () => {
               text: "5",
               value: 5,
             },
-
             {
               text: "10",
               value: 10,
@@ -172,10 +180,11 @@ const AllItemsTable = () => {
               value: 50,
             },
           ],
+          hideSizePerPage: getItem.length === 0,
         })}
         keyField="id"
         columns={columns}
-        data={getItems}
+        data={getItem}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
