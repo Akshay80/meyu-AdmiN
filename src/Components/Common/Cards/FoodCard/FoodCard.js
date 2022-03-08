@@ -7,9 +7,15 @@ import Carousel from "react-bootstrap/Carousel";
 import veg from "../../../../Assets/Icon/Veg.svg";
 import nonveg from "../../../../Assets/Icon/NonVeg.svg";
 import noodles from "../../../../Assets/Images/noodles.png";
+import { useNavigate } from "react-router-dom";
 
 const FoodCard = ({ items, chefRecipe }) => {
   // console.log("ChefRecipe: ", chefRecipe);
+  let navigate = useNavigate();
+  const routeChange = (id) =>{ 
+    let path = `/edit-items/${id}`; 
+    navigate(path);
+  }
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4">
@@ -21,7 +27,7 @@ const FoodCard = ({ items, chefRecipe }) => {
 
       <div className="row col-md-12">
         {chefRecipe?.map((val) => {
-          let price = "₹" + val.costPerServing;
+          let price = "$" + val.costPerServing;
           return (
             <div
               key={val?.MediaObjects?.map((food) => food?.id)}
@@ -29,15 +35,16 @@ const FoodCard = ({ items, chefRecipe }) => {
             >
               <div
                 key={val?.MediaObjects?.map((food) => food?.id)}
-                className="card h-100"
+                className="card h-100" 
               >
-                <Carousel fade indicators={false}>
+                <Carousel controls={val.MediaObjects.length === 1 ? false: true} indicators={false}>
                   {val?.MediaObjects?.map((food, key) => (
                     <Carousel.Item key={key}>
                       <img
                         className="d-block w-100 cardImages"
-                        src={`http://13.213.151.153:8083/${food?.imageUrl}`}
+                        src={`http://13.213.151.153:8081/${food?.imageUrl}`}
                         alt="First slide"
+                        onClick={() => routeChange(val.id)}
                       />
                     </Carousel.Item>
                   ))}
@@ -59,10 +66,12 @@ const FoodCard = ({ items, chefRecipe }) => {
                       ideal={120}
                       max={120}
                       text={val.description}
+                      onChange={(e) => console.log(e)}
                     />
                   </div>
                   <ReactStars
-                    count={Math.random() * 5}
+                    count={val.rating}
+                    className={val.rating === 0 ? "mt-2 mb-2":null}
                     size={16}
                     edit={false}
                     color1={"#04AA6D"}

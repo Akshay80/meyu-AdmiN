@@ -85,7 +85,7 @@ const CustomerCard = ({
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={
-                  customerImage === `http://13.213.151.153:8083/null`
+                  customerImage === `http://13.213.151.153:8081/null`
                     ? UserImage
                     : customerImage
                 }
@@ -121,11 +121,11 @@ const CustomerCard = ({
               <div className="primary-card-info mx-3 mt-5 d-flex justify-content-between">
                 <div className="info-xz">
                   <h5 className="mb-0">Completed Order</h5>
-                  <h6>56</h6>
+                  <h6>0</h6>
                 </div>
                 <div className="info-xz">
                   <h5 className="mb-0">Total Amount</h5>
-                  <h6>$ 56</h6>
+                  <h6>$0</h6>
                 </div>
               </div>
             </div>

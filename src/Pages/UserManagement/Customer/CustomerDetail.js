@@ -27,7 +27,7 @@ const CustomerDetail = () => {
         setcustomerVerify(response?.data?.data?.isVerified);
         setcustomerReject(response?.data?.data?.isRejected);
         setCustomerImage(
-          `http://13.213.151.153:8083/${response.data.data.profileUrl}`
+          `http://13.213.151.153:8081/${response.data.data.profileUrl}`
         );
       })
       .catch(function (error) {});

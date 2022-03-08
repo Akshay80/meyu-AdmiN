@@ -73,7 +73,7 @@ const DiscountTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex">
-            {row.discountValue+"%"}
+            {"$"+row.discountValue}
           </div>
         );
       },
@@ -119,14 +119,20 @@ const DiscountTable = () => {
       .catch(function (error) {});
   };
 
-  // Adding Tags API
+  // Adding Discount API
   const onSubmits = (data) => {
-    let params = {
-      discountValue: data?.discount,
-    };
-    addCoupans(params)
-      .then((data) => {
-        if (data?.statusText === "Created") {
+    if(data.discount > 50)
+    {
+      confirmDiscount(data.discount);
+    }
+    else
+    {
+     let params = {
+        discountValue: data?.discount,
+      }
+      addCoupans(params)
+      .then((res) => {
+        if (res.data.success === true) {
           handleClose();
           toast.success("Coupon Added Successfully", {
             position: "top-right",
@@ -140,9 +146,23 @@ const DiscountTable = () => {
           });
           discountdata();
         }
+        else
+        {
+          toast.error(res.data.error.messgae, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+        }
       })
+      
       .catch((error) => {
-        toast.error(error.error, {
+        toast.error(error, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
@@ -153,7 +173,102 @@ const DiscountTable = () => {
           toastId: "my_toast",
         });
       });
+    }
   };
+
+  // Sending Discount more than 50% value.
+  const handleDiscount = (discount) => {
+    // console.log(discount);
+    let params = {
+      discountValue: discount,
+    }
+    addCoupans(params)
+      .then((res) => {
+        if (res.data.success === true) {
+          handleClose();
+          toast.success("Coupon Added Successfully", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+          discountdata();
+        }
+        else
+        {
+          toast.error(res.data.error.messgae, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+        }
+      })
+    .catch((error) => {
+      toast.error(error, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: 0,
+        toastId: "my_toast",
+      });
+    });
+  }
+
+  // Alert on Editing
+
+  const handleDiscount2 = (discount, id) => {
+    let param = {
+        id: id,
+        discountValue: discount,
+      };
+
+      editCoupans(param)
+      .then((res) => {
+        //   console.log(res.data.error.messgae)
+        if (res.data.success === true) {
+          handleClose2();
+          toast.success("Coupon edited Successfully", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+          discountdata();
+        } else {
+          toast.error(res.data.error.messgae, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+        }
+      })
+
+      .catch(function (error) {});
+     
+  }
+
+
 
   // Deleting tag API
   const handleDelete = (rowId) => {
@@ -196,6 +311,54 @@ const DiscountTable = () => {
     });
   };
 
+  const confirmDiscount = (discount) => {
+    handleClose();
+    confirmAlert({
+      title: "Discount",
+      message: `Are you sure you want to give more than $50 discount?`,
+      buttons: [
+        {
+          label: "Yes",
+          className: "btn btn-danger",
+          onClick: () => {
+            handleDiscount(discount);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {
+            handleShow();
+          }
+        },
+      ],
+    });
+  };
+
+  // Editing Confirm Alert
+
+  const confirmDiscount2 = (discount, id) => {
+    handleClose2();
+    confirmAlert({
+      title: "Discount",
+      message: `Are you sure you want to give more than $50 discount?`,
+      buttons: [
+        {
+          label: "Yes",
+          className: "btn btn-danger",
+          onClick: () => {
+            handleDiscount2(discount, id);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {
+            handleShow2();
+          }
+        },
+      ],
+    });
+  };
+
   // edit discount = open modal and display items
   const handleEdits = (rowId, rowName) => {
     handleShow2();
@@ -220,6 +383,12 @@ const DiscountTable = () => {
   };
 
   const EditSubmits = (data) => {
+    if(data.discount > 50)
+    {
+      confirmDiscount2(data.discount, data.id);
+    }
+    else
+    {
     const param = {
       id: data?.id,
       discountValue: data?.discount,
@@ -253,8 +422,8 @@ const DiscountTable = () => {
           });
         }
       })
-
       .catch(function (error) {});
+    }
   };
 
   return (
@@ -288,10 +457,10 @@ const DiscountTable = () => {
               <Form.Label>Discount Value</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="discount"
+                placeholder="Please enter the discount value in numbers"
                 autoComplete="off"
                 {...register("discount", {
-                  required: "Discount is required!",
+                  required: "Discount is required!", 
                 })}
               />
             </Form.Group>
@@ -321,12 +490,17 @@ const DiscountTable = () => {
               <Form.Control
                 type="text"
                 autoComplete="off"
+                
                 {...register("discount", {
                   required: "Discount is required!",
                   pattern: {
                     value: /^[1-9]/,
                     message: "Invalid Discount!",
                   },
+                  max: {
+                    value: 100,
+                    message: "Cannot give more than $100 discount!"
+                  }
                 })}
               />
             </Form.Group>

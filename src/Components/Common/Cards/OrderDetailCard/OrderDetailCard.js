@@ -34,15 +34,18 @@ const OrderDetailCard = () => {
             <div className="card-x col-12 col-md-12 col-lg-8 d-flex justify-content-between ps-0 py-3">
               <div className="card-xz">
                 <h5 className="mb-0">Quantity</h5>
-                <h6>2X</h6>
+                {/* <h6>2X</h6> */}
+                <h6>0</h6>
               </div>
               <div className="card-xz">
                 <h5 className="mb-0">Price</h5>
-                <h6>$24</h6>
+                {/* <h6>$24</h6> */}
+                <h6>$0</h6>
               </div>
               <div className="card-xz">
                 <h5 className="mb-0">Total Price</h5>
-                <h6>$48</h6>
+                <h6>$0</h6>
+                {/* <h6>$48</h6> */}
               </div>
             </div>
           </div>

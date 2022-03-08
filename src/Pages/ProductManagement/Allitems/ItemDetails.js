@@ -14,9 +14,9 @@ import { toast } from "react-toastify";
 import { getAllTagFun } from "../../../Services/tagServices";
 import { getItemsbyId, deleteRecipeImagebyId } from "../../../Services/itemsService";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 import "./ItemDetails.scss";
 import { ReactComponent as CloseIcon } from "../../../Assets/Icon/close.svg";
-
 const ItemDetails = ({
   itemDetail,
   itemImage,
@@ -34,7 +34,7 @@ const ItemDetails = ({
   // const [multi, setMulti] = useState([]);
   // const [image, setImage] = useState({});
   const [pics, setPics] = useState([]);
-
+let navigate = useNavigate()
   const { itemId } = useParams();
   const {
     register,
@@ -108,7 +108,7 @@ const ItemDetails = ({
           // );
           setPics(response.data.data.recipeDetails.MediaObjects);
           response?.data?.data?.recipeDetails?.MediaObjects?.map((img) =>
-            `http://13.213.151.153:8083/${img?.imageUrl}`
+            `http://13.213.151.153:8081/${img?.imageUrl}`
           );
 
           // response.data.data.recipeDetails.MediaObjects.map((url, index) => setImage({
@@ -135,9 +135,9 @@ const ItemDetails = ({
   
   const submitdata = (data) => {
     // Selling Price Part
-    if (Math.floor(itemDetail.costPerServing) < data.sellingPrice) {
+    if (Math.floor(itemDetail.costPerServing) < data.sellingPrice || itemDetail.costPerServing === data.sellingPrice) {
       setError("");
-      // console.log('tags: ', data.tags)
+      console.log('cost price: ', data.sellingPrice)
 
       var mytags = data.tags;
       var t = mytags
@@ -172,7 +172,7 @@ const ItemDetails = ({
           if (res.data.success === true) {
             toast.success(res.data.data.message, {
               position: "top-right",
-              autoClose: 3000,
+              autoClose: 2000,
               hideProgressBar: true,
               closeOnClick: true,
               pauseOnHover: true,
@@ -182,6 +182,9 @@ const ItemDetails = ({
             });
           }
           fetchItemDetail();
+          setTimeout(() => {
+            navigate(-1)
+          }, 1000);
         })
 
         .catch((err) => {
@@ -282,7 +285,7 @@ const ItemDetails = ({
 
                 <img
                   key={image.id}
-                  src={`http://13.213.151.153:8083/${image.imageUrl}`}
+                  src={`http://13.213.151.153:8081/${image.imageUrl}`}
                   style={{ width: "100%" }}
                   height="300"
                   alt=""

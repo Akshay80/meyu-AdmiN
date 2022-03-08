@@ -49,10 +49,10 @@ export const SidebarData = [
       //   title: "Ingredients",
       //   link: Path.ingredients,
       // },
-      {
-        title: "Tax",
-        link: Path.tax,
-      },
+      // {
+      //   title: "Tax",
+      //   link: Path.tax,
+      // },
       {
         title: "Discount",
         link: Path.discount,

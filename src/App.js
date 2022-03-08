@@ -6,6 +6,7 @@ import Path from "./Constant/RouterConstant";
 import LoginRoute from "./Routes/LoginRoute";
 import RestrictedRoute from "./Routes/RestrictedRoute";
 import PrivateRoutes from "./Routes/PrivateRoutes";
+import IdleTimerContainer from "./Components/Auth/IdleTimerContainer/IdleTimerContainer";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route exact path={Path.login} element={<Login />} />
         <Route exact path={Path.forgotPassword} element={<ForgotPassword />} />
       </Routes>
+      <IdleTimerContainer></IdleTimerContainer>
       <PrivateRoutes />
     </>
   );
