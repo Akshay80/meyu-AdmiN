@@ -17,8 +17,10 @@ function IdleTimerContainer() {
   };
   const logout = () => {
     setModalOpen(false);
+    setTimeout(() => {
       clearToken();
       navigate("/login");
+    }, 1000);
   }
   const handleClose = () => setModalOpen(false);
   return (

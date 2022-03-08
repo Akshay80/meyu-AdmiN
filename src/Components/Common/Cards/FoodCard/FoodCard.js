@@ -35,7 +35,7 @@ const FoodCard = ({ items, chefRecipe }) => {
             >
               <div
                 key={val?.MediaObjects?.map((food) => food?.id)}
-                className="card h-100" 
+                className="card h-100 foodcard" 
               >
                 <Carousel controls={val.MediaObjects.length === 1 ? false: true} indicators={false}>
                   {val?.MediaObjects?.map((food, key) => (
