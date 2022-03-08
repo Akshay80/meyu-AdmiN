@@ -156,8 +156,10 @@ const AllItemsTable = () => {
   return (
     <div className="table-responsive" style={{ padding: "20px" }}>
       <PaginationProvider
+      className="dropdown-toggle"
         pagination={paginationFactory({
           custom: true,
+          withFirstAndLast: false,
           totalSize: getItem.length,
           prePageText: "Previous",
           nextPageText: "Next",
@@ -181,6 +183,7 @@ const AllItemsTable = () => {
             },
           ],
           hideSizePerPage: getItem.length === 0,
+          
         })}
         keyField="id"
         columns={columns}

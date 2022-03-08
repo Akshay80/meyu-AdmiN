@@ -38,3 +38,11 @@
   object-fit: cover;
   object-position: center;
 }
+
+.cardimage :hover{
+  cursor: pointer !important;
+}
+
+.card :hover{
+  cursor: pointer !important;
+}

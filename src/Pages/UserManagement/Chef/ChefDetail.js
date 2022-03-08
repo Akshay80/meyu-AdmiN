@@ -24,7 +24,7 @@ const ChefDetail = ({ menuToggleState }) => {
         setChefDetail(response?.data?.data?.chefProfile);
         setChefRecipe(response.data.data.recipes);
         setChefPic(
-          `http://13.213.151.153:8083/${response?.data?.data?.chefProfile?.profileUrl}`
+          `http://13.213.151.153:8081/${response?.data?.data?.chefProfile?.profileUrl}`
         );
         setIsVerfied(response.data.data.chefProfile?.isVerified);
         response.data.data.chefProfile.CookAvailability.Days.map((items) => setCookingTime(items));

@@ -16,7 +16,7 @@ import OrderManagement from "../Pages/OrderManagement";
 import OrderProfile from "../Pages/OrderManagement/OrderProfile/OrderProfile";
 import EditItems from "../Pages/ProductManagement/Allitems/EditItems";
 import ChangePassword from "../Components/Auth/ChangePassword/ChangePassword";
-import TaxTable from "../Components/Common/Table/TaxTable/TaxTable";
+// import TaxTable from "../Components/Common/Table/TaxTable/TaxTable";
 import DiscountTable from "../Components/Common/Table/DiscountTable/DiscountTable";
 
 function PrivateRoutes() {
@@ -36,7 +36,7 @@ function PrivateRoutes() {
         <Route path={`${Path.editItems}/:itemId`} element={<EditItems />} />
         <Route path={Path.categories} element={<Categories />} />
         <Route path={Path.tags} element={<Tags />} />
-        <Route path={Path.tax} element={<TaxTable />} />
+        {/* <Route path={Path.tax} element={<TaxTable />} /> */}
         <Route path={Path.discount} element={<DiscountTable />} />
         <Route path={Path.ingredients} element={<Ingredients />} />
         <Route path={Path.orderManagement} element={<OrderManagement />} />
