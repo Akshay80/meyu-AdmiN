@@ -50,7 +50,7 @@ const CategoriesTable = () => {
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
-  const url = "http://13.213.151.153:8083/";
+  const url = "http://13.213.151.153:8081/";
   const {
     register,
     setValue,
@@ -425,9 +425,10 @@ const CategoriesTable = () => {
         <div className="table-responsive" style={{ padding: "20px" }}>
           <PaginationProvider
             pagination={paginationFactory({
-              custom: true,
+              custom: false,
               totalSize: categoryData.length,
               prePageText: "Previous",
+              withFirstAndLast: false,
               nextPageText: "Next",
               page: 1,
               sizePerPageList: [
@@ -468,8 +469,8 @@ const CategoriesTable = () => {
               >
                 {(toolkitprops) => (
                   <>
-                    <div className="d-flex justify-content-between mb-3">
-                      <SizePerPageDropdownStandalone {...paginationProps} />
+                    <div className="d-flex justify-content-end mb-3">
+                      {/* <SizePerPageDropdownStandalone {...paginationProps} /> */}
                       <SearchBar {...toolkitprops.searchProps} srText=" " />
                     </div>
                     <BootstrapTable
@@ -485,9 +486,9 @@ const CategoriesTable = () => {
                       noDataIndication="No Data Is Available"
                       bootstrap4
                     />
-                    <div className="d-flex justify-content-end">
+                    {/* <div className="d-flex justify-content-end">
                       <PaginationListStandalone {...paginationProps} />
-                    </div>
+                    </div> */}
                   </>
                 )}
               </ToolkitProvider>

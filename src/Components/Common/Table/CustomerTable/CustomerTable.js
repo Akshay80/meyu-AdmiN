@@ -169,10 +169,11 @@ function CustomerTable() {
     <div className="table-responsive" style={{ padding: "20px" }}>
       <PaginationProvider
         pagination={paginationFactory({
-          custom: true,
+          custom: false,
           totalSize: customerData.length,
           prePageText: "Previous",
           nextPageText: "Next",
+          withFirstAndLast: false,
           sizePerPage: 4,
           page: 1,
           sizePerPageList: [
@@ -209,8 +210,8 @@ function CustomerTable() {
           >
             {(toolkitprops) => (
               <>
-                <div className="d-flex justify-content-between mb-3">
-                  <SizePerPageDropdownStandalone {...paginationProps} />
+                <div className="d-flex justify-content-end mb-3">
+                  {/* <SizePerPageDropdownStandalone {...paginationProps} /> */}
                   <SearchBar
                     className="ms-2"
                     {...toolkitprops.searchProps}
@@ -230,9 +231,9 @@ function CustomerTable() {
                   noDataIndication="No Data Is Available"
                   data={customerData.map((items) => items)}
                 />
-                <div className="d-flex justify-content-end">
+                {/* <div className="d-flex justify-content-end">
                   <PaginationListStandalone {...paginationProps} />
-                </div>
+                </div> */}
               </>
             )}
           </ToolkitProvider>

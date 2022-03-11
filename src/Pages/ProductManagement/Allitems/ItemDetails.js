@@ -18,10 +18,8 @@ import { useNavigate } from "react-router-dom";
 import "./ItemDetails.scss";
 import { ReactComponent as CloseIcon } from "../../../Assets/Icon/close.svg";
 const ItemDetails = ({
-  itemDetail,
   itemImage,
   itemStatus,
-  selectedTag,
   mediaObjectId,
 }) => {
   const [tagOption, setTagOption] = useState([]);
@@ -34,6 +32,13 @@ const ItemDetails = ({
   // const [multi, setMulti] = useState([]);
   // const [image, setImage] = useState({});
   const [pics, setPics] = useState([]);
+  const [items, setItems] = useState();
+  // const [chef, setChef] = useState();
+  const [catname, setCatName] = useState();
+  const [selectedTag, setSelectedTag] = useState([]);
+  const [itemDetail, setItemDetail] = useState({});
+  const [status, setStatus] = useState(false);
+
 let navigate = useNavigate()
   const { itemId } = useParams();
   const {
@@ -51,8 +56,9 @@ let navigate = useNavigate()
   };
   // set Tags Options
   useEffect(() => {
-    tagdata();
     fetchItemDetail();
+    tagdata();
+   
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -76,7 +82,10 @@ let navigate = useNavigate()
   const fetchItemDetail = () => {
     getItemsbyId(itemId)
       .then((response) => {
-        if (response.statusText === "OK") {
+      setItems(response.data.data.recipeDetails);
+      setCatName(response.data.data.recipeDetails.Category.name);
+      // setChef(response.data.data.profile);
+      setItemDetail(response?.data?.data?.recipeDetails);
           setValue("categoryId", response.data.data.recipeDetails.categoryId);
           setValue("dishName", response.data.data.recipeDetails.dishName);
           setValue("deliveryFee", 22);
@@ -98,21 +107,21 @@ let navigate = useNavigate()
             response.data.data.recipeDetails.costPerServing
           );
 
-          setValue(
-            "sellingPrice",
-            response.data.data.recipeDetails.sellingPrice
-          );
+          // setValue(
+          //   "sellingPrice",
+          //   response.data.data.recipeDetails.sellingPrice
+          // );
 
           // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
           //   setChefImage(`http://meyu.sg:8082/${chefPic?.imageUrl}`)
           // );
           setPics(response.data.data.recipeDetails.MediaObjects);
           response?.data?.data?.recipeDetails?.MediaObjects?.map((img) =>
-            `http://13.213.151.153:8083/${img?.imageUrl}`
+            `http://13.213.151.153:8081/${img?.imageUrl}`
           );
 
           // response.data.data.recipeDetails.MediaObjects.map((url, index) => setImage({
-          //   [index]:`http://13.213.151.153:8083/${url.imageUrl}`
+          //   [index]:`http://13.213.151.153:8081/${url.imageUrl}`
           // }))
           // ===========================
           //  set Tags Data
@@ -126,16 +135,16 @@ let navigate = useNavigate()
               tempTag.push(tempTagObj);
             }
           );
-          // setSelectedTag(tempTag);
-        }
+          setSelectedTag(tempTag);
       })
       .catch(function (error) {});
   };
 
   
   const submitdata = (data) => {
+    console.log(data)
     // Selling Price Part
-    if (Math.floor(itemDetail.costPerServing) < data.sellingPrice || itemDetail.costPerServing === data.sellingPrice) {
+    if (Math.floor(itemDetail.costPerServing) <= data.sellingPrice) {
       setError("");
       console.log('cost price: ', data.sellingPrice)
 
@@ -145,7 +154,7 @@ let navigate = useNavigate()
         .join(",")
         .replace(/["']/g, '"');
       var tag = ("tags : ", "[" + t + "]".toString());
-      // console.log(tag);
+      console.log(tag);
 
       var formData = new FormData();
       formData.append("dishName", data.dishName);
@@ -181,7 +190,7 @@ let navigate = useNavigate()
               toastId: "my_toast",
             });
           }
-          fetchItemDetail();
+          // fetchItemDetail();
           setTimeout(() => {
             navigate(-1)
           }, 1000);
@@ -192,9 +201,15 @@ let navigate = useNavigate()
         });
       
       //  Change Status Approved or Pending
-      confirmItemsbyId(itemDetail.id, paramss)
-        .then((data) => {})
+      if(status === true)   
+      {
+        console.log('Did Changed Status API');
+        confirmItemsbyId(itemDetail.id, paramss)
+        .then((data) => {
+          console.log(data.data)
+        })
         .catch((error) => {});
+      }
     } else {
       setError("Selling Price must be greater than Chef Price!");
     }
@@ -248,7 +263,7 @@ let navigate = useNavigate()
         // }
         // window.location.reload(false);
         // setRecipeImage(
-        //   `http://13.213.151.153:8083/${response.data.data.profileUrl}`
+        //   `http://13.213.151.153:8081/${response.data.data.profileUrl}`
         // );
       })
       .catch((error) => {
@@ -285,7 +300,7 @@ let navigate = useNavigate()
 
                 <img
                   key={image.id}
-                  src={`http://13.213.151.153:8083/${image.imageUrl}`}
+                  src={`http://13.213.151.153:8081/${image.imageUrl}`}
                   style={{ width: "100%" }}
                   height="300"
                   alt=""
@@ -325,7 +340,7 @@ let navigate = useNavigate()
             </label>
             <select
               className="form-select"
-              onChange={(e) => changeStatus(e.target.value)}
+              onChange={(e) => {changeStatus(e.target.value); setStatus(true)}}
             >
               {itemStatus === true ? (
                 <option value="true">Approved</option>
@@ -344,7 +359,7 @@ let navigate = useNavigate()
             </label>
             <input
               type="text"
-              value={itemDetail?.id}
+              value={items?.id}
               className="form-control"
               disabled
             />
@@ -376,7 +391,7 @@ let navigate = useNavigate()
             </label>
             <input
               type="text"
-              value={itemDetail?.Category?.name}
+              value={catname}
               className="form-control"
               disabled
             />
@@ -453,6 +468,7 @@ let navigate = useNavigate()
                   value: /^[1-9]\d*(\.\d+)?$/,
                   message: "Invalid Selling Price",
                 },
+                
               })}
               className="form-control"
             />
