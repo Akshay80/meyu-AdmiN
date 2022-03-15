@@ -158,7 +158,7 @@ const AllItemsTable = () => {
       <PaginationProvider
       className="dropdown-toggle"
         pagination={paginationFactory({
-          custom: true,
+          custom: false,
           withFirstAndLast: false,
           totalSize: getItem.length,
           prePageText: "Previous",
@@ -198,8 +198,8 @@ const AllItemsTable = () => {
           >
             {(toolkitprops) => (
               <>
-                <div className="d-flex justify-content-between mb-3">
-                  <SizePerPageDropdownStandalone {...paginationProps} />
+                <div className="d-flex justify-content-end mb-3">
+                  {/* <SizePerPageDropdownStandalone {...paginationProps} /> */}
                   <SearchBar {...toolkitprops.searchProps} srText=" " />
                 </div>
                 <BootstrapTable
@@ -215,9 +215,9 @@ const AllItemsTable = () => {
                   bootstrap4
                   noDataIndication="No Data Is Available"
                 />
-                <div className="d-flex justify-content-end">
+                {/* <div className="d-flex justify-content-end">
                   <PaginationListStandalone {...paginationProps} />
-                </div>
+                </div> */}
               </>
             )}
           </ToolkitProvider>

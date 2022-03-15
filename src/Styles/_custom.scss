@@ -123,7 +123,7 @@
         height: 30px;
         width: 30px;
         transition: 0.2s;
-        margin-top: unset!important;
+        margin-top: unset !important;
       }
       .edit-icon:hover {
         box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.75);
@@ -211,5 +211,28 @@
   .profile-pic {
     max-width: 200px !important;
     max-height: 150px !important;
+  }
+}
+
+.react-bs-table-sizePerPage-dropdown {
+  position: absolute !important;
+  top: 0 !important;
+  margin: 20px !important;
+  left: 0 !important;
+}
+
+.react-bootstrap-table-pagination-list {
+  display: flex !important;
+  justify-content: end !important;
+}
+
+.react-bs-table-sizePerPage-dropdown a:hover {
+  color: red !important;
+}
+
+@media (max-width: 576px) {
+  #search-bar-0 {
+    width: 70% !important;
+    margin-left: auto !important;
   }
 }

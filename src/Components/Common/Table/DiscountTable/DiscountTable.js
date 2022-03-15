@@ -9,7 +9,7 @@ import paginationFactory, {
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { ReactComponent as EditIcon } from "../../../../Assets/Icon/Edit.svg";
 import { ReactComponent as DeleteIcon } from "../../../../Assets/Icon/Delete.svg";
-import "./DiscountTable.css";
+import "./DiscountTable.scss";
 import { confirmAlert } from "react-confirm-alert";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbasket.svg";
@@ -523,9 +523,10 @@ const DiscountTable = () => {
         <div className="table-responsive" style={{ padding: "20px" }}>
           <PaginationProvider
             pagination={paginationFactory({
-              custom: true,
+              custom: false,
               prePageText: "Previous",
               nextPageText: "Next",
+              withFirstAndLast: false,
               page: 1,
               sizePerPageList: [
                 {
@@ -560,8 +561,8 @@ const DiscountTable = () => {
               >
                 {(toolkitprops) => (
                   <>
-                    <div className="d-flex justify-content-between mb-3">
-                      <SizePerPageDropdownStandalone {...paginationProps} />
+                    <div className="d-flex justify-content-end mb-3">
+                      {/* <SizePerPageDropdownStandalone {...paginationProps} /> */}
                       <SearchBar {...toolkitprops.searchProps} srText=" " />
                     </div>
                     <BootstrapTable
@@ -577,9 +578,9 @@ const DiscountTable = () => {
                       condensed={false}
                       noDataIndication="No Data Is Available"
                     />
-                    <div className="d-flex justify-content-end">
+                    {/* <div className="d-flex justify-content-end">
                       <PaginationListStandalone {...paginationProps} />
-                    </div>
+                    </div> */}
                   </>
                 )}
               </ToolkitProvider>

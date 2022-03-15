@@ -1,19 +1,22 @@
 import React, { useRef, useState } from "react";
 import IdleTimer from "react-idle-timer";
-import {Modal, Button} from 'react-bootstrap';
-import {useNavigate} from 'react-router-dom';
-import {clearToken} from '../../helper/uitility';
+import { Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { clearToken, getToken } from "../../helper/uitility";
 
 function IdleTimerContainer() {
   const idleTimerRef = useRef(null);
-  const [ModalOpen, setModalOpen] = useState(false)
+  const [ModalOpen, setModalOpen] = useState(false);
   // Time before idle
   let navigate = useNavigate();
 
-  const onIdle = (time) => {
-    console.log("User is Idle");
-    setModalOpen(true)
-    console.log(time)
+  const onIdle = () => {
+    let token = getToken();
+    if (token === true) {
+      setModalOpen(true);
+    } else {
+      setModalOpen(false);
+    }
   };
   const logout = () => {
     setModalOpen(false);
@@ -21,34 +24,34 @@ function IdleTimerContainer() {
       clearToken();
       navigate("/login");
     }, 1000);
-  }
-  const handleClose = () => setModalOpen(false);
+  };
+
   return (
     <div>
       <IdleTimer
         ref={idleTimerRef}
-        timeout={1000 * 15 * 60}
+        timeout={1000 * 5 * 60}
         onIdle={onIdle}
       ></IdleTimer>
-      <Modal show={ModalOpen} backdrop="static"
+      <Modal
+        show={ModalOpen}
+        backdrop="static"
         keyboard={false}
         centered={true}
-        >
-          <Modal.Header className="border-0 pb-0">
-          <Modal.Title>Are you still here?</Modal.Title>
+      >
+        <Modal.Header className="border-0 pb-0 ms-2">
+          <Modal.Title>Session Ended</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="pb-0">
-        Your session has been expired. Do you want to continue your session?
+        <Modal.Body className="pb-0 ms-2">
+          <p>Your session has been expired with us. Please sign-in again.</p>
         </Modal.Body>
-        <Modal.Footer className="border-0">
-          <Button variant="btn btn-danger" onClick={logout}>
-            Logout
+        <Modal.Footer className="border-0 p-3">
+          <Button variant="btn btn-primary" onClick={logout}>
+            Okay
           </Button>
-          <Button variant="primary" onClick={handleClose}>Continue Session</Button>
         </Modal.Footer>
       </Modal>
     </div>
-
   );
 }
 

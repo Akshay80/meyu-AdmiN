@@ -87,10 +87,11 @@ const ChefOrderTable = () => {
     <div className="table-responsive" style={{ padding: "20px" }}>
       <PaginationProvider
         pagination={paginationFactory({
-          custom: true,
+          custom: false,
           totalSize: products.length,
           prePageText: "Previous",
           nextPageText: "Next",
+          withFirstAndLast: false,
           page: 1,
           sizePerPageList: [
             {
@@ -130,8 +131,8 @@ const ChefOrderTable = () => {
           >
             {(toolkitprops) => (
               <>
-                <div className="d-flex justify-content-between mb-3">
-                  <SizePerPageDropdownStandalone {...paginationProps} />
+                <div className="d-flex justify-content-end mb-3">
+                  {/* <SizePerPageDropdownStandalone {...paginationProps} /> */}
                   <SearchBar
                     className="ms-2"
                     {...toolkitprops.searchProps}
@@ -149,9 +150,9 @@ const ChefOrderTable = () => {
                   condensed={false}
                   noDataIndication="No Data Is Available"
                 />
-                <div className="d-flex justify-content-end">
+                {/* <div className="d-flex justify-content-end">
                   <PaginationListStandalone {...paginationProps} />
-                </div>
+                </div> */}
               </>
             )}
           </ToolkitProvider>

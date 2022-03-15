@@ -52,14 +52,14 @@ const OrdersTable = () => {
       // align: "center",
     },
     {
-      dataField: "createdAt",
+      dataField: "approvedDate",
       text: "Date",
       sort: true,
       headerSortingStyle,
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex">
-            {moment(row.createdAt).format("MMMM Do YYYY")}
+            {moment(row.approvedDate).format("MMMM Do YYYY")}
           </div>
         );
       },
@@ -134,10 +134,11 @@ const OrdersTable = () => {
     <div className="table-responsive" style={{ padding: "20px" }}>
       <PaginationProvider
         pagination={paginationFactory({
-          custom: true,
+          custom: false,
           totalSize: orders.length,
           prePageText: "Previous",
           nextPageText: "Next",
+          withFirstAndLast: false,
           page: 1,
           sizePerPage: 4,
           sizePerPageList: [
@@ -178,8 +179,8 @@ const OrdersTable = () => {
           >
             {(toolkitprops) => (
               <>
-                <div className="d-flex justify-content-between mb-3">
-                  <SizePerPageDropdownStandalone {...paginationProps} />
+                <div className="d-flex justify-content-end mb-3">
+                  {/* <SizePerPageDropdownStandalone {...paginationProps} /> */}
                   <SearchBar {...toolkitprops.searchProps} srText=" " />
                 </div>
                 <BootstrapTable
@@ -191,11 +192,12 @@ const OrdersTable = () => {
                   hover
                   striped
                   condensed={false}
+                  bootstrap4={true}
                   noDataIndication="No Data Is Available"
                 />
-                <div className="d-flex justify-content-end">
+                {/* <div className="d-flex justify-content-end">
                   <PaginationListStandalone {...paginationProps} />
-                </div>
+                </div> */}
               </>
             )}
           </ToolkitProvider>

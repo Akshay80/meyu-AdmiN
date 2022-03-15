@@ -69,5 +69,8 @@ export default (() => {
     //Orders
     getAllOrders: `${setting.api.url}admin/getorders`,
     getOrdersByID: `${setting.api.url}admin/getorderdetails`,
+
+    // Dashboard
+    dashboardService: `${setting.api.url}admin/dashboard`
   };
 })();

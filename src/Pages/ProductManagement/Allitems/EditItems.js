@@ -17,6 +17,7 @@ const EditItems = () => {
   const [cook, setCook] = useState("");
   const { itemId } = useParams();
   const [cookTime, setCookTime] = useState("");
+  const [id, setID] = useState();
 
   useEffect(() => {
     fetchItemDetail();
@@ -26,7 +27,7 @@ const EditItems = () => {
   const fetchItemDetail = () => {
     getItemsbyId(itemId)
       .then((response) => {
-        if (response.statusText === "OK") {
+          setID(response.data.data.profile.createdBy)
           setItemStatus(response?.data?.data?.recipeDetails?.isVerified);
           response.data.data.profile.CookAvailability.Days.map((items) => setCook(items));
           setCookTime(response.data.data.profile.CookAvailability);
@@ -60,7 +61,6 @@ const EditItems = () => {
             }
           );
           setSelectedTag(tempTag);
-        }
       })
       .catch(function (error) {});
   };
@@ -77,7 +77,7 @@ const EditItems = () => {
           </div>
         </div>
         <h6 className="mt-2">
-          Chef ID <b>{chefDetail.createdBy}</b>
+          Chef ID <b>{id}</b>
         </h6>
       </div>
 

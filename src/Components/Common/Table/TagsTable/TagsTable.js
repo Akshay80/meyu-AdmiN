@@ -243,7 +243,7 @@ const TagsTable = () => {
 
   const defaultSorted = [
     {
-      dataField: "id",
+      dataField: "serialno",
       order: "asc",
     },
   ];
@@ -336,10 +336,11 @@ const TagsTable = () => {
         <div className="table-responsive" style={{ padding: "20px" }}>
           <PaginationProvider
             pagination={paginationFactory({
-              custom: true,
+              custom: false,
               prePageText: "Previous",
               nextPageText: "Next",
-              page: 1,
+              withFirstAndLast: false,
+              sizePerPage: 5,
               sizePerPageList: [
                 {
                   text: "5",
@@ -358,23 +359,28 @@ const TagsTable = () => {
                   text: "50",
                   value: 50,
                 },
+                {
+                  text: "All",
+                  value: tag.length,
+                },
               ],
+              hideSizePerPage: tag.length === 0,
             })}
-            keyField="id"
+            keyField="serialno"
             columns={columns}
             data={tag}
           >
             {({ paginationProps, paginationTableProps }) => (
               <ToolkitProvider
-                keyField="id"
+                keyField="serialno"
                 columns={columns}
                 data={tag}
                 search
               >
                 {(toolkitprops) => (
                   <>
-                    <div className="d-flex justify-content-between mb-3">
-                      <SizePerPageDropdownStandalone {...paginationProps} />
+                    <div className="d-flex justify-content-end mb-3 me-2">
+                      {/* <SizePerPageDropdownStandalone {...paginationProps} /> */}
                       <SearchBar {...toolkitprops.searchProps} srText=" " />
                     </div>
                     <BootstrapTable
@@ -390,15 +396,12 @@ const TagsTable = () => {
                       condensed={false}
                       noDataIndication="No Data Is Available"
                     />
-                    <div className="d-flex justify-content-end">
-                      <PaginationListStandalone {...paginationProps} />
-                    </div>
                   </>
                 )}
               </ToolkitProvider>
             )}
           </PaginationProvider>
-        </div>
+          </div>
       </div>
       <ToastContainer
         position="top-right"
