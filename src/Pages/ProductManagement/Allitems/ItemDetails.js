@@ -107,10 +107,10 @@ let navigate = useNavigate()
             response.data.data.recipeDetails.costPerServing
           );
 
-          // setValue(
-          //   "sellingPrice",
-          //   response.data.data.recipeDetails.sellingPrice
-          // );
+          setValue(
+            "sellingPrice",
+            response.data.data.recipeDetails.sellingPrice
+          );
 
           // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
           //   setChefImage(`http://meyu.sg:8082/${chefPic?.imageUrl}`)
@@ -444,7 +444,7 @@ let navigate = useNavigate()
             ) : null}
           </div>
 
-          <div className="col-md-6 col-sm-6 col-xs-12 mb-3">
+          <div className="col-md-12 col-sm-12 col-xs-12 mb-3">
             <label htmlFor="validationCustom001" className="form-label">
               Chef Price
             </label>
@@ -456,7 +456,7 @@ let navigate = useNavigate()
             />
           </div>
 
-          <div className="col-md-6 col-sm-6 col-xs-12 mb-3">
+          {/* <div className="col-md-6 col-sm-6 col-xs-12 mb-3">
             <label htmlFor="validationCustom001" className="form-label">
               Selling Price
             </label>
@@ -477,7 +477,7 @@ let navigate = useNavigate()
             ) : (
               <p className="errors">{err}</p>
             )}
-          </div>
+          </div> */}
 
           <div className="d-flex flex-column w-100 flex-direction-column pb-2 align-items-start">
             <label>Description</label>
