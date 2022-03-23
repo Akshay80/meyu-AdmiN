@@ -117,7 +117,7 @@ let navigate = useNavigate()
           // );
           setPics(response.data.data.recipeDetails.MediaObjects);
           response?.data?.data?.recipeDetails?.MediaObjects?.map((img) =>
-            `http://13.213.151.153:8081/${img?.imageUrl}`
+            `http://13.213.151.153:8083/${img?.imageUrl}`
           );
 
           // response.data.data.recipeDetails.MediaObjects.map((url, index) => setImage({
@@ -300,7 +300,7 @@ let navigate = useNavigate()
 
                 <img
                   key={image.id}
-                  src={`http://13.213.151.153:8081/${image.imageUrl}`}
+                  src={`http://13.213.151.153:8083/${image.imageUrl}`}
                   style={{ width: "100%" }}
                   height="300"
                   alt=""

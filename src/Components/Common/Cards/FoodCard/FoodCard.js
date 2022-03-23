@@ -42,7 +42,7 @@ const FoodCard = ({ items, chefRecipe }) => {
                     <Carousel.Item key={key}>
                       <img
                         className="d-block w-100 cardImages"
-                        src={`http://13.213.151.153:8081/${food?.imageUrl}`}
+                        src={`http://13.213.151.153:8083/${food?.imageUrl}`}
                         alt="First slide"
                         onClick={() => routeChange(val.id)}
                       />
