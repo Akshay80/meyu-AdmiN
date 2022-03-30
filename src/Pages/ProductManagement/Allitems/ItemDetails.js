@@ -121,7 +121,7 @@ let navigate = useNavigate()
           );
 
           // response.data.data.recipeDetails.MediaObjects.map((url, index) => setImage({
-          //   [index]:`http://13.213.151.153:8081/${url.imageUrl}`
+          //   [index]:`http://13.213.151.153:8083/${url.imageUrl}`
           // }))
           // ===========================
           //  set Tags Data
@@ -263,7 +263,7 @@ let navigate = useNavigate()
         // }
         // window.location.reload(false);
         // setRecipeImage(
-        //   `http://13.213.151.153:8081/${response.data.data.profileUrl}`
+        //   `http://13.213.151.153:8083/${response.data.data.profileUrl}`
         // );
       })
       .catch((error) => {

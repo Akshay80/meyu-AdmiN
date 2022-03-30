@@ -66,11 +66,21 @@ export default (() => {
     deleteCoupans: `${setting.api.url}admin/delete-genrate-discount-coupan`,
     getCoupansByID: `${setting.api.url}common/genrate-discount-coupan`,
 
+    // Discount Image
+    editOfferImage: `${setting.api.url}admin/edit-offer-image`,
+
     //Orders
     getAllOrders: `${setting.api.url}admin/getorders`,
     getOrdersByID: `${setting.api.url}admin/getorderdetails`,
 
     // Dashboard
-    dashboardService: `${setting.api.url}admin/dashboard`
+    dashboardService: `${setting.api.url}admin/dashboard`,
+
+    // Food
+    getAllFood: `${setting.api.url}common/food-filter-category`,
+    addFood: `${setting.api.url}admin/add-food-filter-category`,
+    editFood: `${setting.api.url}admin/edit-food-filter-category`,
+    deleteFood: `${setting.api.url}admin/delete-food-filter-category`,
+    getFoodbyId: `${setting.api.url}common/food-filter-category`,
   };
 })();

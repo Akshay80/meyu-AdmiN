@@ -19,6 +19,7 @@ import {
   deleteItemsbyId,
 } from "../../../../Services/itemsService.js";
 import { toast } from "react-toastify";
+import moment from "moment";
 
 const AllItemsTable = () => {
   const [getItem, setgetItem] = useState([]);
@@ -76,6 +77,22 @@ const AllItemsTable = () => {
   };
 
   const columns = [
+    {
+      dataField: "createdAt",
+      text: "Date",
+      sort: true,
+      headerSortingStyle,
+      // headerAlign: "center",
+      // align: "center",
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            {moment(row.createdAt).format("MMMM Do YYYY")}
+          </div>
+        );
+      },
+    },
+
     {
       dataField: "id",
       text: "Product ID",
