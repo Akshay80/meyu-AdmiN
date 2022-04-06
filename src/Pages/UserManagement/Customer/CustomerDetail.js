@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import CustomerCard from "../../../Components/Common/Cards/PrimaryCard/CustomerDetailCard/Card";
 import { ReactComponent as UserIcon } from "../../../Assets/Icon/user.svg";
 import { ReactComponent as OrderIcon } from "../../../Assets/Icon/order.svg";
-import OrderDetailCard from "../../../Components/Common/Cards/OrderDetailCard/OrderDetailCard";
+// import OrderDetailCard from "../../../Components/Common/Cards/OrderDetailCard/OrderDetailCard";
 import { getCustomerDetails } from "../../../Services/customerServices";
 import { useParams } from "react-router-dom";
+import CustomerOrderTable from "../../../Components/Common/Table/CustomerOrderTable/CustomerOrderTable";
 
 const CustomerDetail = () => {
   const [customerDetail, setCustomerDetail] = useState({});
@@ -27,7 +28,7 @@ const CustomerDetail = () => {
         setcustomerVerify(response?.data?.data?.isVerified);
         setcustomerReject(response?.data?.data?.isRejected);
         setCustomerImage(
-          `http://13.213.151.153:8083/${response.data.data.profileUrl}`
+          `http://13.213.151.153:8081/${response.data.data.profileUrl}`
         );
       })
       .catch(function (error) {});
@@ -63,7 +64,10 @@ const CustomerDetail = () => {
             <h3 className="page-sec-heading m-0 mx-2">Order Details</h3>
           </div>
         </div>
-        <OrderDetailCard />
+        <div className="card">
+        <CustomerOrderTable />
+        </div>
+        {/* <OrderDetailCard /> */}
       </div>
     </div>
   );

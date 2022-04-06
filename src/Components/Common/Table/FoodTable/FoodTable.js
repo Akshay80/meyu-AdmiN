@@ -135,63 +135,63 @@ const FoodTable = () => {
   };
 
 //   edit tags = open modal and display items
-  const handleEdits = (rowId, rowName) => {
-    handleShow2();
-    reset();
-    getFoodbyId(rowId)
-      .then((res) => {
-        setValue("food", rowName);
-        setEditId(res?.data?.data);
-      })
-      .catch(function (error) {
-        toast.error(error.error, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-      });
-  };
+  // const handleEdits = (rowId, rowName) => {
+  //   handleShow2();
+  //   reset();
+  //   getFoodbyId(rowId)
+  //     .then((res) => {
+  //       setValue("food", rowName);
+  //       setEditId(res?.data?.data);
+  //     })
+  //     .catch(function (error) {
+  //       toast.error(error.error, {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: true,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: false,
+  //         progress: 0,
+  //         toastId: "my_toast",
+  //       });
+  //     });
+  // };
 
-  const EditSubmits = (data) => {
-    const param = {
-      id: editId?.id,
-      name: data?.food,
-    };
-    editFoodFun(param)
-      .then((res) => {
-        if (res?.statusText === "OK") {
-          handleClose2();
-          toast.success("Food Filter Edited Successfully", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-            toastId: "my_toast",
-          });
-          tagdata();
-        }
-      })
-      .catch(function (error) {
-        toast.error(error.error, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-      });
-  };
+  // const EditSubmits = (data) => {
+  //   const param = {
+  //     id: editId?.id,
+  //     name: data?.food,
+  //   };
+  //   editFoodFun(param)
+  //     .then((res) => {
+  //       if (res?.statusText === "OK") {
+  //         handleClose2();
+  //         toast.success("Food Filter Edited Successfully", {
+  //           position: "top-right",
+  //           autoClose: 2000,
+  //           hideProgressBar: true,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: false,
+  //           progress: 0,
+  //           toastId: "my_toast",
+  //         });
+  //         tagdata();
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       toast.error(error.error, {
+  //         position: "top-right",
+  //         autoClose: 2000,
+  //         hideProgressBar: true,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: false,
+  //         progress: 0,
+  //         toastId: "my_toast",
+  //       });
+  //     });
+  // };
 
   const columns = [
     {
@@ -221,10 +221,10 @@ const FoodTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex">
-            <EditIcon
+            {/* <EditIcon
               className="mt-1 edit-icon"
               onClick={() => handleEdits(row.id, row.name)}
-            />
+            /> */}
             <DeleteIcon
               className="iconHover delete-icon"
               onClick={() => confirmDelete(row.id)}
@@ -302,7 +302,7 @@ const FoodTable = () => {
 
       {/* ============================== Modal for Edit ========================= */}
 
-      <Modal centered show={show2} onHide={handleClose2}>
+      {/* <Modal centered show={show2} onHide={handleClose2}>
         <Modal.Header
           className="border-0 shadow-none"
           closeButton
@@ -336,7 +336,7 @@ const FoodTable = () => {
             </Button>
           </Modal.Footer>
         </Form>
-      </Modal>
+      </Modal> */}
 
       {/* =====================modal end============= */}
 

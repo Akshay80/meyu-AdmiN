@@ -57,7 +57,7 @@ export const DashboardCard = () => {
                     <div className="card-body p-0">
                       <p className="card-text cardTitle">Total Orders</p>
                       <h3 className="cardNumber">
-                        <CountUp start={0} end={totalOrder} duration={5} />
+                        {totalOrder}
                       </h3>
                     </div>
                   </div>
@@ -83,7 +83,7 @@ export const DashboardCard = () => {
                     <div className="card-body p-0">
                       <p className="card-text cardTitle">Total Delivered</p>
                       <h3 className="cardNumber">
-                        <CountUp start={0} end={totalDeliveries} duration={5} />
+                      {totalDeliveries}
                       </h3>
                     </div>
                   </div>
@@ -111,7 +111,7 @@ export const DashboardCard = () => {
                     <div className="card-body p-0">
                       <p className="card-text cardTitle">Total Cancelled</p>
                       <h3 className="cardNumber">
-                        <CountUp start={0} end={totalCancelled} duration={5} />
+                      {totalCancelled}
                       </h3>
                     </div>
                   </div>
@@ -139,7 +139,7 @@ export const DashboardCard = () => {
                     <div className="card-body p-0">
                       <p className="card-text cardTitle">Total Revenue</p>
                       <h3 className="cardNumber">
-                        <CountUp start={0} end={totalRevenue} duration={5} />
+                      {Math.floor(totalRevenue)}
                       </h3>
                     </div>
                   </div>
@@ -166,7 +166,7 @@ export const DashboardCard = () => {
                     <div className="card-body p-0">
                       <p className="card-text cardTitle">Total Chef</p>
                       <h3 className="cardNumber">
-                        <CountUp start={0} end={totalChef} duration={5} />
+                      {totalChef}
                       </h3>
                     </div>
                   </div>
@@ -194,7 +194,7 @@ export const DashboardCard = () => {
                     <div className="card-body p-0">
                       <p className="card-text cardTitle">Total Customer</p>
                       <h3 className="cardNumber">
-                        <CountUp start={0} end={totalCustomer} duration={5} />
+                      {totalCustomer}
                       </h3>
                     </div>
                   </div>
@@ -221,7 +221,7 @@ export const DashboardCard = () => {
                     <div className="card-body p-0">
                       <p className="card-text cardTitle">Order in Progress</p>
                       <h3 className="cardNumber">
-                        <CountUp start={0} end={totalOrderInProgress} duration={5} />
+                      {totalOrderInProgress}
                       </h3>
                     </div>
                   </div>

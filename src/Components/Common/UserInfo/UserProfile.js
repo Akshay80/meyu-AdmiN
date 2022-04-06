@@ -44,7 +44,7 @@ const UserProfile = () => {
         if (response?.statusText === "OK") {
           setProfileData(response?.data?.data);
           setURL(
-            `http://13.213.151.153:8083/${response.data.data.Profile.profileUrl}`
+            `http://13.213.151.153:8081/${response.data.data.Profile.profileUrl}`
           );
           setValue("firstName", response.data.data.Profile.firstName);
           setValue("lastName", response.data.data.Profile.lastName);
@@ -306,37 +306,8 @@ const UserProfile = () => {
             <div className="invalid-feedback">Street is required!</div>
           </div>
 
-          <div className="col-md-6 col-sm-12">
-            <label htmlFor="validationCustom06" className="form-label">
-              Country
-            </label>
-            <select
-              {...register("country", { required: true })}
-              className={`form-select ${errors.country ? "is-invalid" : ""}`}
-            >
-              <option value="">Choose...</option>
-              <option value="India">India</option>
-            </select>
-            <div className="invalid-feedback">
-              Please provide a valid country!
-            </div>
-          </div>
+         
 
-          <div className="col-md-6 col-sm-12">
-            <label htmlFor="validationCustom07" className="form-label">
-              State
-            </label>
-            <select
-              {...register("state", { required: true })}
-              className={`form-select ${errors.state ? "is-invalid" : ""}`}
-            >
-              <option value="">Choose...</option>
-              <option value="Uttrakhand">Uttrakhand</option>
-            </select>
-            <div className="invalid-feedback">
-              Please provide a valid state!
-            </div>
-          </div>
           <div className="col-md-6 col-sm-12">
             <label htmlFor="validationCustom08" className="form-label">
               City
@@ -345,10 +316,25 @@ const UserProfile = () => {
               type="text"
               {...register("city", { required: true })}
               className={`form-control ${errors.city ? "is-invalid" : ""}`}
-              placeholder="Singapore"
+              placeholder="city"
             />
             <div className="invalid-feedback">City is required!</div>
           </div>
+
+          <div className="col-md-6 col-sm-12">
+            <label htmlFor="validationCustom07" className="form-label">
+              State
+            </label>
+            <input type="text"
+            placeholder="state"
+              {...register("state", { required: true })}
+              className={`form-control ${errors.state ? "is-invalid" : ""}`}
+            />
+            <div className="invalid-feedback">
+              State is required!
+            </div>
+          </div>
+          
           <div className="col-md-6 col-sm-12">
             <label htmlFor="validationCustom09" className="form-label">
               Zip
@@ -357,9 +343,23 @@ const UserProfile = () => {
               type="text"
               {...register("zip", { required: true })}
               className={`form-control ${errors.zip ? "is-invalid" : ""}`}
-              placeholder="238282"
+              placeholder="zip"
             />
             <div className="invalid-feedback">Zip is required!</div>
+          </div>
+
+          <div className="col-md-6 col-sm-12">
+            <label htmlFor="validationCustom06" className="form-label">
+              Country
+            </label>
+            <input type="text"
+            placeholder="country"
+              {...register("country", { required: true })}
+              className={`form-control ${errors.country ? "is-invalid" : ""}`}
+            />
+            <div className="invalid-feedback">
+             Country is required!
+            </div>
           </div>
 
           <div className="d-flex pb-5 align-items-center justify-content-center flex-wrap-wrap">

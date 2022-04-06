@@ -85,7 +85,7 @@ const CustomerCard = ({
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={
-                  customerImage === `http://13.213.151.153:8083/null`
+                  customerImage === `http://13.213.151.153:8081/null`
                     ? UserImage
                     : customerImage
                 }
@@ -103,7 +103,7 @@ const CustomerCard = ({
                   <p>{customerDetail?.phone}</p>
                   <p>{customerDetail?.email}</p>
                 </div>
-                <div>
+                {/* <div>
                   <button
                     className={
                       disState === "true"
@@ -115,7 +115,7 @@ const CustomerCard = ({
                   >
                     {disState === "true" ? "Continue" : "Discontinue"}
                   </button>
-                </div>
+                </div> */}
               </div>
 
               <div className="primary-card-info mx-3 mt-5 d-flex justify-content-between">

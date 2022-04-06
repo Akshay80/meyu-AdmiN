@@ -54,10 +54,13 @@ const DiscountTable = () => {
   const [offerImageValue, setOfferImage] = useState();
   const [validInDayValue, setvalidInDay] = useState(0);
   const [apiOfferImage, setAPIOfferImage] = useState("");
+  const [image, setImage] = useState({ preview: "", raw: "" });
+  
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => setShow2(true);
   const [isOpen, setOpen] = useState(false);
-  const url = "http://13.213.151.153:8083/";
+  const urls = "http://13.213.151.153:8081/";
+  const [url, setURL] = useState();
   const [myError, SetMyError] = useState("");
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
@@ -108,7 +111,7 @@ const DiscountTable = () => {
                 key={key}
                 type="image"
                 className="categoryImages"
-                src={url + rows.imageUrl}
+                src={urls + rows.imageUrl}
                 alt="food_image"
                 onClick={() => openLightbox(rows.imageUrl)}
               />
@@ -185,7 +188,7 @@ const DiscountTable = () => {
     addCoupans(formdata)
       .then((res) => {
         // setAPIOfferImage(
-        //   `http://13.213.151.153:8083/${res.data.data.MediaObject.imageUrl}`
+        //   `http://13.213.151.153:8081/${res.data.data.MediaObject.imageUrl}`
         // );
         if (res.data.success === true) {
           handleClose();
@@ -509,6 +512,8 @@ const DiscountTable = () => {
     // }
   };
 
+  
+
   return (
     <>
       <div className="page-heading d-flex align-items-center p-4 justify-content-between">
@@ -568,13 +573,17 @@ const DiscountTable = () => {
                 {...register("discount", {
                   required: "Discount is required!",
                   pattern: {
-                    value: /^[1-9]/,
+                    value: /^[0-9]+$/,
                     message: "Invalid Discount!",
                   },
                   max: {
                     value: 100,
                     message: "Cannot give more than $100 discount!",
                   },
+                  min: {
+                    value: 1,
+                    message: "Discount should be greater than 0!"
+                  }
                 })}
               />
             </Form.Group>
@@ -619,6 +628,10 @@ const DiscountTable = () => {
                     value: /^[0-9]+$/,
                     message: "Only Numbers are allowed",
                   },
+                  min: {
+                    value: 1,
+                    message: "Days should be greater than 0."
+                  }
                 })}
               />
             </Form.Group>
@@ -729,6 +742,10 @@ const DiscountTable = () => {
                     value: /^[0-9]+$/,
                     message: "Only Numbers are allowed",
                   },
+                  min: {
+                    value: 0,
+                    message: "Days should be greater than 0."
+                  }
                 })}
               />
             </Form.Group>
