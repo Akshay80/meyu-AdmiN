@@ -24,3 +24,15 @@
 tr {
   vertical-align: middle !important;
 }
+
+#profile-pic-wrapper img
+{
+  width: 120px;
+  height: 120px;
+}
+
+#profile-pic-wrapper
+{
+  margin-bottom: 0px;
+}
+

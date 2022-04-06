@@ -18,6 +18,7 @@ import EditItems from "../Pages/ProductManagement/Allitems/EditItems";
 import ChangePassword from "../Components/Auth/ChangePassword/ChangePassword";
 // import TaxTable from "../Components/Common/Table/TaxTable/TaxTable";
 import DiscountTable from "../Components/Common/Table/DiscountTable/DiscountTable";
+import FoodTable from "../Components/Common/Table/FoodTable/FoodTable";
 
 function PrivateRoutes() {
   return (
@@ -42,6 +43,7 @@ function PrivateRoutes() {
         <Route path={Path.orderManagement} element={<OrderManagement />} />
         <Route path={`${Path.orderDetails}/:orderId`} element={<OrderProfile />} />
         <Route path={Path.userProfile} element={<UserProfile />} />
+        <Route path={Path.food} element={<FoodTable />} />
       </Route>
     </Routes>
   );

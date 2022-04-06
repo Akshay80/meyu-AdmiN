@@ -35,6 +35,7 @@ const CategoriesTable = () => {
   const [isOpen, setOpen] = useState(false);
   const [categImg, setCategImg] = useState();
   const [catId, setCatId] = useState();
+  const [catVal, setCatVal] = useState();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -50,7 +51,7 @@ const CategoriesTable = () => {
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
-  const url = "http://13.213.151.153:8083/";
+  const url = "http://13.213.151.153:8081/";
   const {
     register,
     setValue,
@@ -195,6 +196,7 @@ const CategoriesTable = () => {
     // Getting Data for Specific category
     viewCategorybyId(rowId)
       .then(function (response) {
+        setValue("category", `http://13.213.151.153:8081/${response.data.data.MediaObjects[0].imageUrl}`)
         setCatId(response.data.data.id);
         setValue("name", response.data.data.name);
       })
@@ -203,6 +205,7 @@ const CategoriesTable = () => {
 
   // =================== edit category modal ==================
   const EditSubmit = (data) => {
+    setCatVal(data.category[0]);
     var formData2 = new FormData();
     formData2.append("name", data.name);
     formData2.append("id", catId);
@@ -405,7 +408,7 @@ const CategoriesTable = () => {
                 type="file"
                 id="formFile"
                 {...register("category", {
-                  required: "Please provide an image!",
+                  required: false
                 })}
               />
             </Form.Group>

@@ -26,3 +26,8 @@ export function deleteCoupans(payload) {
 export function getCoupansByID(id) {
   return ApiInstance?.get(`${Api.getCoupansByID}/${id}`);
 }
+
+// Edit Offer Image
+export function editOfferImage(payload) {
+  return ApiInstance?.put(`${Api.editOfferImage}`, payload);
+}

@@ -37,12 +37,12 @@ const EditItems = () => {
  
           // set item image
           response?.data?.data?.recipeDetails?.MediaObjects?.map((recipe) =>
-            setItemImage(`http://13.213.151.153:8083/${recipe?.imageUrl}`)
+            setItemImage(`http://13.213.151.153:8081/${recipe?.imageUrl}`)
           );
 
           // set chef image
           setChefImage(
-            `http://13.213.151.153:8083/${response?.data?.data?.profile?.profileUrl}`
+            `http://13.213.151.153:8081/${response?.data?.data?.profile?.profileUrl}`
           );
 
           // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>

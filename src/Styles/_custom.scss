@@ -223,7 +223,9 @@
 
 .react-bootstrap-table-pagination-list {
   display: flex !important;
-  justify-content: end !important;
+  justify-content: flex-end !important;
+  -webkit-justify-content: flex-end !important;
+  -moz-justify-content: flex-end !important;
 }
 
 .react-bs-table-sizePerPage-dropdown a:hover {
@@ -235,4 +237,9 @@
     width: 70% !important;
     margin-left: auto !important;
   }
+}
+
+.btn-close {
+  box-shadow: none !important;
+  outline: none !important;
 }

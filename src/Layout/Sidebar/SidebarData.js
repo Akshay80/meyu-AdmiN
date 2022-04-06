@@ -49,12 +49,12 @@ export const SidebarData = [
       //   title: "Ingredients",
       //   link: Path.ingredients,
       // },
-      // {
-      //   title: "Tax",
-      //   link: Path.tax,
-      // },
       {
-        title: "Discount",
+        title: "Food Filter",
+        link: Path.food,
+      },
+      {
+        title: "Offers",
         link: Path.discount,
       },
     ],

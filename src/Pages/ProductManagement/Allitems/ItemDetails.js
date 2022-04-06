@@ -12,16 +12,15 @@ import {
 } from "../../../Services/itemsService";
 import { toast } from "react-toastify";
 import { getAllTagFun } from "../../../Services/tagServices";
-import { getItemsbyId, deleteRecipeImagebyId } from "../../../Services/itemsService";
+import {
+  getItemsbyId,
+  deleteRecipeImagebyId,
+} from "../../../Services/itemsService";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import "./ItemDetails.scss";
 import { ReactComponent as CloseIcon } from "../../../Assets/Icon/close.svg";
-const ItemDetails = ({
-  itemImage,
-  itemStatus,
-  mediaObjectId,
-}) => {
+const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
   const [tagOption, setTagOption] = useState([]);
   const [tag, setTag] = useState([]);
   const [err, setError] = useState("");
@@ -35,11 +34,12 @@ const ItemDetails = ({
   const [items, setItems] = useState();
   // const [chef, setChef] = useState();
   const [catname, setCatName] = useState();
+  const [time, setTime] = useState();
   const [selectedTag, setSelectedTag] = useState([]);
   const [itemDetail, setItemDetail] = useState({});
   const [status, setStatus] = useState(false);
 
-let navigate = useNavigate()
+  let navigate = useNavigate();
   const { itemId } = useParams();
   const {
     register,
@@ -58,10 +58,9 @@ let navigate = useNavigate()
   useEffect(() => {
     fetchItemDetail();
     tagdata();
-   
+    // setOptions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   const tagdata = () => {
     getAllTagFun()
@@ -82,71 +81,62 @@ let navigate = useNavigate()
   const fetchItemDetail = () => {
     getItemsbyId(itemId)
       .then((response) => {
-      setItems(response.data.data.recipeDetails);
-      setCatName(response.data.data.recipeDetails.Category.name);
-      // setChef(response.data.data.profile);
-      setItemDetail(response?.data?.data?.recipeDetails);
-          setValue("categoryId", response.data.data.recipeDetails.categoryId);
-          setValue("dishName", response.data.data.recipeDetails.dishName);
-          setValue("deliveryFee", 22);
-          setValue(
-            "preparationTime",
-            response.data.data.recipeDetails.preparationTime
-          );
-          setValue("description", response.data.data.recipeDetails.description);
-          setValue(
-            "isVegetarian",
-            response.data.data.recipeDetails.isVegetarian ? 1 : 0
-          );
-          setValue(
-            "isNonVegetarian",
-            response.data.data.recipeDetails.isNonVegetarian ? 1 : 0
-          );
-          setValue(
-            "costPerServing",
-            response.data.data.recipeDetails.costPerServing
-          );
+        setItems(response.data.data.recipeDetails);
+        setCatName(response.data.data.recipeDetails.Category.name);
+        setTime(response.data.data.recipeDetails.preparationTime);
+        // setChef(response.data.data.profile);
+        setItemDetail(response?.data?.data?.recipeDetails);
+        setValue("categoryId", response.data.data.recipeDetails.categoryId);
+        setValue("dishName", response.data.data.recipeDetails.dishName);
+        setValue("deliveryFee", 22);
+        setValue("description", response.data.data.recipeDetails.description);
+        setValue(
+          "isVegetarian",
+          response.data.data.recipeDetails.isVegetarian ? 1 : 0
+        );
+        setValue(
+          "isNonVegetarian",
+          response.data.data.recipeDetails.isNonVegetarian ? 1 : 0
+        );
+        setValue(
+          "costPerServing",
+          response.data.data.recipeDetails.costPerServing
+        );
 
-          setValue(
-            "sellingPrice",
-            response.data.data.recipeDetails.sellingPrice
-          );
+        setValue("sellingPrice", response.data.data.recipeDetails.sellingPrice);
 
-          // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
-          //   setChefImage(`http://meyu.sg:8082/${chefPic?.imageUrl}`)
-          // );
-          setPics(response.data.data.recipeDetails.MediaObjects);
-          response?.data?.data?.recipeDetails?.MediaObjects?.map((img) =>
-            `http://13.213.151.153:8083/${img?.imageUrl}`
-          );
+        // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
+        //   setChefImage(`http://meyu.sg:8082/${chefPic?.imageUrl}`)
+        // );
+        setPics(response.data.data.recipeDetails.MediaObjects);
+        response?.data?.data?.recipeDetails?.MediaObjects?.map(
+          (img) => `http://13.213.151.153:8081/${img?.imageUrl}`
+        );
 
-          // response.data.data.recipeDetails.MediaObjects.map((url, index) => setImage({
-          //   [index]:`http://13.213.151.153:8081/${url.imageUrl}`
-          // }))
-          // ===========================
-          //  set Tags Data
-          let tempTag = [];
-          response?.data?.data?.recipeDetails?.tags?.forEach(
-            (tagName, index) => {
-              let tempTagObj = {
-                value: tagName[index],
-                label: tagName[index],
-              };
-              tempTag.push(tempTagObj);
-            }
-          );
-          setSelectedTag(tempTag);
+        // response.data.data.recipeDetails.MediaObjects.map((url, index) => setImage({
+        //   [index]:`http://13.213.151.153:8081/${url.imageUrl}`
+        // }))
+        // ===========================
+        //  set Tags Data
+        let tempTag = [];
+        response?.data?.data?.recipeDetails?.tags?.forEach((tagName, index) => {
+          let tempTagObj = {
+            value: tagName[index],
+            label: tagName[index],
+          };
+          tempTag.push(tempTagObj);
+        });
+        setSelectedTag(tempTag);
       })
       .catch(function (error) {});
   };
 
-  
   const submitdata = (data) => {
-    console.log(data)
+    console.log(data);
     // Selling Price Part
     if (Math.floor(itemDetail.costPerServing) <= data.sellingPrice) {
       setError("");
-      console.log('cost price: ', data.sellingPrice)
+      console.log("cost price: ", data.sellingPrice);
 
       var mytags = data.tags;
       var t = mytags
@@ -192,23 +182,22 @@ let navigate = useNavigate()
           }
           // fetchItemDetail();
           setTimeout(() => {
-            navigate(-1)
+            navigate(-1);
           }, 1000);
         })
 
         .catch((err) => {
           console.log(err);
         });
-      
+
       //  Change Status Approved or Pending
-      if(status === true)   
-      {
-        console.log('Did Changed Status API');
+      if (status === true) {
+        console.log("Did Changed Status API");
         confirmItemsbyId(itemDetail.id, paramss)
-        .then((data) => {
-          console.log(data.data)
-        })
-        .catch((error) => {});
+          .then((data) => {
+            console.log(data.data);
+          })
+          .catch((error) => {});
       }
     } else {
       setError("Selling Price must be greater than Chef Price!");
@@ -224,16 +213,13 @@ let navigate = useNavigate()
     // console.log(multi);
     setPics((oldState) => oldState.filter((item) => item.id !== image.id));
 
-
     // Delete Recipe Image By Media Object ID
     deleteRecipeImagebyId(image.id)
-    .then((res) => {
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
 
   // Upload Reciepe Image by ID
 
@@ -280,8 +266,27 @@ let navigate = useNavigate()
       });
   };
 
-  // console.log("item ki image: ", itemImage)
-  // console.log("RECIEPE IMAGE: ", recipeImage);
+  // const setOptions = () => {
+  //   // var myArray = [
+  //   //   {name: 'deepak', place: 'bangalore'}, 
+  //   //   {name: 'chirag', place: 'bangalore'}, 
+  //   //   {name: 'alok', place: 'berhampur'}, 
+  //   //   {name: 'chandan', place: 'mumbai'}
+  //   // ];
+  //   // var toRemove = [
+  //   //   {name: 'deepak', place: 'bangalore'},
+  //   //   {name: 'alok', place: 'berhampur'}
+  //   // ];
+
+  //   for (var i = tagOption.length - 1; i >= 0; i--) {
+  //     for (var j = 0; j < selectedTag.length; j++) {
+  //       if (tagOption[i] && tagOption[i].label === selectedTag[j].label) {
+  //         tagOption.splice(i, 1);
+  //       }
+  //     }
+  //   }
+  //   console.log(tagOption);
+  // }
 
   const animatedComponents = makeAnimated();
 
@@ -292,19 +297,30 @@ let navigate = useNavigate()
           <div className="row">
             {/* {console.log(pics)} */}
             {pics.map((image) => (
-              <div key={image.id} className={pics.length ===1? "col-sm-12 col-md-6 mx-auto mb-3 h-100":"col-sm-12 col-md-4 mb-3"}>
+              <div
+                key={image.id}
+                className={
+                  pics.length === 1
+                    ? "col-sm-12 col-md-6 mx-auto mb-3 h-100"
+                    : "col-sm-12 col-md-4 mb-3"
+                }
+              >
                 <div className="text-end" style={{ margin: 35 }}>
-                  {pics.length !== 1?
-                  <CloseIcon className="btn-close-color" style={{ position: "absolute", marginTop: 7 }} onClick={() => handleClose(image)} />:null}
+                  {pics.length !== 1 ? (
+                    <CloseIcon
+                      className="btn-close-color"
+                      style={{ position: "absolute", marginTop: 7 }}
+                      onClick={() => handleClose(image)}
+                    />
+                  ) : null}
                 </div>
 
                 <img
                   key={image.id}
-                  src={`http://13.213.151.153:8083/${image.imageUrl}`}
+                  src={`http://13.213.151.153:8081/${image.imageUrl}`}
                   style={{ width: "100%" }}
                   height="300"
                   alt=""
-                  
                 />
               </div>
             ))}
@@ -340,7 +356,10 @@ let navigate = useNavigate()
             </label>
             <select
               className="form-select"
-              onChange={(e) => {changeStatus(e.target.value); setStatus(true)}}
+              onChange={(e) => {
+                changeStatus(e.target.value);
+                setStatus(true);
+              }}
             >
               {itemStatus === true ? (
                 <option value="true">Approved</option>
@@ -432,16 +451,7 @@ let navigate = useNavigate()
             <label htmlFor="validationCustom001" className="form-label">
               Preparation Time
             </label>
-            <input
-              type="text"
-              className="form-control"
-              {...register("preparationTime", {
-                required: "Preparation time is required!",
-              })}
-            />
-            {errors.preparationTime ? (
-              <p className="errors">{errors.preparationTime.message}</p>
-            ) : null}
+            <input type="text" className="form-control" value={time} disabled />
           </div>
 
           <div className="col-md-12 col-sm-12 col-xs-12 mb-3">
