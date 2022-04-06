@@ -25,7 +25,8 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
   const [tag, setTag] = useState([]);
   const [err, setError] = useState("");
   const [paramss, setParams] = useState();
-  // const [image, setImage] = useState({ preview: "", raw: "" });
+  const [image, setImage] = useState({ preview: "", raw: "" });
+  const [tasveer, setTasveer] = useState();
   // const [recipeImage, setRecipeImage] = useState("");
   // const [recipeImageByAPI, setRecipeImagebyAPI] = useState();
   // const [multi, setMulti] = useState([]);
@@ -202,38 +203,12 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
     } else {
       setError("Selling Price must be greater than Chef Price!");
     }
-    fetchItemDetail();
-  };
 
-  // OnClose Function
-  const handleClose = async (image) => {
-    // // Selected Image Object
-    // console.log(id);
-    // // All Images Object
-    // console.log(multi);
-    setPics((oldState) => oldState.filter((item) => item.id !== image.id));
+    // console.log(tasveer)
 
-    // Delete Recipe Image By Media Object ID
-    deleteRecipeImagebyId(image.id)
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // Upload Reciepe Image by ID
-
-  const handleChange = (e) => {
-    if (e?.target?.files?.length) {
-      // setImage({
-      //   preview: URL.createObjectURL(e?.target?.files[0]),
-      //   raw: e?.target?.files[0],
-      // });
-    }
-
-    let formData = new FormData();
-    formData.append("recipe", e?.target?.files[0]);
-    updateRecipeImagebyId(mediaObjectId, formData)
+  let formData1 = new FormData();
+    formData1.append("recipe", tasveer);
+    updateRecipeImagebyId(mediaObjectId, formData1)
       .then((response) => {
         // if (response.data.success === true) {
         //   toast.success(response.data.data.message, {
@@ -264,6 +239,38 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
           toastId: "my_toast",
         });
       });
+
+
+
+    fetchItemDetail();
+  };
+
+  // OnClose Function
+  const handleClose = async (image) => {
+    // // Selected Image Object
+    // console.log(id);
+    // // All Images Object
+    // console.log(multi);
+    setPics((oldState) => oldState.filter((item) => item.id !== image.id));
+
+    // Delete Recipe Image By Media Object ID
+    deleteRecipeImagebyId(image.id)
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // Upload Reciepe Image by ID
+
+  const handleChange = (e) => {
+    if (e?.target?.files?.length) {
+      setImage({
+        preview: URL.createObjectURL(e?.target?.files[0]),
+        raw: e?.target?.files[0],
+      });
+    }
+  setTasveer(e.target.files[0]);
   };
 
   // const setOptions = () => {
@@ -296,9 +303,9 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
         <div className="container">
           <div className="row">
             {/* {console.log(pics)} */}
-            {pics.map((image) => (
+            {pics.map((images) => (
               <div
-                key={image.id}
+                key={images.id}
                 className={
                   pics.length === 1
                     ? "col-sm-12 col-md-6 mx-auto mb-3 h-100"
@@ -310,17 +317,18 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
                     <CloseIcon
                       className="btn-close-color"
                       style={{ position: "absolute", marginTop: 7 }}
-                      onClick={() => handleClose(image)}
+                      onClick={() => handleClose(images)}
                     />
                   ) : null}
                 </div>
-
-                <img
-                  key={image.id}
-                  src={`http://13.213.151.153:8081/${image.imageUrl}`}
+                <input
+                type="image"
+                  key={images.id}
+                  src={image.preview === '' ? `http://13.213.151.153:8081/`+images.imageUrl: image.preview}
                   style={{ width: "100%" }}
                   height="300"
                   alt=""
+                  defaultValue={`http://13.213.151.153:8081/`+images.imageUrl}
                 />
               </div>
             ))}

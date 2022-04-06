@@ -283,6 +283,10 @@ const TagsTable = () => {
                 autoComplete="off"
                 {...register("tags", {
                   required: "Dietary Tag is required!",
+                  pattern: {
+                    value: /^[A-Za-z]+$/,
+                    message: "Invalid Tag!",
+                  },
                 })}
               />
             </Form.Group>
@@ -312,10 +316,10 @@ const TagsTable = () => {
                 autoComplete="off"
                 {...register("tags", {
                   required: "Tag is required!",
-                  // pattern: {
-                  //   value: /^[A-Za-z]+$/,
-                  //   message: "Only alphabets are allowed!",
-                  // },
+                  pattern: {
+                    value: /^[A-Za-z]+$/,
+                    message: "Invalid Tag!",
+                  },
                 })}
               />
             </Form.Group>
