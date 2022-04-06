@@ -150,7 +150,7 @@ const DiscountTable = () => {
 
   async function openLightbox(MyUrl) {
     setOpen(true);
-    await setAPIOfferImage(url + MyUrl);
+    await setAPIOfferImage(urls + MyUrl);
   }
 
   //   Getting Discount Data
@@ -696,13 +696,17 @@ const DiscountTable = () => {
                 {...register("discount", {
                   required: "Discount is required!",
                   pattern: {
-                    value: /^[1-9]/,
+                    value: /^[0-9]+$/,
                     message: "Invalid Discount!",
                   },
                   max: {
                     value: 100,
                     message: "Cannot give more than $100 discount!",
                   },
+                  min: {
+                    value: 1,
+                    message: "Discount should be greater than 0!"
+                  }
                 })}
               />
             </Form.Group>
@@ -743,7 +747,7 @@ const DiscountTable = () => {
                     message: "Only Numbers are allowed",
                   },
                   min: {
-                    value: 0,
+                    value: 1,
                     message: "Days should be greater than 0."
                   }
                 })}
