@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
@@ -7,72 +7,79 @@ import paginationFactory, {
   PaginationListStandalone,
 } from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import { customerOrderData } from "./CustomerOrderData";
+import {
+  getCustomerDetail,
+  getCustomerDetails,
+} from "../../../../Services/customerServices";
 import "./CustomerOrderTable.css";
+import moment from "moment";
+import { useParams } from "react-router-dom";
 
 const CustomerOrderTable = () => {
-  const products = customerOrderData.map((custom) => [
-    {
-      id: custom.id,
-      date: custom.date,
-      name: custom.name,
-      address: custom.address,
-      amount: custom.amount,
-      status: custom.status,
-    },
-  ]);
+  const [orderData, setorderData] = useState([]);
+  const { customerId } = useParams();
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
   const columns = [
+    // {
+    //   dataField: "id",
+    //   text: "Order ID",
+    //   sort: true,
+    //   headerSortingStyle,
+    // },
     {
-      dataField: "id",
-      text: "Order ID",
-      sort: true,
+      dataField: "sl.no",
+      text: "Serial no.",
+      formatter: (cell, row, rowIndex, formatExtraData) => {
+        return rowIndex + 1;
+      },
       headerSortingStyle,
-      // headerAlign: "center",
-      // align: "center",
     },
     {
-      dataField: "date",
+      dataField: "pickUpTime",
       text: "Date",
       sort: true,
       headerSortingStyle,
-      // headerAlign: "center",
-      // align: "center",
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            {moment(row.pickUpTime).format("MMMM Do YYYY")}
+          </div>
+        );
+      },
     },
     {
-      dataField: "name",
+      dataField: "customerName",
       text: "Chef Name",
       headerSortingStyle,
       sort: true,
-      // headerAlign: "center",
-      // align: "center",
     },
     {
-      dataField: "address",
+      dataField: "chefAddress.street",
       text: "Delivery Address ",
       sort: true,
       headerSortingStyle,
-      // headerAlign: "center",
-      // align: "center",
     },
     {
-      dataField: "amount",
+      dataField: "totalAmount",
       text: "Amount",
       sort: true,
       headerSortingStyle,
-      // headerAlign: "center",
-      // align: "center",
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            {`$`+ row.totalAmount}
+          </div>
+        );
+      },
     },
     {
-      dataField: "status",
+      dataField: "orderState",
       text: "Status",
       sort: true,
       headerSortingStyle,
-      // headerAlign: "center",
-      // align: "center",
     },
   ];
 
@@ -83,12 +90,36 @@ const CustomerOrderTable = () => {
     },
   ];
 
+  useEffect(() => {
+    fetchcustomerID();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchcustomerID = () => {
+    getCustomerDetail(customerId)
+      .then((response) => {
+        console.log(response.data.data)
+        fetchCustomerDetail(response.data.data.createdBy);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  const fetchCustomerDetail = async (CID) => {
+    await getCustomerDetails(CID)
+      .then((response) => {
+        console.log(response.data.data.convertedOrderDetailsJSON);
+        setorderData(response.data.data.convertedOrderDetailsJSON);
+      })
+      .catch(function (error) {});
+  };
+
   return (
     <div className="table-responsive" style={{ padding: "20px" }}>
       <PaginationProvider
         pagination={paginationFactory({
           custom: false,
-          totalSize: products.length,
+          totalSize: orderData.length,
           prePageText: "Previous",
           nextPageText: "Next",
           withFirstAndLast: false,
@@ -113,26 +144,26 @@ const CustomerOrderTable = () => {
             },
             {
               text: "All",
-              value: products.length,
+              value: orderData.length,
             },
           ],
-          hideSizePerPage: products.length === 0,
+          hideSizePerPage: orderData.length === 0,
         })}
         keyField="id"
         columns={columns}
-        data={customerOrderData.map((item) => item)}
+        data={orderData.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={customerOrderData.map((item) => item)}
+            data={orderData.map((item) => item)}
             search
           >
             {(toolkitprops) => (
               <>
                 <div className="d-flex justify-content-end mb-3">
-                  {/* <SizePerPageDropdownStandalone {...paginationProps} /> */}
+                  <SizePerPageDropdownStandalone {...paginationProps} />
                   <SearchBar
                     className="ms-2"
                     {...toolkitprops.searchProps}

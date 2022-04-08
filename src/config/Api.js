@@ -20,7 +20,8 @@ export default (() => {
 
     // Customer
     customers: `${setting.api.url}admin/getusers`,
-    getcustomerDetails: `${setting.api.url}admin/getuserdetails`,
+    getcustomerDetails: `${setting.api.url}admin/complete-user-details`,
+    getcustomerDetail: `${setting.api.url}admin/getuserdetails`,
     deletecustomers: `${setting.api.url}admin/user`,
     discontinueCustomer: `${setting.api.url}admin/confirmuser`,
 
@@ -33,7 +34,8 @@ export default (() => {
 
     //Chef
     chefDetails: `${setting.api.url}admin/getallchef`,
-    getchefDetails: `${setting.api.url}common/chef-profile`,
+    getchefDetails: `${setting.api.url}admin/complete-user-details`,
+    getchefDetail: `${setting.api.url}common/chef-profile`,
     confirmChef: `${setting.api.url}admin/confirmchef`,
     deleteChef: `${setting.api.url}admin/user`,
 

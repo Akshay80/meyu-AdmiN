@@ -9,7 +9,12 @@ export function viewCustomerService() {
 
 // Get Customer By Id
 export function getCustomerDetails(id) {
-  return ApiInstance?.get(`${Api.getcustomerDetails}/${id}`);
+  return ApiInstance?.get(`${Api.getcustomerDetails}/${id}/2`);
+}
+
+// chef card details
+export function getCustomerDetail(id) {
+  return ApiInstance?.get(`${Api.getcustomerDetail}/${id}`);
 }
 
 // Delete Customer

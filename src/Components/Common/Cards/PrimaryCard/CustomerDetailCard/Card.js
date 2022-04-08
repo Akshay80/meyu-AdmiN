@@ -12,6 +12,7 @@ const CustomerCard = ({
   customerId,
   customerVerify,
   customerReject,
+  totalCompleteOrders , totalAmount 
 }) => {
   const [disState, setDisState] = useState();
 
@@ -19,63 +20,63 @@ const CustomerCard = ({
     setDisState(`${customerVerify}`);
   }, [customerVerify]);
 
-  async function disCustomer() {
-    if (`${disState}` === "true") {
-      setDisState("false");
-    } else {
-      setDisState("true");
-    }
-    var params = {
-      isVerified: disState,
-    };
-    await discontinueCustomer(customerId, params)
-      .then((res) => {
-        if (res.data.data.message === "User profile verified successfully.") {
-          toast.success(res.data.data.message, {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-          });
-        }
+  // async function disCustomer() {
+  //   if (`${disState}` === "true") {
+  //     setDisState("false");
+  //   } else {
+  //     setDisState("true");
+  //   }
+  //   var params = {
+  //     isVerified: disState,
+  //   };
+  //   await discontinueCustomer(customerId, params)
+  //     .then((res) => {
+  //       if (res.data.data.message === "User profile verified successfully.") {
+  //         toast.success(res.data.data.message, {
+  //           position: "top-right",
+  //           autoClose: 1000,
+  //           hideProgressBar: true,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: false,
+  //           progress: 0,
+  //         });
+  //       }
 
-        if (res.data.data.message === "User profile rejected successfully.") {
-          toast.error(res.data.data.message, {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-          });
-        }
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  }
+  //       if (res.data.data.message === "User profile rejected successfully.") {
+  //         toast.error(res.data.data.message, {
+  //           position: "top-right",
+  //           autoClose: 1000,
+  //           hideProgressBar: true,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: false,
+  //           progress: 0,
+  //         });
+  //       }
+  //     })
+  //     .catch(function (err) {
+  //       console.log(err);
+  //     });
+  // }
 
-  const disContinue = () => {
-    confirmAlert({
-      title: disState === "true"? "Continue?": "Discontinue!",
-      message: `Are you sure you want to ${disState === "true"? "continue with": "discontinue with"} ${customerDetail.fullName}?`,
-      buttons: [
-        {
-          label: "Yes",
-          className: "btn btn-danger",
-          onClick: () => disCustomer(),
-        },
-        {
-          label: "No",
-          className: "btn btn-success",
-        },
-      ],
-    });
-  };
+  // const disContinue = () => {
+  //   confirmAlert({
+  //     title: disState === "true"? "Continue?": "Discontinue!",
+  //     message: `Are you sure you want to ${disState === "true"? "continue with": "discontinue with"} ${customerDetail.fullName}?`,
+  //     buttons: [
+  //       {
+  //         label: "Yes",
+  //         className: "btn btn-danger",
+  //         onClick: () => disCustomer(),
+  //       },
+  //       {
+  //         label: "No",
+  //         className: "btn btn-success",
+  //       },
+  //     ],
+  //   });
+  // };
 
   return (
     <div className="container">
@@ -99,7 +100,7 @@ const CustomerCard = ({
             <div>
               <div className="user-card-info d-flex mx-3 mt-2 align-items-center justify-content-between">
                 <div className="info-x">
-                  <h5 className="mb-1">{customerDetail?.fullName}</h5>
+                  <h5 className="mb-1">{customerDetail?.firstName} {customerDetail?.lastName}</h5>
                   <p>{customerDetail?.phone}</p>
                   <p>{customerDetail?.email}</p>
                 </div>
@@ -121,11 +122,11 @@ const CustomerCard = ({
               <div className="primary-card-info mx-3 mt-5 d-flex justify-content-between">
                 <div className="info-xz">
                   <h5 className="mb-0">Completed Order</h5>
-                  <h6>0</h6>
+                  <h6>{totalCompleteOrders}</h6>
                 </div>
                 <div className="info-xz">
                   <h5 className="mb-0">Total Amount</h5>
-                  <h6>$0</h6>
+                  <h6>{`$${totalAmount === null ? 0 : totalAmount}`}</h6>
                 </div>
               </div>
             </div>

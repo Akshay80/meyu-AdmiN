@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect , useState} from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
@@ -9,41 +9,41 @@ import paginationFactory, {
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import { chefOrderData } from "./ChefOrderData";
 import "./ChefOrderTable.css";
+import { useParams } from "react-router-dom";
+import { getchefDetail, getchefDetails } from "../../../../Services/chefServices";
+import moment from "moment";
 
 const ChefOrderTable = () => {
-  const products = chefOrderData.map((custom) => [
-    {
-      id: custom.id,
-      date: custom.date,
-      name: custom.name,
-      address: custom.address,
-      amount: custom.amount,
-      status: custom.status,
-    },
-  ]);
+  const {chefId} = useParams();
+  const [orderData, setorderData] = useState([]);
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
   const columns = [
     {
-      dataField: "id",
-      text: "Order ID",
-      sort: true,
+      dataField: "sl.no",
+      text: "Serial no.",
+      formatter: (cell, row, rowIndex, formatExtraData) => {
+        return rowIndex + 1;
+      },
       headerSortingStyle,
-      // headerAlign: "center",
-      // align: "center",
     },
     {
-      dataField: "date",
+      dataField: "pickUpTime",
       text: "Date",
       sort: true,
       headerSortingStyle,
-      // headerAlign: "center",
-      // align: "center",
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            {moment(row.pickUpTime).format("MMMM Do YYYY")}
+          </div>
+        );
+      },
     },
     {
-      dataField: "name",
+      dataField: "customerName",
       text: "Customer Name",
       headerSortingStyle,
       sort: true,
@@ -51,7 +51,7 @@ const ChefOrderTable = () => {
       // align: "center",
     },
     {
-      dataField: "address",
+      dataField: "deliveryAddress.street",
       text: "Delivery Address ",
       sort: true,
       headerSortingStyle,
@@ -59,15 +59,22 @@ const ChefOrderTable = () => {
       // align: "center",
     },
     {
-      dataField: "amount",
+      dataField: "totalAmount",
       text: "Amount",
       sort: true,
       headerSortingStyle,
+      formatter: (rowContent, row) => {
+        return (
+          <div className="d-flex">
+            {`$`+ row.totalAmount}
+          </div>
+        );
+      },
       // headerAlign: "center",
       // align: "center",
     },
     {
-      dataField: "status",
+      dataField: "orderState",
       text: "Status",
       sort: true,
       headerSortingStyle,
@@ -83,12 +90,34 @@ const ChefOrderTable = () => {
     },
   ];
 
+  useEffect(() => {
+    fetchchefID();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchchefID = () => {
+    getchefDetail(chefId).then((response) => {
+      fetchChefDetail(response.data.data.chefProfile.createdBy);
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+  }
+  const fetchChefDetail = async(CID) => {
+    await getchefDetails(CID)
+      .then((response) => {
+        console.log(response.data.data.convertedOrderDetailsJSON)
+        setorderData(response.data.data.convertedOrderDetailsJSON);
+      })
+      .catch(function (error) {});
+  };
+
   return (
     <div className="table-responsive" style={{ padding: "20px" }}>
       <PaginationProvider
         pagination={paginationFactory({
           custom: false,
-          totalSize: products.length,
+          totalSize: orderData.length,
           prePageText: "Previous",
           nextPageText: "Next",
           withFirstAndLast: false,
@@ -113,26 +142,26 @@ const ChefOrderTable = () => {
             },
             {
               text: "All",
-              value: products.length,
+              value: orderData.length,
             },
           ],
-          hideSizePerPage: products.length === 0,
+          hideSizePerPage: orderData.length === 0,
         })}
         keyField="id"
         columns={columns}
-        data={chefOrderData.map((item) => item)}
+        data={orderData.map((item) => item)}
       >
         {({ paginationProps, paginationTableProps }) => (
           <ToolkitProvider
             keyField="id"
             columns={columns}
-            data={chefOrderData.map((item) => item)}
+            data={orderData.map((item) => item)}
             search
           >
             {(toolkitprops) => (
               <>
                 <div className="d-flex justify-content-end mb-3">
-                  {/* <SizePerPageDropdownStandalone {...paginationProps} /> */}
+                  <SizePerPageDropdownStandalone {...paginationProps} />
                   <SearchBar
                     className="ms-2"
                     {...toolkitprops.searchProps}

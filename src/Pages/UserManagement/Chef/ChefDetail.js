@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ChefCard from "../../../Components/Common/Cards/PrimaryCard/ChefDetailCard/Card";
 import { ReactComponent as ChefIcon } from "../../../Assets/Icon/Chef.svg";
-import { getchefDetails } from "../../../Services/chefServices";
+import { getchefDetails , getchefDetail} from "../../../Services/chefServices";
 import { useParams } from "react-router";
 import "react-toastify/dist/ReactToastify.min.css";
 
@@ -12,22 +12,41 @@ const ChefDetail = ({ menuToggleState }) => {
   const [isVerfied, setIsVerfied] = useState();
   const { chefId } = useParams();
   const [cookingTime, setCookingTime] = useState("");
+  const [chefID, setchefID] = useState();
+  const [totalCompleteOrders, setTotalCompletedOrder] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [tableData, setTableData] = useState();
 
   useEffect(() => {
-    fetchChefDetail();
+    fetchchefID();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchChefDetail = () => {
-    getchefDetails(chefId)
+  const fetchchefID = () => {
+    getchefDetail(chefId).then((response) => {
+      fetchChefDetail(response.data.data.chefProfile.createdBy);
+      setChefRecipe(response.data.data.recipes);
+      // setchefID(response.data.data.chefProfile.createdBy);
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+  }
+  const fetchChefDetail = async(CID) => {
+    await getchefDetails(CID)
       .then((response) => {
-        setChefDetail(response?.data?.data?.chefProfile);
-        setChefRecipe(response.data.data.recipes);
+        setTableData(response.data.data.convertedOrderDetailsJSON)
+        setTotalCompletedOrder(response.data.data.totalCompleteOrders)
+        setTotalAmount(response.data.data.totalAmount[0].totalAmount)
+        setchefID(response.data.data.profile.createdBy)
+        setChefDetail(response?.data?.data?.profile);
+        
+        
         setChefPic(
-          `http://13.213.151.153:8081/${response?.data?.data?.chefProfile?.profileUrl}`
+          `http://13.213.151.153:8081/${response?.data?.data?.profile.profileUrl}`
         );
-        setIsVerfied(response.data.data.chefProfile?.isVerified);
-        response.data.data.chefProfile.CookAvailability.Days.map((items) => setCookingTime(items));
+        // setIsVerfied(response.data.data.chefProfile?.isVerified);
+        // response.data.data.chefProfile.CookAvailability.Days.map((items) => setCookingTime(items));
       })
       .catch(function (error) {});
   };
@@ -42,7 +61,7 @@ const ChefDetail = ({ menuToggleState }) => {
           </div>
         </div>
         <h6 className="pt-3">
-          Chef ID : <b>{chefDetail?.createdBy}</b>
+          Chef ID : <b>{chefID}</b>
         </h6>
       </div>
       <ChefCard
@@ -52,6 +71,9 @@ const ChefDetail = ({ menuToggleState }) => {
         chefId={chefId}
         isVerfied={isVerfied}
         cookingTime={cookingTime}
+        createdBy={chefDetail.createdBy}
+        totalCompleteOrders={totalCompleteOrders}
+        totalAmount={totalAmount}
       />
     </div>
   );

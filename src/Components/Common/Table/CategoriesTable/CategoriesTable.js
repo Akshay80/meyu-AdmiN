@@ -29,13 +29,15 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { Modal, Button, Form } from "react-bootstrap";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
+import { Input } from "reactstrap";
 
 const CategoriesTable = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [isOpen, setOpen] = useState(false);
   const [categImg, setCategImg] = useState();
   const [catId, setCatId] = useState();
-  const [catVal, setCatVal] = useState();
+  const [catFile, setCatFile] = useState();
+  const [image, setImage] = useState({ preview: "", raw: "" });
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -196,23 +198,40 @@ const CategoriesTable = () => {
     // Getting Data for Specific category
     viewCategorybyId(rowId)
       .then(function (response) {
-        setValue("category", `http://13.213.151.153:8081/${response.data.data.MediaObjects[0].imageUrl}`)
         setCatId(response.data.data.id);
         setValue("name", response.data.data.name);
+        setCatFile(
+          `http://13.213.151.153:8081/${response.data.data.MediaObjects[0].imageUrl}`
+        );
+        setValue(
+          "category",
+          `http://13.213.151.153:8081/${response.data.data.MediaObjects[0].imageUrl}`
+        );
       })
       .catch(function (error) {});
   };
 
   // =================== edit category modal ==================
-  const EditSubmit = (data) => {
-    setCatVal(data.category[0]);
+
+  // ================== upload category file ========================
+  const handleChange = (e) => {
+    if (e?.target?.files?.length) {
+      setImage({
+        preview: URL.createObjectURL(e?.target?.files[0]),
+        raw: e?.target?.files[0],
+      });
+    }
+  };
+
+  const EditSubmit = async (e) => {
     var formData2 = new FormData();
-    formData2.append("name", data.name);
+    formData2.append("name", e.name);
     formData2.append("id", catId);
-    formData2.append("category", data.category[0]);
+    formData2.append("category", image.raw);
     editCategoryFun(formData2)
-      .then(function (res) {
-        if (res.data.data[0] === 1) {
+      .then((res) => {
+        if (res.statusText === "OK") {
+          categories();
           handleClose1();
           toast.info("Category Edited Successfully", {
             position: "top-right",
@@ -224,10 +243,8 @@ const CategoriesTable = () => {
             progress: 0,
             toastId: "my_toast",
           });
-          categories();
         }
       })
-
       .catch(function (error) {
         toast.error(error.error, {
           position: "top-right",
@@ -404,13 +421,45 @@ const CategoriesTable = () => {
             {errors.name && <p className="errors">{errors.name.message}</p>}
             <Form.Group className="mt-3">
               <Form.Label>Category image</Form.Label>
-              <Form.Control
-                type="file"
-                id="formFile"
-                {...register("category", {
-                  required: false
-                })}
-              />
+              <div className="profile-pic-wrapper">
+                <div className="profile-pic-holder">
+                  <label htmlFor="upload-button">
+                    {image.preview ? (
+                      <img
+                        src={image.preview}
+                        id="profilePic"
+                        className="pic"
+                        alt="user_image"
+                        {...register("category", {})}
+                      />
+                    ) : (
+                      <img
+                        id="profilePic"
+                        className="pic"
+                        alt="user_image"
+                        src={catFile}
+                        {...register("category", {})}
+                      />
+                    )}
+                  </label>
+                  <label htmlFor="upload-button" className="upload-file-block">
+                    <div className="text-center">
+                      <div className="mb-2"></div>
+                      <div className="text-uppercase">
+                        Update <br /> Profile Photo
+                      </div>
+                    </div>
+                  </label>
+                  <Input
+                    className="uploadProfileInput d-none"
+                    type="file"
+                    name="profile_pic"
+                    id="upload-button"
+                    accept="image/*"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
             </Form.Group>
             {errors.category && (
               <p className="errors">{errors.category.message}</p>

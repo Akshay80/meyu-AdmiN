@@ -8,8 +8,13 @@ export function confirmChefAccount(id, payload) {
 
 // chef card details
 export function getchefDetails(id) {
-  return ApiInstance?.get(`${Api.getchefDetails}/${id}`);
+  return ApiInstance?.get(`${Api.getchefDetails}/${id}/1`);
 }
+
+export function getchefDetail(id) {
+  return ApiInstance?.get(`${Api.getchefDetail}/${id}`);
+}
+
 
 // All Chef Details Data
 export function chefDetailsService() {

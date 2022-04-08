@@ -150,7 +150,7 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
       var formData = new FormData();
       formData.append("dishName", data.dishName);
       formData.append("tags", tag);
-      formData.append("preparationTime", data.preparationTime);
+      formData.append("preparationTime", time);
       formData.append("categoryId", data.categoryId);
       formData.append("deliveryFee", data.deliveryFee);
       formData.append("costPerServing", data.costPerServing);
@@ -166,8 +166,9 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
       //   console.log("Pushed ARRAY : ",pushedArray);
       //  }
 
+      console.log("ID SURAJ: ", itemDetail.id)
       // Update Recipe By ID
-      updateRecipebyId(itemDetail?.id, formData)
+      updateRecipebyId(itemDetail.id, formData)
         .then((res) => {
           if (res.data.success === true) {
             toast.success(res.data.data.message, {

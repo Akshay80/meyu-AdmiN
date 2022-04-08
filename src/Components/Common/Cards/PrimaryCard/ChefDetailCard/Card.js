@@ -7,7 +7,7 @@ import { confirmChefAccount } from "../../../../../Services/chefServices";
 import { toast } from "react-toastify";
 import { getAllItemsList } from "../../../../../Services/itemsService";
 
-const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied, cookingTime }) => {
+const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied, cookingTime, totalCompleteOrders , totalAmount }) => {
   const [togglemenu, setToggleMenu] = useState(false);
   const [apiVerify, setApiVerify] = useState();
   const [items, setItems] = useState();
@@ -18,8 +18,9 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied, cookingTime }) =
 
   useEffect(() => {
     getFood();
-    setApiVerify(`${isVerfied}`);
-  }, [isVerfied]);
+  },[]);
+    // setApiVerify(`${isVerfied}`);
+  // }, [isVerfied]);
 
   const getFood = () => {
     getAllItemsList()
@@ -29,43 +30,43 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied, cookingTime }) =
       .catch(function (error) {});
   };
 
-  const changeStatus = (id) => {
-    if (`${apiVerify}` === "false") {
-      setApiVerify("true");
-    } else {
-      setApiVerify("false");
-    }
-    let params = {
-      isVerified: apiVerify,
-    };
-    confirmChefAccount(id, params)
-      .then((res) => {
-        if (res.data.data.message === "User profile verified successfully.") {
-          toast.success(res.data.data.message, {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-          });
-        }
+  // const changeStatus = (id) => {
+  //   if (`${apiVerify}` === "false") {
+  //     setApiVerify("true");
+  //   } else {
+  //     setApiVerify("false");
+  //   }
+  //   let params = {
+  //     isVerified: apiVerify,
+  //   };
+  //   confirmChefAccount(id, params)
+  //     .then((res) => {
+  //       if (res.data.data.message === "User profile verified successfully.") {
+  //         toast.success(res.data.data.message, {
+  //           position: "top-right",
+  //           autoClose: 1000,
+  //           hideProgressBar: true,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: false,
+  //           progress: 0,
+  //         });
+  //       }
 
-        if (res.data.data.message === "User profile rejected successfully.") {
-          toast.error(res.data.data.message, {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-          });
-        }
-      })
-      .catch((error) => {});
-  };
+  //       if (res.data.data.message === "User profile rejected successfully.") {
+  //         toast.error(res.data.data.message, {
+  //           position: "top-right",
+  //           autoClose: 1000,
+  //           hideProgressBar: true,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: false,
+  //           progress: 0,
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {});
+  // };
 
   return (
     <div className="container mb-5">
@@ -125,11 +126,11 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied, cookingTime }) =
               <div className="primary-card-info mx-3 mt-5 d-flex justify-content-between">
                 <div className="info-xz">
                   <h5 className="mb-0">Completed Order</h5>
-                  <h6>0</h6>
+                  <h6>{totalCompleteOrders}</h6>
                 </div>
                 <div className="info-xz">
                   <h5 className="mb-0">Total Amount</h5>
-                  <h6>$0</h6>
+                  <h6>{`$${totalAmount === null ? 0 : totalAmount}`}</h6>
                 </div>
               </div>
             </div>
@@ -140,7 +141,7 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied, cookingTime }) =
       {togglemenu ? (
         <FoodCard items={items} chefRecipe={chefRecipe} />
       ) : (
-        <ChefOrderDetails />
+        <ChefOrderDetails/>
       )}
     </div>
   );

@@ -12,7 +12,7 @@ const ChefOrderDetails = () => {
         </div>
       </div>
       <div className="card">
-        <ChefOrderTable />
+        <ChefOrderTable/>
       </div>
     </div>
   );

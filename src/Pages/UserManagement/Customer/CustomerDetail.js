@@ -3,7 +3,7 @@ import CustomerCard from "../../../Components/Common/Cards/PrimaryCard/CustomerD
 import { ReactComponent as UserIcon } from "../../../Assets/Icon/user.svg";
 import { ReactComponent as OrderIcon } from "../../../Assets/Icon/order.svg";
 // import OrderDetailCard from "../../../Components/Common/Cards/OrderDetailCard/OrderDetailCard";
-import { getCustomerDetails } from "../../../Services/customerServices";
+import { getCustomerDetails, getCustomerDetail } from "../../../Services/customerServices";
 import { useParams } from "react-router-dom";
 import CustomerOrderTable from "../../../Components/Common/Table/CustomerOrderTable/CustomerOrderTable";
 
@@ -13,26 +13,42 @@ const CustomerDetail = () => {
   const [customerImage, setCustomerImage] = useState("");
   const [customerVerify, setcustomerVerify] = useState();
   const [customerReject, setcustomerReject] = useState();
+  const [totalCompleteOrders, setTotalCompletedOrder] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
   const { customerId } = useParams();
 
   useEffect(() => {
-    fetchCustomerDetail();
+    fetchcustomerID();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchCustomerDetail = () => {
-    getCustomerDetails(customerId)
+  const fetchcustomerID = () => {
+    getCustomerDetail(customerId).then((response) => {
+      fetchCustomerDetail(response.data.data.createdBy);
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+  }
+
+  const fetchCustomerDetail = (customerID) => {
+    getCustomerDetails(customerID)
       .then((response) => {
-        setCustomerDetail(response?.data?.data);
-        setCustomerName(response?.data?.data?.fullName);
-        setcustomerVerify(response?.data?.data?.isVerified);
-        setcustomerReject(response?.data?.data?.isRejected);
+        console.log(response.data.data)
+        setCustomerDetail(response?.data?.data?.profile);
+        setTotalCompletedOrder(response.data.data.totalCompleteOrders)
+        setTotalAmount(response.data.data.totalAmount[0].totalAmount)
+        // setCustomerName(response?.data?.data?.fullName);
+        // setcustomerVerify(response?.data?.data?.isVerified);
+        // setcustomerReject(response?.data?.data?.isRejected);
         setCustomerImage(
-          `http://13.213.151.153:8081/${response.data.data.profileUrl}`
+          `http://13.213.151.153:8081/${response.data.data.profile.profileUrl}`
         );
       })
       .catch(function (error) {});
   };
+
+  
 
   return (
     <div>
@@ -44,7 +60,7 @@ const CustomerDetail = () => {
           </div>
         </div>
         <h6 className="pt-3">
-          Customer ID <b>{customerDetail?.id}</b>
+          Customer ID <b>{customerDetail?.createdBy}</b>
         </h6>
       </div>
       <div>
@@ -55,6 +71,8 @@ const CustomerDetail = () => {
           customerName={customerName}
           customerVerify={customerVerify}
           customerReject={customerReject}
+          totalCompleteOrders={totalCompleteOrders}
+        totalAmount={totalAmount}
         />
       </div>
       <div className="pb-3">

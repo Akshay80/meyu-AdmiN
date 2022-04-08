@@ -27,7 +27,6 @@ import {
   editOfferImage,
   deleteOfferImage,
 } from "../../../../Services/discountServices";
-import { Input } from "reactstrap";
 
 const DiscountTable = () => {
   const [coupans, setCoupans] = useState([]);
@@ -51,12 +50,12 @@ const DiscountTable = () => {
   const [imageError, setImageError] = useState(false);
   const [imageError1, setImageError1] = useState(false);
   const [offerValue, setOffer] = useState(0);
-  const [offerID, setOfferID] = useState("");
-  const [offerImage, setOfferImage] = useState("");
+  const [offerImage, setOfferImages] = useState("");
+  const [offerImageValue, setOfferImage] = useState();
   const [validInDayValue, setvalidInDay] = useState(0);
   const [apiOfferImage, setAPIOfferImage] = useState("");
   const [image, setImage] = useState({ preview: "", raw: "" });
-
+  
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => setShow2(true);
   const [isOpen, setOpen] = useState(false);
@@ -170,7 +169,7 @@ const DiscountTable = () => {
   // Adding Discount API
   const onSubmits = (data) => {
     setOffer(data.offer.toUpperCase());
-    setOfferImage(data.myimageFile[0]);
+    setOfferImages(data.myimageFile[0]);
     setvalidInDay(data.validity);
     // api will work
     // handleclose the modal
@@ -188,6 +187,9 @@ const DiscountTable = () => {
 
     addCoupans(formdata)
       .then((res) => {
+        // setAPIOfferImage(
+        //   `http://13.213.151.153:8081/${res.data.data.MediaObject.imageUrl}`
+        // );
         if (res.data.success === true) {
           handleClose();
           toast.success("Coupon Added Successfully", {
@@ -417,14 +419,7 @@ const DiscountTable = () => {
         setValue("offer", res.data.data.offerName);
         setValue("discount", res.data.data.discountValue);
         setValue("validity", `${res.data.data.validOfferInDay}`);
-        setOfferID(res.data.data.id);
-        setOfferImage(
-          `http://13.213.151.153:8081/${res.data.data.MediaObjects[0].imageUrl}`
-        );
-        setValue(
-          "myimageFile",
-          `http://13.213.151.153:8081/${res.data.data.MediaObjects[0].imageUrl}`
-        );
+        setValue("id", res.data.data.id);
       })
       .catch(function (error) {
         toast.error(error.error, {
@@ -440,33 +435,62 @@ const DiscountTable = () => {
       });
   };
 
-  // ================== upload category file ========================
+  const EditedData = (data) => {
+    // if (
+    //   data.myimageFile[0].type === "image/jpeg" ||
+    //   data.myimageFile[0].type === "image/png" ||
+    //   data.myimageFile[0].type === "image/jpg"
+    // ) {
+    //   setImageError1(false);
+    // if (data.discount > 50) {
+    //   confirmDiscount2(data.discount, data.id, data.offer, data.validity);
+    // } else {
 
-  const EditedImage = async (e) => {
-    if (e?.target?.files?.length) {
-      setImage({
-        preview: URL.createObjectURL(e?.target?.files[0]),
-        raw: e?.target?.files[0],
-      });
-    }
     var formData2 = new FormData();
-    formData2.append("id", offerID);
-    formData2.append("offer", e?.target?.files[0]);
+    formData2.append("id", data.id);
+    formData2.append("offer", data.myimageFile[0]);
 
     // Image Update API
     editOfferImage(formData2)
       .then((response) => {
-        toast.success("Coupan Updated!", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
-        });
-        discountdata();
+        const param = {
+          offerName: data?.offer,
+          discountValue: data?.discount,
+          validOfferInDay: data?.validity,
+          id: data?.id,
+        };
+        editCoupans(param)
+          .then((res) => {
+            console.log("response at Line 374: ", res.data.data);
+            if (res.data.success === true) {
+              handleClose2();
+              toast.success("Coupon edited Successfully", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: 0,
+                toastId: "my_toast",
+              });
+              discountdata();
+            } else {
+              toast.error(res.data.error.messgae, {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: 0,
+                toastId: "my_toast",
+              });
+            }
+          })
+          .catch(function (error) {
+            console.log("error", error);
+          });
       })
       .catch(function (error) {
         if (error.error !== null) {
@@ -482,48 +506,13 @@ const DiscountTable = () => {
           });
         }
       });
+    // }
+    // } else {
+    //   setImageError1(true);
+    // }
   };
 
-  const EditedData = (data) => {
-    const param = {
-      offerName: data?.offer.toUpperCase(),
-      discountValue: data?.discount,
-      validOfferInDay: data?.validity,
-      id: offerID,
-    };
-    editCoupans(param)
-      .then((res) => {
-        console.log("response at edit ", res);
-        if (res.data.success === true) {
-          handleClose2();
-          toast.success("Coupon edited Successfully", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-            toastId: "my_toast",
-          });
-          discountdata();
-        } else {
-          toast.error(res.data.error.messgae, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-            toastId: "my_toast",
-          });
-        }
-      })
-      .catch(function (error) {
-        console.log("error", error);
-      });
-  };
+  
 
   return (
     <>
@@ -555,10 +544,9 @@ const DiscountTable = () => {
           <Modal.Body className="p-4 pt-0">
             <Form.Group className="mb-1">
               <Form.Label>Offer Name</Form.Label>
-              
               <Form.Control
                 type="text"
-                placeholder="Please enter the coupon code (Max Length: 20 characters)"
+                placeholder="Please enter the coupon code (Max Length: 10 characters)"
                 autoComplete="off"
                 style={{ textTransform: "uppercase" }}
                 {...register("offer", {
@@ -568,8 +556,8 @@ const DiscountTable = () => {
                     message: "Special Characters are not allowed!",
                   },
                   maxLength: {
-                    value: 20,
-                    message: "Only 20 characters are allowed!",
+                    value: 10,
+                    message: "Only 10 characters are allowed!",
                   },
                 })}
               />
@@ -594,14 +582,40 @@ const DiscountTable = () => {
                   },
                   min: {
                     value: 1,
-                    message: "Discount should be greater than 0!",
-                  },
+                    message: "Discount should be greater than 0!"
+                  }
                 })}
               />
             </Form.Group>
             {errors.discount && (
               <p className="errors">{errors.discount.message}</p>
             )}
+
+            <Form.Group className="mb-1 mt-3">
+              <Form.Label>Offer Image (Width: 315 & Height: 150 will be best image size)</Form.Label>
+              <Form.Control
+                type="file"
+                accept="image/*"
+                id="formFile"
+                {...register("myimageFile", {
+                  required: "Please provide an image!",
+                })}
+              />
+            </Form.Group>
+            {errors.myimageFile && (
+              <p className="errors">{errors.myimageFile.message}</p>
+            )}
+            {/* {imageError ? (
+              <p className="errors">
+                Not a valid image. Only .JPEG, .JPG and .PNG images are allowed!
+              </p>
+            ) : null} */}
+
+            {/* <Form.Group controlId="formFile" className="mb-3">
+    <Form.Label>Default file input example</Form.Label>
+    <Form.Control type="file" />
+  </Form.Group> */}
+
             <Form.Group className="mt-3">
               <Form.Label>Validity (in Days)</Form.Label>
               <Form.Control
@@ -616,38 +630,16 @@ const DiscountTable = () => {
                   },
                   min: {
                     value: 1,
-                    message: "Days should be greater than 0.",
-                  },
-                  max: {
-                    value: 365,
-                    message: "Days cannot be more than 365 Days!",
-                  },
+                    message: "Days should be greater than 0."
+                  }
                 })}
               />
             </Form.Group>
-            <p className="text-muted fw-bold" style={{ fontSize: 14, lineHeight: 2 }}>
+            <p className="text-muted" style={{ fontSize: 14, lineHeight: 2 }}>
               The coupon will expire after above day.
             </p>
             {errors.validity && (
               <p className="errors">{errors.validity.message}</p>
-            )}
-
-            <Form.Group className="mb-1 mt-3">
-              <Form.Label>Offer Image</Form.Label>
-              <p className="text-success fw-bold mb-2" style={{ fontSize: 14 }}>
-              ( For the best experience please kindly upload the image of width: 315px and height: 150px. )
-            </p>
-              <Form.Control
-                type="file"
-                accept="image/*"
-                id="formFile"
-                {...register("myimageFile", {
-                  required: "Please provide an image!",
-                })}
-              />
-            </Form.Group>
-            {errors.myimageFile && (
-              <p className="errors">{errors.myimageFile.message}</p>
             )}
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
@@ -671,51 +663,6 @@ const DiscountTable = () => {
           className="border-0 shadow-none"
           closeButton
         ></Modal.Header>
-        
-        <div className="profile-pic-wrapper p-4 mb-0">
-          <Form.Label className="text-start">Offer Image</Form.Label>
-        <p className="text-success fw-bold mb-2 "style={{ fontSize: 14 }}>
-              ( For the best experience please kindly upload the image of width: 315px and height: 150px. )
-            </p>
-          <div className="profile-pic-holder">
-            
-            <label htmlFor="upload-button">
-              
-              {image.preview ? (
-                <img
-                  src={image.preview}
-                  id="profilePic"
-                  className="pic"
-                  alt="user_image"
-                  {...register("offer", {})}
-                />
-              ) : (
-                <img
-                  id="profilePic"
-                  className="pic"
-                  alt="user_image"
-                  src={offerImage}
-                  {...register("offer", {})}
-                />
-              )}
-            </label>
-            <label htmlFor="upload-button" className="upload-file-block">
-              <div className="text-center">
-                <div className="mb-2"></div>
-                <div className="text-uppercase">Update</div>
-              </div>
-            </label>
-            <Input
-              className="uploadProfileInput d-none"
-              type="file"
-              name="profile_pic"
-              id="upload-button"
-              accept="image/*"
-              onChange={EditedImage}
-            />
-          </div>
-        </div>
-        {errors.offer && <p className="errors">{errors.offer.message}</p>}
         <Form onSubmit={handleSubmit(EditedData)}>
           <Modal.Body className="p-4 pt-0">
             <Form.Group className="mb-1">
@@ -732,8 +679,8 @@ const DiscountTable = () => {
                     message: "Special Characters are not allowed!",
                   },
                   maxLength: {
-                    value: 20,
-                    message: "Only 20 characters are allowed!",
+                    value: 10,
+                    message: "Only 10 characters are allowed!",
                   },
                 })}
               />
@@ -758,14 +705,35 @@ const DiscountTable = () => {
                   },
                   min: {
                     value: 1,
-                    message: "Discount should be greater than 0!",
-                  },
+                    message: "Discount should be greater than 0!"
+                  }
                 })}
               />
             </Form.Group>
             {errors.discount && (
               <p className="errors">{errors.discount.message}</p>
             )}
+
+            <Form.Group className="mb-1 mt-3">
+              <Form.Label>Offer Image</Form.Label>
+              <Form.Control
+                type="file"
+                id="formFile"
+                accept="image/x-png,image/jpg,image/jpeg"
+                {...register("myimageFile", {
+                  required: "Please provide an image!",
+                })}
+              />
+            </Form.Group>
+            {errors.myimageFile && (
+              <p className="errors">{errors.myimageFile.message}</p>
+            )}
+            {/* {imageError1 ? (
+              <p className="errors">
+                Not a valid image. Only .JPEG, .JPG and .PNG images are allowed!
+              </p>
+            ) : null} */}
+
             <Form.Group className="mt-3">
               <Form.Label>Validity (in Days)</Form.Label>
               <Form.Control
@@ -776,16 +744,12 @@ const DiscountTable = () => {
                   required: "Please provide an validity!",
                   pattern: {
                     value: /^[0-9]+$/,
-                    message: "Only Numbers are allowed!",
+                    message: "Only Numbers are allowed",
                   },
                   min: {
                     value: 1,
-                    message: "Days should be greater than 0!",
-                  },
-                  max: {
-                    value: 365,
-                    message: "Days cannot be more than 365 Days!",
-                  },
+                    message: "Days should be greater than 0."
+                  }
                 })}
               />
             </Form.Group>
