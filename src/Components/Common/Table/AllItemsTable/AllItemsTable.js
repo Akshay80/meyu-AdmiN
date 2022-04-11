@@ -78,6 +78,15 @@ const AllItemsTable = () => {
 
   const columns = [
     {
+      dataField: 'sl.no',
+      text: 'Serial no.',
+      formatter: (cell, row, rowIndex, formatExtraData) => {
+        return rowIndex + 1;
+      },
+      sort: true,
+      headerSortingStyle,
+    },
+    {
       dataField: "createdAt",
       text: "Date",
       sort: true,
@@ -94,8 +103,8 @@ const AllItemsTable = () => {
     },
 
     {
-      dataField: "id",
-      text: "Product ID",
+      dataField: "chefName",
+      text: "Chef Name",
       sort: true,
       headerSortingStyle,
       // headerAlign: "center",
