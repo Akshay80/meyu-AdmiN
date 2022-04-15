@@ -19,6 +19,11 @@ import ChangePassword from "../Components/Auth/ChangePassword/ChangePassword";
 // import TaxTable from "../Components/Common/Table/TaxTable/TaxTable";
 import DiscountTable from "../Components/Common/Table/DiscountTable/DiscountTable";
 import FoodTable from "../Components/Common/Table/FoodTable/FoodTable";
+import ApprovedOrder from "../Pages/OrderManagement/ApprovedOrder/ApprovedOrder";
+import RejectedOrder from "../Pages/OrderManagement/RejectedOrder/RejectedOrder";
+import CompletedOrder from "../Pages/OrderManagement/CompletedOrder/CompletedOrder";
+import PendingOrder from "../Pages/OrderManagement/PendingOrder/PendingOrder";
+import CancelledOrder from "../Pages/OrderManagement/CancelledOrder/CancelledOrder";
 
 function PrivateRoutes() {
   return (
@@ -41,6 +46,11 @@ function PrivateRoutes() {
         <Route path={Path.discount} element={<DiscountTable />} />
         <Route path={Path.ingredients} element={<Ingredients />} />
         <Route path={Path.orderManagement} element={<OrderManagement />} />
+        <Route path={Path.pendingOrder} element={<PendingOrder />} />
+        <Route path={Path.approvedOrder} element={<ApprovedOrder />} />
+        <Route path={Path.rejectedOrder} element={<RejectedOrder />} />
+        <Route path={Path.completedOrder} element={<CompletedOrder />} />
+        <Route path={Path.cancelledOrder} element={<CancelledOrder />} />
         <Route path={`${Path.orderDetails}/:orderId`} element={<OrderProfile />} />
         <Route path={Path.userProfile} element={<UserProfile />} />
         <Route path={Path.food} element={<FoodTable />} />

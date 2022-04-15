@@ -28,6 +28,11 @@ const Path = {
   orderDetails: "/order-details",
   food: "food-filter",
   discount: "discount",
+  approvedOrder: "approved-orders",
+  pendingOrder: "pending-orders",
+  completedOrder: "completed-orders",
+  rejectedOrder: "rejected-orders",
+  cancelledOrder: "cancelled-orders"
 };
 
 export default Path;

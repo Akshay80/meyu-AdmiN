@@ -166,7 +166,7 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
       //   console.log("Pushed ARRAY : ",pushedArray);
       //  }
 
-      console.log("ID SURAJ: ", itemDetail.id)
+      console.log("ID SURAJ: ", itemDetail.id);
       // Update Recipe By ID
       updateRecipebyId(itemDetail.id, formData)
         .then((res) => {
@@ -207,7 +207,7 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
 
     // console.log(tasveer)
 
-  let formData1 = new FormData();
+    let formData1 = new FormData();
     formData1.append("recipe", tasveer);
     updateRecipeImagebyId(mediaObjectId, formData1)
       .then((response) => {
@@ -241,8 +241,6 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
         });
       });
 
-
-
     fetchItemDetail();
   };
 
@@ -271,32 +269,16 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
         raw: e?.target?.files[0],
       });
     }
-  setTasveer(e.target.files[0]);
+    setTasveer(e.target.files[0]);
   };
 
-  // const setOptions = () => {
-  //   // var myArray = [
-  //   //   {name: 'deepak', place: 'bangalore'}, 
-  //   //   {name: 'chirag', place: 'bangalore'}, 
-  //   //   {name: 'alok', place: 'berhampur'}, 
-  //   //   {name: 'chandan', place: 'mumbai'}
-  //   // ];
-  //   // var toRemove = [
-  //   //   {name: 'deepak', place: 'bangalore'},
-  //   //   {name: 'alok', place: 'berhampur'}
-  //   // ];
-
-  //   for (var i = tagOption.length - 1; i >= 0; i--) {
-  //     for (var j = 0; j < selectedTag.length; j++) {
-  //       if (tagOption[i] && tagOption[i].label === selectedTag[j].label) {
-  //         tagOption.splice(i, 1);
-  //       }
-  //     }
-  //   }
-  //   console.log(tagOption);
-  // }
-
   const animatedComponents = makeAnimated();
+
+  var objB = selectedTag.reduce(
+    (tagOption, c) => tagOption.add(c.label),
+    new Set()
+  );
+  var result = tagOption.filter((v) => !objB.has(v.label));
 
   return (
     <div className="card p-5 m-3">
@@ -323,13 +305,17 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
                   ) : null}
                 </div>
                 <input
-                type="image"
+                  type="image"
                   key={images.id}
-                  src={image.preview === '' ? `http://13.213.151.153:8081/`+images.imageUrl: image.preview}
+                  src={
+                    image.preview === ""
+                      ? `http://13.213.151.153:8081/` + images.imageUrl
+                      : image.preview
+                  }
                   style={{ width: "100%" }}
                   height="300"
                   alt=""
-                  defaultValue={`http://13.213.151.153:8081/`+images.imageUrl}
+                  defaultValue={`http://13.213.151.153:8081/` + images.imageUrl}
                 />
               </div>
             ))}
@@ -437,7 +423,7 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
                 defaultValue={selectedTag}
                 placeholder="If not Selected, then previous tags will go on!"
                 isMulti
-                options={tagOption}
+                options={result}
                 isSearchable
                 required={true}
                 onChange={(e) =>

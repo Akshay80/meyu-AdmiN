@@ -28,6 +28,7 @@ import {
   deleteOfferImage,
 } from "../../../../Services/discountServices";
 import { Input } from "reactstrap";
+import infoIcon from "../../../../Assets/Icon/info.svg"
 
 const DiscountTable = () => {
   const [coupans, setCoupans] = useState([]);
@@ -50,6 +51,7 @@ const DiscountTable = () => {
   const [show2, setShow2] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [imageError1, setImageError1] = useState(false);
+
   const [offerValue, setOffer] = useState(0);
   const [offerID, setOfferID] = useState("");
   const [offerImage, setOfferImage] = useState("");
@@ -63,6 +65,7 @@ const DiscountTable = () => {
   const urls = "http://13.213.151.153:8081/";
   const [url, setURL] = useState();
   const [myError, SetMyError] = useState("");
+  const [myError1, SetMyError1] = useState("");
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
 
@@ -75,33 +78,43 @@ const DiscountTable = () => {
         return rowIndex + 1;
       },
     },
-    {
-      dataField: "offerName",
-      text: "Coupon Code",
-      headerSortingStyle,
-      sort: true,
-    },
+    // {
+    //   dataField: "offerName",
+    //   text: "Coupon Code",
+    //   headerSortingStyle,
+    //   sort: true,
+    // },
 
-    {
-      dataField: "validOfferInDay",
-      text: "Validity (in Days)",
-      headerSortingStyle,
-      sortf: false,
-    },
+    // {
+    //   dataField: "validOfferInDay",
+    //   text: "Validity (in Days)",
+    //   headerSortingStyle,
+    //   sortf: false,
+    // },
 
-    {
-      dataField: "discountValue",
-      text: "Discount",
-      headerSortingStyle,
-      sort: false,
-      formatter: (rowContent, row) => {
-        return <div className="d-flex">{"$" + row.discountValue}</div>;
-      },
-    },
+    // {
+    //   dataField: "discountApplicableAmount",
+    //   text: "Applicable Amount",
+    //   headerSortingStyle,
+    //   sortf: false,
+    //   formatter: (rowContent, row) => {
+    //     return <div className="d-flex">{"$" + row.discountApplicableAmount}</div>;
+    //   },
+    // },
+
+    // {
+    //   dataField: "discountValue",
+    //   text: "Discount",
+    //   headerSortingStyle,
+    //   sort: false,
+    //   formatter: (rowContent, row) => {
+    //     return <div className="d-flex">{"$" + row.discountValue}</div>;
+    //   },
+    // },
 
     {
       dataField: "imageUrl",
-      text: "Offer Image",
+      text: "Promotional Image",
       headerSortingStyle,
       sort: false,
       formatter: (rowContent, row) => {
@@ -169,41 +182,56 @@ const DiscountTable = () => {
 
   // Adding Discount API
   const onSubmits = (data) => {
-    setOffer(data.offer.toUpperCase());
-    setOfferImage(data.myimageFile[0]);
-    setvalidInDay(data.validity);
-    // api will work
-    // handleclose the modal
+    // console.log(parseInt(data.discount))
+    // if(parseInt(data.discount) < parseInt(data.discountApplicableAmount) )
+    // {
+      // SetMyError("");
+      var formdata = new FormData();
+      // formdata.append("offerName", data.offer.toUpperCase());
+      // formdata.append("discountValue", data.discount);
+      // formdata.append("offer", data.myimageFile[0]);
+      // formdata.append("validOfferInDay", data.validity);
+      // formdata.append("discountApplicableAmount", data.discountApplicableAmount);
 
-    // Commented greater than 50$ discount code
 
-    // if (data.discount > 50) {
-    //   confirmDiscount(data.discount, offerImage, offerValue, validInDayValue);
-    // } else {
-    var formdata = new FormData();
-    formdata.append("offerName", data.offer.toUpperCase());
-    formdata.append("discountValue", data.discount);
-    formdata.append("offer", data.myimageFile[0]);
-    formdata.append("validOfferInDay", data.validity);
-
-    addCoupans(formdata)
-      .then((res) => {
-        if (res.data.success === true) {
-          handleClose();
-          toast.success("Coupon Added Successfully", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: 0,
-            toastId: "my_toast",
-          });
-          discountdata();
-        } else {
-          console.log(res);
-          toast.error(res.data.error.messgae, {
+      formdata.append("offerName", null);
+      formdata.append("discountValue", null);
+      formdata.append("offer", data.myimageFile[0]);
+      formdata.append("validOfferInDay", 1);
+      formdata.append("discountApplicableAmount", null);
+  
+      addCoupans(formdata)
+        .then((res) => {
+          if (res.data.success === true) {
+            handleClose();
+            toast.success("Coupon Added Successfully", {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: 0,
+              toastId: "my_toast",
+            });
+            discountdata();
+          }
+          // } else {
+          //   console.log(res);
+          //   toast.error(res.data.error.messgae, {
+          //     position: "top-right",
+          //     autoClose: 3000,
+          //     hideProgressBar: true,
+          //     closeOnClick: true,
+          //     pauseOnHover: true,
+          //     draggable: false,
+          //     progress: 0,
+          //     toastId: "my_toast",
+          //   });
+          // }
+        })
+        .catch(function (error) {
+          toast.error(error.error, {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: true,
@@ -213,20 +241,27 @@ const DiscountTable = () => {
             progress: 0,
             toastId: "my_toast",
           });
-        }
-      })
-      .catch(function (error) {
-        toast.error(error.error, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
         });
-      });
+    // }
+    // else
+    // {
+    //   // SetMyError("Applicable Amount should be greater than Discount Amount.")
+    // }
+    // setOffer(data.offer.toUpperCase());
+    // setOfferImage(data.myimageFile[0]);
+    // setvalidInDay(data.validity);
+    setOffer(null);
+    setOfferImage(data.myimageFile[0]);
+    setvalidInDay(null);
+    // api will work
+    // handleclose the modal
+
+    // Commented greater than 50$ discount code
+
+    // if (data.discount > 50) {
+    //   confirmDiscount(data.discount, offerImage, offerValue, validInDayValue);
+    // } else {
+   
   };
 
   // Sending Discount more than 50% value.
@@ -417,6 +452,7 @@ const DiscountTable = () => {
         setValue("offer", res.data.data.offerName);
         setValue("discount", res.data.data.discountValue);
         setValue("validity", `${res.data.data.validOfferInDay}`);
+        setValue("discountApplicableAmount", res.data.data.discountApplicableAmount)
         setOfferID(res.data.data.id);
         setOfferImage(
           `http://13.213.151.153:8081/${res.data.data.MediaObjects[0].imageUrl}`
@@ -466,6 +502,7 @@ const DiscountTable = () => {
           progress: 0,
           toastId: "my_toast",
         });
+        handleClose2();
         discountdata();
       })
       .catch(function (error) {
@@ -485,10 +522,22 @@ const DiscountTable = () => {
   };
 
   const EditedData = (data) => {
+    console.log(data)
+    if(parseInt(data.discount) < parseInt(data.discountApplicableAmount))
+    {
+      SetMyError1("");
+    // const param = {
+    //   offerName: data?.offer.toUpperCase(),
+    //   discountValue: data?.discount,
+    //   discountApplicableAmount: data.discountApplicableAmount,
+    //   validOfferInDay: data?.validity,
+    //   id: offerID,
+    // };
     const param = {
-      offerName: data?.offer.toUpperCase(),
-      discountValue: data?.discount,
-      validOfferInDay: data?.validity,
+      offerName: "0",
+      discountValue: "0",
+      discountApplicableAmount: "0",
+      validOfferInDay: "0",
       id: offerID,
     };
     editCoupans(param)
@@ -523,6 +572,11 @@ const DiscountTable = () => {
       .catch(function (error) {
         console.log("error", error);
       });
+    }
+    else
+    {
+      // SetMyError1("Applicable Amount should be greater than Discount amount!")
+    }
   };
 
   return (
@@ -530,7 +584,7 @@ const DiscountTable = () => {
       <div className="page-heading d-flex align-items-center p-4 justify-content-between">
         <div className="page-heading-wapper d-flex">
           <BagIcon className="page-icon m-0" />
-          <h3 className="page-sec-heading m-0 mx-2">Offers</h3>
+          <h3 className="page-sec-heading m-0 mx-2">Promotion</h3>
         </div>
         <div className="add-btn d-flex align-items-center">
           <button
@@ -539,7 +593,7 @@ const DiscountTable = () => {
             onClick={handleShow}
           >
             {" "}
-            <AddIcon /> Add New Offer
+            <AddIcon /> Add New Promotion
           </button>
         </div>
       </div>
@@ -553,7 +607,7 @@ const DiscountTable = () => {
         ></Modal.Header>
         <Form onSubmit={handleSubmit(onSubmits)}>
           <Modal.Body className="p-4 pt-0">
-            <Form.Group className="mb-1">
+            {/* <Form.Group className="mb-1">
               <Form.Label>Offer Name</Form.Label>
               
               <Form.Control
@@ -588,10 +642,6 @@ const DiscountTable = () => {
                     value: /^[0-9]+$/,
                     message: "Invalid Discount!",
                   },
-                  max: {
-                    value: 100,
-                    message: "Cannot give more than $100 discount!",
-                  },
                   min: {
                     value: 1,
                     message: "Discount should be greater than 0!",
@@ -602,6 +652,35 @@ const DiscountTable = () => {
             {errors.discount && (
               <p className="errors">{errors.discount.message}</p>
             )}
+
+<Form.Group className="mb-1 mt-3">
+              <Form.Label>Applicable Amount</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Please enter the applicable amount in numbers"
+                autoComplete="off"
+                {...register("discountApplicableAmount", {
+                  required: "Applicable Amount is required!",
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Invalid Applicable Amount!",
+                  },
+                  min: {
+                    value: 1,
+                    message: "Applicable Amount should be greater than 0!",
+                  },
+                })}
+              />
+            </Form.Group>
+            <p className="text-muted mb-2 fw-bold" style={{ fontSize: 14 }}><span><img src={infoIcon} className="me-1 mb-1" alt="info" width={16}/></span>
+               Applicable amount will only be applicable if it is more than discount amount.
+            </p>
+            {errors.discountApplicableAmount ? (
+              <p className="errors">{errors.discountApplicableAmount.message}</p>
+            ) : (
+              <p className="errors">{myError}</p>
+            )}
+
             <Form.Group className="mt-3">
               <Form.Label>Validity (in Days)</Form.Label>
               <Form.Control
@@ -624,19 +703,18 @@ const DiscountTable = () => {
                   },
                 })}
               />
+              
             </Form.Group>
             <p className="text-muted fw-bold" style={{ fontSize: 14, lineHeight: 2 }}>
-              The coupon will expire after above day.
+            <span><img src={infoIcon} className="me-1 mb-1" alt="info" width={16}/></span> The coupon will expire after above day.
             </p>
             {errors.validity && (
               <p className="errors">{errors.validity.message}</p>
-            )}
+            )} */}
 
             <Form.Group className="mb-1 mt-3">
-              <Form.Label>Offer Image</Form.Label>
-              <p className="text-success fw-bold mb-2" style={{ fontSize: 14 }}>
-              ( For the best experience please kindly upload the image of width: 315px and height: 150px. )
-            </p>
+              <Form.Label>Promotional Image</Form.Label>
+            
               <Form.Control
                 type="file"
                 accept="image/*"
@@ -646,13 +724,16 @@ const DiscountTable = () => {
                 })}
               />
             </Form.Group>
+            <p className="text-muted mb-2 fw-bold" style={{ fontSize: 14 }}><span><img src={infoIcon} className="me-1 mb-1" alt="info" width={16}/></span>
+              For the best experience please kindly upload the image of width: 315px and height: 150px.
+            </p>
             {errors.myimageFile && (
               <p className="errors">{errors.myimageFile.message}</p>
             )}
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
             <Button variant="primary" type="submit">
-              Add Offer
+              Add Promotion
             </Button>
           </Modal.Footer>
         </Form>
@@ -673,9 +754,9 @@ const DiscountTable = () => {
         ></Modal.Header>
         
         <div className="profile-pic-wrapper p-4 mb-0">
-          <Form.Label className="text-start">Offer Image</Form.Label>
-        <p className="text-success fw-bold mb-2 "style={{ fontSize: 14 }}>
-              ( For the best experience please kindly upload the image of width: 315px and height: 150px. )
+          <Form.Label className="text-start">Promotional Image</Form.Label>
+          <p className="text-muted mb-2 fw-bold" style={{ fontSize: 14 }}><span><img src={infoIcon} className="me-1 mb-1" alt="info" width={16}/></span>
+          For the best experience please kindly upload the image of width: 315px and height: 150px.
             </p>
           <div className="profile-pic-holder">
             
@@ -718,11 +799,11 @@ const DiscountTable = () => {
         {errors.offer && <p className="errors">{errors.offer.message}</p>}
         <Form onSubmit={handleSubmit(EditedData)}>
           <Modal.Body className="p-4 pt-0">
-            <Form.Group className="mb-1">
+            {/* <Form.Group className="mb-1">
               <Form.Label>Offer Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Please enter the coupon code (Max Length: 10 characters)"
+                placeholder="Please enter the coupon code (Max Length: 20 characters)"
                 autoComplete="off"
                 style={{ textTransform: "uppercase" }}
                 {...register("offer", {
@@ -752,10 +833,6 @@ const DiscountTable = () => {
                     value: /^[0-9]+$/,
                     message: "Invalid Discount!",
                   },
-                  max: {
-                    value: 100,
-                    message: "Cannot give more than $100 discount!",
-                  },
                   min: {
                     value: 1,
                     message: "Discount should be greater than 0!",
@@ -766,6 +843,37 @@ const DiscountTable = () => {
             {errors.discount && (
               <p className="errors">{errors.discount.message}</p>
             )}
+
+
+            <Form.Group className="mb-1 mt-3">
+              <Form.Label>Applicable Amount</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Please enter the applicable amount in numbers"
+                autoComplete="off"
+                {...register("discountApplicableAmount", {
+                  required: "Applicable Amount is required!",
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Invalid Applicable Amount!",
+                  },
+                  min: {
+                    value: 1,
+                    message: "Applicable Amount should be greater than 0!",
+                  },
+                })}
+              />
+            </Form.Group>
+            <p className="text-muted mb-2 fw-bold" style={{ fontSize: 14 }}><span><img src={infoIcon} className="me-1 mb-1" alt="info" width={16}/></span>
+               Applicable amount will only be applicable if it is more than discount amount.
+            </p>
+            {errors.discountApplicableAmount ? (
+              <p className="errors">{errors.discountApplicableAmount.message}</p>
+            ) : (
+              <p className="errors">{myError1}</p>
+            )}
+
+
             <Form.Group className="mt-3">
               <Form.Label>Validity (in Days)</Form.Label>
               <Form.Control
@@ -794,13 +902,13 @@ const DiscountTable = () => {
             </p>
             {errors.validity && (
               <p className="errors">{errors.validity.message}</p>
-            )}
+            )} */}
           </Modal.Body>
-          <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
+          {/* <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
             <Button variant="success" type="submit">
               Update
             </Button>
-          </Modal.Footer>
+          </Modal.Footer> */}
         </Form>
       </Modal>
 

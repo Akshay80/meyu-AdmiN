@@ -17,11 +17,11 @@ const Dashboard = () => {
             <h3 className="page-sec-heading m-0 mx-2">Dashboard</h3>
           </div>
         </div>
-        <div className="date-filters d-flex">
+        {/* <div className="date-filters d-flex">
           <Week />
           <Month />
           <Year />
-        </div>
+        </div> */}
       </div>
       <div className="dashboard-content">
         <DashboardCard />

@@ -52,8 +52,8 @@ const UserProfile = () => {
           setValue("contact", response.data.data.Profile.phone);
           setValue("gender", response.data.data.Profile.gender);
           setValue("street", response.data.data.Profile.Address.street);
-          setValue("country", response.data.data.Profile.Address.country);
-          setValue("state", response.data.data.Profile.Address.state);
+          // setValue("country", response.data.data.Profile.Address.country);
+          // setValue("state", response.data.data.Profile.Address.state);
           setValue("city", response.data.data.Profile.Address.city);
           setValue("zip", response.data.data.Profile.Address.zipCode);
         }
@@ -70,12 +70,19 @@ const UserProfile = () => {
         lastName: data.lastName,
         phone: data.contact,
         gender: data.gender,
+        description: "",
+        isDeliveryService:true,
+        isPickupService:true,
+        kitchenName:null
       },
       address: {
         street: data.street,
-        city: data.city,
-        state: data.state,
-        country: data.country,
+        // city: data.city,
+        // state: data.state,
+        // country: data.country,
+        floorUnitNumber:"",
+        latitude: "1.29791",
+        longitude: "103.883",
         zipCode: data.zip,
       },
     };
@@ -308,7 +315,7 @@ const UserProfile = () => {
 
          
 
-          <div className="col-md-6 col-sm-12">
+          {/* <div className="col-md-6 col-sm-12">
             <label htmlFor="validationCustom08" className="form-label">
               City
             </label>
@@ -319,9 +326,9 @@ const UserProfile = () => {
               placeholder="city"
             />
             <div className="invalid-feedback">City is required!</div>
-          </div>
+          </div> */}
 
-          <div className="col-md-6 col-sm-12">
+          {/* <div className="col-md-6 col-sm-12">
             <label htmlFor="validationCustom07" className="form-label">
               State
             </label>
@@ -333,9 +340,9 @@ const UserProfile = () => {
             <div className="invalid-feedback">
               State is required!
             </div>
-          </div>
+          </div> */}
           
-          <div className="col-md-6 col-sm-12">
+          <div className="col-md-12 col-sm-12">
             <label htmlFor="validationCustom09" className="form-label">
               Zip
             </label>
@@ -348,7 +355,7 @@ const UserProfile = () => {
             <div className="invalid-feedback">Zip is required!</div>
           </div>
 
-          <div className="col-md-6 col-sm-12">
+          {/* <div className="col-md-6 col-sm-12">
             <label htmlFor="validationCustom06" className="form-label">
               Country
             </label>
@@ -360,7 +367,7 @@ const UserProfile = () => {
             <div className="invalid-feedback">
              Country is required!
             </div>
-          </div>
+          </div> */}
 
           <div className="d-flex pb-5 align-items-center justify-content-center flex-wrap-wrap">
             <button className="m-2 btn btn-success" type="submit">

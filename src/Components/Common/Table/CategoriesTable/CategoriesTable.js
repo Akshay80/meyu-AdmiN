@@ -407,10 +407,10 @@ const CategoriesTable = () => {
                 autoComplete="off"
                 {...register("name", {
                   required: "Cuisine is required!",
-                  pattern: {
-                    value: /^[A-Za-z]+$/,
-                    message: "Only alphabets are allowed!",
-                  },
+                  // pattern: {
+                  //   value: /^[A-Za-z]+$/,
+                  //   message: "Only alphabets are allowed!",
+                  // },
                   minLength: {
                     value: 4,
                     message: "Must be greater than 4 words!",
@@ -531,6 +531,7 @@ const CategoriesTable = () => {
                       defaultSorted={defaultSorted}
                       defaultSortDirection="asc"
                       wrapperClasses="table-responsive"
+                      draggable={true}
                       hover
                       striped
                       data={categoryData}

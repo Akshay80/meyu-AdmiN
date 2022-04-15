@@ -74,6 +74,16 @@ export default (() => {
     //Orders
     getAllOrders: `${setting.api.url}admin/getorders`,
     getOrdersByID: `${setting.api.url}admin/getorderdetails`,
+    // Pending Order
+    getAllPendingOrders: `${setting.api.url}admin/getorders/1`,
+    // Approved Order
+    getAllApprovedOrders: `${setting.api.url}admin/getorders/2`,
+    // Completed Order
+    getAllCompletedOrders: `${setting.api.url}admin/getorders/3`,
+    // Rejected Order
+    getAllRejectedOrders: `${setting.api.url}admin/getorders/4`,
+    // Pending Order
+    getAllCancelledOrders: `${setting.api.url}admin/getorders/5`,
 
     // Dashboard
     dashboardService: `${setting.api.url}admin/dashboard`,

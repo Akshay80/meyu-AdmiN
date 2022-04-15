@@ -3,12 +3,7 @@ import { SidebarData } from "./SidebarData";
 import { NavLink } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import "./Sidebar.scss";
-import {
-  ProSidebar,
-  Menu,
-  MenuItem,
-  SubMenu
-} from "react-pro-sidebar";
+import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import CloseMenu from "./../../Assets/Icon/close_white.svg";
 
 const Sidebar = ({ menuToggleState, toggleMenu }) => {
@@ -36,19 +31,19 @@ const Sidebar = ({ menuToggleState, toggleMenu }) => {
               <ProSidebar key={key}>
                 <Menu iconShape="square">
                   <SubMenu icon={val.icon} title={val.title}>
-                      {val.subMenus.map((submenu, i) => {
-                        return (
-                          <MenuItem key={i} onClick={toggleMenu}>
-                            <NavLink
-                              className="sidebar-menu-links"
-                              to={submenu.link}
-                              >
-                              <span className="ms-3">{submenu.title}</span>
-                              {/* <MenuItem>{submenu.title}</MenuItem> */}
-                            </NavLink>
-                          </MenuItem>
-                        );
-                      })}
+                    {val.subMenus.map((submenu, i) => {
+                      return (
+                        <MenuItem key={i} onClick={toggleMenu}>
+                          <NavLink
+                            className="sidebar-menu-links"
+                            to={submenu.link}
+                          >
+                            <span className="ms-3">{submenu.title}</span>
+                            {/* <MenuItem>{submenu.title}</MenuItem> */}
+                          </NavLink>
+                        </MenuItem>
+                      );
+                    })}
                   </SubMenu>
                 </Menu>
               </ProSidebar>

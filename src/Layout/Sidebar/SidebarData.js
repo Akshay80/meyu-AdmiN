@@ -54,7 +54,7 @@ export const SidebarData = [
         link: Path.food,
       },
       {
-        title: "Offers",
+        title: "Promotion",
         link: Path.discount,
       },
     ],
@@ -62,6 +62,28 @@ export const SidebarData = [
   {
     title: "Order Management",
     icon: <OrderIcon />,
-    link: Path.orderManagement,
+
+    subMenus: [
+      {
+        title: "Pending Orders",
+        link: Path.pendingOrder
+      },
+      {
+        title: "Approved Orders",
+        link: Path.approvedOrder,
+      },
+      {
+        title: "Completed Orders",
+        link: Path.completedOrder,
+      },
+      {
+        title: "Rejected Orders by Chef",
+        link: Path.rejectedOrder,
+      },
+      {
+        title: "Canceled Orders by Customer",
+        link: Path.cancelledOrder,
+      }
+    ],
   },
 ];
