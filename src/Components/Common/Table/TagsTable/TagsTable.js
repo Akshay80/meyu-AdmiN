@@ -14,6 +14,7 @@ import { confirmAlert } from "react-confirm-alert";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import { ReactComponent as BagIcon } from "../../../../Assets/Icon/Shoppingbasket.svg";
 import { ReactComponent as AddIcon } from "../../../../Assets/Icon/Add.svg";
+import Loader from "../../../../Assets/Icon/loading.gif";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
@@ -47,6 +48,7 @@ const TagsTable = () => {
   const [show2, setShow2] = useState(false);
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => setShow2(true);
+  const [loading, setLoading] = useState(false);
 
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
@@ -56,11 +58,16 @@ const TagsTable = () => {
   }, []);
 
   const tagdata = () => {
+    setLoading(true);
+    setTimeout(() => {  
     getAllTagFun()
-      .then((res) => {
-        setTag(res?.data?.data);
-      })
-      .catch(function (error) {});
+        .then((res) => {
+          setLoading(false);
+          setTag(res?.data?.data);
+        })
+        .catch(function (error) {});  
+    }, 1000);
+    
   };
 
   // Adding Tags API
@@ -255,6 +262,8 @@ const TagsTable = () => {
           <BagIcon className="page-icon m-0" />
           <h3 className="page-sec-heading m-0 mx-2">Dietary Tags</h3>
         </div>
+
+        {/* {loading ? <img src={Loader} alt="loader" width={100} /> : null} */}
         <div className="add-btn d-flex align-items-center">
           <button
             type="submit"
@@ -283,10 +292,10 @@ const TagsTable = () => {
                 autoComplete="off"
                 {...register("tags", {
                   required: "Dietary Tag is required!",
-                  pattern: {
-                    value: /^[A-Za-z]+$/,
-                    message: "Invalid Tag!",
-                  },
+                  // pattern: {
+                  //   value: /^[A-Za-z]+$/,
+                  //   message: "Invalid Tag!",
+                  // },
                 })}
               />
             </Form.Group>
@@ -316,10 +325,10 @@ const TagsTable = () => {
                 autoComplete="off"
                 {...register("tags", {
                   required: "Tag is required!",
-                  pattern: {
-                    value: /^[A-Za-z]+$/,
-                    message: "Invalid Tag!",
-                  },
+                  // pattern: {
+                  //   value: /^[A-Za-z]+$/,
+                  //   message: "Invalid Tag!",
+                  // },
                 })}
               />
             </Form.Group>
@@ -398,14 +407,14 @@ const TagsTable = () => {
                       bootstrap4
                       data={tag}
                       condensed={false}
-                      noDataIndication="No Data Is Available"
+                      noDataIndication={loading?<img src={Loader} alt="loader" width={24} />:"No Data Is Available"}
                     />
                   </>
                 )}
               </ToolkitProvider>
             )}
           </PaginationProvider>
-          </div>
+        </div>
       </div>
       <ToastContainer
         position="top-right"

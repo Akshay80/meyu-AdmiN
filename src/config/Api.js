@@ -31,6 +31,7 @@ export default (() => {
     categories: `${setting.api.url}common/category`,
     deletecategories: `${setting.api.url}admin/deletecategory`,
     catergoryById: `${setting.api.url}auth/category`,
+    setCategoryPriority: `${setting.api.url}admin/set-category-priority`,
 
     //Chef
     chefDetails: `${setting.api.url}admin/getallchef`,

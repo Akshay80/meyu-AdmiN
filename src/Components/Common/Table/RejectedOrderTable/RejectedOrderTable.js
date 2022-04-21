@@ -13,9 +13,11 @@ import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
 import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
+import Loader from "../../../../Assets/Icon/loading.gif";
 
 const RejectedOrdersTable = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
   // const products = OrdersData.map((custom) => [
   //   {
   //     id: custom.id,
@@ -35,11 +37,16 @@ const RejectedOrdersTable = () => {
   }, []);
 
   const orderData = async () => {
-    await getAllRejectedOrders()
+    setLoading(true);
+    setTimeout(() => {
+      getAllRejectedOrders()
       .then((response) => {
+        setLoading(false);
         setOrders(response.data.data);
       })
       .catch(function (error) {});
+    }, 1000);
+   
   };
 
   const columns = [
@@ -193,7 +200,7 @@ const RejectedOrdersTable = () => {
                   striped
                   condensed={false}
                   bootstrap4={true}
-                  noDataIndication="No Data Is Available"
+                  noDataIndication={loading?<img src={Loader} alt="loader" width={24} />:"No Data Is Available"}
                 />
                 {/* <div className="d-flex justify-content-end">
                   <PaginationListStandalone {...paginationProps} />

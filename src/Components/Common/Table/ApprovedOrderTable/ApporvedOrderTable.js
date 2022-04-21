@@ -14,9 +14,12 @@ import "./ApprovedOrder.css";
 import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
+import Loader from "../../../../Assets/Icon/loading.gif";
+
 
 const ApprovedOrdersTable = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
   // const products = OrdersData.map((custom) => [
   //   {
   //     id: custom.id,
@@ -36,11 +39,16 @@ const ApprovedOrdersTable = () => {
   }, []);
 
   const orderData = async () => {
-    await getAllApprovedOrders()
+    setLoading(true)
+    setTimeout(() => {
+      getAllApprovedOrders()
       .then((response) => {
+        setLoading(false);
         setOrders(response.data.data);
       })
       .catch(function (error) {});
+    }, 1000);
+   
   };
 
   const columns = [
@@ -194,7 +202,7 @@ const ApprovedOrdersTable = () => {
                   striped
                   condensed={false}
                   bootstrap4={true}
-                  noDataIndication="No Data Is Available"
+                  noDataIndication={loading?<img src={Loader} alt="loader" width={24} />:"No Data Is Available"}
                 />
                 {/* <div className="d-flex justify-content-end">
                   <PaginationListStandalone {...paginationProps} />

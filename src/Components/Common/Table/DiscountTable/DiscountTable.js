@@ -18,6 +18,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import Lightbox from "react-image-lightbox";
+
 import {
   getAllCoupans,
   addCoupans,
@@ -28,10 +29,12 @@ import {
   deleteOfferImage,
 } from "../../../../Services/discountServices";
 import { Input } from "reactstrap";
-import infoIcon from "../../../../Assets/Icon/info.svg"
+import infoIcon from "../../../../Assets/Icon/info.svg";
+import Loader from "../../../../Assets/Icon/loading.gif";
 
 const DiscountTable = () => {
   const [coupans, setCoupans] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -68,6 +71,7 @@ const DiscountTable = () => {
   const [myError1, SetMyError1] = useState("");
   const { SearchBar } = Search;
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
+  
 
   const columns = [
     {
@@ -173,11 +177,16 @@ const DiscountTable = () => {
   }, []);
 
   const discountdata = () => {
-    getAllCoupans()
+    setLoading(true);
+    setTimeout(() => {
+      getAllCoupans()
       .then((res) => {
+        setLoading(false);
         setCoupans(res.data.data);
       })
-      .catch(function (error) {});
+      .catch(function (error) {});  
+    }, 1000);
+    
   };
 
   // Adding Discount API
@@ -976,7 +985,7 @@ const DiscountTable = () => {
                       bootstrap4
                       data={coupans}
                       condensed={false}
-                      noDataIndication="No Data Is Available"
+                      noDataIndication={loading?<img src={Loader} alt="loader" width={24} />:"No Data Is Available"}
                     />
                   </>
                 )}

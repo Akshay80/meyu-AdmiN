@@ -46,7 +46,7 @@ const EditItems = () => {
           );
 
           // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
-          //   setChefImage(`http://meyu.sg:8082/${chefPic?.imageUrl}`)
+          //   setChefImage(`http://meyu.sg:8081/${chefPic?.imageUrl}`)
           // );
           // ===========================
           //  set Tags Data

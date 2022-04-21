@@ -12,9 +12,11 @@ import { ReactComponent as ViewIcon } from "../../../../Assets/Icon/View.svg";
 import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
+import Loader from "../../../../Assets/Icon/loading.gif";
 
 const CompleteOrderTable = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
   // const products = OrdersData.map((custom) => [
   //   {
   //     id: custom.id,
@@ -34,11 +36,16 @@ const CompleteOrderTable = () => {
   }, []);
 
   const orderData = async () => {
-    await getAllCompletedOrders()
+    setLoading(true);
+    setTimeout(() => {
+     getAllCompletedOrders()
       .then((response) => {
+        setLoading(false);
         setOrders(response.data.data);
       })
       .catch(function (error) {});
+    }, 1000);
+    
   };
 
   const columns = [
@@ -192,7 +199,7 @@ const CompleteOrderTable = () => {
                   striped
                   condensed={false}
                   bootstrap4={true}
-                  noDataIndication="No Data Is Available"
+                  noDataIndication={loading?<img src={Loader} alt="loader" width={24} />:"No Data Is Available"}
                 />
                 {/* <div className="d-flex justify-content-end">
                   <PaginationListStandalone {...paginationProps} />

@@ -20,10 +20,12 @@ import {
 import Path from "../../../../Constant/RouterConstant";
 import { toast } from "react-toastify";
 import moment from 'moment'
+import Loader from "../../../../Assets/Icon/loading.gif";
 
 const headerSortingStyle = { backgroundColor: "#e3edf8" };
 function CustomerTable() {
   const [customerData, setCustomerData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { SearchBar } = Search;
 
   useEffect(() => {
@@ -31,11 +33,16 @@ function CustomerTable() {
   }, []);
 
   const data = () => {
-    viewCustomerService()
+    setLoading(true);
+    setTimeout(() => {
+      viewCustomerService()
       .then(function (res) {
+        setLoading(false);
         setCustomerData(res.data.data);
       })
       .catch(function (error) {});
+    }, 1000);
+  
   };
 
   const columns = [
@@ -228,7 +235,7 @@ function CustomerTable() {
                   striped
                   bootstrap4
                   condensed={false}
-                  noDataIndication="No Data Is Available"
+                  noDataIndication={loading?<img src={Loader} alt="loader" width={24} />:"No Data Is Available"}
                   data={customerData.map((items) => items)}
                 />
                 {/* <div className="d-flex justify-content-end">

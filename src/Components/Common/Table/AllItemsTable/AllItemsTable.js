@@ -19,21 +19,28 @@ import {
   deleteItemsbyId,
 } from "../../../../Services/itemsService.js";
 import { toast } from "react-toastify";
+import Loader from "../../../../Assets/Icon/loading.gif";
 import moment from "moment";
 
 const AllItemsTable = () => {
   const [getItem, setgetItem] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getItems();
   }, []);
 
   const getItems = () => {
-    getAllItemsList()
+    setLoading(true);
+    setTimeout(() => {
+      getAllItemsList()
       .then((res) => {
+        setLoading(false)
         setgetItem(res?.data?.data);
       })
       .catch(function (error) {});
+    }, 1000);
+    
   };
 
   const { SearchBar } = Search;
@@ -239,7 +246,7 @@ const AllItemsTable = () => {
                   data={getItem}
                   condensed={false}
                   bootstrap4
-                  noDataIndication="No Data Is Available"
+                  noDataIndication={loading?<img src={Loader} alt="loader" width={24} />:"No Data Is Available"}
                 />
                 {/* <div className="d-flex justify-content-end">
                   <PaginationListStandalone {...paginationProps} />

@@ -18,10 +18,12 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { getAllFoodFun, addFood, editFoodFun, deleteFood, getFoodbyId } from "../../../../Services/foodService";
+import Loader from "../../../../Assets/Icon/loading.gif";
 
 const FoodTable = () => {
   const [editId, setEditId] = useState();
   const [food, setFood] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -50,11 +52,16 @@ const FoodTable = () => {
   }, []);
 
   const tagdata = () => {
-       getAllFoodFun()
+  setLoading(true);
+  setTimeout(() => {
+    getAllFoodFun()
       .then((res) => {
+        setLoading(false);
         setFood(res?.data?.data);
       })
       .catch(function (error) {});
+  }, 1000);
+       
   };
 
   // Adding Tags API
@@ -403,7 +410,7 @@ const FoodTable = () => {
                       bootstrap4
                       data={food}
                       condensed={false}
-                      noDataIndication="No Data Is Available"
+                      noDataIndication={loading?<img src={Loader} alt="loader" width={24} />:"No Data Is Available"}
                     />
                   </>
                 )}

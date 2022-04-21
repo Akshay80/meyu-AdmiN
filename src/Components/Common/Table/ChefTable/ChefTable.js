@@ -19,20 +19,27 @@ import {
 } from "../../../../Services/chefServices";
 import { toast } from "react-toastify";
 import moment from "moment";
+import Loader from "../../../../Assets/Icon/loading.gif";
 
 const ChefTable = () => {
   const [chef, setChef] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     data();
   }, []);
 
   const data = () => {
-    chefDetailsService()
+    setLoading(true);
+    setTimeout(() => {
+      chefDetailsService()
       .then(function (res) {
+        setLoading(false);
         setChef(res.data.data);
       })
       .catch(function (error) {});
+    }, 1000);
+    
   };
 
   const { SearchBar } = Search;
@@ -211,7 +218,7 @@ const ChefTable = () => {
                   bootstrap4
                   data={chef}
                   condensed={false}
-                  noDataIndication="No Data Is Available"
+                  noDataIndication={loading?<img src={Loader} alt="loader" width={24} />:"No Data Is Available"}
                 />
                 {/* <div className="d-flex justify-content-end">
                   <PaginationListStandalone {...paginationProps} />

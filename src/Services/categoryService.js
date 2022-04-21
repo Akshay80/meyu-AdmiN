@@ -22,3 +22,8 @@ export function editCategoryFun(payload) {
 export function viewCategorybyId(id) {
   return ApiInstance.get(`${Api.catergoryById}/${id}`);
 }
+
+// Set Category Priority
+export function setCategoryPriority(payload) {
+  return ApiInstance.post(`${Api.setCategoryPriority}`, payload);
+}

@@ -12,6 +12,8 @@ import {
 } from "../../../Services/itemsService";
 import { toast } from "react-toastify";
 import { getAllTagFun } from "../../../Services/tagServices";
+import { viewCategoryService } from "../../../Services/userService";
+import { getAllFoodFun } from "../../../Services/foodService";
 import {
   getItemsbyId,
   deleteRecipeImagebyId,
@@ -20,11 +22,15 @@ import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import "./ItemDetails.scss";
 import { ReactComponent as CloseIcon } from "../../../Assets/Icon/close.svg";
+
 const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
   const [tagOption, setTagOption] = useState([]);
+  const [foodOption, setFoodOption] = useState([]);
+  const [food, setFood] = useState([]);
   const [tag, setTag] = useState([]);
   const [err, setError] = useState("");
   const [paramss, setParams] = useState();
+  const [select, setSelect] = useState();
   const [image, setImage] = useState({ preview: "", raw: "" });
   const [tasveer, setTasveer] = useState();
   // const [recipeImage, setRecipeImage] = useState("");
@@ -34,9 +40,10 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
   const [pics, setPics] = useState([]);
   const [items, setItems] = useState();
   // const [chef, setChef] = useState();
-  const [catname, setCatName] = useState();
+  const [catName, setCatName] = useState([]);
   const [time, setTime] = useState();
   const [selectedTag, setSelectedTag] = useState([]);
+  const [selectedFood, setSelectedFood] = useState([]);
   const [itemDetail, setItemDetail] = useState({});
   const [status, setStatus] = useState(false);
 
@@ -58,7 +65,10 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
   // set Tags Options
   useEffect(() => {
     fetchItemDetail();
+    category();
     tagdata();
+    foodFilterdata();
+
     // setOptions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -79,11 +89,38 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
       .catch(function (error) {});
   };
 
+  const category = async () => {
+    await viewCategoryService()
+      .then((res) => {
+        setCatName(res.data.data);
+      })
+      .catch(function (error) {});
+  };
+
+  const foodFilterdata = () => {
+    getAllFoodFun()
+      .then((res) => {
+        console.log("Food Items data : ", res.data.data);
+        let tempFood = [];
+        res?.data?.data?.forEach((foodName) => {
+          let tempFoodObj = {
+            value: foodName.id,
+            label: foodName.name,
+          };
+          tempFood.push(tempFoodObj);
+        });
+        setFoodOption(tempFood);
+      })
+      .catch(function (error) {});
+  };
+
   const fetchItemDetail = () => {
     getItemsbyId(itemId)
       .then((response) => {
         setItems(response.data.data.recipeDetails);
-        setCatName(response.data.data.recipeDetails.Category.name);
+        setSelect(response.data.data.recipeDetails.categoryId);
+        setValue("category", response.data.data.recipeDetails.categoryId);
+        // setCatName(response.data.data.recipeDetails.Category.name);
         setTime(response.data.data.recipeDetails.preparationTime);
         // setChef(response.data.data.profile);
         setItemDetail(response?.data?.data?.recipeDetails);
@@ -107,7 +144,7 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
         setValue("sellingPrice", response.data.data.recipeDetails.sellingPrice);
 
         // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
-        //   setChefImage(`http://meyu.sg:8082/${chefPic?.imageUrl}`)
+        //   setChefImage(`http://meyu.sg:8081/${chefPic?.imageUrl}`)
         // );
         setPics(response.data.data.recipeDetails.MediaObjects);
         response?.data?.data?.recipeDetails?.MediaObjects?.map(
@@ -118,6 +155,7 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
         //   [index]:`http://13.213.151.153:8081/${url.imageUrl}`
         // }))
         // ===========================
+     
         //  set Tags Data
         let tempTag = [];
         response?.data?.data?.recipeDetails?.tags?.forEach((tagName, index) => {
@@ -128,12 +166,26 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
           tempTag.push(tempTagObj);
         });
         setSelectedTag(tempTag);
+
+        
+         // set Food Filters
+         console.log(response.data.data.recipeDetails)
+         let tempFoods = [];
+         response?.data?.data?.recipeDetails?.foodFilterCategory?.forEach((foodName, index) => {
+           let tempFoodObj = {
+             value: foodName[index],
+             label: foodName[index],
+           };
+           tempFoods.push(tempFoodObj);
+         })
+         setSelectedFood(tempFoods);
       })
       .catch(function (error) {});
   };
 
   const submitdata = (data) => {
     console.log(data);
+    console.log("DIVYANSHU", select);
     // Selling Price Part
     if (Math.floor(itemDetail.costPerServing) <= data.sellingPrice) {
       setError("");
@@ -147,10 +199,19 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
       var tag = ("tags : ", "[" + t + "]".toString());
       console.log(tag);
 
+      var myfood = data.foodFilterCategory;
+      var l = myfood
+        .map((s) => `${s}`)
+        .join(",")
+        .replace(/["']/g, '"');
+      var food = ("foodFilterCategory : ", "[" + l + "]".toString());
+      console.log(food);
+
       var formData = new FormData();
       formData.append("dishName", data.dishName);
       formData.append("tags", tag);
-      formData.append("preparationTime", time);
+      // formData.append("preparationTime", time);
+      formData.append("foodFilterCategory", food);
       formData.append("categoryId", data.categoryId);
       formData.append("deliveryFee", data.deliveryFee);
       formData.append("costPerServing", data.costPerServing);
@@ -183,9 +244,9 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
             });
           }
           // fetchItemDetail();
-          setTimeout(() => {
-            navigate(-1);
-          }, 1000);
+          // setTimeout(() => {
+          //   navigate(-1);
+          // }, 1000);
         })
 
         .catch((err) => {
@@ -279,6 +340,12 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
     new Set()
   );
   var result = tagOption.filter((v) => !objB.has(v.label));
+
+  var objC = selectedFood.reduce(
+    (foodOption, d) => foodOption.add(d.label),
+    new Set()
+  );
+  var foodresult = foodOption.filter((j) => !objC.has(j.label));
 
   return (
     <div className="card p-5 m-3">
@@ -403,13 +470,57 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
             <label htmlFor="validationCustom0655" className="form-label">
               Category
             </label>
-            <input
-              type="text"
-              value={catname}
-              className="form-control"
-              disabled
-            />
+
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              onChange={(e) => setSelect(e.target.value)}
+              // {...register("category")}
+            >
+              {catName.map((item) => (
+                <option
+                  key={item.id}
+                  defaultValue={item.id}
+                  value={item.id}
+                >
+                  {item.name}
+                </option>
+              ))}
+            </select>
           </div>
+
+          {/* =============================== tagss multiple ============ */}
+          <div className="col-md-6 col-sm-6 col-xs-12 mb-3">
+            <label htmlFor="validationCustom004" className="form-label">
+              Food Filter (Optional)
+            </label>
+{console.log(selectedFood)}
+            {selectedFood.length ? (
+              <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                defaultValue={selectedFood}
+                placeholder="If not Selected, then previous tags will go on!"
+                isMulti
+                options={foodresult}
+                isSearchable
+                required={true}
+                onChange={(e) =>
+                  setFood(e.map((val) => JSON.stringify(val.label)))
+                }
+                // onChange={(e) => {e.map((VAL) => console.log(VAL.label))}}
+                {...setValue(
+                  "foodFilterCategory",
+                  food.length === 0
+                    ? selectedFood.map((val) => JSON.stringify(val.label))
+                    : food
+                )}
+              />
+            ) : (
+              ""
+            )}
+          </div>
+          {/* ======================================== */}
 
           {/* =============================== tagss multiple ============ */}
           <div className="col-md-6 col-sm-6 col-xs-12 mb-3">

@@ -36,3 +36,7 @@ tr {
   margin-bottom: 0px;
 }
 
+.no-data {
+  display: none;
+  text-align: center;
+}

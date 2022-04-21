@@ -14,9 +14,11 @@ import "./CancelledOrder.css";
 import Path from "../../../../Constant/RouterConstant";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
+import Loader from "../../../../Assets/Icon/loading.gif";
 
 const CancelledOrderTable = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
   // const products = OrdersData.map((custom) => [
   //   {
   //     id: custom.id,
@@ -36,11 +38,16 @@ const CancelledOrderTable = () => {
   }, []);
 
   const orderData = async () => {
-    await getAllCancelledOrders()
+    setLoading(true)
+    setTimeout(() => {
+      getAllCancelledOrders()
       .then((response) => {
+        setLoading(false);
         setOrders(response.data.data);
       })
       .catch(function (error) {});
+    }, 1000);
+    
   };
 
   const columns = [
@@ -194,7 +201,7 @@ const CancelledOrderTable = () => {
                   striped
                   condensed={false}
                   bootstrap4={true}
-                  noDataIndication="No Data Is Available"
+                  noDataIndication={loading?<img src={Loader} alt="loader" width={24} />:"No Data Is Available"}
                 />
                 {/* <div className="d-flex justify-content-end">
                   <PaginationListStandalone {...paginationProps} />
