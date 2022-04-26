@@ -50,7 +50,7 @@ export const SidebarData = [
       //   link: Path.ingredients,
       // },
       {
-        title: "Food Filter",
+        title: "Food Type",
         link: Path.food,
       },
       {

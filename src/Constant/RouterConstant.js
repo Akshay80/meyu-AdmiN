@@ -26,7 +26,7 @@ const Path = {
   orders: "orders",
   orderManage: "order-management",
   orderDetails: "/order-details",
-  food: "food-filter",
+  food: "food-type",
   discount: "discount",
   approvedOrder: "approved-orders",
   pendingOrder: "pending-orders",

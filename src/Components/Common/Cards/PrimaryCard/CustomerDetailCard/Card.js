@@ -78,22 +78,29 @@ const CustomerCard = ({
   //   });
   // };
 
+  var testStr = customerImage;
+var splitStr = testStr.substring(testStr.indexOf('http://13.213.151.153:8081/') + 27);
+
   return (
     <div className="container">
       <div className="card mb-3 p-3">
         <div className="row g-0">
           <div className="col-md-3 col-sm-12 align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
-              <img
+              {customerImage.includes("https://lh3.googleusercontent.com") === true ?   <img src={splitStr} className="img"
+                alt="..."
+                style={{ borderRadius: "50%", width: 100, height: 100 }}/>: <img
                 src={
-                  customerImage === `http://13.213.151.153:8081/null`
+                  customerImage === `http://13.213.151.153:8081/null` || customerImage.includes("https://lh3.googleusercontent.com") === true
                     ? UserImage
                     : customerImage
                 }
                 className="img"
                 alt="..."
                 style={{ borderRadius: "50%", width: 100, height: 100 }}
-              />
+              />}
+            
+              
             </div>
           </div>
           <div className="col-md-9 col-sm-12">

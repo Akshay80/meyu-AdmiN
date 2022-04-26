@@ -142,63 +142,63 @@ const FoodTable = () => {
   };
 
 //   edit tags = open modal and display items
-  // const handleEdits = (rowId, rowName) => {
-  //   handleShow2();
-  //   reset();
-  //   getFoodbyId(rowId)
-  //     .then((res) => {
-  //       setValue("food", rowName);
-  //       setEditId(res?.data?.data);
-  //     })
-  //     .catch(function (error) {
-  //       toast.error(error.error, {
-  //         position: "top-right",
-  //         autoClose: 3000,
-  //         hideProgressBar: true,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: false,
-  //         progress: 0,
-  //         toastId: "my_toast",
-  //       });
-  //     });
-  // };
+  const handleEdits = (rowId, rowName) => {
+    handleShow2();
+    reset();
+    getFoodbyId(rowId)
+      .then((res) => {
+        setValue("food", rowName);
+        setEditId(res?.data?.data);
+      })
+      .catch(function (error) {
+        toast.error(error.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      });
+  };
 
-  // const EditSubmits = (data) => {
-  //   const param = {
-  //     id: editId?.id,
-  //     name: data?.food,
-  //   };
-  //   editFoodFun(param)
-  //     .then((res) => {
-  //       if (res?.statusText === "OK") {
-  //         handleClose2();
-  //         toast.success("Food Filter Edited Successfully", {
-  //           position: "top-right",
-  //           autoClose: 2000,
-  //           hideProgressBar: true,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: false,
-  //           progress: 0,
-  //           toastId: "my_toast",
-  //         });
-  //         tagdata();
-  //       }
-  //     })
-  //     .catch(function (error) {
-  //       toast.error(error.error, {
-  //         position: "top-right",
-  //         autoClose: 2000,
-  //         hideProgressBar: true,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: false,
-  //         progress: 0,
-  //         toastId: "my_toast",
-  //       });
-  //     });
-  // };
+  const EditSubmits = (data) => {
+    const param = {
+      id: editId?.id,
+      name: data?.food,
+    };
+    editFoodFun(param)
+      .then((res) => {
+        if (res?.statusText === "OK") {
+          handleClose2();
+          toast.success("Food Filter Edited Successfully", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: 0,
+            toastId: "my_toast",
+          });
+          tagdata();
+        }
+      })
+      .catch(function (error) {
+        toast.error(error.error, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: 0,
+          toastId: "my_toast",
+        });
+      });
+  };
 
   const columns = [
     {
@@ -228,10 +228,10 @@ const FoodTable = () => {
       formatter: (rowContent, row) => {
         return (
           <div className="d-flex">
-            {/* <EditIcon
+            <EditIcon
               className="mt-1 edit-icon"
               onClick={() => handleEdits(row.id, row.name)}
-            /> */}
+            />
             <DeleteIcon
               className="iconHover delete-icon"
               onClick={() => confirmDelete(row.id)}
@@ -254,7 +254,7 @@ const FoodTable = () => {
       <div className="page-heading d-flex align-items-center p-4 justify-content-between">
         <div className="page-heading-wapper d-flex">
           <BagIcon className="page-icon m-0" />
-          <h3 className="page-sec-heading m-0 mx-2">Food Filter</h3>
+          <h3 className="page-sec-heading m-0 mx-2">Food Type</h3>
         </div>
         <div className="add-btn d-flex align-items-center">
           <button
@@ -263,7 +263,7 @@ const FoodTable = () => {
             onClick={handleShow}
           >
             {" "}
-            <AddIcon /> Add New Food Filter
+            <AddIcon /> Add New Food Type
           </button>
         </div>
       </div>
@@ -277,23 +277,23 @@ const FoodTable = () => {
         <Form onSubmit={handleSubmit(onSubmits)}>
           <Modal.Body className="p-4 pt-0">
             <Form.Group className="mb-1">
-              <Form.Label>Food Filter Name</Form.Label>
+              <Form.Label>Food Type</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Food Filter"
+                placeholder="Food Type"
                 autoComplete="off"
                 {...register("food", {
-                  required: "Food filter is required!",
-                  pattern: 
-                  {
-                      value: /^[a-zA-Z ]*$/,
-                      message: "Invalid Food Filter!"
-                  },
-                  maxLength:
-                  {
-                      value: 25,
-                      message: "Minimum 25 characters are allowed!"
-                  }
+                  required: "Food type is required!",
+                  // pattern: 
+                  // {
+                  //     value: /^[a-zA-Z ]*$/,
+                  //     message: "Invalid Food Filter!"
+                  // },
+                  // maxLength:
+                  // {
+                  //     value: 25,
+                  //     message: "Minimum 25 characters are allowed!"
+                  // }
                 })}
               />
             </Form.Group>
@@ -301,7 +301,7 @@ const FoodTable = () => {
           </Modal.Body>
           <Modal.Footer className="border-0 pt-0 pb-4 d-flex justify-content-center">
             <Button variant="primary" type="submit">
-              Add Food Filter
+              Add Food Type
             </Button>
           </Modal.Footer>
         </Form>
@@ -309,7 +309,7 @@ const FoodTable = () => {
 
       {/* ============================== Modal for Edit ========================= */}
 
-      {/* <Modal centered show={show2} onHide={handleClose2}>
+      <Modal centered show={show2} onHide={handleClose2}>
         <Modal.Header
           className="border-0 shadow-none"
           closeButton
@@ -317,21 +317,21 @@ const FoodTable = () => {
         <Form onSubmit={handleSubmit(EditSubmits)}>
           <Modal.Body className="p-4 pt-0">
             <Form.Group className="mb-1">
-              <Form.Label>Edit Food Filter</Form.Label>
+              <Form.Label>Edit Food Type</Form.Label>
               <Form.Control
                 type="text"
                 autoComplete="off"
                 {...register("food", {
-                  required: "Food Filter is required!",
-                  pattern: {
-                    value: /^[a-zA-Z ]*$/,
-                    message: "Only alphabets are allowed!",
-                  },
-                  maxLength:
-                  {
-                      value: 25,
-                      message: "Minimum 25 characters are allowed!"
-                  }
+                  required: "Food type is required!",
+                  // pattern: {
+                  //   value: /^[a-zA-Z ]*$/,
+                  //   message: "Only alphabets are allowed!",
+                  // },
+                  // maxLength:
+                  // {
+                  //     value: 25,
+                  //     message: "Minimum 25 characters are allowed!"
+                  // }
                 })}
               />
             </Form.Group>
@@ -343,7 +343,7 @@ const FoodTable = () => {
             </Button>
           </Modal.Footer>
         </Form>
-      </Modal> */}
+      </Modal>
 
       {/* =====================modal end============= */}
 

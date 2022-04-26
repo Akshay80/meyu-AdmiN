@@ -22,6 +22,7 @@ import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import "./ItemDetails.scss";
 import { ReactComponent as CloseIcon } from "../../../Assets/Icon/close.svg";
+import e from "cors";
 
 const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
   const [tagOption, setTagOption] = useState([]);
@@ -41,11 +42,13 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
   const [items, setItems] = useState();
   // const [chef, setChef] = useState();
   const [catName, setCatName] = useState([]);
+  const [catID, setCatID] = useState("");
   const [time, setTime] = useState();
   const [selectedTag, setSelectedTag] = useState([]);
   const [selectedFood, setSelectedFood] = useState([]);
   const [itemDetail, setItemDetail] = useState({});
   const [status, setStatus] = useState(false);
+  const [defaultCategory, setDefaultCat] = useState("");
 
   let navigate = useNavigate();
   const { itemId } = useParams();
@@ -63,16 +66,7 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
     });
   };
   // set Tags Options
-  useEffect(() => {
-    fetchItemDetail();
-    category();
-    tagdata();
-    foodFilterdata();
-
-    // setOptions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  
   const tagdata = () => {
     getAllTagFun()
       .then((res) => {
@@ -114,13 +108,16 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
       .catch(function (error) {});
   };
 
-  const fetchItemDetail = () => {
-    getItemsbyId(itemId)
+  const fetchItemDetail = async () => {
+    await getItemsbyId(itemId)
       .then((response) => {
+        console.log("RESPONSE : ", response.data.data)
         setItems(response.data.data.recipeDetails);
-        setSelect(response.data.data.recipeDetails.categoryId);
-        setValue("category", response.data.data.recipeDetails.categoryId);
+        // setSelect(response.data.data.recipeDetails.categoryId);
+        // setValue("category", response.data.data.recipeDetails.categoryId);
+        setCatID(response.data.data.recipeDetails.categoryId);
         // setCatName(response.data.data.recipeDetails.Category.name);
+        setDefaultCat(response.data.data.recipeDetails.Category.name);
         setTime(response.data.data.recipeDetails.preparationTime);
         // setChef(response.data.data.profile);
         setItemDetail(response?.data?.data?.recipeDetails);
@@ -157,6 +154,7 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
         // ===========================
      
         //  set Tags Data
+        
         let tempTag = [];
         response?.data?.data?.recipeDetails?.tags?.forEach((tagName, index) => {
           let tempTagObj = {
@@ -169,23 +167,39 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
 
         
          // set Food Filters
-         console.log(response.data.data.recipeDetails)
          let tempFoods = [];
-         response?.data?.data?.recipeDetails?.foodFilterCategory?.forEach((foodName, index) => {
+         response?.data?.data?.recipeDetails?.foodFilterCategory.map((foodName, index) => {
            let tempFoodObj = {
-             value: foodName[index],
-             label: foodName[index],
+             value: foodName.id,
+             label: foodName.name,
            };
            tempFoods.push(tempFoodObj);
          })
+         if(selectedFood === [])
+        {
+          console.log("first")
+        }
          setSelectedFood(tempFoods);
       })
       .catch(function (error) {});
   };
 
+
+  useEffect(() => {
+    fetchItemDetail();
+    category();
+    tagdata();
+    foodFilterdata();
+    // setOptions();
+  }, []);
+
+
+
   const submitdata = (data) => {
+    
     console.log(data);
     console.log("DIVYANSHU", select);
+   
     // Selling Price Part
     if (Math.floor(itemDetail.costPerServing) <= data.sellingPrice) {
       setError("");
@@ -205,20 +219,43 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
         .join(",")
         .replace(/["']/g, '"');
       var food = ("foodFilterCategory : ", "[" + l + "]".toString());
-      console.log(food);
+      console.log("MY FOOD  :", food);
 
-      var formData = new FormData();
+      if(select === undefined)
+      {
+        console.log("Category ID :", catID);
+        var formData = new FormData();
       formData.append("dishName", data.dishName);
       formData.append("tags", tag);
       // formData.append("preparationTime", time);
       formData.append("foodFilterCategory", food);
-      formData.append("categoryId", data.categoryId);
+      // formData.append("foodFilterCategory", );
+      formData.append("categoryId", catID );
       formData.append("deliveryFee", data.deliveryFee);
       formData.append("costPerServing", data.costPerServing);
       formData.append("description", data.description);
       formData.append("isVegetarian", data.isVegetarian);
       formData.append("isNonVegetarian", data.isNonVegetarian);
       formData.append("sellingPrice", data.sellingPrice);
+      }
+      else
+    {
+      console.log("SELECTED ID: ",select)
+      var formData = new FormData();
+      formData.append("dishName", data.dishName);
+      formData.append("tags", tag);
+      // formData.append("preparationTime", time);
+      formData.append("foodFilterCategory", food);
+      formData.append("categoryId", select );
+      formData.append("deliveryFee", data.deliveryFee);
+      formData.append("costPerServing", data.costPerServing);
+      formData.append("description", data.description);
+      formData.append("isVegetarian", data.isVegetarian);
+      formData.append("isNonVegetarian", data.isNonVegetarian);
+      formData.append("sellingPrice", data.sellingPrice);
+    }
+
+      
 
       // var test = [];
       // for(var i=0;i<data.tags.length;i++){
@@ -227,7 +264,7 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
       //   console.log("Pushed ARRAY : ",pushedArray);
       //  }
 
-      console.log("ID SURAJ: ", itemDetail.id);
+     
       // Update Recipe By ID
       updateRecipebyId(itemDetail.id, formData)
         .then((res) => {
@@ -243,10 +280,10 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
               toastId: "my_toast",
             });
           }
-          // fetchItemDetail();
-          // setTimeout(() => {
-          //   navigate(-1);
-          // }, 1000);
+          fetchItemDetail();
+          setTimeout(() => {
+            navigate(-1);
+          }, 1000);
         })
 
         .catch((err) => {
@@ -477,10 +514,10 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
               onChange={(e) => setSelect(e.target.value)}
               // {...register("category")}
             >
+              <option selected disabled>{defaultCategory}</option>
               {catName.map((item) => (
                 <option
                   key={item.id}
-                  defaultValue={item.id}
                   value={item.id}
                 >
                   {item.name}
@@ -489,36 +526,58 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
             </select>
           </div>
 
-          {/* =============================== tagss multiple ============ */}
+          {/* =============================== food multiple ============ */}
           <div className="col-md-6 col-sm-6 col-xs-12 mb-3">
             <label htmlFor="validationCustom004" className="form-label">
-              Food Filter (Optional)
+              Food Type (Optional)
             </label>
-{console.log(selectedFood)}
-            {selectedFood.length ? (
+            {selectedFood.length > 0 && (
               <Select
                 closeMenuOnSelect={false}
                 components={animatedComponents}
-                defaultValue={selectedFood}
-                placeholder="If not Selected, then previous tags will go on!"
+                placeholder="If not Selected, then previous food type will go on!"
                 isMulti
+                defaultValue={selectedFood}
                 options={foodresult}
                 isSearchable
-                required={true}
                 onChange={(e) =>
-                  setFood(e.map((val) => JSON.stringify(val.label)))
+                  setFood(e.map((val) => JSON.stringify(val.value)))
                 }
                 // onChange={(e) => {e.map((VAL) => console.log(VAL.label))}}
                 {...setValue(
                   "foodFilterCategory",
                   food.length === 0
-                    ? selectedFood.map((val) => JSON.stringify(val.label))
+                    ? selectedFood.map((val) => JSON.stringify(val.value))
                     : food
                 )}
               />
-            ) : (
-              ""
-            )}
+              )}
+              {selectedFood.length === 0 && selectedFood.length < 1 && (
+              <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                placeholder="If not Selected, then previous food type will go on!"
+                isMulti
+                defaultValue={selectedFood}
+                options={foodresult}
+                isSearchable
+                onChange={(e) =>
+                  setFood(e.map((val) => JSON.stringify(val.value)))
+                }
+                // onChange={(e) => {e.map((VAL) => console.log(VAL.label))}}
+                {...setValue(
+                  "foodFilterCategory",
+                  food.length === 0
+                    ? selectedFood.map((val) => JSON.stringify(val.value))
+                    : food
+                )}
+              />
+              )}
+
+
+            {/* ) : (
+              "" */}
+          
           </div>
           {/* ======================================== */}
 
@@ -560,7 +619,7 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
             <input type="text" className="form-control" value={time} disabled />
           </div>
 
-          <div className="col-md-12 col-sm-12 col-xs-12 mb-3">
+          <div className="col-md-6 col-sm-6 col-xs-12 mb-3">
             <label htmlFor="validationCustom001" className="form-label">
               Chef Price
             </label>

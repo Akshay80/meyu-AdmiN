@@ -10,6 +10,7 @@ export default function RejectedOrder() {
           <OrderIcon className="page-icon m-0" />
           <h3 className="page-sec-heading m-0 mx-2">Rejected Orders by Chef</h3>
         </div>
+       
       </div>
       <div className="card m-3 mt-0">
         <RejectedOrdersTable />
