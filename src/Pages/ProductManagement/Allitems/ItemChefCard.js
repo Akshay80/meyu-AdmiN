@@ -26,7 +26,7 @@ const ItemChefCard = () => {
       response.data.data.profile.CookAvailability.Days.map((weeks) => setCookWeekDays(weeks.isWeeekdays));
       response.data.data.profile.CookAvailability.Days.map((weeks) => setCookWeekEnds(weeks.isWeekends));
       setChefImage(
-        `http://13.213.151.153:8081/${response?.data?.data?.profile?.profileUrl}`
+        `http://13.213.151.153:8083/${response?.data?.data?.profile?.profileUrl}`
       );
       })
       .catch(function (error) {});
@@ -40,7 +40,7 @@ const ItemChefCard = () => {
           <div className="col-md-3 col-sm-6 col-xs-12 d-flex align-items-center justify-content-center">
             <div className="d-flex align-items-center justify-content-center">
               <img
-                src={chefImage === `http://13.213.151.153:8081/null` || chefImage === null ? UserImage : chefImage}
+                src={chefImage === `http://13.213.151.153:8083/null` || chefImage === null ? UserImage : chefImage}
                 className="img"
                 alt="..."
                 style={{

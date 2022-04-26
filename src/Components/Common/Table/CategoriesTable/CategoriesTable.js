@@ -60,7 +60,7 @@ const CategoriesTable = () => {
   const headerSortingStyle = { backgroundColor: "#e3edf8" };
   const [loading, setLoading] = useState(false);
 
-  const url = "http://13.213.151.153:8081/";
+  const url = "http://13.213.151.153:8083/";
   const {
     register,
     setValue,
@@ -243,11 +243,11 @@ const CategoriesTable = () => {
         setCatId(response.data.data.id);
         setValue("name", response.data.data.name);
         setCatFile(
-          `http://13.213.151.153:8081/${response.data.data.MediaObjects[0].imageUrl}`
+          `http://13.213.151.153:8083/${response.data.data.MediaObjects[0].imageUrl}`
         );
         setValue(
           "category",
-          `http://13.213.151.153:8081/${response.data.data.MediaObjects[0].imageUrl}`
+          `http://13.213.151.153:8083/${response.data.data.MediaObjects[0].imageUrl}`
         );
       })
       .catch(function (error) {});
@@ -654,7 +654,7 @@ const CategoriesTable = () => {
                             <td>
                               <img
                                 alt="categoryImages"
-                                src={`http://13.213.151.153:8081/${item.MediaObjects.map(
+                                src={`http://13.213.151.153:8083/${item.MediaObjects.map(
                                   (element) => element.imageUrl
                                 )}`}
                                 style={{

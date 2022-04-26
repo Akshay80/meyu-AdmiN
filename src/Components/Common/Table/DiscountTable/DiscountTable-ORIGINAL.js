@@ -59,7 +59,7 @@ const DiscountTable = () => {
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => setShow2(true);
   const [isOpen, setOpen] = useState(false);
-  const urls = "http://13.213.151.153:8081/";
+  const urls = "http://13.213.151.153:8083/";
   const [url, setURL] = useState();
   const [myError, SetMyError] = useState("");
   const { SearchBar } = Search;
@@ -188,7 +188,7 @@ const DiscountTable = () => {
     addCoupans(formdata)
       .then((res) => {
         // setAPIOfferImage(
-        //   `http://13.213.151.153:8081/${res.data.data.MediaObject.imageUrl}`
+        //   `http://13.213.151.153:8083/${res.data.data.MediaObject.imageUrl}`
         // );
         if (res.data.success === true) {
           handleClose();

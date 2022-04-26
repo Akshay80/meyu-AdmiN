@@ -40,7 +40,7 @@ const OrderProfile = () => {
   const [PaymentStatus, setPaymentStatus] = useState();
   const [RefundAmount, setRefundAmount] = useState();
 
-  const url = "http://13.213.151.153:8081/";
+  const url = "http://13.213.151.153:8083/";
 
   useEffect(() => {
     ordersByID();
@@ -121,7 +121,7 @@ const OrderProfile = () => {
                 id="profilePic"
                 className="profile-pic"
                 alt=""
-                src={`http://13.213.151.153:8081/${image}`}
+                src={`http://13.213.151.153:8083/${image}`}
               />
             </div>
           </div>

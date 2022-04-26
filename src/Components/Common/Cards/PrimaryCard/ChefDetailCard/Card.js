@@ -76,7 +76,7 @@ const ChefCard = ({ chefRecipe, chefDetail, chefPic, isVerfied, cookingTime, tot
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={
-                  chefPic === `http://13.213.151.153:8081/null` ? UserImage : chefPic
+                  chefPic === `http://13.213.151.153:8083/null` ? UserImage : chefPic
                 }
                 className="img"
                 alt="..."

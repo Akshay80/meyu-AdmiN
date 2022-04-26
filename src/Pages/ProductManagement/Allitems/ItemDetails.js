@@ -141,15 +141,15 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
         setValue("sellingPrice", response.data.data.recipeDetails.sellingPrice);
 
         // response?.data?.data?.profile?.MediaObjects?.map((chefPic) =>
-        //   setChefImage(`http://meyu.sg:8081/${chefPic?.imageUrl}`)
+        //   setChefImage(`http://meyu.sg:8083/${chefPic?.imageUrl}`)
         // );
         setPics(response.data.data.recipeDetails.MediaObjects);
         response?.data?.data?.recipeDetails?.MediaObjects?.map(
-          (img) => `http://13.213.151.153:8081/${img?.imageUrl}`
+          (img) => `http://13.213.151.153:8083/${img?.imageUrl}`
         );
 
         // response.data.data.recipeDetails.MediaObjects.map((url, index) => setImage({
-        //   [index]:`http://13.213.151.153:8081/${url.imageUrl}`
+        //   [index]:`http://13.213.151.153:8083/${url.imageUrl}`
         // }))
         // ===========================
      
@@ -323,7 +323,7 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
         // }
         // window.location.reload(false);
         // setRecipeImage(
-        //   `http://13.213.151.153:8081/${response.data.data.profileUrl}`
+        //   `http://13.213.151.153:8083/${response.data.data.profileUrl}`
         // );
       })
       .catch((error) => {
@@ -413,13 +413,13 @@ const ItemDetails = ({ itemImage, itemStatus, mediaObjectId }) => {
                   key={images.id}
                   src={
                     image.preview === ""
-                      ? `http://13.213.151.153:8081/` + images.imageUrl
+                      ? `http://13.213.151.153:8083/` + images.imageUrl
                       : image.preview
                   }
                   style={{ width: "100%" }}
                   height="300"
                   alt=""
-                  defaultValue={`http://13.213.151.153:8081/` + images.imageUrl}
+                  defaultValue={`http://13.213.151.153:8083/` + images.imageUrl}
                 />
               </div>
             ))}

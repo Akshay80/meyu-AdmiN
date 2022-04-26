@@ -44,7 +44,7 @@ const UserProfile = () => {
         if (response?.statusText === "OK") {
           setProfileData(response?.data?.data);
           setURL(
-            `http://13.213.151.153:8081/${response.data.data.Profile.profileUrl}`
+            `http://13.213.151.153:8083/${response.data.data.Profile.profileUrl}`
           );
           setValue("firstName", response.data.data.Profile.firstName);
           setValue("lastName", response.data.data.Profile.lastName);

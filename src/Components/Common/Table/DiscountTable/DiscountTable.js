@@ -65,7 +65,7 @@ const DiscountTable = () => {
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => setShow2(true);
   const [isOpen, setOpen] = useState(false);
-  const urls = "http://13.213.151.153:8081/";
+  const urls = "http://13.213.151.153:8083/";
   const [url, setURL] = useState();
   const [myError, SetMyError] = useState("");
   const [myError1, SetMyError1] = useState("");
@@ -464,11 +464,11 @@ const DiscountTable = () => {
         setValue("discountApplicableAmount", res.data.data.discountApplicableAmount)
         setOfferID(res.data.data.id);
         setOfferImage(
-          `http://13.213.151.153:8081/${res.data.data.MediaObjects[0].imageUrl}`
+          `http://13.213.151.153:8083/${res.data.data.MediaObjects[0].imageUrl}`
         );
         setValue(
           "myimageFile",
-          `http://13.213.151.153:8081/${res.data.data.MediaObjects[0].imageUrl}`
+          `http://13.213.151.153:8083/${res.data.data.MediaObjects[0].imageUrl}`
         );
       })
       .catch(function (error) {

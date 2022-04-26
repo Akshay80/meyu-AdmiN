@@ -79,7 +79,7 @@ const CustomerCard = ({
   // };
 
   var testStr = customerImage;
-var splitStr = testStr.substring(testStr.indexOf('http://13.213.151.153:8081/') + 27);
+var splitStr = testStr.substring(testStr.indexOf('http://13.213.151.153:8083/') + 27);
 
   return (
     <div className="container">
@@ -91,7 +91,7 @@ var splitStr = testStr.substring(testStr.indexOf('http://13.213.151.153:8081/') 
                 alt="..."
                 style={{ borderRadius: "50%", width: 100, height: 100 }}/>: <img
                 src={
-                  customerImage === `http://13.213.151.153:8081/null` || customerImage.includes("https://lh3.googleusercontent.com") === true
+                  customerImage === `http://13.213.151.153:8083/null` || customerImage.includes("https://lh3.googleusercontent.com") === true
                     ? UserImage
                     : customerImage
                 }
